@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+:root {
+  /* Warm, inviting color palette */
+  --background: #fdfbf7;
+  --foreground: #2d2a26;
+
+  /* Primary - warm terracotta/coral */
+  --primary: #c97b63;
+  --primary-light: #e8a894;
+  --primary-dark: #a65d4a;
+
+  /* Secondary - soft sage green */
+  --secondary: #8fa882;
+  --secondary-light: #b5c9ab;
+  --secondary-dark: #6b8560;
+
+  /* Accent - warm gold */
+  --accent: #d4a853;
+  --accent-light: #e8c97d;
+  --accent-dark: #b08a3a;
+
+  /* Neutrals */
+  --muted: #f5f0e8;
+  --muted-foreground: #6b6560;
+  --border: #e5ddd3;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-secondary: var(--secondary);
+  --color-secondary-light: var(--secondary-light);
+  --color-secondary-dark: var(--secondary-dark);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-dark: var(--accent-dark);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --font-sans: var(--font-heebo), system-ui, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.7;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom selection color */
+::selection {
+  background-color: var(--primary-light);
+  color: var(--foreground);
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
