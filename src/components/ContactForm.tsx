@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 interface FormData {
   firstName: string;
@@ -73,16 +76,21 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="p-8 bg-secondary/20 rounded-2xl text-center">
-        <div className="text-4xl mb-4">✓</div>
+      <div className="p-10 bg-secondary/10 rounded-2xl text-center">
+        <div className="inline-flex p-3 rounded-full bg-secondary/20 mb-4">
+          <svg className="w-8 h-8 text-secondary-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
         <h3 className="text-xl font-semibold mb-2">הפנייה נשלחה בהצלחה!</h3>
         <p className="text-muted-foreground mb-6">נחזור אליכם בהקדם האפשרי</p>
-        <button
+        <Button
+          variant="ghost"
           onClick={() => setStatus("idle")}
-          className="text-primary font-medium hover:underline"
+          className="text-primary font-medium"
         >
           שליחת פנייה נוספת
-        </button>
+        </Button>
       </div>
     );
   }
@@ -94,62 +102,63 @@ export function ContactForm() {
           <label htmlFor="firstName" className="block text-sm font-medium mb-2">
             שם פרטי
           </label>
-          <input
+          <Input
             type="text"
             id="firstName"
             name="firstName"
             value={formData.firstName}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+            className="rounded-xl"
           />
         </div>
         <div>
           <label htmlFor="lastName" className="block text-sm font-medium mb-2">
             שם משפחה
           </label>
-          <input
+          <Input
             type="text"
             id="lastName"
             name="lastName"
             value={formData.lastName}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+            className="rounded-xl"
           />
         </div>
       </div>
 
-      <div>
-        <label htmlFor="email" className="block text-sm font-medium mb-2">
-          אימייל
-        </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          dir="ltr"
-          className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-        />
-      </div>
-
-      <div>
-        <label htmlFor="phone" className="block text-sm font-medium mb-2">
-          טלפון
-        </label>
-        <input
-          type="tel"
-          id="phone"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          required
-          dir="ltr"
-          className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-        />
+      <div className="grid sm:grid-cols-2 gap-4">
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium mb-2">
+            אימייל
+          </label>
+          <Input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            dir="ltr"
+            className="rounded-xl"
+          />
+        </div>
+        <div>
+          <label htmlFor="phone" className="block text-sm font-medium mb-2">
+            טלפון
+          </label>
+          <Input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+            dir="ltr"
+            className="rounded-xl"
+          />
+        </div>
       </div>
 
       <div>
@@ -161,7 +170,7 @@ export function ContactForm() {
           name="service"
           value={formData.service}
           onChange={handleChange}
-          className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background"
+          className="w-full px-4 py-2.5 border border-input rounded-xl bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring text-sm"
         >
           <option value="">בחרו שירות</option>
           <option value="couples">ייעוץ זוגי</option>
@@ -176,28 +185,30 @@ export function ContactForm() {
         <label htmlFor="message" className="block text-sm font-medium mb-2">
           ספרו לנו קצת
         </label>
-        <textarea
+        <Textarea
           id="message"
           name="message"
           rows={5}
           value={formData.message}
           onChange={handleChange}
-          className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+          className="rounded-xl resize-none"
           placeholder="מה הביא אתכם אלינו? איך נוכל לעזור?"
         />
       </div>
 
       {status === "error" && (
-        <div className="p-4 bg-red-50 text-red-700 rounded-lg">{errorMessage}</div>
+        <div className="p-4 bg-destructive/10 text-destructive rounded-xl text-sm">
+          {errorMessage}
+        </div>
       )}
 
-      <button
+      <Button
         type="submit"
         disabled={status === "submitting"}
-        className="w-full px-8 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full rounded-full bg-primary hover:bg-primary-dark text-white text-lg py-6"
       >
-        {status === "submitting" ? "שולח..." : "שליחה"}
-      </button>
+        {status === "submitting" ? "שולח..." : "שליחת פנייה"}
+      </Button>
 
       <p className="text-sm text-muted-foreground text-center">
         נחזור אליכם תוך 24 שעות

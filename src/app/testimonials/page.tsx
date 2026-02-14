@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 export const metadata: Metadata = {
   title: "המלצות | אומנות הקשר",
@@ -61,12 +64,15 @@ export default function TestimonialsPage() {
   return (
     <>
       {/* Hero */}
-      <section className="py-20 bg-muted">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-6">
+      <section className="py-24 bg-gradient-to-b from-muted to-background">
+        <div className="container mx-auto px-4 text-center">
+          <Badge variant="outline" className="mb-4 text-primary border-primary/30">
+            סיפורי הצלחה
+          </Badge>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">
             מה אומרים <span className="text-primary">עלינו</span>
           </h1>
-          <p className="text-xl text-muted-foreground text-center max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             סיפורים אמיתיים של זוגות ויחידים שעברו את התהליך
           </p>
         </div>
@@ -75,67 +81,77 @@ export default function TestimonialsPage() {
       {/* Testimonials Grid */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-6">
             {testimonials.map((testimonial, index) => (
-              <div
+              <Card
                 key={index}
-                className="p-8 bg-muted rounded-2xl hover:shadow-md transition-shadow"
+                className="border-border/50 hover:shadow-lg hover:border-primary/20 transition-all duration-200"
               >
-                <blockquote className="text-lg mb-6 leading-relaxed">
-                  &quot;{testimonial.quote}&quot;
-                </blockquote>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
-                    <span className="text-primary font-bold">
-                      {testimonial.author.charAt(0)}
-                    </span>
+                <CardContent className="p-8">
+                  {/* Quote mark */}
+                  <div className="text-5xl text-primary/20 font-serif leading-none mb-4">&ldquo;</div>
+                  <blockquote className="text-lg mb-6 leading-relaxed">
+                    {testimonial.quote}
+                  </blockquote>
+                  <Separator className="my-5" />
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                      <span className="text-primary font-bold">
+                        {testimonial.author.charAt(0)}
+                      </span>
+                    </div>
+                    <div>
+                      <cite className="not-italic font-semibold block">
+                        {testimonial.author}
+                      </cite>
+                      <span className="text-sm text-muted-foreground">
+                        {testimonial.context}
+                      </span>
+                    </div>
                   </div>
-                  <div>
-                    <cite className="not-italic font-semibold block">
-                      {testimonial.author}
-                    </cite>
-                    <span className="text-sm text-muted-foreground">
-                      {testimonial.context}
-                    </span>
-                  </div>
-                </div>
-              </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
       {/* Stats */}
-      <section className="py-16 bg-secondary/10">
+      <section className="py-20 bg-muted/50">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
               { number: "500+", label: "זוגות ויחידים" },
               { number: "95%", label: "שביעות רצון" },
               { number: "10+", label: "שנות ניסיון" },
               { number: "50+", label: "סדנאות" },
             ].map((stat, index) => (
-              <div key={index}>
-                <div className="text-4xl font-bold text-primary mb-2">
-                  {stat.number}
-                </div>
-                <div className="text-muted-foreground">{stat.label}</div>
-              </div>
+              <Card key={index} className="border-border/50 text-center">
+                <CardContent className="p-6">
+                  <div className="text-4xl font-bold text-primary mb-2">
+                    {stat.number}
+                  </div>
+                  <div className="text-muted-foreground text-sm">{stat.label}</div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-primary text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">רוצים להצטרף לסיפורי ההצלחה?</h2>
-          <p className="text-xl opacity-90 mb-8 max-w-xl mx-auto">
+      <section className="py-24 bg-primary text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">רוצים להצטרף לסיפורי ההצלחה?</h2>
+          <p className="text-xl opacity-90 mb-8 max-w-xl mx-auto leading-relaxed">
             הצעד הראשון מתחיל בפגישת היכרות
           </p>
           <Link
             href="/contact"
-            className="inline-flex px-8 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors"
+            className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
           >
             לקביעת פגישה
           </Link>

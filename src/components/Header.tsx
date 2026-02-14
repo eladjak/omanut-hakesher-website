@@ -1,7 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useTheme } from "@/components/ThemeProvider";
+import { Button } from "@/components/ui/button";
 
 const navLinks = [
   { href: "/", label: "בית" },
@@ -14,10 +17,17 @@ const navLinks = [
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const { theme, toggleTheme } = useTheme();
+
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  };
 
   return (
-    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
-      <nav className="container mx-auto px-4 py-4">
+    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/50">
+      <nav className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link
@@ -28,86 +38,134 @@ export function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <ul className="hidden md:flex items-center gap-8">
+          <ul className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-foreground/80 hover:text-primary font-medium transition-colors"
+                  className={`relative px-4 py-2 rounded-lg font-medium transition-colors ${
+                    isActive(link.href)
+                      ? "text-primary bg-primary/10"
+                      : "text-foreground/70 hover:text-primary hover:bg-primary/5"
+                  }`}
                 >
                   {link.label}
+                  {isActive(link.href) && (
+                    <span className="absolute bottom-0 right-4 left-4 h-0.5 bg-primary rounded-full" />
+                  )}
                 </Link>
               </li>
             ))}
           </ul>
 
-          {/* CTA Button */}
-          <Link
-            href="/contact"
-            className="hidden md:inline-flex px-6 py-2.5 bg-primary text-white rounded-full font-medium hover:bg-primary-dark transition-colors"
-          >
-            קביעת פגישה
-          </Link>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-foreground"
-            aria-label={isMenuOpen ? "סגור תפריט" : "פתח תפריט"}
-            aria-expanded={isMenuOpen}
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+          {/* Right side: Theme toggle + Login + CTA */}
+          <div className="hidden lg:flex items-center gap-3">
+            {/* Dark/Light Mode Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="p-2.5 rounded-xl text-foreground/60 hover:text-foreground hover:bg-muted transition-colors"
+              aria-label={theme === "dark" ? "מצב בהיר" : "מצב כהה"}
             >
-              {isMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
+              {theme === "dark" ? (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
               ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
               )}
-            </svg>
-          </button>
+            </button>
+
+            {/* Login Button */}
+            <Button variant="ghost" size="sm" className="text-foreground/70 hover:text-foreground">
+              <svg className="w-4 h-4 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              התחברות
+            </Button>
+
+            {/* CTA Button */}
+            <Button asChild className="rounded-full bg-primary hover:bg-primary-dark text-white">
+              <Link href="/contact">קביעת פגישה</Link>
+            </Button>
+          </div>
+
+          {/* Mobile: Theme toggle + Menu Button */}
+          <div className="flex lg:hidden items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg text-foreground/60 hover:text-foreground hover:bg-muted transition-colors"
+              aria-label={theme === "dark" ? "מצב בהיר" : "מצב כהה"}
+            >
+              {theme === "dark" ? (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              )}
+            </button>
+
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 text-foreground rounded-lg hover:bg-muted transition-colors"
+              aria-label={isMenuOpen ? "סגור תפריט" : "פתח תפריט"}
+              aria-expanded={isMenuOpen}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {isMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t border-border pt-4">
-            <ul className="flex flex-col gap-4">
+        {/* Mobile Navigation - Animated */}
+        <div
+          className={`lg:hidden overflow-hidden transition-all duration-200 ease-out ${
+            isMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="pt-4 pb-2 border-t border-border/50 mt-3">
+            <ul className="flex flex-col gap-1">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="block text-foreground/80 hover:text-primary font-medium transition-colors"
+                    className={`block px-4 py-3 rounded-xl font-medium transition-colors ${
+                      isActive(link.href)
+                        ? "text-primary bg-primary/10"
+                        : "text-foreground/70 hover:text-primary hover:bg-primary/5"
+                    }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {link.label}
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link
-                  href="/contact"
-                  className="inline-flex px-6 py-2.5 bg-primary text-white rounded-full font-medium hover:bg-primary-dark transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
+            </ul>
+
+            <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-border/50">
+              <Button variant="ghost" className="justify-start text-foreground/70" onClick={() => setIsMenuOpen(false)}>
+                <svg className="w-4 h-4 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                התחברות
+              </Button>
+              <Button asChild className="rounded-full bg-primary hover:bg-primary-dark text-white">
+                <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
                   קביעת פגישה
                 </Link>
-              </li>
-            </ul>
+              </Button>
+            </div>
           </div>
-        )}
+        </div>
       </nav>
     </header>
   );

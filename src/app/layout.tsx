@@ -4,6 +4,8 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const heebo = Heebo({
   variable: "--font-heebo",
@@ -37,12 +39,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="he" dir="rtl">
+    <html lang="he" dir="rtl" suppressHydrationWarning>
       <body className={`${heebo.variable} font-sans antialiased`}>
-        <GoogleAnalytics />
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <ThemeProvider>
+          <TooltipProvider>
+            <GoogleAnalytics />
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </TooltipProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
