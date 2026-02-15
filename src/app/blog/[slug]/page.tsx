@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getBlogPost, getAllBlogSlugs, blogPosts } from "@/lib/blog-posts";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { BreadcrumbJsonLd } from "@/components/JsonLd";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -17,13 +21,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!post) {
     return {
-      title: "מאמר לא נמצא | אומנות הקשר",
+      title: "מאמר לא נמצא",
     };
   }
 
   return {
-    title: `${post.title} | אומנות הקשר`,
+    title: post.title,
     description: post.excerpt,
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: "article",
+      locale: "he_IL",
+    },
   };
 }
 
@@ -42,24 +55,44 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "בית", url: "https://omanut-hakesher.co.il" },
+          { name: "בלוג", url: "https://omanut-hakesher.co.il/blog" },
+          { name: post.title, url: `https://omanut-hakesher.co.il/blog/${slug}` },
+        ]}
+      />
+
       {/* Hero */}
-      <section className="py-16 bg-muted">
+      <section className="py-20 bg-gradient-to-b from-muted to-background">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             {/* Breadcrumb */}
-            <nav className="mb-6 text-sm">
-              <Link href="/blog" className="text-muted-foreground hover:text-primary">
-                בלוג
-              </Link>
-              <span className="mx-2 text-muted-foreground">/</span>
-              <span className="text-foreground">{post.title}</span>
+            <nav aria-label="מיקום באתר" className="mb-6 text-sm">
+              <ol className="flex items-center gap-2">
+                <li>
+                  <Link href="/" className="text-muted-foreground hover:text-primary transition-colors">
+                    בית
+                  </Link>
+                </li>
+                <li className="text-muted-foreground" aria-hidden="true">/</li>
+                <li>
+                  <Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors">
+                    בלוג
+                  </Link>
+                </li>
+                <li className="text-muted-foreground" aria-hidden="true">/</li>
+                <li>
+                  <span className="text-foreground">{post.title}</span>
+                </li>
+              </ol>
             </nav>
 
             {/* Category & Meta */}
             <div className="flex items-center gap-3 mb-4">
-              <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm">
+              <Badge variant="secondary" className="bg-primary/10 text-primary border-0 text-sm">
                 {post.category}
-              </span>
+              </Badge>
               <span className="text-muted-foreground text-sm">{post.readTime}</span>
             </div>
 
@@ -69,7 +102,7 @@ export default async function BlogPostPage({ params }: Props) {
             </h1>
 
             {/* Date */}
-            <p className="text-muted-foreground">{post.date}</p>
+            <time className="text-muted-foreground">{post.date}</time>
           </div>
         </div>
       </section>
@@ -87,8 +120,8 @@ export default async function BlogPostPage({ params }: Props) {
                   .replace(/^\*\*(.*?)\*\*/gm, '<strong>$1</strong>')
                   .replace(/^- (.*$)/gm, '<li class="ms-6 mb-2">$1</li>')
                   .replace(/(<li.*<\/li>\n?)+/g, '<ul class="list-disc mb-6">$&</ul>')
-                  .replace(/^❌ (.*$)/gm, '<p class="text-red-600 mb-2">❌ $1</p>')
-                  .replace(/^✅ (.*$)/gm, '<p class="text-green-600 mb-2">✅ $1</p>')
+                  .replace(/^[^\S\r\n]*\u274C (.*$)/gm, '<p class="text-red-600 dark:text-red-400 mb-2">\u274C $1</p>')
+                  .replace(/^[^\S\r\n]*\u2705 (.*$)/gm, '<p class="text-green-600 dark:text-green-400 mb-2">\u2705 $1</p>')
                   .replace(/\n\n/g, '</p><p class="mb-4 text-muted-foreground">')
                   .replace(/^([^<].*[^>])$/gm, '<p class="mb-4 text-muted-foreground">$1</p>')
               }}
@@ -99,7 +132,7 @@ export default async function BlogPostPage({ params }: Props) {
 
       {/* Related Posts */}
       {relatedPosts.length > 0 && (
-        <section className="py-16 bg-muted">
+        <section className="py-16 bg-muted/50">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
               <h2 className="text-2xl font-bold mb-8">מאמרים נוספים שיעניינו אתכם</h2>
@@ -108,15 +141,25 @@ export default async function BlogPostPage({ params }: Props) {
                   <Link
                     key={relatedPost.slug}
                     href={`/blog/${relatedPost.slug}`}
-                    className="group p-6 bg-background rounded-xl hover:shadow-md transition-shadow"
+                    className="group"
                   >
-                    <span className="text-sm text-primary">{relatedPost.category}</span>
-                    <h3 className="text-lg font-semibold mt-2 group-hover:text-primary transition-colors">
-                      {relatedPost.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm mt-2 line-clamp-2">
-                      {relatedPost.excerpt}
-                    </p>
+                    <Card className="h-full border-border/50 hover:shadow-md hover:border-primary/20 transition-all duration-200">
+                      <CardContent className="p-6">
+                        <Badge variant="secondary" className="bg-primary/10 text-primary border-0 text-xs mb-3">
+                          {relatedPost.category}
+                        </Badge>
+                        <h3 className="text-lg font-semibold group-hover:text-primary transition-colors">
+                          {relatedPost.title}
+                        </h3>
+                        <p className="text-muted-foreground text-sm mt-2 line-clamp-2 leading-relaxed">
+                          {relatedPost.excerpt}
+                        </p>
+                        <Separator className="my-4" />
+                        <span className="inline-flex items-center gap-2 text-primary text-sm font-medium group-hover:gap-3 transition-all">
+                          קראו עוד <span>&larr;</span>
+                        </span>
+                      </CardContent>
+                    </Card>
                   </Link>
                 ))}
               </div>
@@ -126,17 +169,20 @@ export default async function BlogPostPage({ params }: Props) {
       )}
 
       {/* CTA */}
-      <section className="py-16 bg-primary text-white">
-        <div className="container mx-auto px-4 text-center">
+      <section className="py-20 bg-primary text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+
+        <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">
             רוצים ליישם את הכלים האלה בקשר שלכם?
           </h2>
-          <p className="text-lg opacity-90 mb-8 max-w-xl mx-auto">
+          <p className="text-lg opacity-90 mb-8 max-w-xl mx-auto leading-relaxed">
             בואו נדבר על איך אפשר לעזור לכם לבנות תקשורת טובה יותר
           </p>
           <Link
             href="/contact"
-            className="inline-flex px-8 py-4 bg-white text-primary rounded-full font-semibold hover:bg-muted transition-colors"
+            className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
           >
             לקביעת פגישה
           </Link>

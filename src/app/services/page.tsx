@@ -6,9 +6,12 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-  title: "שירותים | אומנות הקשר",
+  title: "שירותים",
   description:
     "ייעוץ זוגי, סדנאות, ליווי אישי ופגישות אונליין - מגוון אפשרויות לחיזוק הקשר והתקשורת",
+  alternates: {
+    canonical: "/services",
+  },
 };
 
 const services = [

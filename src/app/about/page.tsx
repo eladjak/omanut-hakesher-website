@@ -5,9 +5,12 @@ import { Card, CardContent } from "@/components/ui/card";
 
 
 export const metadata: Metadata = {
-  title: "אודות | אומנות הקשר",
+  title: "אודות",
   description:
     "הכירו את הגישה והפילוסופיה של אומנות הקשר - ליווי זוגות ויחידים לתקשורת עמוקה ומשמעותית",
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 const values = [

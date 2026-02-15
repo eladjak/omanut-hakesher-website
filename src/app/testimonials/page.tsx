@@ -5,8 +5,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
 export const metadata: Metadata = {
-  title: "המלצות | אומנות הקשר",
+  title: "המלצות",
   description: "מה אומרים זוגות ויחידים שעברו את התהליך עם אומנות הקשר",
+  alternates: {
+    canonical: "/testimonials",
+  },
 };
 
 const testimonials = [

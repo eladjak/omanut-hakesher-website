@@ -5,8 +5,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
 export const metadata: Metadata = {
-  title: "צור קשר | אומנות הקשר",
+  title: "צור קשר",
   description: "צרו קשר לקביעת פגישת היכרות או לכל שאלה",
+  alternates: {
+    canonical: "/contact",
+  },
 };
 
 export default function ContactPage() {
