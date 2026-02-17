@@ -39,10 +39,26 @@ export const metadata: Metadata = {
   openGraph: {
     title: "אומנות הקשר | זוגיות, תקשורת וצמיחה אישית",
     description:
-      "ליווי זוגות ויחידים בדרך לתקשורת עמוקה ומשמעותית",
+      "ליווי זוגות ויחידים בדרך לתקשורת עמוקה ומשמעותית. סדנאות, ייעוץ זוגי, וכלים מעשיים לבניית קשרים בריאים.",
     locale: "he_IL",
     type: "website",
     siteName: "אומנות הקשר",
+    url: "https://omanut-hakesher.co.il",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "אומנות הקשר - זוגיות, תקשורת וצמיחה אישית",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "אומנות הקשר | זוגיות, תקשורת וצמיחה אישית",
+    description:
+      "ליווי זוגות ויחידים בדרך לתקשורת עמוקה ומשמעותית",
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,

@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/", label: "בית" },
   { href: "/about", label: "אודות" },
   { href: "/services", label: "שירותים" },
+  { href: "/gallery", label: "גלריה" },
   { href: "/testimonials", label: "המלצות" },
   { href: "/blog", label: "בלוג" },
   { href: "/contact", label: "צור קשר" },

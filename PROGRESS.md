@@ -1,13 +1,13 @@
 # אתר אומנות הקשר - התקדמות
 
 ## סטטוס: in_progress
-## עדכון אחרון: 2026-02-15
+## עדכון אחרון: 2026-02-17
 
 ## מצב נוכחי
-האתר בנוי ועובד. MVP הושלם כולל כל הדפים (בית, אודות, שירותים, המלצות, בלוג, צור קשר). בוצע סקר RTL/Hebrew ותיקונים. Build עובר ללא שגיאות. TypeScript נקי. נוספו שיפורי נגישות, SEO, dark mode, דף 404, וכפתור WhatsApp צף.
+האתר בנוי ועובד. MVP הושלם כולל כל הדפים (בית, אודות, שירותים, גלריה, המלצות, בלוג, צור קשר). בוצע סקר RTL/Hebrew ותיקונים. Build עובר ללא שגיאות. TypeScript נקי. נוספו שיפורי נגישות, SEO, dark mode, דף 404, וכפתור WhatsApp צף. נוסף דף גלריה עם lightbox ופילטר קטגוריות, שודרג דף המלצות עם דירוג כוכבים ולייאאוט מתחלף, שודרג טופס צור קשר עם ולידציית Zod והודעות שגיאה בעברית, ונוספו קבצי SEO (sitemap.xml, robots.txt, OG meta).
 
 ## מה בוצע
-- [x] MVP מלא: 6 דפים + בלוג עם 6 מאמרים + טופס צור קשר
+- [x] MVP מלא: 7 דפים + בלוג עם 6 מאמרים + טופס צור קשר
 - [x] RTL מלא עם פונט Heebo
 - [x] Tailwind CSS 4 עם פלטת צבעים חמים
 - [x] Header responsive עם תפריט מובייל
@@ -41,6 +41,15 @@
 - [x] **TypeScript** - אפס שגיאות
 - [x] **Build** - עובר בהצלחה
 
+### סשן 2026-02-17 - גלריה, שדרוג המלצות, ולידציית טופס, SEO
+- [x] **דף גלריה חדש** (app/gallery/page.tsx) - גריד 3 עמודות דסקטופ, 2 טאבלט, 1 מובייל. 12 placeholder images עם gradients ו-overlay text. Lightbox/modal עם Radix Dialog. פילטר קטגוריות: סדנאות, אירועים, זוגיות, הכל
+- [x] **שדרוג דף המלצות** - 8 כרטיסי המלצה עם שם, תפקיד, טקסט, דירוג כוכבים (1-5). לייאאוט מתחלף (שמאל/ימין) בדסקטופ. תוכן RTL עברי
+- [x] **שדרוג טופס צור קשר** - ולידציית Zod לכל השדות. הודעות שגיאה inline בעברית. אנימציית הצלחה (animate-in fade-in zoom-in). מצב שגיאה עם כפתור "נסו שוב". סימון שדות חובה (*). spinner בזמן שליחה
+- [x] **קבצי SEO** - public/sitemap.xml עם כל הדפים. public/robots.txt. Open Graph meta tags עם תמונה, locale, Twitter card בlayout.tsx
+- [x] **לינק גלריה ב-Header** - נוסף לניווט הראשי ולתפריט מובייל
+- [x] **TypeScript** - אפס שגיאות
+- [x] **Build** - עובר בהצלחה (17 routes)
+
 ## צעדים הבאים
 1. תמונות אמיתיות (במקום gradient placeholders)
 2. לוגו מעוצב
@@ -49,6 +58,7 @@
 5. דיפלוי ל-Vercel
 6. Loading states / Skeleton components
 7. אנימציות כניסה עדינות (intersection observer)
+8. יצירת og-image.png לשיתוף ברשתות חברתיות
 
 ## החלטות שהתקבלו
 - שימוש ב-npm (לא bun) בגלל בעיות ב-Windows
@@ -60,25 +70,23 @@
 - שימוש ב-logical properties (ms/me/ps/pe) במקום physical (ml/mr/pl/pr) לתמיכת RTL נכונה
 - inline script ב-head למניעת הבהוב dark mode (לפני React hydration)
 - metadata template pattern עבור כותרות דפים
+- Zod לולידציית טפסים בצד לקוח עם הודעות שגיאה בעברית
+- Radix Dialog ל-lightbox בגלריה (כבר מותקן כ-shadcn component)
 
-## קבצים ששונו (סשן 2026-02-15)
-- src/app/layout.tsx - הוספת WhatsApp, SkipToContent, JsonLd, dark mode script, SEO metadata
-- src/app/not-found.tsx - דף 404 חדש
-- src/app/blog/page.tsx - שדרוג עיצוב עם Shadcn components ופוסט מוביל
-- src/app/blog/[slug]/page.tsx - breadcrumb JSON-LD, נגישות, Shadcn components
-- src/app/about/page.tsx - metadata template, canonical URL
-- src/app/services/page.tsx - metadata template, canonical URL
-- src/app/testimonials/page.tsx - metadata template, canonical URL
-- src/app/contact/page.tsx - metadata template, canonical URL
-- src/app/globals.css - reduced motion, dark mode selection, image brightness
-- src/components/Header.tsx - נגישות, Escape close, body scroll lock, aria attributes
-- src/components/WhatsAppButton.tsx - קומפוננטה חדשה
-- src/components/SkipToContent.tsx - קומפוננטה חדשה
-- src/components/JsonLd.tsx - קומפוננטה חדשה (Organization + Breadcrumb)
+## קבצים ששונו (סשן 2026-02-17)
+- src/app/gallery/page.tsx - דף גלריה חדש עם פילטר קטגוריות ו-lightbox
+- src/app/gallery/layout.tsx - metadata לדף הגלריה
+- src/app/testimonials/page.tsx - שדרוג עם דירוג כוכבים ולייאאוט מתחלף
+- src/components/ContactForm.tsx - ולידציית Zod, הודעות שגיאה inline, אנימציות
+- src/components/Header.tsx - הוספת לינק גלריה לניווט
+- src/app/layout.tsx - שדרוג OG meta tags עם תמונה ו-Twitter card
+- public/sitemap.xml - מפת אתר לכל הדפים
+- public/robots.txt - הנחיות לסורקי מנועי חיפוש
 
 ## הערות לסשן הבא
 - קרא CLAUDE.md ו-PROJECT_STATUS.md לפני התחלה
 - בדוק npm run dev עובד (פורט 3333)
 - התמקד בהחלפת placeholder gradients בתמונות אמיתיות
+- צור og-image.png (1200x630) לשיתוף ברשתות חברתיות
 - שקול הוספת אנימציות כניסה עם intersection observer
 - שקול הוספת loading skeletons לשיפור CLS
