@@ -1,0 +1,16 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="workshopGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C4704E" stop-opacity="0.3" />
+      <stop offset="50%" stop-color="#D4A843" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#7A9E7E" stop-opacity="0.2" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#workshopGrad)" />
+  <circle cx="400" cy="250" r="60" fill="none" stroke="#C4704E" stroke-width="1.5" opacity="0.3" />
+  <circle cx="300" cy="300" r="30" fill="none" stroke="#7A9E7E" stroke-width="1" opacity="0.2" />
+  <circle cx="500" cy="300" r="30" fill="none" stroke="#7A9E7E" stroke-width="1" opacity="0.2" />
+  <line x1="330" y1="300" x2="370" y2="280" stroke="#D4A843" stroke-width="1" opacity="0.2" />
+  <line x1="430" y1="280" x2="470" y2="300" stroke="#D4A843" stroke-width="1" opacity="0.2" />
+  <text x="400" y="420" text-anchor="middle" font-family="system-ui" font-size="18" fill="#C4704E" opacity="0.4">סדנה</text>
+</svg>

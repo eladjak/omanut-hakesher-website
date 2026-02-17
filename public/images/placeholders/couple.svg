@@ -1,0 +1,14 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="coupleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8a894" stop-opacity="0.3" />
+      <stop offset="50%" stop-color="#C4704E" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#D4A843" stop-opacity="0.2" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#coupleGrad)" />
+  <path d="M370 260 C370 230, 400 220, 400 250 C400 220, 430 230, 430 260 L400 290 Z" fill="#C4704E" opacity="0.2" />
+  <circle cx="350" cy="320" r="25" fill="none" stroke="#C4704E" stroke-width="1" opacity="0.2" />
+  <circle cx="450" cy="320" r="25" fill="none" stroke="#C4704E" stroke-width="1" opacity="0.2" />
+  <text x="400" y="420" text-anchor="middle" font-family="system-ui" font-size="18" fill="#C4704E" opacity="0.4">זוגיות</text>
+</svg>

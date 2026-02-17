@@ -1,0 +1,16 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="eventGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7A9E7E" stop-opacity="0.3" />
+      <stop offset="50%" stop-color="#D4A843" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#C4704E" stop-opacity="0.2" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#eventGrad)" />
+  <circle cx="400" cy="270" r="50" fill="none" stroke="#7A9E7E" stroke-width="1.5" opacity="0.3" />
+  <circle cx="340" cy="310" r="20" fill="none" stroke="#D4A843" stroke-width="1" opacity="0.2" />
+  <circle cx="460" cy="310" r="20" fill="none" stroke="#D4A843" stroke-width="1" opacity="0.2" />
+  <circle cx="370" cy="350" r="15" fill="none" stroke="#C4704E" stroke-width="1" opacity="0.15" />
+  <circle cx="430" cy="350" r="15" fill="none" stroke="#C4704E" stroke-width="1" opacity="0.15" />
+  <text x="400" y="430" text-anchor="middle" font-family="system-ui" font-size="18" fill="#7A9E7E" opacity="0.4">אירוע</text>
+</svg>

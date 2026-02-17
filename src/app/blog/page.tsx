@@ -125,12 +125,16 @@ export default function BlogPage() {
               <p className="text-muted-foreground mb-8">
                 הירשמו לניוזלטר וקבלו טיפים, מאמרים ותוכן בלעדי ישירות למייל
               </p>
-              <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" aria-label="הרשמה לניוזלטר">
+                <label htmlFor="newsletter-email-blog" className="sr-only">כתובת אימייל</label>
                 <input
                   type="email"
+                  id="newsletter-email-blog"
                   placeholder="האימייל שלכם"
                   className="flex-1 px-5 py-3 border border-border rounded-full bg-background focus:outline-none focus:ring-2 focus:ring-primary text-sm"
                   dir="ltr"
+                  autoComplete="email"
+                  required
                 />
                 <button
                   type="submit"

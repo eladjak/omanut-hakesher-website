@@ -285,7 +285,7 @@ export function ContactForm() {
           name="service"
           value={formData.service}
           onChange={handleChange}
-          className="w-full px-4 py-2.5 border border-input rounded-xl bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring text-sm"
+          className="w-full px-4 py-2.5 border border-input rounded-xl bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus-visible:ring-2 focus-visible:ring-primary text-sm"
         >
           <option value="">בחרו שירות</option>
           <option value="couples">ייעוץ זוגי</option>

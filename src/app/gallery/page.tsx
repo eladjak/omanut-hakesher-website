@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
@@ -140,11 +141,12 @@ export default function GalleryPage() {
       {/* Category Filter */}
       <section className="py-8 border-b border-border/50">
         <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-3" role="group" aria-label="סינון לפי קטגוריה">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
+                aria-pressed={activeCategory === category}
                 className={`px-6 py-2.5 rounded-full font-medium text-sm transition-colors ${
                   activeCategory === category
                     ? "bg-primary text-white"
@@ -166,6 +168,7 @@ export default function GalleryPage() {
               <button
                 key={item.id}
                 onClick={() => setSelectedItem(item)}
+                aria-label={`פתח תמונה: ${item.title} - ${item.description}`}
                 className="group relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
                 {/* Gradient Placeholder */}
@@ -276,12 +279,12 @@ export default function GalleryPage() {
           <p className="text-xl opacity-90 mb-8 max-w-xl mx-auto leading-relaxed">
             הצטרפו למאות זוגות שכבר עברו את התהליך
           </p>
-          <a
+          <Link
             href="/contact"
             className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
           >
             לקביעת פגישת היכרות
-          </a>
+          </Link>
         </div>
       </section>
     </>

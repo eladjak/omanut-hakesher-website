@@ -1,10 +1,10 @@
 # אתר אומנות הקשר - התקדמות
 
 ## סטטוס: in_progress
-## עדכון אחרון: 2026-02-17
+## עדכון אחרון: 2026-02-18
 
 ## מצב נוכחי
-האתר בנוי ועובד. MVP הושלם כולל כל הדפים (בית, אודות, שירותים, גלריה, המלצות, בלוג, צור קשר). בוצע סקר RTL/Hebrew ותיקונים. Build עובר ללא שגיאות. TypeScript נקי. נוספו שיפורי נגישות, SEO, dark mode, דף 404, וכפתור WhatsApp צף. נוסף דף גלריה עם lightbox ופילטר קטגוריות, שודרג דף המלצות עם דירוג כוכבים ולייאאוט מתחלף, שודרג טופס צור קשר עם ולידציית Zod והודעות שגיאה בעברית, ונוספו קבצי SEO (sitemap.xml, robots.txt, OG meta).
+האתר בנוי ועובד. MVP הושלם כולל כל הדפים (בית, אודות, שירותים, גלריה, המלצות, בלוג, צור קשר). בוצע סקר RTL/Hebrew ותיקונים. Build עובר ללא שגיאות. TypeScript נקי. נוספו שיפורי נגישות, SEO, dark mode, דף 404, וכפתור WhatsApp צף. נוסף דף גלריה עם lightbox ופילטר קטגוריות, שודרג דף המלצות עם דירוג כוכבים ולייאאוט מתחלף, שודרג טופס צור קשר עם ולידציית Zod והודעות שגיאה בעברית, ונוספו קבצי SEO (sitemap.xml, robots.txt, OG meta). בוצעו אופטימיזציות ביצועים, שיפורי נגישות, והכנה לדיפלוי.
 
 ## מה בוצע
 - [x] MVP מלא: 7 דפים + בלוג עם 6 מאמרים + טופס צור קשר
@@ -50,15 +50,35 @@
 - [x] **TypeScript** - אפס שגיאות
 - [x] **Build** - עובר בהצלחה (17 routes)
 
+### סשן 2026-02-18 - אופטימיזציות ביצועים, נגישות, הכנה לדיפלוי
+- [x] **OptimizedImage component** (src/components/OptimizedImage.tsx) - wrapper סביב next/image עם blur placeholder (shimmer SVG), lazy loading, sizes מתאימים, תמיכת WebP/AVIF
+- [x] **Placeholder SVGs** (public/images/placeholders/) - 3 SVGs: workshop.svg, couple.svg, event.svg עם gradients מותאמים למותג
+- [x] **Dynamic imports** - next/dynamic לטעינת HomeTestimonials בדף הבית (below-fold), הפחתת initial bundle
+- [x] **Preconnect links** - dns-prefetch ו-preconnect ל-Google Fonts ו-Google Tag Manager ב-layout.tsx
+- [x] **Caching headers** (next.config.ts) - static assets: immutable 1yr cache, _next/static: immutable cache
+- [x] **Security headers** (next.config.ts) - X-Frame-Options: DENY, X-Content-Type-Options: nosniff, Referrer-Policy, Permissions-Policy, Content-Security-Policy
+- [x] **Image optimization config** (next.config.ts) - AVIF+WebP formats, device sizes, image sizes
+- [x] **Vercel deploy config** (vercel.json) - framework, region, clean URLs
+- [x] **Accessibility: Newsletter forms** - כל טופסי הניוזלטר (דף בית, בלוג, footer) קיבלו label (sr-only), id, aria-label, autoComplete, required
+- [x] **Accessibility: Gallery filter** - role="group" + aria-label + aria-pressed לכפתורי סינון
+- [x] **Accessibility: Gallery items** - aria-label מתאר בעברית לכל פריט בגלריה
+- [x] **Accessibility: Contact form** - focus-visible ring על select element
+- [x] **Accessibility: Footer social links** - focus-visible ring על כפתורי רשתות חברתיות
+- [x] **Accessibility: Gallery CTA** - שימוש ב-Link במקום <a> לניווט פנימי
+- [x] **.env.example** - עדכון עם תיעוד מלא של כל משתני הסביבה
+- [x] **TypeScript** - אפס שגיאות
+- [x] **Build** - עובר בהצלחה (17 routes, no warnings)
+
 ## צעדים הבאים
-1. תמונות אמיתיות (במקום gradient placeholders)
+1. תמונות אמיתיות (במקום gradient placeholders) - להשתמש ב-OptimizedImage component
 2. לוגו מעוצב
 3. הגדרת Resend API key אמיתי
 4. הגדרת Google Analytics ID אמיתי
-5. דיפלוי ל-Vercel
+5. דיפלוי ל-Vercel (vercel.json מוכן)
 6. Loading states / Skeleton components
 7. אנימציות כניסה עדינות (intersection observer)
-8. יצירת og-image.png לשיתוף ברשתות חברתיות
+8. יצירת og-image.png (1200x630) לשיתוף ברשתות חברתיות
+9. בדיקת Lighthouse בפרודקשן (יעד: Performance > 90)
 
 ## החלטות שהתקבלו
 - שימוש ב-npm (לא bun) בגלל בעיות ב-Windows
@@ -72,21 +92,31 @@
 - metadata template pattern עבור כותרות דפים
 - Zod לולידציית טפסים בצד לקוח עם הודעות שגיאה בעברית
 - Radix Dialog ל-lightbox בגלריה (כבר מותקן כ-shadcn component)
+- Security headers via next.config.ts headers() (לא middleware - deprecated ב-Next.js 16)
+- OptimizedImage component עם blur shimmer placeholder ותמיכת AVIF/WebP
+- Dynamic imports לקומפוננטות below-fold (HomeTestimonials)
+- Vercel region: cdg1 (Paris, קרוב לישראל)
 
-## קבצים ששונו (סשן 2026-02-17)
-- src/app/gallery/page.tsx - דף גלריה חדש עם פילטר קטגוריות ו-lightbox
-- src/app/gallery/layout.tsx - metadata לדף הגלריה
-- src/app/testimonials/page.tsx - שדרוג עם דירוג כוכבים ולייאאוט מתחלף
-- src/components/ContactForm.tsx - ולידציית Zod, הודעות שגיאה inline, אנימציות
-- src/components/Header.tsx - הוספת לינק גלריה לניווט
-- src/app/layout.tsx - שדרוג OG meta tags עם תמונה ו-Twitter card
-- public/sitemap.xml - מפת אתר לכל הדפים
-- public/robots.txt - הנחיות לסורקי מנועי חיפוש
+## קבצים ששונו (סשן 2026-02-18)
+- src/components/OptimizedImage.tsx - קומפוננטה חדשה לתמונות אופטימליות
+- src/components/HomeTestimonials.tsx - קומפוננטת המלצות לדף הבית (נפרדה ל-dynamic import)
+- src/app/page.tsx - dynamic import ל-HomeTestimonials, הסרת data מקומי, שיפור נגישות ניוזלטר
+- src/app/layout.tsx - preconnect links ל-Google Fonts/GTM
+- src/app/blog/page.tsx - שיפור נגישות טופס ניוזלטר
+- src/app/gallery/page.tsx - שיפורי נגישות: aria-pressed, aria-label, Link
+- src/components/Footer.tsx - שיפור נגישות: labels לניוזלטר, focus-visible לכפתורים חברתיים
+- src/components/ContactForm.tsx - שיפור focus-visible ל-select
+- next.config.ts - image optimization, caching headers, security headers
+- vercel.json - חדש, הגדרות Vercel deploy
+- .env.example - עדכון עם תיעוד מלא
+- public/images/placeholders/workshop.svg - placeholder SVG לגלריה
+- public/images/placeholders/couple.svg - placeholder SVG לגלריה
+- public/images/placeholders/event.svg - placeholder SVG לגלריה
 
 ## הערות לסשן הבא
-- קרא CLAUDE.md ו-PROJECT_STATUS.md לפני התחלה
+- קרא CLAUDE.md ו-PROGRESS.md לפני התחלה
 - בדוק npm run dev עובד (פורט 3333)
-- התמקד בהחלפת placeholder gradients בתמונות אמיתיות
-- צור og-image.png (1200x630) לשיתוף ברשתות חברתיות
-- שקול הוספת אנימציות כניסה עם intersection observer
-- שקול הוספת loading skeletons לשיפור CLS
+- דיפלוי ל-Vercel: `npx vercel` (vercel.json מוכן)
+- לאחר דיפלוי: בדוק Lighthouse score (Performance > 90 target)
+- כשתמונות אמיתיות מתקבלות: החלף gradients ב-OptimizedImage עם blur placeholders
+- צור og-image.png (1200x630) לפני דיפלוי

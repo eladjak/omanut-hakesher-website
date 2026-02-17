@@ -57,14 +57,17 @@ export function Footer() {
                 <span>נרשמתם בהצלחה!</span>
               </div>
             ) : (
-              <form onSubmit={handleNewsletterSubmit} className="flex gap-2 w-full md:w-auto">
+              <form onSubmit={handleNewsletterSubmit} className="flex gap-2 w-full md:w-auto" aria-label="הרשמה לניוזלטר">
+                <label htmlFor="newsletter-email-footer" className="sr-only">כתובת אימייל</label>
                 <input
                   type="email"
+                  id="newsletter-email-footer"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="האימייל שלכם"
                   required
                   dir="ltr"
+                  autoComplete="email"
                   className="flex-1 md:w-64 px-4 py-2.5 rounded-full bg-background/10 border border-background/20 text-background placeholder:text-background/40 text-sm focus:outline-none focus:ring-2 focus:ring-primary-light"
                 />
                 <button
@@ -101,7 +104,7 @@ export function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-xl bg-background/10 hover:bg-primary/80 transition-colors"
+                className="p-2.5 rounded-xl bg-background/10 hover:bg-primary/80 transition-colors focus-visible:ring-2 focus-visible:ring-primary-light focus-visible:ring-offset-2 focus-visible:ring-offset-foreground"
                 aria-label="פייסבוק"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -112,7 +115,7 @@ export function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-xl bg-background/10 hover:bg-primary/80 transition-colors"
+                className="p-2.5 rounded-xl bg-background/10 hover:bg-primary/80 transition-colors focus-visible:ring-2 focus-visible:ring-primary-light focus-visible:ring-offset-2 focus-visible:ring-offset-foreground"
                 aria-label="אינסטגרם"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -123,7 +126,7 @@ export function Footer() {
                 href="https://wa.me/972501234567"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-xl bg-background/10 hover:bg-primary/80 transition-colors"
+                className="p-2.5 rounded-xl bg-background/10 hover:bg-primary/80 transition-colors focus-visible:ring-2 focus-visible:ring-primary-light focus-visible:ring-offset-2 focus-visible:ring-offset-foreground"
                 aria-label="וואטסאפ"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
