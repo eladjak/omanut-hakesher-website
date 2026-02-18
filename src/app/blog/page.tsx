@@ -4,6 +4,7 @@ import { blogPosts } from "@/lib/blog-posts";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "בלוג",
@@ -14,6 +15,11 @@ export const metadata: Metadata = {
 export default function BlogPage() {
   return (
     <>
+      {/* Breadcrumbs */}
+      <div className="bg-muted/50 border-b border-border/30">
+        <Breadcrumbs items={[{ label: "בלוג" }]} />
+      </div>
+
       {/* Hero */}
       <section className="py-24 bg-gradient-to-b from-muted to-background">
         <div className="container mx-auto px-4 text-center">

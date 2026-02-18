@@ -3,11 +3,17 @@ import dynamic from "next/dynamic";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 import { blogPosts } from "@/lib/blog-posts";
 
 // Dynamic imports for below-fold components to reduce initial bundle
 const HomeTestimonials = dynamic(
   () => import("@/components/HomeTestimonials").then((mod) => mod.HomeTestimonials),
+  { ssr: true }
+);
+
+const FreeWorkshopBanner = dynamic(
+  () => import("@/components/FreeWorkshopBanner").then((mod) => mod.FreeWorkshopBanner),
   { ssr: true }
 );
 
@@ -252,12 +258,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured Courses Section */}
+      {/* Course Preview Section */}
       <section className="py-24 bg-muted/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <Badge variant="outline" className="mb-4 text-accent-dark border-accent/30">
-              בקרוב
+              הצצה לקורסים
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               קורסים <span className="text-primary">דיגיטליים</span>
@@ -269,28 +275,51 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-3 gap-6">
             {courses.map((course, index) => (
-              <Card key={index} className="relative overflow-hidden border-border/50 hover:shadow-lg transition-all duration-200">
-                {/* Coming soon badge */}
+              <Card key={index} className="group relative overflow-hidden border-border/50 hover:shadow-lg hover:border-primary/30 transition-all duration-200 flex flex-col">
+                {/* Level badge */}
                 <div className="absolute top-4 left-4 z-10">
                   <Badge className="bg-accent text-accent-foreground hover:bg-accent">
-                    בקרוב
+                    {course.level}
                   </Badge>
                 </div>
 
                 {/* Course image placeholder */}
-                <div className="aspect-[16/9] bg-gradient-to-br from-primary/15 via-secondary/10 to-accent/15" />
+                <div className="aspect-[16/9] bg-gradient-to-br from-primary/15 via-secondary/10 to-accent/15 relative">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <svg className="w-12 h-12 text-primary/30" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                  </div>
+                </div>
 
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold mb-2">{course.title}</h3>
-                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                <CardContent className="p-6 flex flex-col flex-1">
+                  <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">{course.title}</h3>
+                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed flex-1">
                     {course.description}
                   </p>
                   <Separator className="my-4" />
-                  <div className="flex items-center justify-between text-sm text-muted-foreground">
-                    <span>{course.lessons} שיעורים</span>
-                    <span>{course.duration}</span>
-                    <Badge variant="outline" className="text-xs">{course.level}</Badge>
+                  <div className="flex items-center justify-between text-sm text-muted-foreground mb-5">
+                    <span className="flex items-center gap-1.5">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      {course.lessons} שיעורים
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      {course.duration}
+                    </span>
                   </div>
+                  <Button asChild className="w-full rounded-full bg-primary hover:bg-primary-dark text-white">
+                    <Link href="/contact">
+                      למידע נוסף
+                      <svg className="w-4 h-4 ms-2 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </Link>
+                  </Button>
                 </CardContent>
               </Card>
             ))}
@@ -391,6 +420,9 @@ export default function HomePage() {
           </Card>
         </div>
       </section>
+
+      {/* Free Workshop CTA Banner */}
+      <FreeWorkshopBanner />
 
       {/* Final CTA Section */}
       <section className="py-24 bg-primary text-white relative overflow-hidden">

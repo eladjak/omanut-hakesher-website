@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -63,31 +64,15 @@ export default async function BlogPostPage({ params }: Props) {
         ]}
       />
 
+      {/* Breadcrumbs */}
+      <div className="bg-muted/50 border-b border-border/30">
+        <Breadcrumbs items={[{ label: "בלוג", href: "/blog" }, { label: post.title }]} />
+      </div>
+
       {/* Hero */}
       <section className="py-20 bg-gradient-to-b from-muted to-background">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            {/* Breadcrumb */}
-            <nav aria-label="מיקום באתר" className="mb-6 text-sm">
-              <ol className="flex items-center gap-2">
-                <li>
-                  <Link href="/" className="text-muted-foreground hover:text-primary transition-colors">
-                    בית
-                  </Link>
-                </li>
-                <li className="text-muted-foreground" aria-hidden="true">/</li>
-                <li>
-                  <Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors">
-                    בלוג
-                  </Link>
-                </li>
-                <li className="text-muted-foreground" aria-hidden="true">/</li>
-                <li>
-                  <span className="text-foreground">{post.title}</span>
-                </li>
-              </ol>
-            </nav>
-
             {/* Category & Meta */}
             <div className="flex items-center gap-3 mb-4">
               <Badge variant="secondary" className="bg-primary/10 text-primary border-0 text-sm">

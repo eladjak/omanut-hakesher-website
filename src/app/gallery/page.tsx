@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 type GalleryCategory = "הכל" | "סדנאות" | "אירועים" | "זוגיות";
 
@@ -120,6 +121,11 @@ export default function GalleryPage() {
 
   return (
     <>
+      {/* Breadcrumbs */}
+      <div className="bg-muted/50 border-b border-border/30">
+        <Breadcrumbs items={[{ label: "גלריה" }]} />
+      </div>
+
       {/* Hero */}
       <section className="py-24 bg-gradient-to-b from-muted to-background">
         <div className="container mx-auto px-4 text-center">

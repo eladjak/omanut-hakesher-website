@@ -7,6 +7,7 @@ import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipToContent } from "@/components/SkipToContent";
 import { OrganizationJsonLd } from "@/components/JsonLd";
 
@@ -95,6 +96,7 @@ export default function RootLayout({
             <main id="main-content">{children}</main>
             <Footer />
             <WhatsAppButton />
+            <ScrollToTop />
           </TooltipProvider>
         </ThemeProvider>
       </body>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "המלצות",
@@ -97,6 +98,11 @@ function StarRating({ rating }: { rating: number }) {
 export default function TestimonialsPage() {
   return (
     <>
+      {/* Breadcrumbs */}
+      <div className="bg-muted/50 border-b border-border/30">
+        <Breadcrumbs items={[{ label: "המלצות" }]} />
+      </div>
+
       {/* Hero */}
       <section className="py-24 bg-gradient-to-b from-muted to-background">
         <div className="container mx-auto px-4 text-center">

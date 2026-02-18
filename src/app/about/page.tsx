@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { AboutFAQ } from "@/components/AboutFAQ";
 
 
 export const metadata: Metadata = {
@@ -112,6 +114,11 @@ const credentials = [
 export default function AboutPage() {
   return (
     <>
+      {/* Breadcrumbs */}
+      <div className="bg-muted/50 border-b border-border/30">
+        <Breadcrumbs items={[{ label: "אודות" }]} />
+      </div>
+
       {/* Hero */}
       <section className="py-24 bg-gradient-to-b from-muted to-background">
         <div className="container mx-auto px-4 text-center">
@@ -291,6 +298,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <AboutFAQ />
 
       {/* CTA */}
       <section className="py-24 bg-primary text-white relative overflow-hidden">
