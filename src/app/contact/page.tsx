@@ -4,18 +4,29 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { LocalBusinessJsonLd } from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   title: "צור קשר",
-  description: "צרו קשר לקביעת פגישת היכרות או לכל שאלה",
+  description: "צרו קשר לקביעת פגישת היכרות או לכל שאלה - אומנות הקשר",
   alternates: {
     canonical: "/contact",
+  },
+  openGraph: {
+    title: "צור קשר | אומנות הקשר",
+    description:
+      "צרו קשר לקביעת פגישת היכרות או לכל שאלה - אומנות הקשר",
+    url: "/contact",
+    locale: "he_IL",
+    type: "website",
   },
 };
 
 export default function ContactPage() {
   return (
     <>
+      <LocalBusinessJsonLd />
+
       {/* Breadcrumbs */}
       <div className="bg-muted/50 border-b border-border/30">
         <Breadcrumbs items={[{ label: "צור קשר" }]} />

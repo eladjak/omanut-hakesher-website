@@ -10,6 +10,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/testimonials",
   },
+  openGraph: {
+    title: "המלצות | אומנות הקשר",
+    description:
+      "מה אומרים זוגות ויחידים שעברו את התהליך עם אומנות הקשר",
+    url: "/testimonials",
+    locale: "he_IL",
+    type: "website",
+  },
 };
 
 interface Testimonial {

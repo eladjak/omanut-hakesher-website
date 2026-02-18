@@ -5,6 +5,31 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { CourseJsonLd } from "@/components/JsonLd";
+
+const courseStructuredData = [
+  {
+    title: "ייעוץ זוגי",
+    description: "מפגשים אישיים לזוגות המעוניינים לחזק את הקשר, לשפר את התקשורת ולהתמודד עם אתגרים יחד.",
+    lessons: 10,
+    duration: "60-90 דקות למפגש",
+    level: "כל הרמות",
+  },
+  {
+    title: "סדנאות קבוצתיות",
+    description: "סדנאות מעשיות בקבוצות קטנות לפיתוח מיומנויות תקשורת ויצירת קשרים משמעותיים.",
+    lessons: 6,
+    duration: "3-4 שעות לסדנה",
+    level: "כל הרמות",
+  },
+  {
+    title: "ליווי אישי",
+    description: "מפגשים פרטניים להתפתחות אישית, בניית ביטחון עצמי ופיתוח יכולות לקשרים בריאים.",
+    lessons: 8,
+    duration: "50-60 דקות למפגש",
+    level: "כל הרמות",
+  },
+];
 
 export const metadata: Metadata = {
   title: "שירותים",
@@ -12,6 +37,14 @@ export const metadata: Metadata = {
     "ייעוץ זוגי, סדנאות, ליווי אישי ופגישות אונליין - מגוון אפשרויות לחיזוק הקשר והתקשורת",
   alternates: {
     canonical: "/services",
+  },
+  openGraph: {
+    title: "שירותים | אומנות הקשר",
+    description:
+      "ייעוץ זוגי, סדנאות, ליווי אישי ופגישות אונליין - מגוון אפשרויות לחיזוק הקשר והתקשורת",
+    url: "/services",
+    locale: "he_IL",
+    type: "website",
   },
 };
 
@@ -113,6 +146,8 @@ const services = [
 export default function ServicesPage() {
   return (
     <>
+      <CourseJsonLd courses={courseStructuredData} />
+
       {/* Breadcrumbs */}
       <div className="bg-muted/50 border-b border-border/30">
         <Breadcrumbs items={[{ label: "שירותים" }]} />

@@ -13,6 +13,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/about",
   },
+  openGraph: {
+    title: "אודות | אומנות הקשר",
+    description:
+      "הכירו את הגישה והפילוסופיה של אומנות הקשר - ליווי זוגות ויחידים לתקשורת עמוקה ומשמעותית",
+    url: "/about",
+    locale: "he_IL",
+    type: "website",
+  },
 };
 
 const values = [

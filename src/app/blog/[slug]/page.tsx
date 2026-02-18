@@ -5,7 +5,7 @@ import { getBlogPost, getAllBlogSlugs, blogPosts } from "@/lib/blog-posts";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { BreadcrumbJsonLd } from "@/components/JsonLd";
+import { BreadcrumbJsonLd, ArticleJsonLd } from "@/components/JsonLd";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 interface Props {
@@ -62,6 +62,13 @@ export default async function BlogPostPage({ params }: Props) {
           { name: "בלוג", url: "https://omanut-hakesher.co.il/blog" },
           { name: post.title, url: `https://omanut-hakesher.co.il/blog/${slug}` },
         ]}
+      />
+      <ArticleJsonLd
+        title={post.title}
+        description={post.excerpt}
+        url={`https://omanut-hakesher.co.il/blog/${slug}`}
+        datePublished={post.date}
+        category={post.category}
       />
 
       {/* Breadcrumbs */}

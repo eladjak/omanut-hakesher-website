@@ -10,6 +10,17 @@ export const metadata: Metadata = {
   title: "בלוג",
   description:
     "מאמרים וטיפים בנושאי זוגיות, תקשורת וקשרים בריאים",
+  alternates: {
+    canonical: "/blog",
+  },
+  openGraph: {
+    title: "בלוג | אומנות הקשר",
+    description:
+      "מאמרים וטיפים בנושאי זוגיות, תקשורת וקשרים בריאים",
+    url: "/blog",
+    locale: "he_IL",
+    type: "website",
+  },
 };
 
 export default function BlogPage() {

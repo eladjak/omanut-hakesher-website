@@ -69,6 +69,19 @@
 - [x] **TypeScript** - אפס שגיאות
 - [x] **Build** - עובר בהצלחה (17 routes, no warnings)
 
+### סשן 2026-02-18 (3) - Dynamic Sitemap, Robots, OG Tags per Page
+- [x] **Dynamic sitemap.ts** (app/sitemap.ts) - החלפת static sitemap.xml בדינמי עם Next.js MetadataRoute.Sitemap. כולל את כל 7 הדפים הסטטיים + 6 מאמרי בלוג (13 URLs סה"כ)
+- [x] **Dynamic robots.ts** (app/robots.ts) - החלפת static robots.txt בדינמי עם Next.js MetadataRoute.Robots
+- [x] **הסרת קבצים סטטיים** - public/sitemap.xml ו-public/robots.txt הוסרו (הוחלפו בגרסאות דינמיות)
+- [x] **OG tags - דף אודות** - openGraph עם title, description, url, locale, type
+- [x] **OG tags - דף שירותים** - openGraph עם title, description, url, locale, type
+- [x] **OG tags - דף המלצות** - openGraph עם title, description, url, locale, type
+- [x] **OG tags - דף גלריה** - openGraph עם title, description, url, locale, type
+- [x] **OG tags - דף צור קשר** - openGraph עם title, description, url, locale, type
+- [x] **OG tags - דף בלוג** - openGraph עם title, description, url, locale, type + הוספת canonical URL חסר
+- [x] **TypeScript** - אפס שגיאות
+- [x] **Build** - עובר בהצלחה (19 routes כולל sitemap.xml ו-robots.txt דינמיים)
+
 ## צעדים הבאים
 1. תמונות אמיתיות (במקום gradient placeholders) - להשתמש ב-OptimizedImage component
 2. לוגו מעוצב

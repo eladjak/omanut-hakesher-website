@@ -7,6 +7,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/gallery",
   },
+  openGraph: {
+    title: "גלריה | אומנות הקשר",
+    description:
+      "גלריה של תמונות מסדנאות, אירועים ורגעים מיוחדים של זוגות בתהליך עם אומנות הקשר",
+    url: "/gallery",
+    locale: "he_IL",
+    type: "website",
+  },
 };
 
 export default function GalleryLayout({
