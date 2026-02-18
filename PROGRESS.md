@@ -4,7 +4,7 @@
 ## עדכון אחרון: 2026-02-18
 
 ## מצב נוכחי
-האתר בנוי ועובד. MVP הושלם כולל כל הדפים (בית, אודות, שירותים, גלריה, המלצות, בלוג, צור קשר). בוצע סקר RTL/Hebrew ותיקונים. Build עובר ללא שגיאות. TypeScript נקי. נוספו שיפורי נגישות, SEO, dark mode, דף 404, וכפתור WhatsApp צף. נוסף דף גלריה עם lightbox ופילטר קטגוריות, שודרג דף המלצות עם דירוג כוכבים ולייאאוט מתחלף, שודרג טופס צור קשר עם ולידציית Zod והודעות שגיאה בעברית, ונוספו קבצי SEO (sitemap.xml, robots.txt, OG meta). בוצעו אופטימיזציות ביצועים, שיפורי נגישות, והכנה לדיפלוי.
+האתר בנוי ועובד. MVP+ הושלם כולל כל הדפים, אופטימיזציות ביצועים, ופיצ'רים אינטראקטיביים. נוספו: Course Preview אינטראקטיבי עם כפתורי "למידע נוסף", אקורדיון FAQ בדף אודות (8 שאלות), breadcrumbs בכל הדפים הפנימיים, כפתור scroll-to-top, ובאנר CTA לסדנה חינמית עם countdown timer. Build עובר ללא שגיאות. TypeScript נקי.
 
 ## מה בוצע
 - [x] MVP מלא: 7 דפים + בלוג עם 6 מאמרים + טופס צור קשר
@@ -79,6 +79,7 @@
 7. אנימציות כניסה עדינות (intersection observer)
 8. יצירת og-image.png (1200x630) לשיתוף ברשתות חברתיות
 9. בדיקת Lighthouse בפרודקשן (יעד: Performance > 90)
+10. עדכון תאריך ופרטי סדנה חינמית בקומפוננט FreeWorkshopBanner
 
 ## החלטות שהתקבלו
 - שימוש ב-npm (לא bun) בגלל בעיות ב-Windows
@@ -94,24 +95,36 @@
 - Radix Dialog ל-lightbox בגלריה (כבר מותקן כ-shadcn component)
 - Security headers via next.config.ts headers() (לא middleware - deprecated ב-Next.js 16)
 - OptimizedImage component עם blur shimmer placeholder ותמיכת AVIF/WebP
-- Dynamic imports לקומפוננטות below-fold (HomeTestimonials)
+- Dynamic imports לקומפוננטות below-fold (HomeTestimonials, FreeWorkshopBanner)
 - Vercel region: cdg1 (Paris, קרוב לישראל)
+- Breadcrumbs component עם Schema.org BreadcrumbList structured data
+- ScrollToTop ב-bottom-24 left-6 (מעל WhatsApp button)
+- FreeWorkshopBanner עם countdown שמחשב אוטומטית את שבת ראשונה של חודש הבא
+- FAQ accordion עם Radix Accordion (shadcn) בדף אודות
 
-## קבצים ששונו (סשן 2026-02-18)
-- src/components/OptimizedImage.tsx - קומפוננטה חדשה לתמונות אופטימליות
-- src/components/HomeTestimonials.tsx - קומפוננטת המלצות לדף הבית (נפרדה ל-dynamic import)
-- src/app/page.tsx - dynamic import ל-HomeTestimonials, הסרת data מקומי, שיפור נגישות ניוזלטר
-- src/app/layout.tsx - preconnect links ל-Google Fonts/GTM
-- src/app/blog/page.tsx - שיפור נגישות טופס ניוזלטר
-- src/app/gallery/page.tsx - שיפורי נגישות: aria-pressed, aria-label, Link
-- src/components/Footer.tsx - שיפור נגישות: labels לניוזלטר, focus-visible לכפתורים חברתיים
-- src/components/ContactForm.tsx - שיפור focus-visible ל-select
-- next.config.ts - image optimization, caching headers, security headers
-- vercel.json - חדש, הגדרות Vercel deploy
-- .env.example - עדכון עם תיעוד מלא
-- public/images/placeholders/workshop.svg - placeholder SVG לגלריה
-- public/images/placeholders/couple.svg - placeholder SVG לגלריה
-- public/images/placeholders/event.svg - placeholder SVG לגלריה
+### סשן 2026-02-18 (2) - פיצ'רים אינטראקטיביים ושיפורי ניווט
+- [x] **Course Preview אינטראקטיבי** (app/page.tsx) - שדרוג סקשן הקורסים עם כפתורי "למידע נוסף" (Button + Link), אייקוני שיעורים ומשך, hover effects עם border-primary/30, flex layout לכרטיסים
+- [x] **FAQ אקורדיון** (components/AboutFAQ.tsx) - 8 שאלות ותשובות על המתודולוגיה. שימוש ב-Radix Accordion (קיים כ-shadcn component). נושאים: גישה טיפולית, משך תהליך, פגישת היכרות, טיפול יחיד, ייעוץ vs סדנה, אונליין, סודיות, מתי לפנות
+- [x] **Breadcrumbs** (components/Breadcrumbs.tsx) - קומפוננטה אוניברסלית עם Schema.org structured data. נוספה לכל הדפים הפנימיים: אודות, שירותים, גלריה, המלצות, בלוג, מאמר בלוג (2 רמות), צור קשר
+- [x] **Scroll-to-top** (components/ScrollToTop.tsx) - כפתור צף שמופיע אחרי גלילה של 300px. אנימציית opacity+translate, smooth scroll, נגיש עם aria-label
+- [x] **Free Workshop CTA** (components/FreeWorkshopBanner.tsx) - באנר CTA עם countdown timer חי לסדנה הבאה. מחשב אוטומטית את השבת הקרובה של החודש הבא. mounted state למניעת hydration mismatch
+- [x] **TypeScript** - אפס שגיאות
+- [x] **Build** - עובר בהצלחה (17 routes)
+
+## קבצים ששונו (סשן 2026-02-18, סבב 2)
+- src/components/Breadcrumbs.tsx - חדש, קומפוננטת breadcrumbs עם Schema.org
+- src/components/ScrollToTop.tsx - חדש, כפתור scroll-to-top
+- src/components/FreeWorkshopBanner.tsx - חדש, באנר סדנה חינמית עם countdown
+- src/components/AboutFAQ.tsx - חדש, אקורדיון שאלות נפוצות
+- src/app/layout.tsx - הוספת ScrollToTop
+- src/app/page.tsx - שדרוג Course Preview, הוספת FreeWorkshopBanner
+- src/app/about/page.tsx - הוספת Breadcrumbs, AboutFAQ
+- src/app/services/page.tsx - הוספת Breadcrumbs
+- src/app/gallery/page.tsx - הוספת Breadcrumbs
+- src/app/testimonials/page.tsx - הוספת Breadcrumbs
+- src/app/blog/page.tsx - הוספת Breadcrumbs
+- src/app/blog/[slug]/page.tsx - החלפת breadcrumb ידני ב-Breadcrumbs component
+- src/app/contact/page.tsx - הוספת Breadcrumbs
 
 ## הערות לסשן הבא
 - קרא CLAUDE.md ו-PROGRESS.md לפני התחלה
@@ -120,3 +133,4 @@
 - לאחר דיפלוי: בדוק Lighthouse score (Performance > 90 target)
 - כשתמונות אמיתיות מתקבלות: החלף gradients ב-OptimizedImage עם blur placeholders
 - צור og-image.png (1200x630) לפני דיפלוי
+- עדכן תאריך/פרטי סדנה חינמית ב-FreeWorkshopBanner כשפרטים אמיתיים מוכנים
