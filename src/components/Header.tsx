@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useTheme } from "@/components/ThemeProvider";
@@ -10,14 +11,17 @@ const navLinks = [
   { href: "/", label: "בית" },
   { href: "/about", label: "אודות" },
   { href: "/services", label: "שירותים" },
+  { href: "/course", label: "תכנית הדרך" },
   { href: "/gallery", label: "גלריה" },
   { href: "/testimonials", label: "המלצות" },
   { href: "/blog", label: "בלוג" },
+  { href: "/resources", label: "משאבים" },
   { href: "/contact", label: "צור קשר" },
 ];
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
   const menuRef = useRef<HTMLDivElement>(null);
@@ -31,6 +35,15 @@ export function Header() {
   const closeMenu = useCallback(() => {
     setIsMenuOpen(false);
     menuButtonRef.current?.focus();
+  }, []);
+
+  // Track scroll for header style
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Close mobile menu on Escape key
@@ -63,25 +76,38 @@ export function Header() {
   }, [isMenuOpen]);
 
   return (
-    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/50">
-      <nav className="container mx-auto px-4 py-3" aria-label="ניווט ראשי">
+    <header
+      className={`sticky top-0 z-50 transition-all duration-200 ${
+        isScrolled
+          ? "bg-background/95 backdrop-blur-md border-b border-border/50 shadow-sm"
+          : "bg-background/80 backdrop-blur-sm"
+      }`}
+    >
+      <nav className="container mx-auto px-4 py-2" aria-label="ניווט ראשי">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link
             href="/"
-            className="text-2xl font-bold text-primary hover:text-primary-dark transition-colors"
+            className="flex items-center gap-2 hover:opacity-90 transition-opacity"
             aria-label="אומנות הקשר - דף הבית"
           >
-            אומנות הקשר
+            <Image
+              src="/images/logo.png"
+              alt="לוגו אומנות הקשר"
+              width={140}
+              height={50}
+              className="h-10 md:h-12 w-auto"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
-          <ul className="hidden lg:flex items-center gap-1" role="list">
+          <ul className="hidden xl:flex items-center gap-0.5" role="list">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={`relative px-4 py-2 rounded-lg font-medium transition-colors ${
+                  className={`relative px-3 py-2 rounded-lg font-medium text-sm transition-colors ${
                     isActive(link.href)
                       ? "text-primary bg-primary/10"
                       : "text-foreground/70 hover:text-primary hover:bg-primary/5"
@@ -90,15 +116,15 @@ export function Header() {
                 >
                   {link.label}
                   {isActive(link.href) && (
-                    <span className="absolute bottom-0 inset-x-4 h-0.5 bg-primary rounded-full" aria-hidden="true" />
+                    <span className="absolute bottom-0 inset-x-3 h-0.5 bg-primary rounded-full" aria-hidden="true" />
                   )}
                 </Link>
               </li>
             ))}
           </ul>
 
-          {/* Right side: Theme toggle + Login + CTA */}
-          <div className="hidden lg:flex items-center gap-3">
+          {/* Right side: Theme toggle + CTA */}
+          <div className="hidden xl:flex items-center gap-3">
             {/* Dark/Light Mode Toggle */}
             <button
               onClick={toggleTheme}
@@ -116,22 +142,14 @@ export function Header() {
               )}
             </button>
 
-            {/* Login Button */}
-            <Button variant="ghost" size="sm" className="text-foreground/70 hover:text-foreground">
-              <svg className="w-4 h-4 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-              התחברות
-            </Button>
-
             {/* CTA Button */}
-            <Button asChild className="rounded-full bg-primary hover:bg-primary-dark text-white">
-              <Link href="/contact">קביעת פגישה</Link>
+            <Button asChild className="rounded-full bg-primary hover:bg-primary-dark text-white shadow-md shadow-primary/20">
+              <Link href="/book">קביעת שיחה</Link>
             </Button>
           </div>
 
           {/* Mobile: Theme toggle + Menu Button */}
-          <div className="flex lg:hidden items-center gap-2">
+          <div className="flex xl:hidden items-center gap-2">
             <button
               onClick={toggleTheme}
               className="p-2 rounded-lg text-foreground/60 hover:text-foreground hover:bg-muted transition-colors"
@@ -167,14 +185,14 @@ export function Header() {
           </div>
         </div>
 
-        {/* Mobile Navigation - Animated */}
+        {/* Mobile Navigation */}
         <div
           ref={menuRef}
           id="mobile-menu"
           role="navigation"
           aria-label="תפריט מובייל"
-          className={`lg:hidden overflow-hidden transition-all duration-200 ease-out ${
-            isMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+          className={`xl:hidden overflow-hidden transition-all duration-200 ease-out ${
+            isMenuOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
           <div className="pt-4 pb-2 border-t border-border/50 mt-3">
@@ -198,15 +216,9 @@ export function Header() {
             </ul>
 
             <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-border/50">
-              <Button variant="ghost" className="justify-start text-foreground/70" onClick={closeMenu}>
-                <svg className="w-4 h-4 me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                התחברות
-              </Button>
               <Button asChild className="rounded-full bg-primary hover:bg-primary-dark text-white">
-                <Link href="/contact" onClick={closeMenu}>
-                  קביעת פגישה
+                <Link href="/book" onClick={closeMenu}>
+                  קביעת שיחת היכרות
                 </Link>
               </Button>
             </div>
