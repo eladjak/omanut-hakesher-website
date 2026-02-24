@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     url: "https://omanut-hakesher.co.il",
     images: [
       {
-        url: "/og-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "אומנות הקשר - זוגיות, תקשורת וצמיחה אישית",
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     title: "אומנות הקשר | זוגיות, תקשורת וצמיחה אישית",
     description:
       "ליווי זוגות ויחידים בדרך לתקשורת עמוקה ומשמעותית",
-    images: ["/og-image.png"],
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,
