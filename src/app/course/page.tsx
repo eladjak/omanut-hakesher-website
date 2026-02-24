@@ -124,8 +124,8 @@ const programSteps = [
 ];
 
 const stats = [
-  { end: 500, suffix: "+", label: "זוגות שליוויתי" },
-  { end: 95, suffix: "%", label: "שביעות רצון" },
+  { end: 200, suffix: "+", label: "זוגות שליוויתי" },
+  { end: 98, suffix: "%", label: "שביעות רצון" },
   { end: 8, suffix: "+", label: "שנות ניסיון" },
 ];
 

@@ -65,7 +65,7 @@ const resources = [
     description:
       "מדריך מעשי עם חמישה עקרונות פשוטים שישפרו את התקשורת הזוגית שלכם מהיום.",
     category: "מאמר",
-    link: "/blog/communication-tips",
+    link: "/blog/communication-basics",
     categoryColor: "bg-primary/10 text-primary",
   },
   {
@@ -74,7 +74,7 @@ const resources = [
     description:
       "תרגיל של 15 דקות לתירגול הקשבה עמוקה - לעשות יחד עם בן/בת הזוג פעם בשבוע.",
     category: "תרגיל",
-    link: "/blog/active-listening",
+    link: "/blog/listening-skills",
     categoryColor: "bg-secondary/10 text-secondary-dark",
   },
   {
@@ -83,7 +83,7 @@ const resources = [
     description:
       "טיפים ועצות לשמירה על קשר בריא ומספק לאורך זמן, גם בתקופות עמוסות.",
     category: "מאמר",
-    link: "/blog/healthy-relationship",
+    link: "/blog/emotional-intimacy",
     categoryColor: "bg-primary/10 text-primary",
   },
   {
@@ -110,7 +110,7 @@ const resources = [
     description:
       "שאלון קצר לשיחה שבועית עם בן/בת הזוג - לחזק את הקשר ולמנוע הצטברות של מתחים.",
     category: "תרגיל",
-    link: "/blog/relationship-exercises",
+    link: "/blog/expressing-needs",
     categoryColor: "bg-secondary/10 text-secondary-dark",
   },
 ];

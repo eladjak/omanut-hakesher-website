@@ -187,10 +187,10 @@ export default function TestimonialsPage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { number: "500+", label: "זוגות ויחידים" },
-              { number: "95%", label: "שביעות רצון" },
-              { number: "10+", label: "שנות ניסיון" },
-              { number: "50+", label: "סדנאות" },
+              { number: "200+", label: "זוגות ויחידים" },
+              { number: "98%", label: "שביעות רצון" },
+              { number: "8+", label: "שנות ניסיון" },
+              { number: "30+", label: "סדנאות" },
             ].map((stat, index) => (
               <Card key={index} className="border-border/50 text-center">
                 <CardContent className="p-6">

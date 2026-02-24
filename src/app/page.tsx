@@ -89,10 +89,10 @@ const courses = [
 ];
 
 const stats = [
-  { number: "500+", label: "זוגות ויחידים" },
-  { number: "95%", label: "שביעות רצון" },
-  { number: "10+", label: "שנות ניסיון" },
-  { number: "50+", label: "סדנאות" },
+  { number: "200+", label: "זוגות ויחידים" },
+  { number: "98%", label: "שביעות רצון" },
+  { number: "8+", label: "שנות ניסיון" },
+  { number: "30+", label: "סדנאות" },
 ];
 
 const recentPosts = blogPosts.slice(0, 3);

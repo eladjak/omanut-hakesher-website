@@ -33,16 +33,12 @@ export function OrganizationJsonLd() {
         closes: "13:00",
       },
     ],
-    sameAs: [
-      "https://facebook.com",
-      "https://instagram.com",
-    ],
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "500",
-      bestRating: "5",
-    },
+    // TODO: Replace with real social media profiles
+    // sameAs: [
+    //   "https://facebook.com/omanut-hakesher",
+    //   "https://instagram.com/omanut_hakesher",
+    // ],
+    // TODO: Add real aggregate rating when reviews are collected
   };
 
   return (
@@ -159,16 +155,12 @@ export function LocalBusinessJsonLd() {
         closes: "13:00",
       },
     ],
-    sameAs: [
-      "https://facebook.com",
-      "https://instagram.com",
-    ],
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "500",
-      bestRating: "5",
-    },
+    // TODO: Replace with real social media profiles
+    // sameAs: [
+    //   "https://facebook.com/omanut-hakesher",
+    //   "https://instagram.com/omanut_hakesher",
+    // ],
+    // TODO: Add real aggregate rating when reviews are collected
   };
 
   return (
