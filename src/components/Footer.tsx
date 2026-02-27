@@ -7,17 +7,19 @@ import { useState } from "react";
 const footerLinks = {
   navigation: [
     { href: "/", label: "בית" },
-    { href: "/about", label: "אודות" },
-    { href: "/services", label: "שירותים" },
-    { href: "/testimonials", label: "המלצות" },
+    { href: "/about", label: "אודות אלעד" },
+    { href: "/hadrech", label: "תוכנית הדרך" },
+    { href: "/coaching", label: "ליווי אישי" },
+    { href: "/testimonials", label: "סיפורי הצלחה" },
     { href: "/blog", label: "בלוג" },
     { href: "/contact", label: "צור קשר" },
   ],
   services: [
-    { href: "/services#couples", label: "ייעוץ זוגי" },
-    { href: "/services#workshops", label: "סדנאות" },
-    { href: "/services#individual", label: "ליווי אישי" },
-    { href: "/services#online", label: "פגישות אונליין" },
+    { href: "/coaching", label: "ליווי אישי פרימיום" },
+    { href: "/hadrech", label: "קורס ״הדרך״" },
+    { href: "/book", label: "הספר" },
+    { href: "/podcast", label: "פודקאסט" },
+    { href: "/community", label: "קהילה" },
   ],
 };
 
@@ -94,15 +96,15 @@ export function Footer() {
               אומנות הקשר
             </Link>
             <p className="mt-4 text-background/60 max-w-md leading-relaxed">
-              ליווי מקצועי לזוגות ויחידים בדרך לתקשורת עמוקה ומשמעותית. יחד
-              נבנה את הכלים לקשר בריא ומספק.
+              ליווי מקצועי לרווקים ורווקות בדרך לזוגיות מאושרת. 461 זוגות
+              כבר מצאו את האהבה - עכשיו תורך.
             </p>
 
             {/* Social Links */}
             <div className="flex gap-3 mt-6">
               {/* TODO: Add Facebook/Instagram when real profiles are created */}
               <a
-                href="https://wa.me/972501234567"
+                href="https://wa.me/972512518025"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2.5 rounded-xl bg-background/10 hover:bg-primary/80 transition-colors focus-visible:ring-2 focus-visible:ring-primary-light focus-visible:ring-offset-2 focus-visible:ring-offset-foreground"
@@ -151,8 +153,8 @@ export function Footer() {
             <h3 className="font-bold text-lg mb-3 mt-8 text-background">צרו קשר</h3>
             <ul className="space-y-2 text-sm text-background/60">
               <li>
-                <a href="tel:+972501234567" dir="ltr" className="hover:text-primary-light transition-colors">
-                  050-123-4567
+                <a href="tel:+972512518025" dir="ltr" className="hover:text-primary-light transition-colors">
+                  051-251-8025
                 </a>
               </li>
               <li>

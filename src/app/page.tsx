@@ -1,12 +1,11 @@
 import Link from "next/link";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { blogPosts } from "@/lib/blog-posts";
 
-// Dynamic imports for below-fold components to reduce initial bundle
+// Dynamic imports for below-fold components
 const HomeTestimonials = dynamic(
   () => import("@/components/HomeTestimonials").then((mod) => mod.HomeTestimonials),
   { ssr: true }
@@ -17,28 +16,25 @@ const FreeWorkshopBanner = dynamic(
   { ssr: true }
 );
 
-const services = [
+const stats = [
+  { number: "461", label: "זוגות שנוצרו" },
+  { number: "15+", label: "שנות ניסיון" },
+  { number: "12", label: "שבועות תוכנית" },
+  { number: "20+", label: "שנים על הבמה" },
+];
+
+const products = [
   {
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
       </svg>
     ),
-    title: "ייעוץ זוגי",
-    description: "מפגשים אישיים לזוגות לחיזוק הקשר, שיפור התקשורת והתמודדות עם אתגרים",
-    href: "/services#couples",
+    title: "תוכנית ״הדרך״",
+    description: "קורס 12 שבועות מובנה שמוביל אותך צעד אחר צעד מהעבודה הפנימית ועד למציאת הזוגיות. כולל 18+ שיעורי וידאו, תרגילים מעשיים וקהילה תומכת.",
+    href: "/hadrech",
     color: "bg-primary/10 text-primary",
-  },
-  {
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-      </svg>
-    ),
-    title: "סדנאות קבוצתיות",
-    description: "סדנאות מעשיות בקבוצות קטנות לפיתוח מיומנויות תקשורת וקשר",
-    href: "/services#workshops",
-    color: "bg-secondary/10 text-secondary-dark",
+    cta: "לפרטים על הדרך",
   },
   {
     icon: (
@@ -46,56 +42,82 @@ const services = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
       </svg>
     ),
-    title: "ליווי אישי",
-    description: "מפגשים פרטניים להתפתחות אישית ובניית יכולות לקשרים בריאים",
-    href: "/services#individual",
-    color: "bg-accent/10 text-accent-dark",
+    title: "ליווי אישי פרימיום",
+    description: "תהליך מותאם אישית עם מפגשים פרטניים, תמיכה בווטסאפ, משוב על דייטים בזמן אמת והתחייבות לתוצאה. זוגיות תוך 3 חודשים או המשך ליווי חינם.",
+    href: "/coaching",
+    color: "bg-secondary/10 text-secondary",
+    cta: "לשיחת היכרות חינם",
   },
   {
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
       </svg>
     ),
-    title: "פגישות אונליין",
-    description: "גמישות מלאה עם אפשרות למפגשים מקוונים מכל מקום בעולם",
-    href: "/services#online",
+    title: "הספר ״אומנות הקשר״",
+    description: "10 פרקים, 32 תרגילים מעשיים ועשרות סיפורים מהשטח. לא עוד ספר טיפים - דרך שלמה ומובנית למציאת הזוגיות שמגיעה לך.",
+    href: "/book",
+    color: "bg-accent/10 text-accent-dark",
+    cta: "לפרטים על הספר",
+  },
+  {
+    icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+    ),
+    title: "הקהילה",
+    description: "מועדון חברים עם תוכן איכותי, קהילה תומכת, אירועים ומפגשים. נכנסים בחינם לאחר רכישת תוכנית הדרך ונהנים ממשאבים בלתי מוגבלים.",
+    href: "/community",
     color: "bg-primary-light/20 text-primary-dark",
+    cta: "לפרטים על הקהילה",
   },
 ];
 
-const courses = [
+const painPoints = [
   {
-    title: "יסודות התקשורת הזוגית",
-    description: "קורס מקיף ללימוד עקרונות התקשורת הבסיסיים לבניית קשר בריא ומספק",
-    lessons: 12,
-    duration: "6 שבועות",
-    level: "מתחילים",
+    emoji: "😤",
+    title: "נמאס מדייטים שלא מובילים לשום מקום?",
+    description: "כבר ניסית באמפר, בהינג׳, בטינדר. מעולה. עכשיו בוא ננסה משהו שבאמת עובד.",
   },
   {
-    title: "ניהול קונפליקטים בזוגיות",
-    description: "למדו להפוך ויכוחים להזדמנויות צמיחה עם טכניקות מוכחות",
-    lessons: 8,
-    duration: "4 שבועות",
-    level: "כל הרמות",
+    emoji: "🤔",
+    title: "מרגיש שאתה בסדר, אבל משהו לא עובד?",
+    description: "קריירה מצוינת, חברים טובים, הכל מושלם - חוץ מהדבר הזה. הזוגיות.",
   },
   {
-    title: "בניית אינטימיות רגשית",
-    description: "העמקת הקשר הרגשי עם בן/בת הזוג דרך תרגולים וכלים מעשיים",
-    lessons: 10,
-    duration: "5 שבועות",
-    level: "מתקדמים",
+    emoji: "😩",
+    title: "כבר ניסית ליווי ולא עבד?",
+    description: "שדכנים נותנים הזדמנויות. פסיכולוגים עוזרים להבין. אנחנו עושים את הדבר עם ליווי בשטח.",
   },
 ];
 
-const stats = [
-  { number: "200+", label: "זוגות ויחידים" },
-  { number: "98%", label: "שביעות רצון" },
-  { number: "8+", label: "שנות ניסיון" },
-  { number: "30+", label: "סדנאות" },
+const method = [
+  {
+    step: "01",
+    title: "מבפנים החוצה",
+    description: "הכרת עצמך, שבירת סיפורים מגבילים, הבנת הפחדים שחוסמים אותך מזוגיות",
+    color: "from-secondary to-secondary-light",
+  },
+  {
+    step: "02",
+    title: "שפת החיבור",
+    description: "תקשורת רגשית, גבולות בריאים, אינטימיות ופגיעות - המיומנויות שלא לימדו אותך",
+    color: "from-primary to-primary-light",
+  },
+  {
+    step: "03",
+    title: "המפגש",
+    description: "כלים מעשיים לדייטינג, יצירת כימיה אמיתית, היכרויות שמובילות ליותר",
+    color: "from-accent-dark to-accent",
+  },
+  {
+    step: "04",
+    title: "בניית קשר אמיתי",
+    description: "מחויבות כהחלטה, שמירה על הקשר, בניית זוגיות שנמשכת לאורך זמן",
+    color: "from-primary-dark to-secondary",
+  },
 ];
-
-const recentPosts = blogPosts.slice(0, 3);
 
 export default function HomePage() {
   return (
@@ -112,30 +134,35 @@ export default function HomePage() {
         <div className="container mx-auto px-4 py-20 relative z-10">
           <div className="max-w-3xl">
             <Badge variant="secondary" className="mb-6 text-sm px-4 py-1.5 bg-primary/10 text-primary border-primary/20 hover:bg-primary/10">
-              ליווי מקצועי לזוגות ויחידים
+              בית הספר למציאת זוגיות - עם אלעד יעקובוביץ׳
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight text-foreground">
-              אומנות הקשר
+              מצא/י את הזוגיות
+              <br />
+              <span className="text-primary">שמגיעה לך</span>
             </h1>
-            <p className="text-2xl md:text-3xl lg:text-4xl font-semibold text-primary mt-3">
-              לבנות קשר עמוק שנמשך לאורך זמן
+            <p className="text-xl md:text-2xl text-secondary font-medium mt-3">
+              תוך 3 חודשים. בליווי אישי. בהתחייבות לתוצאה.
             </p>
             <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-              ליווי מקצועי לזוגות ויחידים בדרך לתקשורת אמיתית ומשמעותית.
-              יחד נגלה את הכלים לחיבור עמוק יותר ולקשרים שמספקים.
+              לא עוד טיפים מפוזרים ולא עוד דייטים לשווא.
+              {" "}
+              <strong className="text-foreground">אומנות הקשר</strong> היא דרך מובנית שכבר הובילה
+              {" "}
+              <strong className="text-primary">461 זוגות</strong> לזוגיות מאושרת.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
-                href="/contact"
+                href="/coaching"
                 className="px-8 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
               >
-                לקביעת פגישת היכרות
+                לשיחת היכרות חינם
               </Link>
               <Link
-                href="/services"
-                className="px-8 py-4 border-2 border-primary text-primary rounded-full font-semibold text-lg hover:bg-primary hover:text-white transition-colors"
+                href="/hadrech"
+                className="px-8 py-4 border-2 border-secondary text-secondary rounded-full font-semibold text-lg hover:bg-secondary hover:text-white transition-colors"
               >
-                השירותים שלנו
+                על תוכנית ״הדרך״
               </Link>
             </div>
 
@@ -152,21 +179,46 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Pain Points Section */}
+      <section className="py-20 bg-muted/50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              מכיר את <span className="text-primary">התחושה</span> הזאת?
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              אם מה שעשית עד עכשיו היה עובד - לא היית צריך להיות כאן. בוא ננסה אחרת.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {painPoints.map((point, index) => (
+              <Card key={index} className="border-border/50 hover:border-primary/30 hover:shadow-lg transition-all duration-200">
+                <CardContent className="p-8 text-center">
+                  <div className="text-4xl mb-4">{point.emoji}</div>
+                  <h3 className="text-lg font-semibold mb-3">{point.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{point.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* "Who I Am" Section */}
-      <section className="py-24 bg-muted/50">
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Photo placeholder */}
+            {/* Photo */}
             <div className="relative">
               <div className="aspect-[4/5] bg-gradient-to-br from-primary/20 via-secondary/10 to-accent/20 rounded-3xl overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center text-muted-foreground/50">
-                    <svg className="w-24 h-24 mx-auto mb-4 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                    <p className="text-sm">תמונה</p>
-                  </div>
-                </div>
+                <Image
+                  src="/assets/brand/facebook-profile.jpg"
+                  alt="אלעד יעקובוביץ׳ - מייסד אומנות הקשר"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
               </div>
               {/* Decorative accent */}
               <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-accent/20 rounded-2xl -z-10" />
@@ -179,30 +231,41 @@ export default function HomePage() {
                 מי אני
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                הסיפור מאחורי <span className="text-primary">אומנות הקשר</span>
+                אלעד יעקובוביץ׳ - <span className="text-primary">המסע שלי</span>
               </h2>
               <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
                 <p>
-                  אומנות הקשר נולדה מתוך האמונה העמוקה שכל אדם וכל זוג יכולים
-                  ליצור קשרים עמוקים ומשמעותיים. לאורך שנים של עבודה עם זוגות
-                  ויחידים, ראיתי כיצד שינויים קטנים בתקשורת מביאים לשינוי עצום.
+                  אני לא פסיכולוג. לא מטפל זוגי עם תואר שלישי. לא חוקר אקדמי.
+                  ואם אני ממש כנה - גם אני עשיתי את כל הטעויות שאני מלמד להימנע מהן.
                 </p>
                 <p>
-                  הגישה שלי משלבת ידע מקצועי מתחומי הפסיכולוגיה והתקשורת עם כלים
-                  מעשיים שניתן ליישם בחיי היום-יום.
+                  לפני שנים, הייתי רווק תקוע. בשיא הקריירה, חברים טובים, הכל מושלם על
+                  הנייר - חוץ מהזוגיות. אחרי שנים של עבודה על עצמי, הבנתי שהבעיה לא הייתה
+                  מה שעשיתי, אלא מה שלא הבנתי על עצמי.
+                </p>
+                <p className="text-foreground font-medium">
+                  היום אני נשוי באושר, ועוזר לאחרים לעשות את אותו המסע.
+                  עם רקע של <strong className="text-primary">~20 שנה בתחום הבמה</strong> כשחקן,
+                  מוזיקאי ובובנאי - אני מביא לליווי דרך ייחודית שמחברת בין אמנות ליחסים.
                 </p>
               </div>
 
-              {/* Credentials */}
+              {/* Real Credentials */}
               <div className="mt-8 flex flex-wrap gap-3">
-                <Badge variant="secondary" className="bg-secondary/10 text-secondary-dark border-secondary/20 px-3 py-1">
-                  M.A בפסיכולוגיה
+                <Badge variant="secondary" className="bg-secondary/10 text-secondary border-secondary/20 px-3 py-1">
+                  NLP מוסמך
                 </Badge>
-                <Badge variant="secondary" className="bg-secondary/10 text-secondary-dark border-secondary/20 px-3 py-1">
-                  מטפלת זוגית מוסמכת
+                <Badge variant="secondary" className="bg-secondary/10 text-secondary border-secondary/20 px-3 py-1">
+                  CBT
                 </Badge>
-                <Badge variant="secondary" className="bg-secondary/10 text-secondary-dark border-secondary/20 px-3 py-1">
-                  10+ שנות ניסיון
+                <Badge variant="secondary" className="bg-secondary/10 text-secondary border-secondary/20 px-3 py-1">
+                  קואצ׳ יהודי
+                </Badge>
+                <Badge variant="secondary" className="bg-secondary/10 text-secondary border-secondary/20 px-3 py-1">
+                  דמיון מודרך
+                </Badge>
+                <Badge variant="secondary" className="bg-secondary/10 text-secondary border-secondary/20 px-3 py-1">
+                  ~20 שנות במה
                 </Badge>
               </div>
 
@@ -210,7 +273,7 @@ export default function HomePage() {
                 href="/about"
                 className="inline-flex items-center gap-2 mt-8 text-primary font-semibold hover:gap-3 transition-all"
               >
-                קראו עוד על הגישה שלי
+                קרא עוד על הגישה שלי
                 <span>&larr;</span>
               </Link>
             </div>
@@ -218,171 +281,166 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className="py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30">
-              מה אני מציעה
-            </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              השירותים <span className="text-primary">שלנו</span>
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              מגוון אפשרויות לליווי וצמיחה בתחום הזוגיות והתקשורת, מותאם אישית לצרכים שלכם
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {services.map((service, index) => (
-              <Link key={index} href={service.href} className="group">
-                <Card className="h-full border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200">
-                  <CardContent className="p-8">
-                    <div className={`inline-flex p-3 rounded-xl mb-5 ${service.color}`}>
-                      {service.icon}
-                    </div>
-                    <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
-                      {service.title}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {service.description}
-                    </p>
-                    <span className="inline-flex items-center gap-2 mt-5 text-primary font-medium group-hover:gap-3 transition-all">
-                      למידע נוסף <span>&larr;</span>
-                    </span>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Course Preview Section */}
+      {/* Method - The 4 Steps */}
       <section className="py-24 bg-muted/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <Badge variant="outline" className="mb-4 text-accent-dark border-accent/30">
-              הצצה לקורסים
+              הגישה שלי
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              קורסים <span className="text-primary">דיגיטליים</span>
+              ארבעת <span className="text-primary">השלבים</span> בדרך לזוגיות
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              למידה עצמאית בקצב שלכם, עם כלים מעשיים שתוכלו ליישם מיד
+              לא טיפים מפוזרים - דרך שלמה ומובנית. מסע שמתחיל מבפנים ויוצא החוצה.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {courses.map((course, index) => (
-              <Card key={index} className="group relative overflow-hidden border-border/50 hover:shadow-lg hover:border-primary/30 transition-all duration-200 flex flex-col">
-                {/* Level badge */}
-                <div className="absolute top-4 left-4 z-10">
-                  <Badge className="bg-accent text-accent-foreground hover:bg-accent">
-                    {course.level}
-                  </Badge>
-                </div>
-
-                {/* Course image placeholder */}
-                <div className="aspect-[16/9] bg-gradient-to-br from-primary/15 via-secondary/10 to-accent/15 relative">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <svg className="w-12 h-12 text-primary/30" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {method.map((item, index) => (
+              <Card key={index} className="relative overflow-hidden border-border/50 hover:shadow-lg transition-all duration-200 group">
+                <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-l ${item.color}`} />
+                <CardContent className="p-6 pt-8">
+                  <div className="text-5xl font-bold text-muted/30 mb-4 group-hover:text-primary/20 transition-colors">
+                    {item.step}
                   </div>
-                </div>
-
-                <CardContent className="p-6 flex flex-col flex-1">
-                  <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">{course.title}</h3>
-                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed flex-1">
-                    {course.description}
+                  <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed text-sm">
+                    {item.description}
                   </p>
-                  <Separator className="my-4" />
-                  <div className="flex items-center justify-between text-sm text-muted-foreground mb-5">
-                    <span className="flex items-center gap-1.5">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                      </svg>
-                      {course.lessons} שיעורים
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      {course.duration}
-                    </span>
-                  </div>
-                  <Button asChild className="w-full rounded-full bg-primary hover:bg-primary-dark text-white">
-                    <Link href="/contact">
-                      למידע נוסף
-                      <svg className="w-4 h-4 ms-2 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </Link>
-                  </Button>
                 </CardContent>
               </Card>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Testimonials Section - dynamically loaded for performance */}
-      <HomeTestimonials />
-
-      {/* Blog Preview Section */}
-      <section className="py-24 bg-muted/50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30">
-              מהבלוג
-            </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              מאמרים <span className="text-primary">אחרונים</span>
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              טיפים, תובנות וכלים מעשיים בנושאי זוגיות ותקשורת
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {recentPosts.map((post) => (
-              <Link key={post.slug} href={`/blog/${post.slug}`} className="group">
-                <Card className="h-full overflow-hidden border-border/50 hover:shadow-lg transition-all duration-200">
-                  <div className="aspect-[16/9] bg-gradient-to-br from-primary/15 via-secondary/10 to-accent/15" />
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <Badge variant="secondary" className="bg-primary/10 text-primary border-0 text-xs">
-                        {post.category}
-                      </Badge>
-                      <span className="text-xs text-muted-foreground">{post.readTime}</span>
-                    </div>
-                    <h3 className="font-semibold mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                      {post.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-                      {post.excerpt}
-                    </p>
-                    <span className="inline-flex items-center gap-2 mt-4 text-primary text-sm font-medium group-hover:gap-3 transition-all">
-                      קראו עוד <span>&larr;</span>
-                    </span>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-
-          <div className="text-center mt-10">
+          <div className="text-center mt-12">
             <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all"
+              href="/hadrech"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-secondary text-white rounded-full font-semibold text-lg hover:bg-secondary-dark transition-colors shadow-lg shadow-secondary/20"
             >
-              לכל המאמרים
+              גלה את תוכנית הדרך
               <span>&larr;</span>
             </Link>
           </div>
         </div>
       </section>
+
+      {/* Products/Services Section */}
+      <section className="py-24">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30">
+              מה אני מציע
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              הדרך <span className="text-primary">שלך</span> לזוגיות
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              כמה דרכים להתחיל - בחר את מה שמתאים לך. כל אחת מהן כבר הוכיחה את עצמה.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {products.map((product, index) => (
+              <Link key={index} href={product.href} className="group">
+                <Card className="h-full border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200">
+                  <CardContent className="p-8">
+                    <div className={`inline-flex p-3 rounded-xl mb-5 ${product.color}`}>
+                      {product.icon}
+                    </div>
+                    <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                      {product.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {product.description}
+                    </p>
+                    <span className="inline-flex items-center gap-2 mt-5 text-primary font-medium group-hover:gap-3 transition-all">
+                      {product.cta} <span>&larr;</span>
+                    </span>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <HomeTestimonials />
+
+      {/* Video Testimonials Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-14">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30">
+              הם מספרים
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              סיפורי <span className="text-primary">הצלחה</span> אמיתיים
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="aspect-video rounded-2xl overflow-hidden shadow-lg">
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/Kbd7BRJ25TM"
+                title="סיפור הצלחה - אומנות הקשר"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </div>
+            <div className="aspect-video rounded-2xl overflow-hidden shadow-lg">
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/chvsmJzcihE"
+                title="סיפור הצלחה - אומנות הקשר"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Core Concept - "פנוי לקשר" */}
+      <section className="py-24 bg-secondary text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-3xl mx-auto text-center">
+            <Badge className="mb-6 bg-white/10 text-white border-white/20 hover:bg-white/10">
+              הקונספט המרכזי
+            </Badge>
+            <h2 className="text-3xl md:text-5xl font-bold mb-8">
+              ״פנוי לקשר״ - זה לא מצב. זו <span className="text-accent">מיומנות</span>.
+            </h2>
+            <p className="text-xl opacity-90 leading-relaxed mb-6">
+              יש הבדל בין <strong>לרצות</strong> זוגיות לבין <strong>להיות פנוי</strong> לזוגיות.
+              רוב האנשים שאומרים ״אני מחפש זוגיות״ בעצם לא באמת פנויים -
+              לא בגלל שהם משקרים, אלא בגלל שמשהו חוסם אותם.
+            </p>
+            <p className="text-lg opacity-80 leading-relaxed mb-10">
+              הליווי של אומנות הקשר מזהה את החסם ומפתח את הכלים לעבור
+              ממצב של ״לא פנוי״ ל״פנוי לקשר״.
+            </p>
+            <Link
+              href="/coaching"
+              className="inline-flex px-10 py-4 bg-white text-secondary rounded-full font-semibold text-lg hover:bg-accent hover:text-secondary-dark transition-colors shadow-lg"
+            >
+              בוא נבדוק ביחד - שיחת היכרות חינם
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Free Workshop CTA Banner */}
+      <FreeWorkshopBanner />
 
       {/* Newsletter Section */}
       <section className="py-20">
@@ -394,16 +452,17 @@ export default function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold mb-3">הישארו מעודכנים</h2>
+              <h2 className="text-2xl font-bold mb-3">רוצה לקבל כלים בחינם?</h2>
               <p className="text-muted-foreground mb-8">
-                הירשמו לניוזלטר וקבלו טיפים, מאמרים ותוכן בלעדי ישירות למייל
+                הצטרף לרשימת התפוצה וקבל מדריכים, טיפים ותוכן בלעדי ישירות למייל.
+                בלי ספאם, רק ערך אמיתי.
               </p>
-              <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" aria-label="הרשמה לניוזלטר">
+              <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" aria-label="הרשמה לרשימת תפוצה">
                 <label htmlFor="newsletter-email-home" className="sr-only">כתובת אימייל</label>
                 <input
                   type="email"
                   id="newsletter-email-home"
-                  placeholder="האימייל שלכם"
+                  placeholder="האימייל שלך"
                   className="flex-1 px-5 py-3 border border-border rounded-full bg-background focus:outline-none focus:ring-2 focus:ring-primary text-sm"
                   dir="ltr"
                   autoComplete="email"
@@ -413,7 +472,7 @@ export default function HomePage() {
                   type="submit"
                   className="px-6 py-3 bg-primary text-white rounded-full font-medium hover:bg-primary-dark transition-colors text-sm"
                 >
-                  הרשמה לניוזלטר
+                  שלח לי!
                 </button>
               </form>
             </CardContent>
@@ -421,35 +480,33 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Free Workshop CTA Banner */}
-      <FreeWorkshopBanner />
-
       {/* Final CTA Section */}
       <section className="py-24 bg-primary text-white relative overflow-hidden">
-        {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
 
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            מוכנים להתחיל את המסע?
+            הזוגיות שמגיעה לך לא תדפוק בדלת.
+            <br />
+            <span className="text-accent-light">אבל אם תצא לדרך - היא מחכה לך.</span>
           </h2>
           <p className="text-xl opacity-90 max-w-2xl mx-auto mb-10 leading-relaxed">
-            פגישת היכרות ראשונה ללא התחייבות. בואו נכיר ונראה איך אפשר לעזור לכם
-            לבנות את הקשר שאתם רוצים.
+            שיחת היכרות של 30+ דקות, בחינם, בלי התחייבות.
+            בוא נכיר ונבדוק ביחד אם ואיך אני יכול לעזור.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              href="/contact"
+              href="/coaching"
               className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
             >
-              לקביעת פגישה
+              לשיחת היכרות חינם
             </Link>
             <Link
-              href="/services"
+              href="/about"
               className="inline-flex px-10 py-4 border-2 border-white/50 text-white rounded-full font-semibold text-lg hover:bg-white/10 transition-colors"
             >
-              למידע נוסף
+              קרא עוד עליי
             </Link>
           </div>
         </div>

@@ -6,73 +6,110 @@ import { Separator } from "@/components/ui/separator";
 interface Testimonial {
   quote: string;
   author: string;
+  age?: number;
+  occupation?: string;
   context: string;
+  highlight?: boolean;
 }
 
 const testimonials: Testimonial[] = [
   {
-    quote: "התהליך עם אומנות הקשר שינה את הזוגיות שלנו לחלוטין. למדנו להקשיב באמת אחד לשני ולדבר בצורה שמחברת.",
-    author: "מיכל ודני",
-    context: "זוג נשוי 8 שנים",
+    quote: "הגעתי לאלעד אחרי 5 שנים של דייטים כושלים. הייתי בטוח שמשהו לא בסדר איתי. תוך 3 חודשים הבנתי שהבעיה הייתה לא מה שחשבתי - למדתי שאני בורח מקרבה בגלל פחד מדחייה. היום אני נשוי כבר שנתיים לאישה הכי מדהימה שפגשתי.",
+    author: "דני",
+    age: 38,
+    occupation: "מהנדס",
+    context: "נשוי 2 שנים",
+    highlight: true,
   },
   {
-    quote: "הכלים שקיבלנו פשוטים ומעשיים. אנחנו משתמשים בהם כל יום ורואים את ההבדל. הויכוחים שלנו הפכו לשיחות בונות.",
-    author: "רונית ויוסי",
-    context: "לאחר שנתיים ביחד",
+    quote: "ניסיתי הכל - אפליקציות, שדכנים, אירועים. שום דבר לא עבד. הליווי עם אלעד היה שונה לגמרי. הוא לא רק עזר לי להבין מה אני רוצה, אלא גם לימד אותי איך לתקשר את זה. פגשתי את בן זוגי אחרי חודשיים וחצי.",
+    author: "מיכל",
+    age: 34,
+    occupation: "עורכת דין",
+    context: "בזוגיות מאושרת",
+    highlight: true,
   },
   {
-    quote: "גישה חמה ומקצועית. הרגשנו בטוחים לפתוח את הלב ולעבוד על הקשר שלנו. זו הייתה ההחלטה הכי טובה.",
-    author: "שירה ואלון",
-    context: "לפני החתונה",
+    quote: "הייתי סקפטי בהתחלה. חשבתי שאני יודע הכל על דייטינג. אלעד הראה לי כמה דברים בסיסיים שפספסתי לגמרי. הייתה לי חברה תוך 6 שבועות. היום אנחנו גרים ביחד.",
+    author: "אורי",
+    age: 42,
+    occupation: "יזם",
+    context: "גרים ביחד",
   },
   {
-    quote: "אחרי שנים של ניסיונות כושלים, סוף סוף מצאנו מקום שבו הדברים התחילו להשתנות באמת.",
-    author: "יעל ומשה",
-    context: "זוג עם ילדים",
+    quote: "אחרי הגירושין הבנתי שאני צריך לעשות דברים אחרת. הליווי עם אלעד נתן לי את הכלים והביטחון. לא טיפול - דרך מעשית שעובדת.",
+    author: "יואב",
+    age: 38,
+    occupation: "מנהל שיווק",
+    context: "בזוגיות חדשה",
   },
   {
-    quote: "הסדנה הייתה חוויה מדהימה. למדתי כל כך הרבה על עצמי ועל הדרך שבה אני מתקשר.",
-    author: "אורן",
-    context: "משתתף בסדנה",
+    quote: "מגיעה כל שנתיים של דייטים אינסופיים, הייתי מותשת. כולם אומרים ׳את נפלאה, זה יגיע׳ - אבל אלעד נתן כלים, לא עידוד. וזה מה שהיה חסר.",
+    author: "ענבל",
+    age: 29,
+    occupation: "מעצבת",
+    context: "מאורסת",
   },
   {
-    quote: "הליווי האישי עזר לי להבין דפוסים שחזרו בכל הקשרים שלי. היום אני בקשר בריא ומספק.",
-    author: "נעמה",
-    context: "ליווי אישי",
-  },
-  {
-    quote: "המפגשים האונליין היו נוחים ואפקטיביים. גם דרך המסך ההרגשה הייתה של קרבה ותמיכה אמיתית.",
-    author: "דנה ורן",
-    context: "פגישות אונליין",
-  },
-  {
-    quote: "הגענו בזמן משבר קשה ויצאנו מחוזקים. הכלים שקיבלנו עוזרים לנו גם היום, שנתיים אחרי.",
-    author: "תמר ואיתי",
-    context: "ייעוץ זוגי",
+    quote: "אלעד לא מנחה ׳מלמעלה׳. הוא מדבר בגובה העיניים, ישר, בלי בולשיט. גישה שלגברים כמוני היה קשה למצוא בכל מקום אחר.",
+    author: "נועם",
+    age: 34,
+    occupation: "מהנדס תוכנה",
+    context: "מאורס",
   },
 ];
 
 export function HomeTestimonials() {
   return (
-    <section className="py-24">
+    <section className="py-24 bg-muted/50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <Badge variant="outline" className="mb-4 text-primary border-primary/30">
-            המלצות
+            461 זוגות ועולה
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            מה אומרים <span className="text-primary">עלינו</span>
+            הם כבר <span className="text-primary">מצאו</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            סיפורים אמיתיים של זוגות ויחידים שעברו את התהליך
+            סיפורים אמיתיים של אנשים שעברו את התהליך ומצאו את הזוגיות שחיכתה להם
           </p>
         </div>
 
+        {/* Featured testimonials */}
+        <div className="grid md:grid-cols-2 gap-8 mb-8">
+          {testimonials.filter(t => t.highlight).map((testimonial, index) => (
+            <Card key={index} className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent hover:shadow-lg transition-all duration-200">
+              <CardContent className="p-8">
+                <div className="text-5xl text-primary/20 font-serif leading-none mb-4">&ldquo;</div>
+                <blockquote className="text-lg leading-relaxed mb-6">
+                  {testimonial.quote}
+                </blockquote>
+                <Separator className="my-4" />
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                    <span className="text-primary font-bold">
+                      {testimonial.author.charAt(0)}
+                    </span>
+                  </div>
+                  <div>
+                    <cite className="not-italic font-semibold block">
+                      {testimonial.author}, {testimonial.age}
+                    </cite>
+                    <span className="text-sm text-muted-foreground">
+                      {testimonial.occupation} &middot; {testimonial.context}
+                    </span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Other testimonials */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {testimonials.map((testimonial, index) => (
+          {testimonials.filter(t => !t.highlight).map((testimonial, index) => (
             <Card key={index} className="border-border/50 hover:shadow-md transition-all duration-200">
               <CardContent className="p-6">
-                {/* Quote mark */}
                 <div className="text-4xl text-primary/20 font-serif leading-none mb-3">&ldquo;</div>
                 <blockquote className="text-sm leading-relaxed mb-4">
                   {testimonial.quote}
@@ -86,10 +123,10 @@ export function HomeTestimonials() {
                   </div>
                   <div>
                     <cite className="not-italic font-semibold block text-sm">
-                      {testimonial.author}
+                      {testimonial.author}{testimonial.age ? `, ${testimonial.age}` : ""}
                     </cite>
                     <span className="text-xs text-muted-foreground">
-                      {testimonial.context}
+                      {testimonial.occupation ? `${testimonial.occupation} · ` : ""}{testimonial.context}
                     </span>
                   </div>
                 </div>
@@ -103,7 +140,7 @@ export function HomeTestimonials() {
             href="/testimonials"
             className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all"
           >
-            לכל ההמלצות
+            לכל סיפורי ההצלחה
             <span>&larr;</span>
           </Link>
         </div>

@@ -4,18 +4,18 @@ export function OrganizationJsonLd() {
     "@type": "ProfessionalService",
     name: "אומנות הקשר",
     description:
-      "ליווי מקצועי לזוגות ויחידים בדרך לתקשורת עמוקה ומשמעותית. סדנאות, ייעוץ זוגי, וכלים מעשיים לבניית קשרים בריאים.",
+      "ליווי מקצועי לרווקים ורווקות בדרך לזוגיות מאושרת. 461 זוגות כבר מצאו אהבה עם אלעד יעקובוביץ׳.",
     url: "https://omanut-hakesher.co.il",
-    telephone: "+972501234567",
+    telephone: "+972512518025",
     email: "hello@omanut-hakesher.co.il",
     areaServed: {
       "@type": "Country",
       name: "Israel",
     },
     serviceType: [
-      "ייעוץ זוגי",
-      "סדנאות תקשורת",
-      "ליווי אישי",
+      "ליווי אישי למציאת זוגיות",
+      "קורס דייטינג",
+      "מנטורינג זוגיות",
       "ייעוץ אונליין",
     ],
     priceRange: "$$",
@@ -126,9 +126,9 @@ export function LocalBusinessJsonLd() {
     "@type": "LocalBusiness",
     name: "אומנות הקשר",
     description:
-      "ליווי מקצועי לזוגות ויחידים בדרך לתקשורת עמוקה ומשמעותית. סדנאות, ייעוץ זוגי, וכלים מעשיים לבניית קשרים בריאים.",
+      "ליווי מקצועי לרווקים ורווקות בדרך לזוגיות מאושרת. 461 זוגות כבר מצאו אהבה עם אלעד יעקובוביץ׳.",
     url: "https://omanut-hakesher.co.il",
-    telephone: "+972501234567",
+    telephone: "+972512518025",
     email: "hello@omanut-hakesher.co.il",
     address: {
       "@type": "PostalAddress",

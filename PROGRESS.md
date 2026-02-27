@@ -1,7 +1,7 @@
 # אתר אומנות הקשר - התקדמות
 
-## סטטוס: in_progress
-## עדכון אחרון: 2026-02-18
+## סטטוס: deployed
+## עדכון אחרון: 2026-02-24
 
 ## מצב נוכחי
 האתר בנוי ועובד. MVP+ הושלם כולל כל הדפים, אופטימיזציות ביצועים, ופיצ'רים אינטראקטיביים. נוספו: Course Preview אינטראקטיבי עם כפתורי "למידע נוסף", אקורדיון FAQ בדף אודות (8 שאלות), breadcrumbs בכל הדפים הפנימיים, כפתור scroll-to-top, ובאנר CTA לסדנה חינמית עם countdown timer. Build עובר ללא שגיאות. TypeScript נקי.
@@ -82,17 +82,23 @@
 - [x] **TypeScript** - אפס שגיאות
 - [x] **Build** - עובר בהצלחה (19 routes כולל sitemap.xml ו-robots.txt דינמיים)
 
+### סשן 2026-02-24 - דיפלוי, OG image דינמי, עדכון sitemap
+- [x] **OG image דינמי** (app/opengraph-image.tsx) - Next.js edge runtime, עיצוב ממותג עם צבעי הלוגו, גרדיאנטים, וטקסט עברי RTL
+- [x] **עדכון sitemap** - הוספת 3 דפים חדשים: course, book, resources (סה"כ 16 URLs)
+- [x] **עדכון layout.tsx** - הפניית OG image לנתיב הדינמי /opengraph-image
+- [x] **דיפלוי ל-Vercel** - Production: https://omanut-hakesher-website.vercel.app
+- [x] **Build** - עובר בהצלחה (23 routes כולל opengraph-image)
+
 ## צעדים הבאים
 1. תמונות אמיתיות (במקום gradient placeholders) - להשתמש ב-OptimizedImage component
 2. לוגו מעוצב
 3. הגדרת Resend API key אמיתי
 4. הגדרת Google Analytics ID אמיתי
-5. דיפלוי ל-Vercel (vercel.json מוכן)
-6. Loading states / Skeleton components
-7. אנימציות כניסה עדינות (intersection observer)
-8. יצירת og-image.png (1200x630) לשיתוף ברשתות חברתיות
-9. בדיקת Lighthouse בפרודקשן (יעד: Performance > 90)
-10. עדכון תאריך ופרטי סדנה חינמית בקומפוננט FreeWorkshopBanner
+5. Loading states / Skeleton components
+6. אנימציות כניסה עדינות (intersection observer)
+7. בדיקת Lighthouse בפרודקשן (יעד: Performance > 90)
+8. עדכון תאריך ופרטי סדנה חינמית בקומפוננט FreeWorkshopBanner
+9. חיבור דומיין omanut-hakesher.co.il ל-Vercel
 
 ## החלטות שהתקבלו
 - שימוש ב-npm (לא bun) בגלל בעיות ב-Windows

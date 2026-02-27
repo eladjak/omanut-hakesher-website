@@ -10,12 +10,12 @@ import { Button } from "@/components/ui/button";
 const navLinks = [
   { href: "/", label: "בית" },
   { href: "/about", label: "אודות" },
-  { href: "/services", label: "שירותים" },
-  { href: "/course", label: "תכנית הדרך" },
-  { href: "/gallery", label: "גלריה" },
-  { href: "/testimonials", label: "המלצות" },
+  { href: "/hadrech", label: "תוכנית הדרך" },
+  { href: "/coaching", label: "ליווי אישי" },
+  { href: "/book", label: "הספר" },
+  { href: "/testimonials", label: "סיפורי הצלחה" },
+  { href: "/podcast", label: "פודקאסט" },
   { href: "/blog", label: "בלוג" },
-  { href: "/resources", label: "משאבים" },
   { href: "/contact", label: "צור קשר" },
 ];
 
@@ -144,7 +144,7 @@ export function Header() {
 
             {/* CTA Button */}
             <Button asChild className="rounded-full bg-primary hover:bg-primary-dark text-white shadow-md shadow-primary/20">
-              <Link href="/book">קביעת שיחה</Link>
+              <Link href="/coaching">שיחת היכרות חינם</Link>
             </Button>
           </div>
 
@@ -217,8 +217,8 @@ export function Header() {
 
             <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-border/50">
               <Button asChild className="rounded-full bg-primary hover:bg-primary-dark text-white">
-                <Link href="/book" onClick={closeMenu}>
-                  קביעת שיחת היכרות
+                <Link href="/coaching" onClick={closeMenu}>
+                  שיחת היכרות חינם
                 </Link>
               </Button>
             </div>

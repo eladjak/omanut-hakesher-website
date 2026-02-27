@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 
-const WHATSAPP_NUMBER = "972501234567";
+const WHATSAPP_NUMBER = "972512518025";
 const WHATSAPP_MESSAGE = encodeURIComponent(
-  "שלום, אשמח לשמוע פרטים נוספים על השירותים שלכם"
+  "היי אלעד, אשמח לשמוע פרטים על הליווי לזוגיות"
 );
 
 export function WhatsAppButton() {
