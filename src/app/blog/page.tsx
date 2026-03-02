@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { blogPosts } from "@/lib/blog-posts";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -32,15 +33,25 @@ export default function BlogPage() {
       </div>
 
       {/* Hero */}
-      <section className="py-24 bg-gradient-to-b from-muted to-background">
-        <div className="container mx-auto px-4 text-center">
-          <Badge variant="outline" className="mb-4 text-primary border-primary/30">
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/generated/blog-hero.jpg"
+            alt="בלוג אומנות הקשר - מאמרים על זוגיות"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-foreground/70" />
+        </div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <Badge variant="outline" className="mb-4 text-white border-white/30">
             תובנות וכלים
           </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            ה<span className="text-primary">בלוג</span>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+            ה<span className="text-accent-light">בלוג</span>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
             מאמרים, טיפים ותובנות בנושאי זוגיות, תקשורת וקשרים בריאים
           </p>
         </div>
