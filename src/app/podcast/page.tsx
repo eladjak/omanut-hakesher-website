@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -57,28 +58,41 @@ export default function PodcastPage() {
       </div>
 
       {/* Hero */}
-      <section className="py-24 bg-gradient-to-b from-muted to-background">
-        <div className="container mx-auto px-4">
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/generated/podcast-hero.jpg"
+            alt="מוצאים אהבה - הפודקאסט של אומנות הקשר"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-foreground/70" />
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30">
+            <Badge variant="outline" className="mb-4 text-white border-white/30">
               הפודקאסט
             </Badge>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-white">
               מוצאים אהבה!
               <br />
-              <span className="text-primary">הפודקאסט של אומנות הקשר</span>
+              <span className="text-accent-light">הפודקאסט של אומנות הקשר</span>
             </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed mb-8">
+            <p className="text-xl text-white/80 leading-relaxed mb-8">
               שיחות אמיתיות על זוגיות, דייטינג, תקשורת וכל מה שלא לימדו אותך
               בבית ספר. בלי קלישאות, בלי בולשיט - רק אמת.
             </p>
 
-            {/* Podcast logo icon */}
+            {/* Podcast microphone image */}
             <div className="flex items-center justify-center mb-10">
-              <div className="w-32 h-32 bg-gradient-to-br from-primary/20 via-accent/10 to-secondary/20 rounded-3xl flex items-center justify-center shadow-lg">
-                <svg className="w-16 h-16 text-primary" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3zM8 12a4 4 0 0 0 8 0h2a6 6 0 0 1-5 5.91V21h-2v-3.09A6 6 0 0 1 6 12h2z" />
-                </svg>
+              <div className="relative w-32 h-32 rounded-3xl overflow-hidden shadow-lg">
+                <Image
+                  src="/images/generated/podcast-microphone.jpg"
+                  alt="מיקרופון פודקאסט"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
 

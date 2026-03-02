@@ -131,31 +131,31 @@ export default function BookPage() {
               <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight text-white">
                 אומנות הקשר
               </h1>
-              <p className="text-2xl text-primary font-medium mb-6">
+              <p className="text-2xl text-accent-light font-medium mb-6">
                 הדרך לזוגיות שאתה ראוי לה
               </p>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+              <p className="text-lg text-white/80 leading-relaxed mb-8">
                 הספר שמלמד את מה שלא לימדו אותך על זוגיות. לא עוד ״תהיה עצמך״
                 ו-״זה יגיע כשתפסיק לחפש״. אלא דרך מובנית, מעשית, שעובדת -
                 מבוססת על עבודה עם מאות אנשים שעברו את התהליך ומצאו.
               </p>
 
               <div className="flex flex-wrap gap-4 mb-8">
-                <span className="text-sm bg-primary/10 text-primary px-3 py-1.5 rounded-full">
+                <span className="text-sm bg-white/20 text-white px-3 py-1.5 rounded-full">
                   10 פרקים
                 </span>
-                <span className="text-sm bg-accent/10 text-accent-dark px-3 py-1.5 rounded-full">
+                <span className="text-sm bg-white/20 text-white px-3 py-1.5 rounded-full">
                   32 תרגילים
                 </span>
-                <span className="text-sm bg-secondary/10 text-secondary px-3 py-1.5 rounded-full">
+                <span className="text-sm bg-white/20 text-white px-3 py-1.5 rounded-full">
                   9 סיפורים אמיתיים
                 </span>
               </div>
 
-              <blockquote className="border-r-4 border-primary/30 pr-4 text-muted-foreground italic mb-8">
+              <blockquote className="border-r-4 border-white/40 pr-4 text-white/80 italic mb-8">
                 &ldquo;אני לא הולך לספר לך מה שנעים לשמוע. אני הולך לספר לך מה שצריך לשמוע.
                 ישירות, בלי בולשיט.&rdquo;
-                <cite className="block not-italic text-sm mt-2 text-foreground font-medium">
+                <cite className="block not-italic text-sm mt-2 text-white font-medium">
                   - אלעד יעקובוביץ׳
                 </cite>
               </blockquote>
@@ -169,7 +169,7 @@ export default function BookPage() {
                 </Link>
                 <Link
                   href="/hadrech"
-                  className="inline-flex px-8 py-3.5 border-2 border-primary/30 text-primary rounded-full font-semibold hover:bg-primary/5 transition-colors"
+                  className="inline-flex px-8 py-3.5 border-2 border-white/50 text-white rounded-full font-semibold hover:bg-white/10 transition-colors"
                 >
                   בינתיים - תוכנית הדרך
                 </Link>
@@ -210,6 +210,20 @@ export default function BookPage() {
                 <div className="text-sm text-muted-foreground">{stat.label}</div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Book Reading Image */}
+      <section className="py-12">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <div className="relative w-full h-64 rounded-2xl overflow-hidden">
+            <Image
+              src="/images/generated/book-reading.jpg"
+              alt="קוראים את הספר אומנות הקשר"
+              fill
+              className="object-cover"
+            />
           </div>
         </div>
       </section>

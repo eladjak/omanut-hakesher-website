@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -73,20 +74,30 @@ export default function CommunityPage() {
       </div>
 
       {/* Hero */}
-      <section className="py-24 bg-gradient-to-b from-muted to-background">
-        <div className="container mx-auto px-4 text-center">
-          <Badge variant="outline" className="mb-4 text-primary border-primary/30">
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/generated/community-hero.jpg"
+            alt="קהילת אומנות הקשר"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-foreground/70" />
+        </div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <Badge variant="outline" className="mb-4 text-white border-white/30">
             הקהילה
           </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-            לא לבד <span className="text-primary">בדרך</span>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-white">
+            לא לבד <span className="text-accent-light">בדרך</span>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-10">
+          <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed mb-10">
             קהילת אומנות הקשר היא הבית של מי שבדרך לזוגיות מאושרת.
             סביבה תומכת, תוכן בלעדי, ואנשים שמבינים את המסע.
           </p>
-          <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-10">
-            הקהילה פתוחה <strong className="text-foreground">בחינם</strong> לכל מי שרכש את
+          <p className="text-lg text-white/70 max-w-xl mx-auto mb-10">
+            הקהילה פתוחה <strong className="text-white">בחינם</strong> לכל מי שרכש את
             תוכנית הדרך או עובר ליווי אישי.
           </p>
         </div>

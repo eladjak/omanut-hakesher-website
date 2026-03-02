@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -74,19 +75,29 @@ export default function ThanksPage() {
       </div>
 
       {/* Hero */}
-      <section className="py-24 bg-gradient-to-b from-muted to-background">
-        <div className="container mx-auto px-4 text-center">
-          <Badge variant="outline" className="mb-4 text-accent-dark border-accent/30">
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/generated/thanks-hero.jpg"
+            alt="תודות - האנשים שעשו את זה אפשרי"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-foreground/70" />
+        </div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <Badge variant="outline" className="mb-4 text-white border-white/30">
             הכרת תודה
           </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-            אומנות הקשר היא <span className="text-primary">לא רק שלי</span>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-white">
+            אומנות הקשר היא <span className="text-accent-light">לא רק שלי</span>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
             יש אנשים שבלעדיהם אומנות הקשר לא הייתה מגיעה לאן שהגיעה.
             אנשים שהאמינו, שלימדו, שדחפו, ושנתנו לי את הכלים להעביר הלאה.
           </p>
-          <p className="text-lg text-primary font-medium mt-6">
+          <p className="text-lg text-accent-light font-medium mt-6">
             אלו אנשים שאני חייב להם אישית פשוט המון.
           </p>
         </div>

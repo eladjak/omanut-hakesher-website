@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { ContactForm } from "@/components/ContactForm";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -33,15 +34,25 @@ export default function ContactPage() {
       </div>
 
       {/* Hero */}
-      <section className="py-24 bg-gradient-to-b from-muted to-background">
-        <div className="container mx-auto px-4 text-center">
-          <Badge variant="outline" className="mb-4 text-primary border-primary/30">
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/generated/contact-hero.jpg"
+            alt="צור קשר - אומנות הקשר"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-foreground/70" />
+        </div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <Badge variant="outline" className="mb-4 text-white border-white/30">
             בואו נדבר
           </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            צור <span className="text-primary">קשר</span>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+            צור <span className="text-accent-light">קשר</span>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
             שאלות, התלבטויות, או פשוט רוצה להתחיל - אני כאן.
             שיחת היכרות של 30 דקות, בחינם, בלי התחייבות.
           </p>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -170,15 +171,25 @@ export default function TestimonialsPage() {
       </div>
 
       {/* Hero */}
-      <section className="py-24 bg-gradient-to-b from-muted to-background">
-        <div className="container mx-auto px-4 text-center">
-          <Badge variant="outline" className="mb-4 text-primary border-primary/30">
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/generated/testimonials-hero.jpg"
+            alt="סיפורי הצלחה - 461 זוגות"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-foreground/70" />
+        </div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <Badge variant="outline" className="mb-4 text-white border-white/30">
             461 זוגות ועולה
           </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            הם כבר <span className="text-primary">מצאו</span>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+            הם כבר <span className="text-accent-light">מצאו</span>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
             סיפורים אמיתיים של אנשים שהיו בדיוק איפה שאתה עכשיו -
             ועשו את הצעד שהביא אותם לזוגיות
           </p>
@@ -335,6 +346,20 @@ export default function TestimonialsPage() {
                 />
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Wedding Image */}
+      <section className="py-12">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <div className="relative w-full h-64 rounded-2xl overflow-hidden">
+            <Image
+              src="/images/generated/testimonials-wedding.jpg"
+              alt="חתונה - זוג שמצא אהבה דרך אומנות הקשר"
+              fill
+              className="object-cover"
+            />
           </div>
         </div>
       </section>
