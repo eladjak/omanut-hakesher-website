@@ -106,6 +106,95 @@
   --sidebar-ring: #F08C9E;
 }
 
+/* ================================================
+   Gender-Adaptive Color Overrides
+   Applied on <html> element alongside the dark class.
+   Composable: .gender-male.dark works correctly.
+   ================================================ */
+
+/* Female: explicit class, same as default (enables future female-specific tweaks) */
+.gender-female {
+  --primary: #E85D75;
+  --primary-foreground: #ffffff;
+  --primary-light: #F08C9E;
+  --primary-dark: #C94A62;
+
+  --secondary: #1E3A5F;
+  --secondary-foreground: #ffffff;
+  --secondary-light: #2C5280;
+  --secondary-dark: #152B47;
+
+  --ring: #E85D75;
+
+  /* Warm background tint */
+  --background: #FFFAF7;
+  --muted: #F5EDE8;
+  --border: #E8DDD5;
+}
+
+/* Male: swap primary/secondary so blue dominates */
+.gender-male {
+  --primary: #1E3A5F;
+  --primary-foreground: #ffffff;
+  --primary-light: #2C5280;
+  --primary-dark: #152B47;
+
+  --secondary: #E85D75;
+  --secondary-foreground: #ffffff;
+  --secondary-light: #F08C9E;
+  --secondary-dark: #C94A62;
+
+  --ring: #1E3A5F;
+
+  /* Cool background tint */
+  --background: #F7FAFF;
+  --muted: #E8EDF5;
+  --border: #D5DDE8;
+
+  --chart-1: #1E3A5F;
+  --chart-2: #E85D75;
+
+  --sidebar-primary: #1E3A5F;
+  --sidebar-ring: #1E3A5F;
+}
+
+/* Male + Dark Mode composition */
+.gender-male.dark {
+  --primary: #4A7AB5;
+  --primary-foreground: #0F1729;
+  --primary-light: #2C5280;
+  --primary-dark: #7BA3D0;
+
+  --secondary: #F08C9E;
+  --secondary-foreground: #0F1729;
+  --secondary-light: #E85D75;
+  --secondary-dark: #F5B0BD;
+
+  --ring: #4A7AB5;
+}
+
+/* Female + Dark Mode (explicit, same as current .dark) */
+.gender-female.dark {
+  --primary: #F08C9E;
+  --primary-foreground: #0F1729;
+  --primary-light: #E85D75;
+  --primary-dark: #F5B0BD;
+
+  --secondary: #4A7AB5;
+  --secondary-foreground: #0F1729;
+  --secondary-light: #2C5280;
+  --secondary-dark: #7BA3D0;
+
+  --ring: #F08C9E;
+}
+
+/* Smooth color transitions when switching gender themes */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    transition: background-color 0.3s ease, color 0.15s ease;
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

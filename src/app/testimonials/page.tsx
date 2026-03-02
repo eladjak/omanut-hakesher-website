@@ -310,6 +310,35 @@ export default function TestimonialsPage() {
         </div>
       </section>
 
+      {/* WhatsApp Testimonials - Real Screenshots */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <div className="text-center mb-14">
+            <Badge variant="outline" className="mb-4 text-accent-dark border-accent/30">
+              הודעות אמיתיות
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              מה <span className="text-primary">כותבים לי</span> אחרי התהליך
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">
+              צילומי מסך אמיתיים מוואטסאפ - ישירות מהלקוחות
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {[1, 2, 3, 4, 5].map((n) => (
+              <div key={n} className="rounded-xl overflow-hidden shadow-md border border-border/30">
+                <img
+                  src={`/assets/testimonials/whatsapp-${n}.jpg`}
+                  alt={`עדות לקוח ${n} - הודעת וואטסאפ`}
+                  className="w-full h-auto"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Video Testimonials */}
       <section className="py-20">
         <div className="container mx-auto px-4 max-w-4xl">

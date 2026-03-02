@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>דוח שינויים - אומנות הקשר v2.0</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f9fa;
+      color: #1a1a2e;
+      line-height: 1.7;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+    /* Header */
+    .report-header {
+      background: linear-gradient(135deg, #E85D75 0%, #1E3A5F 100%);
+      color: white;
+      padding: 50px 40px;
+      border-radius: 16px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .report-header h1 { font-size: 2.2em; margin-bottom: 10px; }
+    .report-header .subtitle { font-size: 1.1em; opacity: 0.9; }
+    .report-header .date {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 6px 20px;
+      border-radius: 20px;
+      margin-top: 15px;
+      font-size: 0.9em;
+    }
+
+    /* Stats bar */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    .stat-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border: 1px solid #eee;
+    }
+    .stat-card .number {
+      font-size: 2em;
+      font-weight: 700;
+      color: #E85D75;
+    }
+    .stat-card .label {
+      font-size: 0.85em;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    /* Section */
+    .section {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border: 1px solid #eee;
+    }
+    .section h2 {
+      font-size: 1.4em;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid #E85D75;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section h3 {
+      font-size: 1.1em;
+      margin: 18px 0 10px 0;
+      color: #1E3A5F;
+    }
+
+    /* Badge */
+    .badge {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 12px;
+      font-size: 0.75em;
+      font-weight: 600;
+    }
+    .badge-new { background: #d4edda; color: #155724; }
+    .badge-rewrite { background: #fff3cd; color: #856404; }
+    .badge-fix { background: #f8d7da; color: #721c24; }
+    .badge-update { background: #d1ecf1; color: #0c5460; }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+    th, td {
+      padding: 12px 15px;
+      text-align: right;
+      border-bottom: 1px solid #eee;
+    }
+    th {
+      background: #f8f9fa;
+      font-weight: 600;
+      color: #1E3A5F;
+    }
+    tr:hover td { background: #fafbfc; }
+
+    /* List */
+    ul { padding-right: 20px; }
+    li { margin-bottom: 8px; }
+
+    /* Change item */
+    .change-item {
+      display: flex;
+      gap: 15px;
+      padding: 15px;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      transition: border-color 0.2s;
+    }
+    .change-item:hover { border-color: #E85D75; }
+    .change-item .icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3em;
+      flex-shrink: 0;
+    }
+    .change-item .icon.pink { background: #fce4ec; }
+    .change-item .icon.blue { background: #e3f2fd; }
+    .change-item .icon.green { background: #e8f5e9; }
+    .change-item .icon.gold { background: #fff8e1; }
+    .change-item .content h4 { margin-bottom: 4px; }
+    .change-item .content p { font-size: 0.9em; color: #666; }
+
+    /* Gap item */
+    .gap-item {
+      padding: 12px 18px;
+      border-right: 4px solid;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 10px;
+      background: #fafbfc;
+    }
+    .gap-high { border-color: #E85D75; }
+    .gap-medium { border-color: #D4A853; }
+    .gap-low { border-color: #1E3A5F; }
+    .gap-item .priority {
+      font-size: 0.75em;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .gap-item .priority.high { color: #E85D75; }
+    .gap-item .priority.medium { color: #D4A853; }
+    .gap-item .priority.low { color: #1E3A5F; }
+
+    /* Footer */
+    .report-footer {
+      text-align: center;
+      padding: 30px;
+      color: #999;
+      font-size: 0.85em;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .report-header { padding: 30px 20px; }
+      .report-header h1 { font-size: 1.6em; }
+      .section { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="report-header">
+      <h1>דוח שינויים - אומנות הקשר</h1>
+      <div class="subtitle">שכתוב מלא של האתר עם תוכן אותנטי | גרסה 2.0</div>
+      <div class="date">27 בפברואר 2026</div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="number">40</div>
+        <div class="label">קבצים שהשתנו</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">5</div>
+        <div class="label">דפים חדשים</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">7</div>
+        <div class="label">דפים שוכתבו</div>
+      </div>
+      <div class="stat-card">
+        <div class="number">10</div>
+        <div class="label">תמונות Gemini</div>
+      </div>
+    </div>
+
+    <!-- Section 1: Critical Fixes -->
+    <div class="section">
+      <h2>&#x1F6A8; תיקונים קריטיים</h2>
+      <p style="margin-bottom:15px;">האתר הישן הכיל תוכן שגוי ומפוברק שתוקן במלואו:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>בעיה</th>
+            <th>לפני</th>
+            <th>אחרי</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>מגדר</strong></td>
+            <td>נקבה (מטפלת זוגית)</td>
+            <td>זכר (מנטור לרווקים)</td>
+          </tr>
+          <tr>
+            <td><strong>תחום</strong></td>
+            <td>ייעוץ זוגי לזוגות נשואים</td>
+            <td>מציאת זוגיות לרווקים/ות</td>
+          </tr>
+          <tr>
+            <td><strong>אישורים</strong></td>
+            <td>M.A. בפסיכולוגיה (בדוי)</td>
+            <td>NLP, CBT, קואצ'ינג, ~20 שנות במה</td>
+          </tr>
+          <tr>
+            <td><strong>המלצות</strong></td>
+            <td>8 המלצות מזויפות (זוגות)</td>
+            <td>12 המלצות אותנטיות (רווקים שמצאו)</td>
+          </tr>
+          <tr>
+            <td><strong>טלפון</strong></td>
+            <td>050-123-4567 (פיקטיבי)</td>
+            <td>051-251-8025 (אמיתי)</td>
+          </tr>
+          <tr>
+            <td><strong>מספר זוגות</strong></td>
+            <td>200+ / 444+ (לא עקבי)</td>
+            <td>461 (מאושר ע"י אלעד)</td>
+          </tr>
+          <tr>
+            <td><strong>דף הספר</strong></td>
+            <td>"קביעת שיחה" (לא ספר כלל)</td>
+            <td>תוכן הספר: 10 פרקים, 32 תרגילים</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 2: New Pages -->
+    <div class="section">
+      <h2>&#x2728; דפים חדשים</h2>
+
+      <div class="change-item">
+        <div class="icon pink">&#x1F4AC;</div>
+        <div class="content">
+          <h4>/coaching - ליווי אישי <span class="badge badge-new">חדש</span></h4>
+          <p>דף פאנל מכירות (712 שורות) - נקודות כאב, שיטה, תוצאות, המלצות, תהליך, FAQ (8 שאלות), CTA חזקים. המנגנון שנבנה עם אלי שביט.</p>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="icon blue">&#x1F4DA;</div>
+        <div class="content">
+          <h4>/hadrech - תוכנית הדרך <span class="badge badge-new">חדש</span></h4>
+          <p>דף תוכנית 12 שבועות (799 שורות) - 4 שלבים מפורטים, נושאים לכל שבוע, FAQ, לוח זמנים, סטטיסטיקות.</p>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="icon green">&#x1F3A7;</div>
+        <div class="content">
+          <h4>/podcast - פודקאסט <span class="badge badge-new">חדש</span></h4>
+          <p>דף "בקרוב" עם 6 נושאים מתוכננים, הרשמה לעדכונים, ותיאור מה יהיה בפודקאסט.</p>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="icon blue">&#x1F465;</div>
+        <div class="content">
+          <h4>/community - קהילה <span class="badge badge-new">חדש</span></h4>
+          <p>3 מסלולי הצטרפות (ליווי/קורס/מנוי), יתרונות הקהילה, עדות. הקהילה חינם לרוכשי מוצר.</p>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="icon gold">&#x1F64F;</div>
+        <div class="content">
+          <h4>/thanks - תודות <span class="badge badge-new">חדש</span></h4>
+          <p>דף הכרת תודה ל-6 אנשים: אלי שביט, אליהו ארנד, אלי תמיר קרניאל, דודו נחום, דפנה לשם, אראל הנדלר. כולל מכתב אישי מאלעד.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: Rewritten Pages -->
+    <div class="section">
+      <h2>&#x1F504; דפים שוכתבו מחדש</h2>
+
+      <div class="change-item">
+        <div class="icon pink">&#x1F3E0;</div>
+        <div class="content">
+          <h4>דף בית (/) <span class="badge badge-rewrite">שכתוב מלא</span></h4>
+          <p>סטטיסטיקות אמיתיות (461 זוגות, 15+ שנים, 12 שבועות, 20+ שנות במה). 4 מוצרים, נקודות כאב לרווקים, שיטת 4 שלבים, סרטוני YouTube, קונספט "פנוי לקשר", ביוגרפיה אמיתית.</p>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="icon blue">&#x1F4D6;</div>
+        <div class="content">
+          <h4>הספר (/book) <span class="badge badge-rewrite">שכתוב מלא</span></h4>
+          <p>היה "קביעת שיחה" - הפך לדף הספר "אומנות הקשר" עם 10 פרקים, 32 תרגילים, סיפורי חיים, טעימה מההקדמה, ו-3 הבטחות לקורא.</p>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="icon green">&#x2B50;</div>
+        <div class="content">
+          <h4>סיפורי הצלחה (/testimonials) <span class="badge badge-rewrite">שכתוב מלא</span></h4>
+          <p>8 המלצות מזויפות הוחלפו ב-12 אותנטיות עם שם, גיל, מקצוע, הקשר ומקור (ליווי/קורס/ספר). נוספו סרטוני YouTube וסטטיסטיקות.</p>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="icon pink">&#x1F464;</div>
+        <div class="content">
+          <h4>אודות (/about) <span class="badge badge-rewrite">שכתוב מלא</span></h4>
+          <p>ביוגרפיה אמיתית של אלעד - ~20 שנות רקע בתחום הבמה, NLP, CBT, ערכים (אמת, כלים, כבוד). כולל FAQ.</p>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="icon blue">&#x2B50;</div>
+        <div class="content">
+          <h4>המלצות בדף הבית <span class="badge badge-rewrite">שכתוב מלא</span></h4>
+          <p>6 המלצות אמיתיות עם גיל, מקצוע, הקשר. 2 מובלטות (דני 38, מיכל 34) + 4 רגילות. כותרת "461 זוגות ועולה".</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: Infrastructure -->
+    <div class="section">
+      <h2>&#x2699;&#xFE0F; תשתית ושינויים טכניים</h2>
+
+      <div class="change-item">
+        <div class="icon green">&#x1F9ED;</div>
+        <div class="content">
+          <h4>ניווט (Header) <span class="badge badge-update">עדכון</span></h4>
+          <p>9 דפים: בית, אודות, תוכנית הדרך, ליווי אישי, הספר, סיפורי הצלחה, פודקאסט, בלוג, צור קשר. CTA: "שיחת היכרות חינם".</p>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="icon blue">&#x1F4CD;</div>
+        <div class="content">
+          <h4>Footer <span class="badge badge-update">עדכון</span></h4>
+          <p>לינקים מעודכנים, תיאור מתוקן ("רווקים" במקום "זוגות"), טלפון אמיתי, WhatsApp עובד.</p>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="icon pink">&#x1F4DE;</div>
+        <div class="content">
+          <h4>מספרי טלפון <span class="badge badge-fix">תיקון קריטי</span></h4>
+          <p>הוחלפו ב-6 קבצים: Footer, WhatsApp Button, JsonLd (x2), Contact page (x3).</p>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="icon green">&#x1F5FA;</div>
+        <div class="content">
+          <h4>Sitemap <span class="badge badge-update">עדכון</span></h4>
+          <p>נוספו: /coaching, /hadrech, /podcast, /community, /thanks. הוסרו: /services, /gallery, /resources.</p>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="icon gold">&#x1F5BC;</div>
+        <div class="content">
+          <h4>תמונות Gemini AI <span class="badge badge-new">חדש</span></h4>
+          <p>10 תמונות יוצרו: hero-banner, about-journey, coaching-program, testimonials-bg, book-cover, podcast-cover, community, hero-male, hero-female, heart-icon.</p>
+        </div>
+      </div>
+
+      <div class="change-item">
+        <div class="icon pink">&#x1F6AB;</div>
+        <div class="content">
+          <h4>הסרת route group (site) <span class="badge badge-fix">תיקון</span></h4>
+          <p>הוסרה תיקיית src/app/(site)/ שגרמה ל-11 שגיאות build (דפים כפולים). כל הדפים עכשיו ב-src/app/ ישירות.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 5: Research & Docs -->
+    <div class="section">
+      <h2>&#x1F4CB; מסמכי מחקר שנוצרו</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>קובץ</th>
+            <th>תיאור</th>
+            <th>גודל</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>content-library.md</code></td>
+            <td>ספריית תוכן מאוחדת - ביוגרפיה, שיטה, סטטיסטיקות, מוצרים, המלצות, קול מותג</td>
+            <td>21.2 KB</td>
+          </tr>
+          <tr>
+            <td><code>ELAD_ANSWERS.md</code></td>
+            <td>תשובות אלעד ל-10 שאלות: מספר זוגות, מודל עסקי, מחירים, צבעים, פודקאסט</td>
+            <td>3.5 KB</td>
+          </tr>
+          <tr>
+            <td><code>acknowledgments-research.md</code></td>
+            <td>מחקר על 6 אנשי התודות: אלי שביט, ארנד, תמיר קרניאל, נחום, לשם, הנדלר</td>
+            <td>8 KB</td>
+          </tr>
+          <tr>
+            <td><code>gender-adaptive-design.md</code></td>
+            <td>ארכיטקטורה מלאה לעיצוב מותאם-מגדר: CSS, React context, קומפוננטות</td>
+            <td>999 שורות</td>
+          </tr>
+          <tr>
+            <td><code>PROJECT_STATUS.md</code></td>
+            <td>סטטוס מעודכן v2.0 עם TODO מפורט</td>
+            <td>3 KB</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 6: Gaps -->
+    <div class="section">
+      <h2>&#x26A0;&#xFE0F; פערים ומשימות שנשארו</h2>
+
+      <h3>עדיפות גבוהה</h3>
+
+      <div class="gap-item gap-high">
+        <div class="priority high">גבוהה</div>
+        <strong>עיצוב מותאם-מגדר (Gender-Adaptive)</strong>
+        <p>אלעד ביקש במפורש שהאתר יתאים את עצמו אוטומטית לגברים/נשים. מסמך ארכיטקטורה מוכן (999 שורות) אך לא הוטמע: GenderProvider, WelcomeModal, CSS variable swapping, GenderedText.</p>
+      </div>
+
+      <div class="gap-item gap-high">
+        <div class="priority high">גבוהה</div>
+        <strong>Google Stitch MCP לעיצוב</strong>
+        <p>אלעד ביקש במפורש "מתיחת פנים בסיוע MCP סטיצ' של גוגל". טרם נעשה שימוש ב-Stitch MCP לעיצוב מחדש של הדפים.</p>
+      </div>
+
+      <div class="gap-item gap-high">
+        <div class="priority high">גבוהה</div>
+        <strong>תמונות Gemini לדפים הפנימיים</strong>
+        <p>10 תמונות יוצרו אך לא שולבו בכל הדפים. דפי coaching, hadrech, about צריכים hero images ואיורים.</p>
+      </div>
+
+      <div class="gap-item gap-high">
+        <div class="priority high">גבוהה</div>
+        <strong>עדכון מאמרי הבלוג</strong>
+        <p>6 מאמרי הבלוג עדיין מכילים תוכן ישן המדבר על "זוגות" ו"ייעוץ זוגי" במקום "רווקים" ו"מציאת זוגיות". צריך שכתוב.</p>
+      </div>
+
+      <h3>עדיפות בינונית</h3>
+
+      <div class="gap-item gap-medium">
+        <div class="priority medium">בינונית</div>
+        <strong>תמונות מקאנבה / שגיא הצלם</strong>
+        <p>אלעד נתן גישה לקאנבה. צלם בשם שגיא צילם תמונות מקצועיות. צריך למצוא ולשלב.</p>
+      </div>
+
+      <div class="gap-item gap-medium">
+        <div class="priority medium">בינונית</div>
+        <strong>Lead Magnets (הורדות חינם)</strong>
+        <p>קיימים: "23 סיבות למה אתה עדיין רווק", "7 עקרונות לפרופיל מנצח", "36 שאלות להתאהבות". צריך להוסיף לאתר כדפי נחיתה.</p>
+      </div>
+
+      <div class="gap-item gap-medium">
+        <div class="priority medium">בינונית</div>
+        <strong>שילוב YouCanBookMe</strong>
+        <p>אלעד ממשיך עם YouCanBookMe. צריך להטמיע widget בדפי coaching ו-contact.</p>
+      </div>
+
+      <div class="gap-item gap-medium">
+        <div class="priority medium">בינונית</div>
+        <strong>חיבור Responder (רב-מסר) API</strong>
+        <p>טופס הניוזלטר בפוטר לא מחובר. צריך API של Responder לניהול רשימות דיוור.</p>
+      </div>
+
+      <div class="gap-item gap-medium">
+        <div class="priority medium">בינונית</div>
+        <strong>הקדשות אישיות מאלעד</strong>
+        <p>אלעד ציין שיוסיף הקדשה אישית + שיחת ייעוץ 15 דקות לכל אחד מ-6 האנשים. צריך לקבל ממנו טקסט.</p>
+      </div>
+
+      <h3>עדיפות נמוכה</h3>
+
+      <div class="gap-item gap-low">
+        <div class="priority low">נמוכה</div>
+        <strong>ניקוי דפים ישנים</strong>
+        <p>דפים /services, /course, /gallery, /resources עדיין קיימים עם תוכן ישן. לא בניווט אך נגישים דרך URL ישיר.</p>
+      </div>
+
+      <div class="gap-item gap-low">
+        <div class="priority low">נמוכה</div>
+        <strong>דף צור קשר - טקסטים</strong>
+        <p>חלק מהטקסטים עדיין "זוגיות" במקום "מציאת זוגיות". טלפון תוקן, טקסטים צריכים עדכון.</p>
+      </div>
+
+      <div class="gap-item gap-low">
+        <div class="priority low">נמוכה</div>
+        <strong>טלגרם</strong>
+        <p>ערוץ עם 189 מנויים לא פעיל. אלעד פתוח להחיות. צריך אסטרטגיה.</p>
+      </div>
+
+      <div class="gap-item gap-low">
+        <div class="priority low">נמוכה</div>
+        <strong>דיפלוי ל-Vercel</strong>
+        <p>Build עובר בהצלחה. צריך לעשות <code>npx vercel</code> לדיפלוי.</p>
+      </div>
+    </div>
+
+    <!-- Section 7: Page Map -->
+    <div class="section">
+      <h2>&#x1F5FA;&#xFE0F; מפת דפים מעודכנת</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>נתיב</th>
+            <th>שם</th>
+            <th>סטטוס</th>
+            <th>בניווט</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>/</code></td><td>דף בית</td><td><span class="badge badge-rewrite">שוכתב</span></td><td>&#x2705;</td></tr>
+          <tr><td><code>/about</code></td><td>אודות אלעד</td><td><span class="badge badge-rewrite">שוכתב</span></td><td>&#x2705;</td></tr>
+          <tr><td><code>/coaching</code></td><td>ליווי אישי</td><td><span class="badge badge-new">חדש</span></td><td>&#x2705;</td></tr>
+          <tr><td><code>/hadrech</code></td><td>תוכנית הדרך</td><td><span class="badge badge-new">חדש</span></td><td>&#x2705;</td></tr>
+          <tr><td><code>/book</code></td><td>הספר</td><td><span class="badge badge-rewrite">שוכתב</span></td><td>&#x2705;</td></tr>
+          <tr><td><code>/testimonials</code></td><td>סיפורי הצלחה</td><td><span class="badge badge-rewrite">שוכתב</span></td><td>&#x2705;</td></tr>
+          <tr><td><code>/podcast</code></td><td>פודקאסט</td><td><span class="badge badge-new">חדש</span></td><td>&#x2705;</td></tr>
+          <tr><td><code>/blog</code></td><td>בלוג</td><td>ללא שינוי</td><td>&#x2705;</td></tr>
+          <tr><td><code>/contact</code></td><td>צור קשר</td><td><span class="badge badge-fix">טלפון תוקן</span></td><td>&#x2705;</td></tr>
+          <tr><td><code>/community</code></td><td>קהילה</td><td><span class="badge badge-new">חדש</span></td><td>בפוטר</td></tr>
+          <tr><td><code>/thanks</code></td><td>תודות</td><td><span class="badge badge-new">חדש</span></td><td>-</td></tr>
+          <tr style="opacity:0.5"><td><code>/services</code></td><td>שירותים (ישן)</td><td>לניקוי</td><td>-</td></tr>
+          <tr style="opacity:0.5"><td><code>/course</code></td><td>קורס (ישן)</td><td>לניקוי</td><td>-</td></tr>
+          <tr style="opacity:0.5"><td><code>/gallery</code></td><td>גלריה (ישן)</td><td>לניקוי</td><td>-</td></tr>
+          <tr style="opacity:0.5"><td><code>/resources</code></td><td>משאבים (ישן)</td><td>לניקוי</td><td>-</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 8: Assets -->
+    <div class="section">
+      <h2>&#x1F5BC;&#xFE0F; נכסים דיגיטליים</h2>
+
+      <h3>תמונות Gemini (public/images/generated/)</h3>
+      <table>
+        <thead>
+          <tr><th>קובץ</th><th>יחס</th><th>שימוש</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>hero-banner.jpg</td><td>16:9</td><td>באנר ראשי דף הבית</td></tr>
+          <tr><td>hero-male.jpg</td><td>16:9</td><td>באנר לגברים (עיצוב מותאם-מגדר)</td></tr>
+          <tr><td>hero-female.jpg</td><td>16:9</td><td>באנר לנשים (עיצוב מותאם-מגדר)</td></tr>
+          <tr><td>about-journey.jpg</td><td>3:2</td><td>דף אודות</td></tr>
+          <tr><td>coaching-program.jpg</td><td>3:2</td><td>דף ליווי אישי</td></tr>
+          <tr><td>book-cover.jpg</td><td>2:3</td><td>כריכת הספר</td></tr>
+          <tr><td>podcast-cover.jpg</td><td>1:1</td><td>כריכת פודקאסט</td></tr>
+          <tr><td>community.jpg</td><td>3:2</td><td>דף קהילה</td></tr>
+          <tr><td>testimonials-bg.jpg</td><td>16:9</td><td>רקע המלצות</td></tr>
+          <tr><td>heart-icon.jpg</td><td>1:1</td><td>אייקון לב</td></tr>
+        </tbody>
+      </table>
+
+      <h3>תמונות שהורדו (public/assets/)</h3>
+      <ul>
+        <li><strong>brand/</strong> - 16 קבצים: לוגו, hero, זוגות, פודקאסט, פרופיל פייסבוק</li>
+        <li><strong>media/</strong> - 21 קבצים: YouTube thumbnails, 12 כריכות פודקאסט</li>
+        <li><strong>products/</strong> - 9 קבצים: תמונות שירותים/קורסים</li>
+        <li><strong>elad-photos/</strong> - 54 קבצים (187MB): הדשוט, כנסים, חתונה, WhatsApp</li>
+      </ul>
+    </div>
+
+    <!-- Footer -->
+    <div class="report-footer">
+      <p>דוח זה נוצר אוטומטית | אומנות הקשר v2.0 | 27 בפברואר 2026</p>
+      <p style="margin-top:5px;">Dev server: <a href="http://localhost:3333" style="color:#E85D75;">http://localhost:3333</a></p>
+    </div>
+
+  </div>
+</body>
+</html>

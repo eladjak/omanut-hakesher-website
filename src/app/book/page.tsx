@@ -111,14 +111,24 @@ export default function BookPage() {
       </div>
 
       {/* Hero */}
-      <section className="py-24 bg-gradient-to-b from-muted to-background">
-        <div className="container mx-auto px-4">
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/generated/book-hero.jpg"
+            alt='הספר "אומנות הקשר"'
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-foreground/70" />
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
             <div>
-              <Badge variant="outline" className="mb-4 text-accent-dark border-accent/30">
+              <Badge variant="outline" className="mb-4 text-white border-white/30">
                 הספר החדש
               </Badge>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight text-white">
                 אומנות הקשר
               </h1>
               <p className="text-2xl text-primary font-medium mb-6">
@@ -171,7 +181,11 @@ export default function BookPage() {
               <div className="relative">
                 <div className="w-72 h-[430px] bg-gradient-to-br from-primary/20 via-accent/10 to-secondary/20 rounded-2xl shadow-2xl flex items-center justify-center border border-border/30">
                   <div className="text-center px-8">
-                    <div className="text-6xl mb-4">📖</div>
+                    <div className="w-16 h-16 bg-primary/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                      </svg>
+                    </div>
                     <h3 className="text-2xl font-bold mb-2">אומנות הקשר</h3>
                     <Separator className="my-3 bg-primary/20" />
                     <p className="text-sm text-muted-foreground">הדרך לזוגיות שאתה ראוי לה</p>
@@ -294,19 +308,31 @@ export default function BookPage() {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                icon: "🎯",
+                icon: (
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+                ),
                 title: "אמת",
                 description:
                   "אני לא הולך לספר לך מה שנעים לשמוע. אני הולך לספר לך מה שצריך לשמוע. ישירות, בלי בולשיט.",
               },
               {
-                icon: "🔧",
+                icon: (
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                ),
                 title: "כלים",
                 description:
                   "כל פרק כולל משהו שאפשר לעשות מחר בבוקר. לא תיאוריה מופשטת - 32 תרגילים שעובדים.",
               },
               {
-                icon: "🤝",
+                icon: (
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                ),
                 title: "כבוד",
                 description:
                   "אני לא הולך להטיף לך. הגעת לכאן כי אתה רוצה לשנות משהו - וזה לבד כבר אומר על הערך שלך.",
@@ -314,7 +340,9 @@ export default function BookPage() {
             ].map((promise, index) => (
               <Card key={index} className="border-primary/20 bg-gradient-to-b from-primary/5 to-transparent">
                 <CardContent className="p-8 text-center">
-                  <div className="text-4xl mb-4">{promise.icon}</div>
+                  <div className="inline-flex p-3 rounded-xl bg-primary/10 text-primary mb-4">
+                    {promise.icon}
+                  </div>
                   <h3 className="text-xl font-bold mb-3">{promise.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     {promise.description}

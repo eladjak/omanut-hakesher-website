@@ -230,25 +230,21 @@ const comparison = [
     approach: "אפליקציות דייטינג",
     description: "נותנות הזדמנויות, אבל בלי כלים. זה כמו לתת למישהו מפתח בלי ללמד אותו לנהוג.",
     verdict: "הזדמנויות ללא כלים",
-    icon: "📱",
   },
   {
     approach: "שדכנים",
     description: "מספקים התאמות, אבל לא מטפלים בסיבה שדייטים קודמים נכשלו.",
     verdict: "התאמות ללא עבודה פנימית",
-    icon: "🤝",
   },
   {
     approach: "טיפול פסיכולוגי",
     description: "עוזר להבין את עצמך, אבל לרוב לא מלווה אותך בשטח ולא נותן כלים מעשיים לדייטינג.",
     verdict: "הבנה ללא ליווי בשטח",
-    icon: "🛋️",
   },
   {
     approach: "ספרי עזרה עצמית",
     description: "טיפים מעניינים, אבל קוראים, מתלהבים, ואחרי שבוע חוזרים לאותם דפוסים.",
     verdict: "השראה ללא מסגרת",
-    icon: "📚",
   },
 ];
 
@@ -335,27 +331,34 @@ export default function HaDrechPage() {
 
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-bl from-primary-light/20 via-background to-secondary-light/10" />
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
+        <div className="absolute inset-0">
+          <Image
+            src="/images/generated/hadrech-hero.jpg"
+            alt='תוכנית "הדרך" - 12 שבועות למציאת זוגיות'
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-foreground/65" />
+        </div>
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge
                 variant="secondary"
-                className="mb-6 text-sm px-4 py-1.5 bg-secondary/10 text-secondary border-secondary/20 hover:bg-secondary/10"
+                className="mb-6 text-sm px-4 py-1.5 bg-white/10 text-white border-white/20 hover:bg-white/10"
               >
                 קורס דיגיטלי - 12 שבועות
               </Badge>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-foreground">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
                 תוכנית{" "}
-                <span className="text-primary">&quot;הדרך&quot;</span>
+                <span className="text-accent-light">&quot;הדרך&quot;</span>
               </h1>
-              <p className="text-xl md:text-2xl text-secondary font-medium mt-3">
+              <p className="text-xl md:text-2xl text-white/90 font-medium mt-3">
                 12 שבועות שישנו את חיי האהבה שלך
               </p>
-              <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
+              <p className="mt-6 text-lg text-white/80 max-w-xl leading-relaxed">
                 לא עוד טיפים מפוזרים. לא עוד &quot;תהיה עצמך&quot; ו&quot;זה
                 יגיע כשתפסיק לחפש&quot;. תוכנית הדרך היא{" "}
                 <strong className="text-foreground">
@@ -605,7 +608,6 @@ export default function HaDrechPage() {
                 <StaggerItem key={index}>
                   <Card className="border-border/50 h-full">
                     <CardContent className="p-6">
-                      <div className="text-3xl mb-3">{item.icon}</div>
                       <h3 className="text-lg font-semibold mb-2">
                         {item.approach}
                       </h3>
@@ -694,6 +696,20 @@ export default function HaDrechPage() {
               </StaggerItem>
             ))}
           </StaggerContainer>
+        </div>
+      </section>
+
+      {/* Community Image */}
+      <section className="py-12">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <div className="relative w-full h-72 rounded-2xl overflow-hidden">
+            <Image
+              src="/images/generated/hadrech-community.jpg"
+              alt="קהילת תוכנית הדרך"
+              fill
+              className="object-cover"
+            />
+          </div>
         </div>
       </section>
 

@@ -212,29 +212,35 @@ export default function CoachingPage() {
     <>
       {/* ===== HERO SECTION ===== */}
       <section className="relative min-h-[92dvh] flex items-center overflow-hidden">
-        {/* Background */}
-        <div className="absolute inset-0 bg-gradient-to-bl from-secondary-light/15 via-background to-primary-light/10" />
-        <div className="absolute top-20 left-10 w-72 h-72 bg-secondary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute left-0 bottom-0 w-1/3 h-1/2 bg-gradient-to-tr from-accent/8 to-transparent rounded-tr-full pointer-events-none" />
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/images/generated/coaching-hero.jpg"
+            alt="ליווי אישי למציאת זוגיות"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-foreground/65" />
+        </div>
 
         <div className="container mx-auto px-4 py-20 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge variant="secondary" className="mb-6 text-sm px-4 py-1.5 bg-secondary/10 text-secondary border-secondary/20 hover:bg-secondary/10">
+              <Badge variant="secondary" className="mb-6 text-sm px-4 py-1.5 bg-white/10 text-white border-white/20 hover:bg-white/10">
                 ליווי אישי פרימיום - אומנות הקשר
               </Badge>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-foreground">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
                 ליווי אישי
                 <br />
-                <span className="text-primary">למציאת זוגיות</span>
+                <span className="text-accent-light">למציאת זוגיות</span>
               </h1>
-              <p className="text-xl md:text-2xl text-secondary font-medium mt-3">
+              <p className="text-xl md:text-2xl text-white/90 font-medium mt-3">
                 זוגיות תוך 3 חודשים - או המשך ליווי חינם.
               </p>
-              <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
+              <p className="mt-6 text-lg md:text-xl text-white/80 max-w-xl leading-relaxed">
                 תהליך מותאם אישית שכבר עזר ל-
-                <strong className="text-primary">461 זוגות</strong> למצוא אהבה אמיתית.
+                <strong className="text-white">461 זוגות</strong> למצוא אהבה אמיתית.
                 לא טיפים מפוזרים - ליווי צמוד, עם אחריות לתוצאה.
               </p>
 
@@ -256,20 +262,20 @@ export default function CoachingPage() {
               {/* Trust indicators */}
               <div className="mt-12 flex flex-wrap gap-8">
                 <div className="text-center">
-                  <div className="text-2xl md:text-3xl font-bold text-primary">461</div>
-                  <div className="text-sm text-muted-foreground mt-1">זוגות שנוצרו</div>
+                  <div className="text-2xl md:text-3xl font-bold text-accent-light">461</div>
+                  <div className="text-sm text-white/70 mt-1">זוגות שנוצרו</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl md:text-3xl font-bold text-primary">3</div>
-                  <div className="text-sm text-muted-foreground mt-1">חודשים ממוצע</div>
+                  <div className="text-2xl md:text-3xl font-bold text-accent-light">3</div>
+                  <div className="text-sm text-white/70 mt-1">חודשים ממוצע</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl md:text-3xl font-bold text-primary">15+</div>
-                  <div className="text-sm text-muted-foreground mt-1">שנות ניסיון</div>
+                  <div className="text-2xl md:text-3xl font-bold text-accent-light">15+</div>
+                  <div className="text-sm text-white/70 mt-1">שנות ניסיון</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl md:text-3xl font-bold text-primary">30+</div>
-                  <div className="text-sm text-muted-foreground mt-1">דקות שיחה חינם</div>
+                  <div className="text-2xl md:text-3xl font-bold text-accent-light">30+</div>
+                  <div className="text-sm text-white/70 mt-1">דקות שיחה חינם</div>
                 </div>
               </div>
             </div>
@@ -400,6 +406,20 @@ export default function CoachingPage() {
         </div>
       </section>
 
+      {/* ===== TRANSFORMATION IMAGE ===== */}
+      <section className="py-12">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <div className="relative w-full h-72 rounded-2xl overflow-hidden">
+            <Image
+              src="/images/generated/coaching-transformation.jpg"
+              alt="תהליך שינוי וצמיחה אישית"
+              fill
+              className="object-cover"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* ===== HOW IT WORKS - 4 STEPS ===== */}
       <section id="how-it-works" className="py-24">
         <div className="container mx-auto px-4">
@@ -471,6 +491,18 @@ export default function CoachingPage() {
                 </CardContent>
               </Card>
             ))}
+          </div>
+
+          {/* Results image */}
+          <div className="mt-12 max-w-xs mx-auto">
+            <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-lg">
+              <Image
+                src="/images/generated/coaching-results.jpg"
+                alt="תוצאות הליווי - זוגות מאושרים"
+                fill
+                className="object-cover"
+              />
+            </div>
           </div>
 
           {/* Guarantee callout */}

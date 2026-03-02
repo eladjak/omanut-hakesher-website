@@ -10,6 +10,8 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipToContent } from "@/components/SkipToContent";
 import { OrganizationJsonLd } from "@/components/JsonLd";
+import { GenderProvider } from "@/components/GenderProvider";
+import { WelcomeModal } from "@/components/WelcomeModal";
 
 const heebo = Heebo({
   variable: "--font-heebo",
@@ -88,19 +90,28 @@ export default function RootLayout({
             __html: `(function(){try{var t=localStorage.getItem("theme");if(t==="dark"||(t!=="light"&&window.matchMedia("(prefers-color-scheme:dark)").matches)){document.documentElement.classList.add("dark")}}catch(e){}})()`,
           }}
         />
+        {/* Prevent gender theme flash - runs before React hydration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var g=localStorage.getItem("gender-preference");if(g==="male")document.documentElement.classList.add("gender-male");else if(g==="female")document.documentElement.classList.add("gender-female");}catch(e){}})()`,
+          }}
+        />
         <OrganizationJsonLd />
       </head>
       <body className={`${heebo.variable} font-sans antialiased`}>
         <ThemeProvider>
-          <TooltipProvider>
-            <SkipToContent />
-            <GoogleAnalytics />
-            <Header />
-            <main id="main-content">{children}</main>
-            <Footer />
-            <WhatsAppButton />
-            <ScrollToTop />
-          </TooltipProvider>
+          <GenderProvider>
+            <TooltipProvider>
+              <SkipToContent />
+              <GoogleAnalytics />
+              <Header />
+              <main id="main-content">{children}</main>
+              <Footer />
+              <WelcomeModal />
+              <WhatsAppButton />
+              <ScrollToTop />
+            </TooltipProvider>
+          </GenderProvider>
         </ThemeProvider>
       </body>
     </html>

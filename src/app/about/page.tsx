@@ -177,18 +177,26 @@ export default function AboutPage() {
       </div>
 
       {/* Hero */}
-      <section className="py-24 bg-gradient-to-b from-muted to-background relative overflow-hidden">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/generated/about-hero.jpg"
+            alt="אלעד יעקובוביץ׳ - מנטור זוגיות"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-foreground/70" />
+        </div>
 
         <div className="container mx-auto px-4 text-center relative z-10">
-          <Badge variant="outline" className="mb-4 text-primary border-primary/30">
+          <Badge variant="outline" className="mb-4 text-white border-white/30">
             הסיפור שלי
           </Badge>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            מרווק תקוע ל<span className="text-primary">מנטור זוגיות</span>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+            מרווק תקוע ל<span className="text-accent-light">מנטור זוגיות</span>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
             הכירו את אלעד יעקובוביץ׳ - שחקן, מוזיקאי ובובנאי שהפך את המסע האישי שלו
             לדרך שכבר עזרה ל-461 זוגות למצוא אהבה
           </p>
@@ -301,8 +309,8 @@ export default function AboutPage() {
             <div className="relative">
               <div className="aspect-[4/5] rounded-3xl overflow-hidden">
                 <Image
-                  src="/images/generated/about-journey.jpg"
-                  alt="אלעד יעקובוביץ׳ - מהבמה לליווי זוגיות"
+                  src="/images/generated/about-elad-speaking.jpg"
+                  alt="אלעד יעקובוביץ׳ על הבמה"
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"

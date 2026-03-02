@@ -1,0 +1,14 @@
+# Large raw photo archives - stored locally but not deployed
+# These can be uploaded to Cloudinary/S3 for production use
+public/assets/elad-photos/conference-*.jpg
+public/assets/elad-photos/photoshoot-2025-*.jpg
+
+# Scratch/temp files
+nul
+*.docx
+~$*.docx
+
+# Claude work files (not needed for deployment)
+.claude/research/
+.claude/scraped-content/
+.claude/recovered-content/

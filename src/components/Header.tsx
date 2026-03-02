@@ -5,6 +5,8 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useTheme } from "@/components/ThemeProvider";
+import { useGender } from "@/components/GenderProvider";
+import type { Gender } from "@/lib/gendered-content";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
@@ -24,6 +26,21 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
+  const { gender, setGender } = useGender();
+
+  const cycleGender = () => {
+    const cycle: Gender[] = ["neutral", "female", "male"];
+    const currentIndex = cycle.indexOf(gender);
+    const nextIndex = (currentIndex + 1) % cycle.length;
+    setGender(cycle[nextIndex]);
+  };
+
+  const genderLabel =
+    gender === "male"
+      ? "מצב גברי - לחצו לשינוי"
+      : gender === "female"
+        ? "מצב נשי - לחצו לשינוי"
+        : "התאמה אישית - לחצו לשינוי";
   const menuRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -123,7 +140,7 @@ export function Header() {
             ))}
           </ul>
 
-          {/* Right side: Theme toggle + CTA */}
+          {/* Right side: Theme toggle + Gender toggle + CTA */}
           <div className="hidden xl:flex items-center gap-3">
             {/* Dark/Light Mode Toggle */}
             <button
@@ -142,14 +159,66 @@ export function Header() {
               )}
             </button>
 
+            {/* Gender Theme Toggle */}
+            <button
+              onClick={cycleGender}
+              className="p-2.5 rounded-xl text-foreground/60 hover:text-foreground hover:bg-muted transition-colors"
+              aria-label={genderLabel}
+              title={genderLabel}
+            >
+              {gender === "male" ? (
+                <svg className="w-5 h-5 text-[#1E3A5F]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              ) : gender === "female" ? (
+                <svg className="w-5 h-5 text-[#E85D75]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              ) : (
+                <span className="flex -space-x-1.5" aria-hidden="true">
+                  <svg className="w-4 h-4 text-[#E85D75]" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                  <svg className="w-4 h-4 text-[#1E3A5F]" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                </span>
+              )}
+            </button>
+
             {/* CTA Button */}
             <Button asChild className="rounded-full bg-primary hover:bg-primary-dark text-white shadow-md shadow-primary/20">
               <Link href="/coaching">שיחת היכרות חינם</Link>
             </Button>
           </div>
 
-          {/* Mobile: Theme toggle + Menu Button */}
+          {/* Mobile: Theme toggle + Gender toggle + Menu Button */}
           <div className="flex xl:hidden items-center gap-2">
+            <button
+              onClick={cycleGender}
+              className="p-2 rounded-lg text-foreground/60 hover:text-foreground hover:bg-muted transition-colors"
+              aria-label={genderLabel}
+              title={genderLabel}
+            >
+              {gender === "male" ? (
+                <svg className="w-5 h-5 text-[#1E3A5F]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              ) : gender === "female" ? (
+                <svg className="w-5 h-5 text-[#E85D75]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              ) : (
+                <span className="flex -space-x-1" aria-hidden="true">
+                  <svg className="w-4 h-4 text-[#E85D75]" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                  <svg className="w-4 h-4 text-[#1E3A5F]" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                </span>
+              )}
+            </button>
             <button
               onClick={toggleTheme}
               className="p-2 rounded-lg text-foreground/60 hover:text-foreground hover:bg-muted transition-colors"

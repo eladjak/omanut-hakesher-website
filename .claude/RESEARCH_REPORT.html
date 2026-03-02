@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מחקר מקיף - אומנות הקשר | פברואר 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --blue: #1E3A5F;
+    --pink: #E85D75;
+    --gold: #D4A853;
+    --bg: #FAFAFA;
+    --card: #FFFFFF;
+    --text: #333333;
+    --text-light: #666666;
+    --border: #E5E5E5;
+    --green: #2D8A56;
+    --red: #D94444;
+    --orange: #E8943A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    direction: rtl;
+  }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, var(--blue) 0%, #2A4F7A 50%, var(--blue) 100%);
+    color: white;
+    padding: 80px 0 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 400px;
+    height: 400px;
+    background: var(--pink);
+    opacity: 0.08;
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 300px;
+    height: 300px;
+    background: var(--gold);
+    opacity: 0.08;
+    border-radius: 50%;
+  }
+  .hero h1 {
+    font-size: 2.8em;
+    font-weight: 800;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero .subtitle {
+    font-size: 1.3em;
+    font-weight: 300;
+    opacity: 0.9;
+    position: relative;
+    z-index: 1;
+  }
+  .hero .meta {
+    margin-top: 24px;
+    font-size: 0.95em;
+    opacity: 0.7;
+    position: relative;
+    z-index: 1;
+  }
+  .hero .badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--blue);
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9em;
+    margin-top: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* TOC */
+  .toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    margin: -30px auto 40px;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+  .toc h2 { color: var(--blue); font-size: 1.3em; margin-bottom: 16px; }
+  .toc ol { padding-right: 20px; }
+  .toc li { margin-bottom: 8px; }
+  .toc a { color: var(--pink); text-decoration: none; font-weight: 500; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* Sections */
+  section {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 40px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  h2 {
+    font-size: 1.8em;
+    font-weight: 800;
+    color: var(--blue);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--gold);
+  }
+
+  h3 {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: var(--blue);
+    margin: 28px 0 12px;
+  }
+
+  h4 {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--text);
+    margin: 20px 0 8px;
+  }
+
+  p { margin-bottom: 12px; }
+
+  /* Alert boxes */
+  .alert {
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin: 16px 0;
+    font-weight: 500;
+  }
+  .alert-critical {
+    background: #FEF2F2;
+    border-right: 4px solid var(--red);
+    color: #991B1B;
+  }
+  .alert-success {
+    background: #F0FDF4;
+    border-right: 4px solid var(--green);
+    color: #166534;
+  }
+  .alert-info {
+    background: #EFF6FF;
+    border-right: 4px solid var(--blue);
+    color: var(--blue);
+  }
+  .alert-gold {
+    background: #FFFBEB;
+    border-right: 4px solid var(--gold);
+    color: #92400E;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.95em;
+  }
+  th {
+    background: var(--blue);
+    color: white;
+    padding: 12px 16px;
+    text-align: right;
+    font-weight: 600;
+  }
+  td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  tr:nth-child(even) { background: #F9FAFB; }
+  tr:hover { background: #F0F4F8; }
+
+  /* Stats */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .stat-card {
+    background: linear-gradient(135deg, var(--blue), #2A4F7A);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .stat-card .number {
+    font-size: 2.2em;
+    font-weight: 800;
+    color: var(--gold);
+  }
+  .stat-card .label {
+    font-size: 0.9em;
+    opacity: 0.9;
+    margin-top: 4px;
+  }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: 600;
+    margin: 2px;
+  }
+  .tag-green { background: #DCFCE7; color: #166534; }
+  .tag-red { background: #FEE2E2; color: #991B1B; }
+  .tag-blue { background: #DBEAFE; color: #1E40AF; }
+  .tag-gold { background: #FEF3C7; color: #92400E; }
+  .tag-pink { background: #FCE7F3; color: #9D174D; }
+
+  /* Quote */
+  blockquote {
+    background: #F8F4F0;
+    border-right: 4px solid var(--pink);
+    padding: 20px 24px;
+    margin: 20px 0;
+    font-style: italic;
+    color: var(--text-light);
+    border-radius: 0 8px 8px 0;
+  }
+  blockquote strong { color: var(--text); font-style: normal; }
+
+  /* List */
+  ul, ol { padding-right: 20px; margin-bottom: 12px; }
+  li { margin-bottom: 6px; }
+
+  /* Funnel */
+  .funnel {
+    margin: 20px 0;
+  }
+  .funnel-stage {
+    padding: 16px 24px;
+    margin-bottom: 4px;
+    border-radius: 8px;
+    font-weight: 600;
+    position: relative;
+  }
+  .funnel-stage::after {
+    content: '▼';
+    position: absolute;
+    bottom: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #CCC;
+    font-size: 0.8em;
+    z-index: 1;
+  }
+  .funnel-stage:last-child::after { display: none; }
+  .funnel-top { background: #DBEAFE; color: #1E40AF; }
+  .funnel-mid { background: #FEF3C7; color: #92400E; }
+  .funnel-bottom { background: #DCFCE7; color: #166534; }
+
+  /* Footer */
+  .doc-footer {
+    text-align: center;
+    padding: 40px 0;
+    color: var(--text-light);
+    font-size: 0.9em;
+  }
+
+  /* Print */
+  @media print {
+    .hero { background: var(--blue) !important; -webkit-print-color-adjust: exact; }
+    section { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="container">
+    <h1>מחקר מקיף: אומנות הקשר</h1>
+    <div class="subtitle">ניתוח עסקי, מיפוי נכסים, וכיוון אסטרטגי לאתר החדש</div>
+    <div class="meta">פברואר 2026 | מוכן על ידי Claude Code</div>
+    <div class="badge">5 סוכני מחקר | 17+ מקורות | 400+ קבצים נסרקו</div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="container">
+<div class="toc">
+  <h2>תוכן עניינים</h2>
+  <ol>
+    <li><a href="#exec">תקציר מנהלים</a></li>
+    <li><a href="#identity">מי באמת אלעד יעקובוביץ'</a></li>
+    <li><a href="#products">מוצרים ושירותים - המפה המלאה</a></li>
+    <li><a href="#voice">הקול האותנטי - ניתוח טון וסגנון</a></li>
+    <li><a href="#assets">מלאי נכסים דיגיטליים</a></li>
+    <li><a href="#gaps">ניתוח פערים: אתר ישן vs. חדש</a></li>
+    <li><a href="#testimonials">עדויות לקוח אמיתיות</a></li>
+    <li><a href="#digital">נוכחות דיגיטלית</a></li>
+    <li><a href="#branding">מיתוג וזהות חזותית</a></li>
+    <li><a href="#structure">מבנה אתר מומלץ</a></li>
+    <li><a href="#action">תכנית פעולה</a></li>
+  </ol>
+</div>
+
+<!-- 1. EXECUTIVE SUMMARY -->
+<section id="exec">
+  <h2>1. תקציר מנהלים</h2>
+
+  <div class="alert alert-critical">
+    <strong>הבעיה המרכזית:</strong> האתר הנוכחי בנוי על תוכן גנרי ובדוי שלא משקף את מי שאלעד הוא, מה הוא עושה, ומה הופך את אומנות הקשר לייחודית. האתר מתייחס אליו בלשון נקבה, ממציא לו תארים, ומציג שירותים שאינם קשורים למה שהוא באמת מציע.
+  </div>
+
+  <h3>מה נחקר</h3>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="number">18</div>
+      <div class="label">דפי אתר ישן</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">17</div>
+      <div class="label">דפי נחיתה רב מסר</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">9</div>
+      <div class="label">עדויות לקוח אמיתיות</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">73</div>
+      <div class="label">תסריטי וידאו</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">78</div>
+      <div class="label">סרטוני קורס</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">71K</div>
+      <div class="label">מילים בספר מוכן</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">13</div>
+      <div class="label">פרקי פודקאסט</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">10+</div>
+      <div class="label">מדריכים חינמיים</div>
+    </div>
+  </div>
+
+  <h3>3 מסקנות מרכזיות</h3>
+  <ol>
+    <li><strong>יש עושר אדיר של תוכן אותנטי</strong> - ספר מוכן, 73 תסריטים, מדריכים, עדויות אמיתיות, סדרות מיילים. האתר הנוכחי לא משתמש באף אחד מהם.</li>
+    <li><strong>הקול של אלעד הוא הנכס מספר 1</strong> - ישיר, כנה, אותנטי, ללא פילטר. הקופי בדפי הנחיתה הוא זהב. האתר הנוכחי מחליף את הקול הזה בשפה גנרית.</li>
+    <li><strong>משפך מכירה מוכח קיים</strong> - מ-lead magnets חינמיים, דרך אירוע אהבה ומועדון 4₪, ועד ליווי VIP ב-24,000₪. האתר הנוכחי לא מציג אף אחד מהמוצרים האמיתיים.</li>
+  </ol>
+</section>
+
+<!-- 2. IDENTITY -->
+<section id="identity">
+  <h2>2. מי באמת אלעד יעקובוביץ'</h2>
+
+  <div class="alert alert-critical">
+    <strong>טעות קריטית באתר הנוכחי:</strong> האתר מתייחס לאלעד בלשון נקבה ("מטפלת זוגית מוסמכת"), ממציא לו תארים שאין לו, ומציג ביוגרפיה בדויה שלא קשורה אליו.
+  </div>
+
+  <h3>הזהות האמיתית</h3>
+  <table>
+    <tr><th style="width:35%">פרט</th><th>מידע</th></tr>
+    <tr><td><strong>שם מלא</strong></td><td>אלעד יעקובוביץ'</td></tr>
+    <tr><td><strong>מגדר</strong></td><td>גבר (לא אישה!)</td></tr>
+    <tr><td><strong>תפקיד</strong></td><td>מנטור למציאת זוגיות | מייסד ומנהל אומנות הקשר</td></tr>
+    <tr><td><strong>ניסיון</strong></td><td>15+ שנים (מ-2008/2010)</td></tr>
+    <tr><td><strong>הכשרות</strong></td><td>NLP, CBT, קואצ'ינג יהודי, דמיון מודרך</td></tr>
+    <tr><td><strong>הישג מרכזי</strong></td><td>444+ זוגות מצאו זוגיות (המספר המעודכן מדפי הנחיתה)</td></tr>
+    <tr><td><strong>מצב משפחתי</strong></td><td>נשוי</td></tr>
+    <tr><td><strong>מגורים</strong></td><td>יקנעם עילית</td></tr>
+    <tr><td><strong>טלפון</strong></td><td>052-542-7474 / 051-251-8025 (עסקי)</td></tr>
+    <tr><td><strong>מייל</strong></td><td>support@ohlove.co.il</td></tr>
+  </table>
+
+  <h3>הרקע הייחודי (שלא מוזכר באתר!)</h3>
+  <p>לאלעד יש רקע אומנותי עשיר שמייחד אותו מכל מאמן/מנטור אחר בתחום:</p>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;">
+    <span class="tag tag-pink">שחקן (4 שנות ניסיון)</span>
+    <span class="tag tag-pink">מוזיקאי ומלחין</span>
+    <span class="tag tag-pink">כותב שירים</span>
+    <span class="tag tag-pink">מהנדס סאונד</span>
+    <span class="tag tag-pink">בובנאי טלוויזיה</span>
+    <span class="tag tag-pink">מאייר ומעצב</span>
+    <span class="tag tag-pink">אנימטור</span>
+    <span class="tag tag-pink">בונה תפאורות</span>
+    <span class="tag tag-blue">אודישן כוכב נולד עונה 10</span>
+    <span class="tag tag-blue">שידור ברדיו 106FM</span>
+    <span class="tag tag-blue">ראיון במגזין שליש גן עדן</span>
+  </div>
+
+  <blockquote>
+    <strong>תובנה:</strong> הרקע האומנותי הזה הוא מבדל שיווקי חזק. "אומנות הקשר" הוא לא רק שם - זו אומנות במובן האמיתי, מאדם שחי אומנות כל חייו. זה יכול להיות הנרטיב המרכזי של האתר החדש.
+  </blockquote>
+
+  <h3>הסיפור האישי (מתוך הקופי המקורי)</h3>
+  <p>אלעד מספר באופן פתוח על הרווקות הקשה שלו: <em>"רוב הילדות שלי הייתי די בודד ואומלל"</em>. הוא עבר דרך ארוכה מרווקות קשה לזוגיות מאושרת, ומתוך המסע הזה נולדה השליחות: לעזור לאחרים לעשות את אותו המסע.</p>
+  <p>בשנת 2024, כתב מייל כנה ופגיע במיוחד בו סיפר על המשבר שעבר בתקופת מלחמת חרבות ברזל - תחושות של חוסר אונים, בושה, ואשמה - ואיך בחר להפוך את המשבר להזדמנות. <strong>הכנות הזו היא הנכס הגדול ביותר שלו.</strong></p>
+
+  <h3>הגדרת התפקיד (מה הוא לא!)</h3>
+  <table>
+    <tr><th>מה שהאתר אומר (שגוי)</th><th>מה שצריך להיות</th></tr>
+    <tr><td><span class="tag tag-red">מטפלת זוגית מוסמכת</span></td><td><span class="tag tag-green">מנטור למציאת זוגיות</span></td></tr>
+    <tr><td><span class="tag tag-red">ייעוץ זוגי</span></td><td><span class="tag tag-green">ליווי אישי למציאת זוגיות</span></td></tr>
+    <tr><td><span class="tag tag-red">טיפולים</span></td><td><span class="tag tag-green">תכניות וקורסים מעשיים</span></td></tr>
+    <tr><td><span class="tag tag-red">גנרי, אקדמי</span></td><td><span class="tag tag-green">ישיר, אותנטי, מעשי</span></td></tr>
+  </table>
+</section>
+
+<!-- 3. PRODUCTS -->
+<section id="products">
+  <h2>3. מוצרים ושירותים - המפה המלאה</h2>
+
+  <p>מהמחקר עולה שלאומנות הקשר יש <strong>מערך מוצרים מלא ומובנה</strong> שלא בא לידי ביטוי כלל באתר הנוכחי:</p>
+
+  <h3>משפך המוצרים</h3>
+  <div class="funnel">
+    <div class="funnel-stage funnel-top" style="padding-right:10%;">
+      <strong>מודעות (חינם)</strong><br>
+      7 מדריכים להורדה | אירוע אהבה (זום) | פודקאסט "מוצאים אהבה!" | תוכן ברשתות
+    </div>
+    <div class="funnel-stage funnel-top" style="padding-right:15%;">
+      <strong>טעימה (4-97₪)</strong><br>
+      מועדון הדרך 90D (4₪/חודש) | כרטיס היכרויות מנצח (97₪) | שיחת ייעוץ חינם
+    </div>
+    <div class="funnel-stage funnel-mid" style="padding-right:20%;">
+      <strong>מוצר ליבה (1,850-2,970₪)</strong><br>
+      תכנית "הדרך" 90 יום | חדר כושר לדייטים | שילוב הדרך+חדר כושר
+    </div>
+    <div class="funnel-stage funnel-bottom" style="padding-right:25%;">
+      <strong>פרימיום (24,000₪)</strong><br>
+      ליווי אישי VIP | התחייבות לתוצאה | 6-12 חודשים עד חתונה
+    </div>
+  </div>
+
+  <h3>פירוט מוצרים</h3>
+  <table>
+    <tr>
+      <th>מוצר</th>
+      <th>מחיר</th>
+      <th>משך</th>
+      <th>מה כולל</th>
+    </tr>
+    <tr>
+      <td><strong>ליווי אישי VIP</strong></td>
+      <td>24,000₪</td>
+      <td>6-12 חודשים</td>
+      <td>ליווי יומיומי, התחייבות לחתונה, דפים נפרדים לגברים/נשים</td>
+    </tr>
+    <tr>
+      <td><strong>הדרך + חדר כושר</strong></td>
+      <td>2,970₪</td>
+      <td>90 יום</td>
+      <td>6 שלבים, סרטון יומי, מנטור בצ'אט, קהילה, 12 מפגשי תרגול, 8 בונוסים</td>
+    </tr>
+    <tr>
+      <td><strong>תכנית הדרך</strong></td>
+      <td>1,850₪</td>
+      <td>90 יום</td>
+      <td>6 שלבים, תוכן יומי, ליווי בצ'אט, קהילה</td>
+    </tr>
+    <tr>
+      <td><strong>חדר כושר לדייטים</strong></td>
+      <td>1,850₪</td>
+      <td>12 מפגשים</td>
+      <td>תרגול מעשי של דייטים באונליין</td>
+    </tr>
+    <tr>
+      <td><strong>כרטיס היכרויות מנצח</strong></td>
+      <td>97₪</td>
+      <td>חד-פעמי</td>
+      <td>כתיבת פרופיל מקצועי + 3 בונוסים</td>
+    </tr>
+    <tr>
+      <td><strong>מועדון הדרך 90D</strong></td>
+      <td>4₪/חודש ראשון, 30₪ אח"כ</td>
+      <td>חודשי</td>
+      <td>מפגש שבועי, ליווי בצ'אט, קהילה, אירועים חינם</td>
+    </tr>
+    <tr>
+      <td><strong>אירוע אהבה</strong></td>
+      <td>חינם</td>
+      <td>~1.5 שעות</td>
+      <td>מפגש זום חי, שאלות, ללא הקלטה</td>
+    </tr>
+    <tr>
+      <td><strong>שיחת ייעוץ</strong></td>
+      <td>חינם</td>
+      <td>30 דקות</td>
+      <td>בדיקת התאמה, מוגבל ל-10 לקוחות</td>
+    </tr>
+  </table>
+
+  <div class="alert alert-gold">
+    <strong>6 שלבי שיטת "הדרך":</strong> גישה (שבועות 1-2) → תקשורת (3-5) → משיכה (6-8) → חיבור וכימיה (9-11) → אינטימיות רגשית → מחויבות (12-13)
+  </div>
+
+  <h3>מדריכים חינמיים (Lead Magnets) - מוכנים!</h3>
+  <table>
+    <tr><th>#</th><th>מדריך</th><th>פורמט</th><th>קיים בדיסק</th></tr>
+    <tr><td>1</td><td>8 דרכים לחיים של אומץ</td><td>PDF</td><td><span class="tag tag-green">כן</span></td></tr>
+    <tr><td>2</td><td>10 כללים לשיחה מנצחת בדייטים</td><td>PDF</td><td><span class="tag tag-green">כן</span></td></tr>
+    <tr><td>3</td><td>"פשוט עשה זאת!" - כלים להתגברות</td><td>PDF + שער</td><td><span class="tag tag-green">כן</span></td></tr>
+    <tr><td>4</td><td>מדריך למציאת אהבה וזוגיות</td><td>PDF</td><td><span class="tag tag-green">כן</span></td></tr>
+    <tr><td>5</td><td>ברוכים הבאים למשחק החיים</td><td>PDF</td><td><span class="tag tag-green">כן</span></td></tr>
+    <tr><td>6</td><td>כתיבת חזון אישי - 8 תחומי חיים</td><td>PDF</td><td><span class="tag tag-green">כן</span></td></tr>
+    <tr><td>7</td><td>20 שאלות שחייבים לשאול לפני שמתחתנים</td><td>PDF</td><td><span class="tag tag-green">כן</span></td></tr>
+    <tr><td>8</td><td>7 עקרונות הצילום לפרופיל מושלם</td><td>PDF + DOCX</td><td><span class="tag tag-green">כן</span></td></tr>
+    <tr><td>9</td><td>5 סודות הסטיילינג לדייטים</td><td>PDF</td><td><span class="tag tag-green">כן</span></td></tr>
+    <tr><td>10</td><td>8 צעדים למציאת החבר/ה הראשונים</td><td>PDF + וידאו!</td><td><span class="tag tag-green">כן</span></td></tr>
+  </table>
+
+  <div class="alert alert-success">
+    <strong>כל 10 המדריכים קיימים במחשב ומוכנים לשימוש!</strong> ניתן לשלב אותם באתר כ-lead magnets מיידיים.
+  </div>
+</section>
+
+<!-- 4. VOICE -->
+<section id="voice">
+  <h2>4. הקול האותנטי - ניתוח טון וסגנון</h2>
+
+  <p>מניתוח של 17 דפי נחיתה, מייל אישי, ותוכן הספר, עולה תמונה ברורה של הקול הייחודי של אלעד:</p>
+
+  <h3>מאפייני הטון</h3>
+  <table>
+    <tr><th>מאפיין</th><th>תיאור</th><th>דוגמה</th></tr>
+    <tr>
+      <td><strong>ישיר ובלתי מתפשר</strong></td>
+      <td>לא מתנצל, לא עושה הנחות, אומר את האמת</td>
+      <td>"אל תעשה לעצמך הנחות, ואל תצפה שאתן לך אחת!"</td>
+    </tr>
+    <tr>
+      <td><strong>אח גדול, לא מרצה</strong></td>
+      <td>מדבר כמו חבר שעבר את זה, לא מלמעלה</td>
+      <td>"רוב הילדות שלי הייתי די בודד ואומלל"</td>
+    </tr>
+    <tr>
+      <td><strong>שליחותי ואמוני</strong></td>
+      <td>רואה בעבודה שליחות, מחובר לערכים רוחניים</td>
+      <td>"אני עושה כל השתדלות... ואתה בורא עולם דואג לכל השאר"</td>
+    </tr>
+    <tr>
+      <td><strong>פגיע ואותנטי</strong></td>
+      <td>חושף חולשות, כותב ומוחק, לא מתחזה</td>
+      <td>"הרגשתי מיותר. חסר אונים."</td>
+    </tr>
+    <tr>
+      <td><strong>מאתגר ומניע</strong></td>
+      <td>מזהה כאב אבל דוחף לפעולה, לא מרחם</td>
+      <td>"תפעל ותעשה בלי תירוצים"</td>
+    </tr>
+    <tr>
+      <td><strong>פרגמטי</strong></td>
+      <td>כלים מעשיים, לוחות זמנים, מספרים</td>
+      <td>"3 חודשים, 5-10 דקות ביום, צעד אחר צעד"</td>
+    </tr>
+  </table>
+
+  <h3>משפטי מפתח (מתוך הקופי המקורי)</h3>
+  <blockquote>
+    "אנחנו לא שדכנות ולא אתר הכרויות. אנחנו בונים כלים למצוא זוגיות בעצמך."
+  </blockquote>
+  <blockquote>
+    "יש שיטה. היא אמיתית. היא עובדת, היא שינתה את חיי ושינתה חיים של המון המון מבקשי זוגיות."
+  </blockquote>
+  <blockquote>
+    "הזוגיות שאתה ראוי לה לא תדפוק לך בדלת. אבל אם תצא לדרך - היא מחכה לך."
+  </blockquote>
+
+  <h3>פתיחת דפי נחיתה (נוסחה חוזרת שעובדת)</h3>
+  <div style="background:#F8F4F0; padding:20px; border-radius:8px; margin:12px 0;">
+    <p style="font-size:1.2em; font-weight:700; color:var(--pink);">עדיין לבד בלי אהבה וזוגיות?</p>
+    <ul>
+      <li>ניסית כבר פסיכולוגים, מאמנים, שידוכים, סדנאות...</li>
+      <li>הזמן רץ, הייאוש והתסכול מחלחלים פנימה</li>
+      <li>כולם סביבך מתחתנים ומתקדמים... ונשארת מאחור</li>
+    </ul>
+  </div>
+
+  <div class="alert alert-info">
+    <strong>המלצה:</strong> הקופי באתר החדש חייב לשמור על הטון הזה. לא ללטש אותו לשפה שיווקית גנרית. הכנות וה"בלי פילטר" הם מה שמבדיל את אלעד מכל מתחרה.
+  </div>
+</section>
+
+<!-- 5. ASSETS -->
+<section id="assets">
+  <h2>5. מלאי נכסים דיגיטליים</h2>
+
+  <p>נמצאו <strong>5 פרויקטים דיגיטליים</strong>, מאות קבצים, ותוכן מוכן לשימוש:</p>
+
+  <h3>פרויקטים פעילים</h3>
+  <table>
+    <tr><th>פרויקט</th><th>סטטוס</th><th>רלוונטיות לאתר</th></tr>
+    <tr>
+      <td><strong>אתר אומנות הקשר</strong><br><small>omanut-hakesher-website</small></td>
+      <td><span class="tag tag-green">deployed</span></td>
+      <td>הפרויקט הנוכחי - צריך שיפוץ תוכן מהיסוד</td>
+    </tr>
+    <tr>
+      <td><strong>הדרך נקסט</strong><br><small>haderech-next</small></td>
+      <td><span class="tag tag-blue">בפיתוח מתקדם</span></td>
+      <td>פלטפורמת למידה - Next.js + Convex + Clerk, 131 בדיקות, 29 עמודים</td>
+    </tr>
+    <tr>
+      <td><strong>ספר אומנות הקשר</strong><br><small>omanut-hakesher-book</small></td>
+      <td><span class="tag tag-green">הושלם!</span></td>
+      <td>71,000 מילים, 10 פרקים + 3 נספחים, 3 סבבי עריכה, DOCX סופי</td>
+    </tr>
+    <tr>
+      <td><strong>עריכת תסריטים</strong><br><small>omanut-hakesher-course</small></td>
+      <td><span class="tag tag-blue">פעיל</span></td>
+      <td>ניהול 73 תסריטי וידאו לקורס הדרך</td>
+    </tr>
+  </table>
+
+  <h3>תוכן מוכן לשימוש באתר</h3>
+  <table>
+    <tr><th>סוג תוכן</th><th>כמות</th><th>מצב</th></tr>
+    <tr><td>תסריטי שיעורים</td><td>73 (12 שבועות)</td><td><span class="tag tag-green">מוכן</span></td></tr>
+    <tr><td>סרטוני וידאו</td><td>78 (MP4)</td><td><span class="tag tag-green">מוכן</span></td></tr>
+    <tr><td>ספר מלא</td><td>71,000 מילים</td><td><span class="tag tag-green">מוכן</span></td></tr>
+    <tr><td>מדריכים/Lead Magnets</td><td>10+</td><td><span class="tag tag-green">מוכן</span></td></tr>
+    <tr><td>סדרת מיילים 2026</td><td>3 סדרות כתובות</td><td><span class="tag tag-green">מוכן</span></td></tr>
+    <tr><td>מצגת וובינר מכירה</td><td>מלאה + עיצוב</td><td><span class="tag tag-green">מוכן</span></td></tr>
+    <tr><td>המלצות WhatsApp</td><td>13 צילומי מסך</td><td><span class="tag tag-green">מוכן</span></td></tr>
+    <tr><td>עדויות לקוח מרב מסר</td><td>9 (2 עם וידאו)</td><td><span class="tag tag-green">מוכן</span></td></tr>
+    <tr><td>סילבוס תכנית הדרך</td><td>4 גרסאות (2020-2025)</td><td><span class="tag tag-green">מוכן</span></td></tr>
+    <tr><td>אפיון פלטפורמה 2026</td><td>מסמך מקיף</td><td><span class="tag tag-green">מוכן</span></td></tr>
+    <tr><td>פרקי פודקאסט</td><td>13 פרקים</td><td><span class="tag tag-green">מוכן</span></td></tr>
+    <tr><td>לוגואים</td><td>8 גרסאות (כולל 2024)</td><td><span class="tag tag-green">מוכן</span></td></tr>
+    <tr><td>תמלולי קורס</td><td>60+ קבצים</td><td><span class="tag tag-green">מוכן</span></td></tr>
+    <tr><td>מצגות הרצאה</td><td>6 מצגות PPTX</td><td><span class="tag tag-green">מוכן</span></td></tr>
+  </table>
+
+  <h3>מה חסר</h3>
+  <table>
+    <tr><th>פריט</th><th>סטטוס</th><th>פתרון</th></tr>
+    <tr><td>תמונות מקצועיות של אלעד</td><td><span class="tag tag-red">חסר</span></td><td>לחפש ב-Canva / OneDrive / צילום חדש</td></tr>
+    <tr><td>SVG של הלוגו</td><td><span class="tag tag-red">חסר</span></td><td>להמיר מ-PNG או לבקש מעצב</td></tr>
+    <tr><td>סרטון תדמית</td><td><span class="tag tag-red">חסר</span></td><td>לערוך מתוך הסרטונים הקיימים</td></tr>
+    <tr><td>תמונות מאירועים</td><td><span class="tag tag-gold">חלקי</span></td><td>יש גרפיקות זום, צריך תמונות אמיתיות</td></tr>
+    <tr><td>Favicon ייעודי</td><td><span class="tag tag-red">חסר</span></td><td>ליצור מהלוגו</td></tr>
+  </table>
+</section>
+
+<!-- 6. GAPS -->
+<section id="gaps">
+  <h2>6. ניתוח פערים: אתר ישן vs. חדש</h2>
+
+  <table>
+    <tr>
+      <th style="width:25%">נושא</th>
+      <th style="width:30%">אתר ישן (Wix)</th>
+      <th style="width:30%">אתר חדש (Next.js)</th>
+      <th style="width:15%">סטטוס</th>
+    </tr>
+    <tr>
+      <td>זהות אלעד</td>
+      <td>מפורטת + הכשרות + סיפור</td>
+      <td>בדויה, לשון נקבה</td>
+      <td><span class="tag tag-red">קריטי</span></td>
+    </tr>
+    <tr>
+      <td>מוצרים</td>
+      <td>6+ מוצרים מפורטים + מחירים</td>
+      <td>גנרי, אין מוצרים אמיתיים</td>
+      <td><span class="tag tag-red">קריטי</span></td>
+    </tr>
+    <tr>
+      <td>טון ושפה</td>
+      <td>ישיר, אותנטי, מניע</td>
+      <td>גנרי, שיווקי, משעמם</td>
+      <td><span class="tag tag-red">קריטי</span></td>
+    </tr>
+    <tr>
+      <td>CTA מרכזי</td>
+      <td>שיחת ייעוץ חינם</td>
+      <td>טופס צור קשר רגיל</td>
+      <td><span class="tag tag-red">קריטי</span></td>
+    </tr>
+    <tr>
+      <td>הוכחה חברתית</td>
+      <td>310+ זוגות, מספרים ספציפיים</td>
+      <td>8 המלצות בדויות</td>
+      <td><span class="tag tag-red">קריטי</span></td>
+    </tr>
+    <tr>
+      <td>פודקאסט</td>
+      <td>בולט, רדיו 106FM</td>
+      <td>לא קיים</td>
+      <td><span class="tag tag-red">חסר</span></td>
+    </tr>
+    <tr>
+      <td>קהילות</td>
+      <td>6+ פלטפורמות</td>
+      <td>אין קישורים</td>
+      <td><span class="tag tag-red">חסר</span></td>
+    </tr>
+    <tr>
+      <td>אירועים/כנסים</td>
+      <td>דף ייעודי</td>
+      <td>אין</td>
+      <td><span class="tag tag-red">חסר</span></td>
+    </tr>
+    <tr>
+      <td>בלוג</td>
+      <td>24 מאמרים ייחודיים</td>
+      <td>6 מאמרים גנריים</td>
+      <td><span class="tag tag-gold">שיפור</span></td>
+    </tr>
+    <tr>
+      <td>Lead Magnets</td>
+      <td>7 מדריכים חינמיים</td>
+      <td>אין</td>
+      <td><span class="tag tag-red">חסר</span></td>
+    </tr>
+    <tr>
+      <td>הפרדה מגדרית</td>
+      <td>דפי גברים/נשים נפרדים</td>
+      <td>אין</td>
+      <td><span class="tag tag-gold">לשקול</span></td>
+    </tr>
+    <tr>
+      <td>SEO</td>
+      <td>חלש (Wix)</td>
+      <td>חזק (Next.js, structured data)</td>
+      <td><span class="tag tag-green">יתרון חדש</span></td>
+    </tr>
+    <tr>
+      <td>ביצועים</td>
+      <td>בינוני</td>
+      <td>מצוין (SSR, אופטימיזציות)</td>
+      <td><span class="tag tag-green">יתרון חדש</span></td>
+    </tr>
+    <tr>
+      <td>נגישות</td>
+      <td>בסיסית</td>
+      <td>WCAG 2.1 מלא</td>
+      <td><span class="tag tag-green">יתרון חדש</span></td>
+    </tr>
+    <tr>
+      <td>Dark Mode</td>
+      <td>אין</td>
+      <td>מלא</td>
+      <td><span class="tag tag-green">יתרון חדש</span></td>
+    </tr>
+    <tr>
+      <td>עיצוב</td>
+      <td>מיושן (2018)</td>
+      <td>מודרני (2026)</td>
+      <td><span class="tag tag-green">יתרון חדש</span></td>
+    </tr>
+  </table>
+</section>
+
+<!-- 7. TESTIMONIALS -->
+<section id="testimonials">
+  <h2>7. עדויות לקוח אמיתיות</h2>
+
+  <p>נמצאו <strong>9 עדויות לקוח מפורטות</strong> בדפי רב מסר, כולל 2 עם וידאו ו-5 עם תמונות אמיתיות:</p>
+
+  <table>
+    <tr><th>#</th><th>לקוח</th><th>לפני</th><th>אחרי</th><th>משך</th><th>וידאו</th><th>תמונה</th></tr>
+    <tr><td>1</td><td><strong>בני סניידר</strong></td><td>שנים לבד, מערכות יחסים נכשלות</td><td>נשוי + בת!</td><td>תהליך ארוך</td><td><span class="tag tag-green">כן</span></td><td><span class="tag tag-green">חתונה</span></td></tr>
+    <tr><td>2</td><td><strong>לימור שקד</strong></td><td>גרושה, 8 שנים לבד, ניסתה מאמנים אחרים</td><td>בזוגיות מאושרת</td><td>תהליך ארוך</td><td><span class="tag tag-green">כן</span></td><td><span class="tag tag-green">זוגי</span></td></tr>
+    <tr><td>3</td><td><strong>י. (יעל כהן)</strong></td><td>שנים של מערכות יחסים כושלות</td><td>נשואה באושר</td><td>חודש!</td><td>-</td><td>-</td></tr>
+    <tr><td>4</td><td><strong>ד.</strong></td><td>גירושין קשים, שנות פחד</td><td>נשואה באושר</td><td>קצר</td><td>-</td><td>-</td></tr>
+    <tr><td>5</td><td><strong>מ.ל.</strong></td><td>חרדי, גרוש, 40+, מוצא אחרון</td><td>נשוי באושר</td><td>קצר</td><td>-</td><td>-</td></tr>
+    <tr><td>6</td><td><strong>מארק לוסקי</strong></td><td>צעיר, ביישן, חסר ביטחון</td><td>בזוגיות מאושרת</td><td>3 חודשים</td><td>-</td><td><span class="tag tag-green">כן</span></td></tr>
+    <tr><td>7</td><td><strong>דוד לוינשטרן</strong></td><td>אפס הצלחה ביצירת קשרים</td><td>נשוי לאלנה!</td><td>3 חודשים</td><td>-</td><td><span class="tag tag-green">כן</span></td></tr>
+    <tr><td>8</td><td><strong>אוריה אשטה</strong></td><td>אם חד-הורית, לקות ראייה</td><td>בזוגיות מאושרת</td><td>חודש</td><td>-</td><td><span class="tag tag-green">כן</span></td></tr>
+    <tr><td>9</td><td><strong>מאיר דוד חי</strong></td><td>ביטחון עצמי נמוך</td><td>נשוי באושר</td><td>חודשיים</td><td>-</td><td><span class="tag tag-green">כן</span></td></tr>
+  </table>
+
+  <div class="alert alert-gold">
+    <strong>ציטוט בולט מאוריה אשטה:</strong> "ניצחתי את המוגבלות שלי" - סיפור עוצמתי של אם חד-הורית עם לקות ראייה שמצאה אהבה תוך חודש.
+  </div>
+
+  <p><strong>בנוסף:</strong> 13 צילומי מסך WhatsApp של המלצות אמיתיות נמצאים בתיקיית OneDrive.</p>
+
+  <div class="alert alert-info">
+    <strong>המלצה לאתר:</strong> כל עדות צריכה להיות דף נפרד עם סיפור מלא, וידאו (אם קיים), ותמונה. בדף ההמלצות הראשי - כרטיסים עם ציטוט קצר שמקשרים לדף המלא. העדויות עם וידאו (בני, לימור) בראש.
+  </div>
+</section>
+
+<!-- 8. DIGITAL -->
+<section id="digital">
+  <h2>8. נוכחות דיגיטלית</h2>
+
+  <h3>מפת ערוצים</h3>
+  <table>
+    <tr><th>ערוץ</th><th>פלטפורמה</th><th>סטטוס</th><th>קהל</th></tr>
+    <tr><td>אתר</td><td>ohlove.co.il (Wix)</td><td><span class="tag tag-red">מיושן</span></td><td>-</td></tr>
+    <tr><td>פודקאסט</td><td>Spotify + 12 פלטפורמות + רדיו 106FM</td><td><span class="tag tag-gold">לא פעיל מ-01/2022</span></td><td>13 פרקים</td></tr>
+    <tr><td>טלגרם</td><td>t.me/MatimLiZugiut</td><td><span class="tag tag-blue">פעיל</span></td><td>194 מנויים</td></tr>
+    <tr><td>פייסבוק</td><td>קבוצת "מתאים לי זוגיות"</td><td><span class="tag tag-green">פעיל</span></td><td>הפלטפורמה הראשית</td></tr>
+    <tr><td>יוטיוב</td><td>אומנות הקשר</td><td><span class="tag tag-gold">לא ברור</span></td><td>-</td></tr>
+    <tr><td>וואטסאפ</td><td>קבוצת קהילה</td><td><span class="tag tag-blue">פעיל</span></td><td>-</td></tr>
+    <tr><td>אינסטגרם</td><td>נמצא פוסט אחד</td><td><span class="tag tag-red">חלש</span></td><td>-</td></tr>
+    <tr><td>לינקדאין</td><td>2 פרופילים</td><td><span class="tag tag-gold">בסיסי</span></td><td>-</td></tr>
+  </table>
+
+  <h3>הופעות תקשורת</h3>
+  <ul>
+    <li><strong>כוכב נולד עונה 10</strong> (קשת 12) - אודישן, ברשימת "11 הכי הזויים"</li>
+    <li><strong>מוצאים אהבה!</strong> - תוכנית רדיו שבועית ב-106FM</li>
+    <li><strong>מגזין שליש גן עדן</strong> - ראיון "3 דקות עם אלעד יעקובוביץ'"</li>
+    <li><strong>מומחים פלוס</strong> (mako / קשת 12) - לאמת עם אלעד</li>
+  </ul>
+
+  <h3>שותפויות עסקיות</h3>
+  <ul>
+    <li><strong>שליש גן עדן</strong> - אתר היכרויות דתי (מנכ"ל אסף נבון היה אורח בפודקאסט)</li>
+    <li><strong>פרויקט 252</strong> - אתר היכרויות</li>
+    <li><strong>SmartDating (גיא משאלי)</strong> - צילום ומיתוג לפרופילים</li>
+    <li><strong>YouCanBookMe</strong> - מערכת קביעת פגישות (ohlove-freesession.youcanbook.me)</li>
+  </ul>
+</section>
+
+<!-- 9. BRANDING -->
+<section id="branding">
+  <h2>9. מיתוג וזהות חזותית</h2>
+
+  <div class="alert alert-gold">
+    <strong>שאלה פתוחה:</strong> צבעי המיתוג שלך ל-2026 (מתוך מצגת הוובינר) שונים מהצבעים של האתר הנוכחי. צריך להחליט על כיוון אחד.
+  </div>
+
+  <table>
+    <tr><th>פרמטר</th><th>אתר נוכחי</th><th>מיתוג 2026 (מצגת)</th></tr>
+    <tr>
+      <td>צבע ראשי</td>
+      <td><span style="display:inline-block;width:20px;height:20px;background:#C4704B;border-radius:4px;vertical-align:middle;"></span> טרקוטה</td>
+      <td><span style="display:inline-block;width:20px;height:20px;background:#1E3A5F;border-radius:4px;vertical-align:middle;"></span> כחול כהה (#1E3A5F)</td>
+    </tr>
+    <tr>
+      <td>צבע משני</td>
+      <td><span style="display:inline-block;width:20px;height:20px;background:#7B9E87;border-radius:4px;vertical-align:middle;"></span> ירוק מרווה</td>
+      <td><span style="display:inline-block;width:20px;height:20px;background:#E85D75;border-radius:4px;vertical-align:middle;"></span> ורוד חם (#E85D75)</td>
+    </tr>
+    <tr>
+      <td>צבע הדגשה</td>
+      <td><span style="display:inline-block;width:20px;height:20px;background:#C9A84C;border-radius:4px;vertical-align:middle;"></span> זהב</td>
+      <td><span style="display:inline-block;width:20px;height:20px;background:#D4A853;border-radius:4px;vertical-align:middle;"></span> זהב חם (#D4A853)</td>
+    </tr>
+    <tr>
+      <td>פונט</td>
+      <td>Heebo</td>
+      <td>David Libre (כותרות) + Assistant (טקסט)</td>
+    </tr>
+  </table>
+
+  <h3>לוגואים זמינים</h3>
+  <ul>
+    <li>לוגו 2024 (הגרסה העדכנית ביותר) - PNG</li>
+    <li>לוגו נקי - PNG (כמה גדלים)</li>
+    <li>אייקון לוגו - PNG</li>
+    <li><span class="tag tag-red">חסר SVG - לא אופטימלי לווב</span></li>
+  </ul>
+</section>
+
+<!-- 10. STRUCTURE -->
+<section id="structure">
+  <h2>10. מבנה אתר מומלץ</h2>
+
+  <p>בהתבסס על כל המחקר, זהו המבנה המומלץ לאתר החדש:</p>
+
+  <table>
+    <tr><th>דף</th><th>תוכן</th><th>מקור</th></tr>
+    <tr>
+      <td><strong>דף בית</strong></td>
+      <td>Hero עם הבטחה מרכזית ("מציאת זוגיות תוך 3 חודשים") + מספרים (444+ זוגות) + CTA שיחת ייעוץ + "בתקשורת" (106FM, כוכב נולד, שליש גן עדן) + 3 עדויות מובילות + הסיפור של אלעד בקצרה</td>
+      <td>דפי נחיתה + עדויות</td>
+    </tr>
+    <tr>
+      <td><strong>אודות אלעד</strong></td>
+      <td>הסיפור האמיתי (רווקות → שליחות), רקע אומנותי, הכשרות (NLP, CBT), הגישה שלי (מהקופי המקורי), ערכים</td>
+      <td>אתר ישן + מייל + ספר</td>
+    </tr>
+    <tr>
+      <td><strong>שיטת הדרך</strong></td>
+      <td>6 שלבי השיטה ויזואלית, הסבר מעמיק, FAQ אמיתי מדפי הנחיתה, "למי זה מתאים"</td>
+      <td>דפי נחיתה + קורס</td>
+    </tr>
+    <tr>
+      <td><strong>תכניות ומחירים</strong></td>
+      <td>כל המוצרים (מועדון 4₪ עד VIP 24K), השוואה, CTA לכל מוצר</td>
+      <td>דפי נחיתה + רב מסר</td>
+    </tr>
+    <tr>
+      <td><strong>דף תכנית הדרך</strong></td>
+      <td>דף נחיתה מושקע! - קופי מהדפים הקיימים, 6 שלבים, בונוסים, עדויות, FAQ, תמחור</td>
+      <td>TheNewWay + TheWay_Jim4Dates</td>
+    </tr>
+    <tr>
+      <td><strong>ליווי אישי VIP</strong></td>
+      <td>דף נחיתה נפרד - מה כולל, התחייבות, CTA לשיחת ייעוץ. אולי הפרדה גברים/נשים</td>
+      <td>אתר ישן + PrivateVIPConsult</td>
+    </tr>
+    <tr>
+      <td><strong>סיפורי הצלחה</strong></td>
+      <td>9 עדויות אמיתיות (כרטיסים + דף מלא לכל אחד), וידאו, תמונות, ציטוטים</td>
+      <td>דפי Testimony + WhatsApp</td>
+    </tr>
+    <tr>
+      <td><strong>דף תודות</strong></td>
+      <td>קונספט ייחודי של אלעד! פרגון לאנשים ושירותים שהוא מעריך (לא המלצות לקוח)</td>
+      <td>אתר ישן + חדש</td>
+    </tr>
+    <tr>
+      <td><strong>פודקאסט והרצאות</strong></td>
+      <td>13 פרקי פודקאסט עם נגנים, "משודר ב-106FM", קישורים לכל הפלטפורמות</td>
+      <td>Spotify + פלטפורמות</td>
+    </tr>
+    <tr>
+      <td><strong>הספר</strong></td>
+      <td>תיאור, תוכן עניינים, ציטוטים, הזמנה, טקסט כריכה, קהל יעד</td>
+      <td>ספר מוכן + marketing.md</td>
+    </tr>
+    <tr>
+      <td><strong>משאבים / מדריכים</strong></td>
+      <td>10 מדריכים חינמיים להורדה (lead magnets), המלצות קריאה, כלים</td>
+      <td>PDFs מוכנים!</td>
+    </tr>
+    <tr>
+      <td><strong>בלוג</strong></td>
+      <td>מאמרים מבוססי תוכן אמיתי (מפודקאסט, מהקורס, מהרשתות). מחובר ל-Sanity CMS</td>
+      <td>24 מאמרים ישנים + פודקאסט</td>
+    </tr>
+    <tr>
+      <td><strong>קהילה</strong></td>
+      <td>קישורים לכל הקהילות (טלגרם, פייסבוק, וואטסאפ, סיגנל), אירועים קרובים</td>
+      <td>ערוצים קיימים</td>
+    </tr>
+    <tr>
+      <td><strong>צור קשר</strong></td>
+      <td>CTA ראשי: שיחת ייעוץ חינם (YouCanBookMe), WhatsApp ישיר, טופס, פרטים</td>
+      <td>דפי נחיתה</td>
+    </tr>
+  </table>
+</section>
+
+<!-- 11. ACTION PLAN -->
+<section id="action">
+  <h2>11. תכנית פעולה</h2>
+
+  <h3>שלב 1: תיקונים קריטיים (מיידי)</h3>
+  <div class="alert alert-critical">
+    <strong>חייב לקרות לפני הכל:</strong>
+  </div>
+  <table>
+    <tr><th>#</th><th>משימה</th><th>פירוט</th></tr>
+    <tr><td>1.1</td><td><strong>תיקון זהות</strong></td><td>החלפת כל התוכן הבדוי - אלעד הוא גבר, מנטור, 15+ שנים, NLP/CBT. לא מטפלת.</td></tr>
+    <tr><td>1.2</td><td><strong>דף אודות חדש</strong></td><td>מבוסס על הסיפור האמיתי מהמייל, הספר, ודפי הנחיתה</td></tr>
+    <tr><td>1.3</td><td><strong>מוצרים אמיתיים</strong></td><td>החלפת הדף הגנרי במוצרים האמיתיים עם מחירים</td></tr>
+    <tr><td>1.4</td><td><strong>עדויות אמיתיות</strong></td><td>החלפת 8 ההמלצות הבדויות ב-9 עדויות האמיתיות + וידאו</td></tr>
+    <tr><td>1.5</td><td><strong>CTA ראשי</strong></td><td>שינוי מ"טופס צור קשר" ל"שיחת ייעוץ חינמית" + WhatsApp</td></tr>
+    <tr><td>1.6</td><td><strong>מספרים אמיתיים</strong></td><td>444+ זוגות, 15+ שנים (לאמת מספר מדויק)</td></tr>
+  </table>
+
+  <h3>שלב 2: דפים חדשים (שבוע-שבועיים)</h3>
+  <table>
+    <tr><th>#</th><th>משימה</th><th>מקור תוכן</th></tr>
+    <tr><td>2.1</td><td><strong>דף תכנית הדרך</strong> (דף נחיתה מושקע)</td><td>TheNewWay + TheWay_Jim4Dates</td></tr>
+    <tr><td>2.2</td><td><strong>דף פודקאסט/הרצאות</strong></td><td>Spotify + רדיו 106FM</td></tr>
+    <tr><td>2.3</td><td><strong>דף הספר</strong></td><td>marketing.md + book-outline.md</td></tr>
+    <tr><td>2.4</td><td><strong>דף תודות</strong></td><td>קונספט ייחודי - לבנות מאפס + אתר ישן</td></tr>
+    <tr><td>2.5</td><td><strong>דף משאבים/מדריכים</strong></td><td>10 PDFs מוכנים!</td></tr>
+    <tr><td>2.6</td><td><strong>דף ליווי אישי VIP</strong></td><td>PrivateVIPConsult + אתר ישן</td></tr>
+    <tr><td>2.7</td><td><strong>FAQ חדש</strong></td><td>FAQ מדפי הנחיתה (אותנטי, לא גנרי)</td></tr>
+  </table>
+
+  <h3>שלב 3: שיפורים (שבוע 2-3)</h3>
+  <table>
+    <tr><th>#</th><th>משימה</th></tr>
+    <tr><td>3.1</td><td>בלוג חדש מבוסס תוכן אמיתי (מפודקאסט, מאתר ישן, מקהילות)</td></tr>
+    <tr><td>3.2</td><td>דף גלריה מעודכן עם אירועים אמיתיים</td></tr>
+    <tr><td>3.3</td><td>הוספת "בתקשורת" (As Seen In) - רדיו 106FM, כוכב נולד, שליש גן עדן</td></tr>
+    <tr><td>3.4</td><td>הוספת קישורים לקהילות בכל מקום רלוונטי</td></tr>
+    <tr><td>3.5</td><td>אינטגרציה עם YouCanBookMe (קביעת פגישות)</td></tr>
+    <tr><td>3.6</td><td>Lead Magnets - הורדת מדריכים חינמיים תמורת מייל</td></tr>
+  </table>
+
+  <h3>שלב 4: מיתוג ויזואלי (שבוע 3-4)</h3>
+  <table>
+    <tr><th>#</th><th>משימה</th></tr>
+    <tr><td>4.1</td><td>החלטה על פלטת צבעים (2026 vs. נוכחי)</td></tr>
+    <tr><td>4.2</td><td>תמונות אמיתיות - חיפוש ב-Canva + OneDrive, או צילום חדש</td></tr>
+    <tr><td>4.3</td><td>המרת לוגו ל-SVG</td></tr>
+    <tr><td>4.4</td><td>Favicon מהלוגו</td></tr>
+    <tr><td>4.5</td><td>OG Image מעודכן עם מיתוג נכון</td></tr>
+  </table>
+
+  <h3>שלב 5: אינטגרציות (שבוע 4+)</h3>
+  <table>
+    <tr><th>#</th><th>משימה</th></tr>
+    <tr><td>5.1</td><td>Sanity CMS - השלמת אינטגרציה לבלוג</td></tr>
+    <tr><td>5.2</td><td>Google Analytics אמיתי</td></tr>
+    <tr><td>5.3</td><td>Resend API אמיתי</td></tr>
+    <tr><td>5.4</td><td>מדיניות פרטיות</td></tr>
+    <tr><td>5.5</td><td>חיבור דומיין omanut-hakesher.co.il</td></tr>
+    <tr><td>5.6</td><td>רב מסר / ניוזלטר אלטרנטיבי - מיגרציה אם משתלם</td></tr>
+  </table>
+
+  <h3>שאלות פתוחות לאלעד</h3>
+  <ol>
+    <li><strong>מספר זוגות מעודכן?</strong> נמצאו: 266, 310, 350, 430, 444, 451 - מה המספר הנכון?</li>
+    <li><strong>פלטת צבעים:</strong> צבעי מצגת 2026 (כחול/ורוד/זהב) או צבעי האתר הנוכחי (טרקוטה/ירוק/זהב)?</li>
+    <li><strong>מומחים פלוס:</strong> האם באמת הופעת? פרטים?</li>
+    <li><strong>פודקאסט:</strong> תכנית לחדש? פרקים חדשים?</li>
+    <li><strong>תמונות:</strong> האם יש תמונות מקצועיות ב-Canva שלא נמצאו?</li>
+    <li><strong>המותג:</strong> ממשיכים עם "ohlove" או עוברים ל-"omanut-hakesher" בלבד?</li>
+    <li><strong>אינסטגרם:</strong> מה ה-handle? האם פעיל?</li>
+    <li><strong>קביעת פגישות:</strong> ממשיכים עם YouCanBookMe?</li>
+    <li><strong>ניוזלטר:</strong> ממשיכים עם רב מסר (1,345₪ ל-1,000 הודעות/יום) או מיגרציה?</li>
+    <li><strong>דף תודות:</strong> מי האנשים שתרצה לכלול? יש רשימה מהאתר הישן?</li>
+  </ol>
+</section>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <p><strong>מסמך מחקר | אומנות הקשר</strong></p>
+  <p>הופק על ידי Claude Code | 5 סוכני מחקר | פברואר 2026</p>
+  <p>קבצי מחקר מפורטים זמינים ב: <code>.claude/</code></p>
+  <p style="margin-top:12px;">
+    <small>OLD_SITE_ANALYSIS.md | LANDING_PAGES_ANALYSIS.md | TESTIMONIALS_RESEARCH.md | ONLINE_PRESENCE_AUDIT.md</small>
+  </p>
+</div>
+
+</div>
+</body>
+</html>

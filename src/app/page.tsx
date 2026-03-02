@@ -1,9 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { GenderedText } from "@/components/GenderedText";
 
 // Dynamic imports for below-fold components
 const HomeTestimonials = dynamic(
@@ -76,17 +79,14 @@ const products = [
 
 const painPoints = [
   {
-    emoji: "😤",
     title: "נמאס מדייטים שלא מובילים לשום מקום?",
     description: "כבר ניסית באמפר, בהינג׳, בטינדר. מעולה. עכשיו בוא ננסה משהו שבאמת עובד.",
   },
   {
-    emoji: "🤔",
     title: "מרגיש שאתה בסדר, אבל משהו לא עובד?",
     description: "קריירה מצוינת, חברים טובים, הכל מושלם - חוץ מהדבר הזה. הזוגיות.",
   },
   {
-    emoji: "😩",
     title: "כבר ניסית ליווי ולא עבד?",
     description: "שדכנים נותנים הזדמנויות. פסיכולוגים עוזרים להבין. אנחנו עושים את הדבר עם ליווי בשטח.",
   },
@@ -124,32 +124,37 @@ export default function HomePage() {
     <>
       {/* Hero Section */}
       <section className="relative min-h-[92dvh] flex items-center overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-bl from-primary-light/20 via-background to-secondary-light/10" />
-        {/* Decorative shapes */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
-        <div className="absolute left-0 bottom-0 w-1/3 h-1/2 bg-gradient-to-tr from-accent/10 to-transparent rounded-tr-full pointer-events-none" />
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/images/generated/hero-homepage.jpg"
+            alt="אומנות הקשר - בית הספר למציאת זוגיות"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-foreground/65" />
+        </div>
 
         <div className="container mx-auto px-4 py-20 relative z-10">
           <div className="max-w-3xl">
-            <Badge variant="secondary" className="mb-6 text-sm px-4 py-1.5 bg-primary/10 text-primary border-primary/20 hover:bg-primary/10">
+            <Badge variant="secondary" className="mb-6 text-sm px-4 py-1.5 bg-white/10 text-white border-white/20 hover:bg-white/10">
               בית הספר למציאת זוגיות - עם אלעד יעקובוביץ׳
             </Badge>
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight text-foreground">
-              מצא/י את הזוגיות
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight text-white">
+              <GenderedText id="hero.title-main" />
               <br />
               <span className="text-primary">שמגיעה לך</span>
             </h1>
-            <p className="text-xl md:text-2xl text-secondary font-medium mt-3">
+            <p className="text-xl md:text-2xl text-white/90 font-medium mt-3">
               תוך 3 חודשים. בליווי אישי. בהתחייבות לתוצאה.
             </p>
-            <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
+            <p className="mt-6 text-lg md:text-xl text-white/80 max-w-2xl leading-relaxed">
               לא עוד טיפים מפוזרים ולא עוד דייטים לשווא.
               {" "}
-              <strong className="text-foreground">אומנות הקשר</strong> היא דרך מובנית שכבר הובילה
+              <strong className="text-white">אומנות הקשר</strong> היא דרך מובנית שכבר הובילה
               {" "}
-              <strong className="text-primary">461 זוגות</strong> לזוגיות מאושרת.
+              <strong className="text-accent-light">461 זוגות</strong> לזוגיות מאושרת.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
@@ -170,8 +175,8 @@ export default function HomePage() {
             <div className="mt-16 flex flex-wrap gap-8 md:gap-12">
               {stats.map((stat, i) => (
                 <div key={i} className="text-center">
-                  <div className="text-2xl md:text-3xl font-bold text-primary">{stat.number}</div>
-                  <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
+                  <div className="text-2xl md:text-3xl font-bold text-accent-light">{stat.number}</div>
+                  <div className="text-sm text-white/70 mt-1">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -184,10 +189,10 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              מכיר את <span className="text-primary">התחושה</span> הזאת?
+              <GenderedText id="pain.feeling" />
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              אם מה שעשית עד עכשיו היה עובד - לא היית צריך להיות כאן. בוא ננסה אחרת.
+              <GenderedText id="pain.try-differently" />
             </p>
           </div>
 
@@ -195,7 +200,6 @@ export default function HomePage() {
             {painPoints.map((point, index) => (
               <Card key={index} className="border-border/50 hover:border-primary/30 hover:shadow-lg transition-all duration-200">
                 <CardContent className="p-8 text-center">
-                  <div className="text-4xl mb-4">{point.emoji}</div>
                   <h3 className="text-lg font-semibold mb-3">{point.title}</h3>
                   <p className="text-muted-foreground leading-relaxed">{point.description}</p>
                 </CardContent>
@@ -273,7 +277,7 @@ export default function HomePage() {
                 href="/about"
                 className="inline-flex items-center gap-2 mt-8 text-primary font-semibold hover:gap-3 transition-all"
               >
-                קרא עוד על הגישה שלי
+                <GenderedText id="blog.about-approach" />
                 <span>&larr;</span>
               </Link>
             </div>
@@ -336,7 +340,7 @@ export default function HomePage() {
               הדרך <span className="text-primary">שלך</span> לזוגיות
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              כמה דרכים להתחיל - בחר את מה שמתאים לך. כל אחת מהן כבר הוכיחה את עצמה.
+              <GenderedText id="products.choose" /> כל אחת מהן כבר הוכיחה את עצמה.
             </p>
           </div>
 
@@ -378,6 +382,16 @@ export default function HomePage() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               סיפורי <span className="text-primary">הצלחה</span> אמיתיים
             </h2>
+          </div>
+
+          {/* Couples image */}
+          <div className="relative w-full h-64 rounded-2xl overflow-hidden mb-10 max-w-4xl mx-auto">
+            <Image
+              src="/images/generated/homepage-couples.jpg"
+              alt="זוגות שמצאו אהבה דרך אומנות הקשר"
+              fill
+              className="object-cover"
+            />
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -433,7 +447,7 @@ export default function HomePage() {
               href="/coaching"
               className="inline-flex px-10 py-4 bg-white text-secondary rounded-full font-semibold text-lg hover:bg-accent hover:text-secondary-dark transition-colors shadow-lg"
             >
-              בוא נבדוק ביחד - שיחת היכרות חינם
+              <GenderedText id="final-cta.free-call" />
             </Link>
           </div>
         </div>
@@ -452,10 +466,11 @@ export default function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold mb-3">רוצה לקבל כלים בחינם?</h2>
+              <h2 className="text-2xl font-bold mb-3">
+                <GenderedText id="newsletter.want-free-tools" />
+              </h2>
               <p className="text-muted-foreground mb-8">
-                הצטרף לרשימת התפוצה וקבל מדריכים, טיפים ותוכן בלעדי ישירות למייל.
-                בלי ספאם, רק ערך אמיתי.
+                <GenderedText id="newsletter.join-cta" /> בלי ספאם, רק ערך אמיתי.
               </p>
               <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" aria-label="הרשמה לרשימת תפוצה">
                 <label htmlFor="newsletter-email-home" className="sr-only">כתובת אימייל</label>
@@ -492,21 +507,20 @@ export default function HomePage() {
             <span className="text-accent-light">אבל אם תצא לדרך - היא מחכה לך.</span>
           </h2>
           <p className="text-xl opacity-90 max-w-2xl mx-auto mb-10 leading-relaxed">
-            שיחת היכרות של 30+ דקות, בחינם, בלי התחייבות.
-            בוא נכיר ונבדוק ביחד אם ואיך אני יכול לעזור.
+            <GenderedText id="final-cta.body" />
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/coaching"
               className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
             >
-              לשיחת היכרות חינם
+              <GenderedText id="cta.free-call" />
             </Link>
             <Link
               href="/about"
               className="inline-flex px-10 py-4 border-2 border-white/50 text-white rounded-full font-semibold text-lg hover:bg-white/10 transition-colors"
             >
-              קרא עוד עליי
+              <GenderedText id="final-cta.read-more" />
             </Link>
           </div>
         </div>
