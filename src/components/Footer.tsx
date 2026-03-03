@@ -201,9 +201,15 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-background/40 text-sm">
           <p>&copy; {currentYear} אומנות הקשר. כל הזכויות שמורות.</p>
-          <p className="text-background/30 text-xs">
-            נבנה באהבה לקשרים טובים יותר
-          </p>
+          <div className="flex items-center gap-4">
+            <Link href="/privacy" className="text-background/30 hover:text-primary-light transition-colors text-xs">
+              מדיניות פרטיות
+            </Link>
+            <span className="text-background/20 text-xs">|</span>
+            <p className="text-background/30 text-xs">
+              נבנה באהבה לקשרים טובים יותר
+            </p>
+          </div>
         </div>
       </div>
     </footer>

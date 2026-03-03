@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>דוח שדרוג מלא - אומנות הקשר</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #faf8f5; color: #2d2015; line-height: 1.7; }
+  .header { background: linear-gradient(135deg, #c8714a 0%, #8b4513 50%, #5c2e00 100%); color: white; padding: 60px 40px; text-align: center; }
+  .header h1 { font-size: 2.8em; margin-bottom: 10px; }
+  .header .subtitle { font-size: 1.3em; opacity: 0.9; margin-bottom: 20px; }
+  .header .meta { font-size: 1em; opacity: 0.75; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+
+  .url-banner { background: #1a5c3a; color: white; text-align: center; padding: 20px; margin-bottom: 40px; border-radius: 16px; }
+  .url-banner a { color: #7ee8b0; font-size: 1.4em; font-weight: bold; text-decoration: none; }
+  .url-banner p { margin-top: 8px; opacity: 0.85; font-size: 0.95em; }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 40px; }
+  .stat-card { background: white; border-radius: 16px; padding: 24px; text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,0.07); border-top: 4px solid #c8714a; }
+  .stat-card .num { font-size: 2.5em; font-weight: 900; color: #c8714a; }
+  .stat-card .label { font-size: 0.9em; color: #666; margin-top: 4px; }
+
+  .section { margin-bottom: 48px; }
+  .section-title { font-size: 1.6em; font-weight: 800; color: #5c2e00; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #c8714a; display: flex; align-items: center; gap: 10px; }
+  .section-icon { font-size: 1.2em; }
+
+  .agents-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .agent-card { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); border-right: 4px solid; }
+  .agent-card.completed { border-color: #22c55e; }
+  .agent-card.partial { border-color: #f59e0b; }
+  .agent-card h3 { font-size: 1.1em; font-weight: 700; margin-bottom: 8px; }
+  .agent-card .status { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 600; margin-bottom: 12px; }
+  .status.done { background: #dcfce7; color: #16a34a; }
+  .status.partial { background: #fef9c3; color: #ca8a04; }
+  .agent-card ul { font-size: 0.9em; color: #444; padding-right: 16px; }
+  .agent-card li { margin-bottom: 4px; }
+
+  .pages-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+  .page-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .page-card .url { font-family: monospace; font-size: 0.85em; color: #c8714a; font-weight: 600; margin-bottom: 8px; }
+  .page-card .name { font-weight: 700; margin-bottom: 6px; }
+  .page-card .badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .badge { font-size: 0.72em; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+  .badge.new { background: #dbeafe; color: #1d4ed8; }
+  .badge.image { background: #fce7f3; color: #be185d; }
+  .badge.gender { background: #ede9fe; color: #7c3aed; }
+  .badge.copy { background: #ecfdf5; color: #059669; }
+
+  .images-section { background: white; border-radius: 16px; padding: 32px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+  .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-top: 20px; }
+  .image-item { background: #faf8f5; border-radius: 10px; padding: 12px; font-size: 0.85em; }
+  .image-item .name { font-family: monospace; color: #c8714a; font-weight: 600; margin-bottom: 4px; }
+  .image-item .desc { color: #666; font-size: 0.9em; }
+
+  .alert { border-radius: 12px; padding: 20px 24px; margin-bottom: 20px; }
+  .alert.info { background: #eff6ff; border-right: 4px solid #3b82f6; }
+  .alert.warning { background: #fffbeb; border-right: 4px solid #f59e0b; }
+  .alert.success { background: #f0fdf4; border-right: 4px solid #22c55e; }
+  .alert h4 { font-weight: 700; margin-bottom: 6px; }
+
+  .gaps-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .gaps-table th { background: #5c2e00; color: white; padding: 14px 16px; text-align: right; font-weight: 700; }
+  .gaps-table td { padding: 12px 16px; border-bottom: 1px solid #f0ebe4; font-size: 0.92em; }
+  .gaps-table tr:last-child td { border-bottom: none; }
+  .gaps-table tr:nth-child(even) { background: #faf8f5; }
+  .priority { padding: 3px 10px; border-radius: 10px; font-size: 0.8em; font-weight: 700; }
+  .high { background: #fee2e2; color: #dc2626; }
+  .medium { background: #fef9c3; color: #ca8a04; }
+  .low { background: #dcfce7; color: #16a34a; }
+
+  .timeline { border-right: 3px solid #c8714a; padding-right: 30px; margin-right: 15px; }
+  .timeline-item { position: relative; margin-bottom: 24px; }
+  .timeline-item::before { content: ''; position: absolute; right: -38px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: #c8714a; border: 2px solid white; box-shadow: 0 0 0 2px #c8714a; }
+  .timeline-item h4 { font-weight: 700; color: #5c2e00; }
+  .timeline-item p { font-size: 0.9em; color: #666; margin-top: 4px; }
+
+  .footer-section { background: #5c2e00; color: white; padding: 40px; text-align: center; border-radius: 16px; margin-top: 40px; }
+  .footer-section a { color: #f5c08c; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>דוח שדרוג מלא</h1>
+  <div class="subtitle">אומנות הקשר - גרסה 3.0</div>
+  <div class="meta">נוצר: 2 במרץ 2026 | שדרוג רב-שלבי עם 5 סוכנים מקביליים</div>
+</div>
+
+<div class="container">
+
+  <!-- Live URL Banner -->
+  <div class="url-banner">
+    <p style="font-size:0.9em; margin-bottom:8px;">האתר עלה לאוויר!</p>
+    <a href="https://omanut-hakesher-website.vercel.app" target="_blank">
+      https://omanut-hakesher-website.vercel.app
+    </a>
+    <p>כתובת Vercel Production | בנייה: 27 דפים | Next.js 16 + TypeScript</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="num">5</div>
+      <div class="label">סוכנים שעבדו במקביל</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">22</div>
+      <div class="label">תמונות Gemini AI שיוצרו</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">27</div>
+      <div class="label">דפים חיים באתר</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">5</div>
+      <div class="label">עדויות וואטסאפ אמיתיות</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">215</div>
+      <div class="label">קבצים שהשתנו</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">3</div>
+      <div class="label">commits בסשן</div>
+    </div>
+  </div>
+
+  <!-- Agent Work Summary -->
+  <div class="section">
+    <div class="section-title"><span class="section-icon">🤖</span> עבודת הסוכנים - סיכום</div>
+    <div class="agents-grid">
+
+      <div class="agent-card completed">
+        <h3>סוכן קופי ואמוג'ים</h3>
+        <span class="status done">הושלם במלואו</span>
+        <ul>
+          <li>הסרת כל האמוג'ים מהדפים (החלפה ב-SVG)</li>
+          <li>תיקון כל הפניות בלשון נקבה ← זכר</li>
+          <li>דף פודקאסט: שם אמיתי "מוצאים אהבה!" + Spotify + SoundCloud</li>
+          <li>עדכון קופי צור קשר לקול אישי ואמיתי</li>
+          <li>עדכון בלוג לשפה אחידה (רווקים, לא זוגות)</li>
+        </ul>
+      </div>
+
+      <div class="agent-card completed">
+        <h3>סוכן עיצוב מגדרי</h3>
+        <span class="status done">הושלם במלואו</span>
+        <ul>
+          <li>GenderProvider - React Context מלא</li>
+          <li>WelcomeModal - חלון ברוכים הבאים בכניסה ראשונה</li>
+          <li>GenderedText - קומפוננט קופי מגדרי</li>
+          <li>CSS Variables - כחול לגברים / טרקוטה לנשים</li>
+          <li>Header toggle - כפתור מיתוג מגדר</li>
+          <li>עדכון דף הבית עם 8 טקסטים מגדריים</li>
+        </ul>
+      </div>
+
+      <div class="agent-card completed">
+        <h3>סוכן תמונות Gemini</h3>
+        <span class="status done">22/22 תמונות</span>
+        <ul>
+          <li>3 תמונות לדף הבית (hero, about, couples)</li>
+          <li>2 תמונות לאודות</li>
+          <li>3 תמונות לליווי אישי</li>
+          <li>3 תמונות לתוכנית הדרך</li>
+          <li>2 תמונות לספר</li>
+          <li>2 תמונות לעדויות</li>
+          <li>2 תמונות לפודקאסט</li>
+          <li>4 תמונות לשאר הדפים</li>
+        </ul>
+      </div>
+
+      <div class="agent-card partial">
+        <h3>סוכן RavMeser Scraper</h3>
+        <span class="status partial">חסום על ידי Cloudflare</span>
+        <ul>
+          <li>כל 18 ה-URLs חסומים (403 Cloudflare)</li>
+          <li>נשמרו: 9 שמות ממליצים אמיתיים</li>
+          <li>מחיר ליווי אישי אושר: 24,000 ₪</li>
+          <li>לינקים סושיאל אמיתיים נמצאו</li>
+          <li><strong>פעולה נדרשת:</strong> אלעד צריך לייצא תוכן ידנית</li>
+        </ul>
+      </div>
+
+      <div class="agent-card completed">
+        <h3>סוכן שילוב תמונות</h3>
+        <span class="status done">6+ דפים עודכנו</span>
+        <ul>
+          <li>תמונות hero נוספו בדפי: book, contact, community, testimonials, podcast, thanks</li>
+          <li>קומפוננט Next.js Image עם fill + overlay</li>
+          <li>Build עובר ללא שגיאות</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- What was done this session -->
+  <div class="section">
+    <div class="section-title"><span class="section-icon">✅</span> מה בוצע בסשן זה</div>
+
+    <div class="alert success">
+      <h4>תשתית - עיצוב מגדרי מלא</h4>
+      <p>GenderProvider + WelcomeModal + GenderedText + CSS variables. האתר מראה עכשיו חוויה שונה לגברים (כחול) ולנשים (טרקוטה). נשמר ב-localStorage.</p>
+    </div>
+
+    <div class="alert success">
+      <h4>22 תמונות Gemini AI</h4>
+      <p>כל הדפים קיבלו תמונות hero וסקציות מיוצרות עם Google Gemini. סגנון: ים-תיכוני-ישראלי, צבעי טרקוטה-זהב-ירוק.</p>
+    </div>
+
+    <div class="alert success">
+      <h4>פודקאסט מחובר לאמת</h4>
+      <p>"מוצאים אהבה!" - הפודקאסט הרשמי. לינקים: Spotify + SoundCloud. לא "בקרוב" אלא דף פעיל.</p>
+    </div>
+
+    <div class="alert success">
+      <h4>5 עדויות וואטסאפ אמיתיות</h4>
+      <p>צילומי מסך אמיתיים מוואטסאפ שהיו על המחשב עברו לדף העדויות.</p>
+    </div>
+
+    <div class="alert success">
+      <h4>5 סושיאל לינקים בפוטר</h4>
+      <p>WhatsApp + Telegram (t.me/MatimLiZugiut) + Facebook (groups/mateemlizugiut) + YouTube + Spotify - כולם אמיתיים.</p>
+    </div>
+
+    <div class="alert success">
+      <h4>Vercel Production Deploy</h4>
+      <p>.vercelignore להוצאת 120MB תמונות גולמיות. האתר עלה בהצלחה ל-production.</p>
+    </div>
+  </div>
+
+  <!-- Pages Map -->
+  <div class="section">
+    <div class="section-title"><span class="section-icon">🗺️</span> מפת הדפים המלאה</div>
+    <div class="pages-grid">
+
+      <div class="page-card">
+        <div class="url">/</div>
+        <div class="name">דף הבית</div>
+        <div class="badges">
+          <span class="badge image">Gemini 3</span>
+          <span class="badge gender">מגדרי</span>
+          <span class="badge copy">קופי</span>
+        </div>
+      </div>
+
+      <div class="page-card">
+        <div class="url">/about</div>
+        <div class="name">אודות אלעד</div>
+        <div class="badges">
+          <span class="badge image">Gemini 2</span>
+          <span class="badge copy">קופי</span>
+        </div>
+      </div>
+
+      <div class="page-card">
+        <div class="url">/coaching</div>
+        <div class="name">ליווי אישי</div>
+        <div class="badges">
+          <span class="badge image">Gemini 3</span>
+          <span class="badge copy">קופי</span>
+        </div>
+      </div>
+
+      <div class="page-card">
+        <div class="url">/hadrech</div>
+        <div class="name">תוכנית הדרך</div>
+        <div class="badges">
+          <span class="badge image">Gemini 3</span>
+          <span class="badge copy">קופי</span>
+        </div>
+      </div>
+
+      <div class="page-card">
+        <div class="url">/book</div>
+        <div class="name">הספר</div>
+        <div class="badges">
+          <span class="badge image">Gemini 2</span>
+        </div>
+      </div>
+
+      <div class="page-card">
+        <div class="url">/testimonials</div>
+        <div class="name">סיפורי הצלחה</div>
+        <div class="badges">
+          <span class="badge image">Gemini 2</span>
+          <span class="badge new">5 WA אמיתיות</span>
+        </div>
+      </div>
+
+      <div class="page-card">
+        <div class="url">/podcast</div>
+        <div class="name">פודקאסט</div>
+        <div class="badges">
+          <span class="badge image">Gemini 2</span>
+          <span class="badge new">Spotify חי</span>
+        </div>
+      </div>
+
+      <div class="page-card">
+        <div class="url">/community</div>
+        <div class="name">קהילה</div>
+        <div class="badges">
+          <span class="badge image">Gemini 1</span>
+          <span class="badge new">קישור בפוטר</span>
+        </div>
+      </div>
+
+      <div class="page-card">
+        <div class="url">/thanks</div>
+        <div class="name">תודות</div>
+        <div class="badges">
+          <span class="badge image">Gemini 1</span>
+          <span class="badge new">קישור בפוטר</span>
+        </div>
+      </div>
+
+      <div class="page-card">
+        <div class="url">/blog</div>
+        <div class="name">בלוג</div>
+        <div class="badges">
+          <span class="badge image">Gemini 1</span>
+          <span class="badge copy">קופי</span>
+        </div>
+      </div>
+
+      <div class="page-card">
+        <div class="url">/contact</div>
+        <div class="name">צור קשר</div>
+        <div class="badges">
+          <span class="badge image">Gemini 1</span>
+          <span class="badge copy">קופי</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Generated Images -->
+  <div class="section">
+    <div class="section-title"><span class="section-icon">🎨</span> 22 תמונות Gemini שיוצרו</div>
+    <div class="images-section">
+      <div class="images-grid">
+        <div class="image-item"><div class="name">hero-homepage.jpg</div><div class="desc">16:9 | חוף ים ים-תיכוני, שקיעה</div></div>
+        <div class="image-item"><div class="name">homepage-about-section.jpg</div><div class="desc">3:2 | מנטור גבר ישראלי מקצועי</div></div>
+        <div class="image-item"><div class="name">homepage-couples.jpg</div><div class="desc">16:9 | קולאז' זוגות שמחים</div></div>
+        <div class="image-item"><div class="name">about-hero.jpg</div><div class="desc">16:9 | אדם בצומת דרכים, שחר</div></div>
+        <div class="image-item"><div class="name">about-elad-speaking.jpg</div><div class="desc">3:2 | מרצה דינמי עם קהל</div></div>
+        <div class="image-item"><div class="name">coaching-hero.jpg</div><div class="desc">16:9 | פגישת מנטור אחד-על-אחד</div></div>
+        <div class="image-item"><div class="name">coaching-transformation.jpg</div><div class="desc">3:2 | טרנספורמציה אישית</div></div>
+        <div class="image-item"><div class="name">coaching-results.jpg</div><div class="desc">1:1 | זוג חוגג אירוסין</div></div>
+        <div class="image-item"><div class="name">hadrech-hero.jpg</div><div class="desc">16:9 | כביש מתפתל, נוף ישראלי</div></div>
+        <div class="image-item"><div class="name">hadrech-curriculum.jpg</div><div class="desc">3:2 | למידה ופיתוח אישי</div></div>
+        <div class="image-item"><div class="name">hadrech-community.jpg</div><div class="desc">16:9 | קבוצת רווקים ישראלים</div></div>
+        <div class="image-item"><div class="name">book-hero.jpg</div><div class="desc">16:9 | עטיפת ספר עברי, טרקוטה-זהב</div></div>
+        <div class="image-item"><div class="name">book-reading.jpg</div><div class="desc">3:2 | קריאה מחכה בסביבה חמה</div></div>
+        <div class="image-item"><div class="name">testimonials-hero.jpg</div><div class="desc">16:9 | גלרית זוגות שמחים</div></div>
+        <div class="image-item"><div class="name">testimonials-wedding.jpg</div><div class="desc">3:2 | חתונה ישראלית, אושר</div></div>
+        <div class="image-item"><div class="name">podcast-hero.jpg</div><div class="desc">16:9 | אולפן פודקאסט מקצועי</div></div>
+        <div class="image-item"><div class="name">podcast-microphone.jpg</div><div class="desc">1:1 | מיקרופון וינטג', זהוב</div></div>
+        <div class="image-item"><div class="name">community-hero.jpg</div><div class="desc">16:9 | קהילה ישראלית תוססת</div></div>
+        <div class="image-item"><div class="name">contact-hero.jpg</div><div class="desc">16:9 | פנייה חמה, ישראלי</div></div>
+        <div class="image-item"><div class="name">thanks-hero.jpg</div><div class="desc">16:9 | הכרת תודה, אור זהוב</div></div>
+        <div class="image-item"><div class="name">blog-hero.jpg</div><div class="desc">16:9 | ידע על זוגיות, ספרים</div></div>
+        <div class="image-item"><div class="name">section-divider-warm.jpg</div><div class="desc">16:9 | רקע טקסטורה, טרקוטה</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gaps & Next Steps -->
+  <div class="section">
+    <div class="section-title"><span class="section-icon">🎯</span> פערים ו-TODO לסשן הבא</div>
+
+    <table class="gaps-table">
+      <thead>
+        <tr>
+          <th>עדיפות</th>
+          <th>נושא</th>
+          <th>פרטים</th>
+          <th>הערות</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="priority high">דחוף</span></td>
+          <td>תוכן RavMeser</td>
+          <td>עדויות בפגינות עם תמונות (9 עמודים חסומים)</td>
+          <td>אלעד צריך לייצא מהאדמין שלו</td>
+        </tr>
+        <tr>
+          <td><span class="priority high">דחוף</span></td>
+          <td>תמונות Elad בדפים</td>
+          <td>profile-current.jpg + fb-photo + elad-2025-portrait לא בכל הדפים</td>
+          <td>תמונת פרופיל אמיתית בולטת חסרה</td>
+        </tr>
+        <tr>
+          <td><span class="priority high">גבוה</span></td>
+          <td>מאמרי בלוג</td>
+          <td>תוכן בלוג עדיין ישן (לא מתאים לרווקים)</td>
+          <td>6 מאמרים לכתוב מחדש</td>
+        </tr>
+        <tr>
+          <td><span class="priority high">גבוה</span></td>
+          <td>קישורים חיים בניווט</td>
+          <td>תמונת אלעד בדף About לא ממש בולטת</td>
+          <td>צריך להשתמש ב-profile-current.jpg</td>
+        </tr>
+        <tr>
+          <td><span class="priority medium">בינוני</span></td>
+          <td>Lead Magnets</td>
+          <td>23 סיבות, 7 עקרונות, 36 שאלות - עמודי נחיתה</td>
+          <td>יצירת 3 עמודי הורדה בחינם</td>
+        </tr>
+        <tr>
+          <td><span class="priority medium">בינוני</span></td>
+          <td>YouCanBookMe</td>
+          <td>שילוב לוח קביעת שיחה בדפי coaching ו-contact</td>
+          <td>API integration</td>
+        </tr>
+        <tr>
+          <td><span class="priority medium">בינוני</span></td>
+          <td>Email Marketing</td>
+          <td>חיבור ניוזלטר ל-Responder API</td>
+          <td>key integration</td>
+        </tr>
+        <tr>
+          <td><span class="priority medium">בינוני</span></td>
+          <td>תמונות Canva</td>
+          <td>עדויות לקוח ב-Canva שלא נוצלו</td>
+          <td>אלעד לספק access</td>
+        </tr>
+        <tr>
+          <td><span class="priority low">נמוך</span></td>
+          <td>דומיין מותאם</td>
+          <td>חיבור omanut-hakesher.co.il לוורסל</td>
+          <td>בוורסל dashboard</td>
+        </tr>
+        <tr>
+          <td><span class="priority low">נמוך</span></td>
+          <td>Google Analytics</td>
+          <td>חיבור GA4 לאתר</td>
+          <td>env var NEXT_PUBLIC_GA_ID</td>
+        </tr>
+        <tr>
+          <td><span class="priority low">נמוך</span></td>
+          <td>מדיניות פרטיות</td>
+          <td>דף משפטי מלא</td>
+          <td>אלעד ביקש עזרה עם זה</td>
+        </tr>
+        <tr>
+          <td><span class="priority low">נמוך</span></td>
+          <td>ניקוי דפים ישנים</td>
+          <td>services, gallery, resources, course</td>
+          <td>הסרה מה-sitemap</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Critical Note About Scraping -->
+  <div class="alert warning">
+    <h4>הערה חשובה: תוכן RavMeser נחסם</h4>
+    <p>כל 18 דפי RavMeser שביקשת לסרוק חסומים על ידי Cloudflare (403 Forbidden). הסוכן לא הצליח לגשת אליהם. כדי לקבל את תוכן העדויות האמיתי (בני סניידר, לימור שקד, וכו'), יש לגשת לאדמין של RavMeser, לייצא את תוכן העמודים, ולשלוח לי. אני אשלב אותם מיד.</p>
+  </div>
+
+  <!-- Git History -->
+  <div class="section">
+    <div class="section-title"><span class="section-icon">📝</span> היסטוריית commits בסשן</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <h4>4fcf1d8 - feat: complete site rewrite with authentic content and new pages</h4>
+        <p>שכתוב מלא: 40 קבצים, 11 דפים, תיקון טלפונים, הסרת תוכן מזויף</p>
+      </div>
+      <div class="timeline-item">
+        <h4>4e3c353 - feat: major update - gender-adaptive design, 22 Gemini images</h4>
+        <p>109 קבצים: GenderProvider, WelcomeModal, 22 תמונות Gemini, סושיאל לינקים, .vercelignore</p>
+      </div>
+      <div class="timeline-item">
+        <h4>e46dccf - feat: integrate Gemini images into page heroes + WhatsApp testimonials</h4>
+        <p>6 דפים עם תמונות hero + 5 עדויות וואטסאפ אמיתיות</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-section">
+    <h2 style="margin-bottom:16px;">אתר אומנות הקשר - גרסה 3.0</h2>
+    <p style="margin-bottom:12px;">
+      <a href="https://omanut-hakesher-website.vercel.app">https://omanut-hakesher-website.vercel.app</a>
+    </p>
+    <p style="opacity:0.75; font-size:0.9em;">27 דפים | עיצוב מגדרי | 22 תמונות Gemini | קופי אותנטי | 5 סוכנים</p>
+    <p style="opacity:0.75; font-size:0.85em; margin-top:8px;">נוצר 2 מרץ 2026 | Claude + Gemini AI</p>
+  </div>
+
+</div>
+</body>
+</html>

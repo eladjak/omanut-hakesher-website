@@ -502,7 +502,7 @@ export default function AboutPage() {
             <div className="relative">
               <div className="aspect-video rounded-3xl overflow-hidden">
                 <Image
-                  src="/images/generated/community.jpg"
+                  src="/images/generated/community-hero.jpg"
                   alt="קהילת אומנות הקשר"
                   fill
                   className="object-cover"

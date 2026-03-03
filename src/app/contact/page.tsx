@@ -188,22 +188,21 @@ export default function ContactPage() {
                 </CardContent>
               </Card>
 
-              {/* Map Placeholder */}
+              {/* Location Image */}
               <Card className="border-border/50 overflow-hidden">
-                <div className="aspect-[4/3] bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center">
-                  <div className="text-center text-muted-foreground/50">
-                    <svg className="w-12 h-12 mx-auto mb-2 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    <p className="text-sm">מפה</p>
+                <div className="relative aspect-[4/3]">
+                  <Image
+                    src="/images/generated/about-elad-speaking.jpg"
+                    alt="אלעד יעקובוביץ׳ בפגישה אישית"
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent" />
+                  <div className="absolute bottom-0 inset-x-0 p-4">
+                    <p className="text-white text-sm font-medium">פגישות אישיות במרכז הארץ</p>
+                    <p className="text-white/70 text-xs">כתובת מדויקת בתיאום מראש</p>
                   </div>
                 </div>
-                <CardContent className="p-4">
-                  <p className="text-sm text-muted-foreground text-center">
-                    מרכז הארץ - כתובת מדויקת בתיאום מראש
-                  </p>
-                </CardContent>
               </Card>
             </div>
           </div>
