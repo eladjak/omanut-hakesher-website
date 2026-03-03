@@ -10,14 +10,14 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 export const metadata: Metadata = {
   title: "בלוג",
   description:
-    "מאמרים וטיפים בנושאי זוגיות, תקשורת וקשרים בריאים",
+    "מאמרים, טיפים ותובנות לרווקים ורווקות בדרך לזוגיות מאושרת",
   alternates: {
     canonical: "/blog",
   },
   openGraph: {
     title: "בלוג | אומנות הקשר",
     description:
-      "מאמרים וטיפים בנושאי זוגיות, תקשורת וקשרים בריאים",
+      "מאמרים, טיפים ותובנות לרווקים ורווקות בדרך לזוגיות מאושרת",
     url: "/blog",
     locale: "he_IL",
     type: "website",
@@ -37,7 +37,7 @@ export default function BlogPage() {
         <div className="absolute inset-0">
           <Image
             src="/images/generated/blog-hero.jpg"
-            alt="בלוג אומנות הקשר - מאמרים על זוגיות"
+            alt="בלוג אומנות הקשר - מאמרים לרווקים ורווקות"
             fill
             className="object-cover"
             priority
@@ -46,13 +46,13 @@ export default function BlogPage() {
         </div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <Badge variant="outline" className="mb-4 text-white border-white/30">
-            תובנות וכלים
+            תובנות וכלים לדרך
           </Badge>
           <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
             ה<span className="text-accent-light">בלוג</span>
           </h1>
           <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
-            מאמרים, טיפים ותובנות בנושאי זוגיות, תקשורת וקשרים בריאים
+            מאמרים, טיפים ותובנות לרווקים ורווקות שרוצים למצוא זוגיות אמיתית
           </p>
         </div>
       </section>
@@ -65,8 +65,15 @@ export default function BlogPage() {
             <Link href={`/blog/${blogPosts[0].slug}`} className="group block mb-12">
               <Card className="overflow-hidden border-border/50 hover:shadow-lg hover:border-primary/20 transition-all duration-200">
                 <div className="grid md:grid-cols-2 gap-0">
-                  {/* Image placeholder */}
-                  <div className="aspect-[16/9] md:aspect-auto bg-gradient-to-br from-primary/15 via-secondary/10 to-accent/15" />
+                  {/* Featured image */}
+                  <div className="relative aspect-[16/9] md:aspect-auto overflow-hidden">
+                    <Image
+                      src={blogPosts[0].image}
+                      alt={blogPosts[0].title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
 
                   <CardContent className="p-8 md:p-10 flex flex-col justify-center">
                     <div className="flex items-center gap-3 mb-4">
@@ -98,8 +105,15 @@ export default function BlogPage() {
             {blogPosts.slice(1).map((post) => (
               <Link key={post.slug} href={`/blog/${post.slug}`} className="group">
                 <Card className="h-full overflow-hidden border-border/50 hover:shadow-lg hover:border-primary/20 transition-all duration-200">
-                  {/* Image placeholder */}
-                  <div className="aspect-[16/9] bg-gradient-to-br from-primary/15 via-secondary/10 to-accent/15" />
+                  {/* Real image */}
+                  <div className="relative aspect-[16/9] overflow-hidden">
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
 
                   <CardContent className="p-6">
                     {/* Category & Meta */}
@@ -149,9 +163,9 @@ export default function BlogPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold mb-3">הישאר מעודכן</h2>
+              <h2 className="text-2xl font-bold mb-3">קבלו מאמרים ישירות למייל</h2>
               <p className="text-muted-foreground mb-8">
-                הירשם לניוזלטר וקבל טיפים, מאמרים ותוכן בלעדי ישירות למייל
+                הירשמו לניוזלטר וקבלו טיפים, תובנות ותוכן בלעדי שיעזרו לכם בדרך לזוגיות
               </p>
               <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" aria-label="הרשמה לניוזלטר">
                 <label htmlFor="newsletter-email-blog" className="sr-only">כתובת אימייל</label>

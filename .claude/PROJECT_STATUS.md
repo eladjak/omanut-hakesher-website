@@ -1,76 +1,96 @@
 # סטטוס פרויקט: אומנות הקשר
 
-> **עדכון אחרון:** 2026-02-27
-> **גרסה:** 2.0.0
-> **סטטוס:** שכתוב מלא של האתר - מבוסס תוכן אותנטי
+> **עדכון אחרון:** 2026-03-03
+> **גרסה:** 3.0.0
+> **סטטוס:** שכתוב מלא v3 - תמונות, מגדר, פריסה ב-Vercel
+> **URL פרודקשן:** https://omanut-hakesher-website.vercel.app
 
 ---
 
-## מטרת הפרויקט
+## מה הושלם (v3.0 - מרץ 2026)
 
-בניית אתר מקצועי ומרשים לאומנות הקשר - עסק בתחום מציאת זוגיות לרווקים/ות עם אלעד יעקובוביץ'.
+### עיצוב מותאם-מגדר ✅
+- [x] `GenderProvider.tsx` - Context + localStorage + CSS class על `<html>`
+- [x] `WelcomeModal.tsx` - מודל בקרה ראשונה (גבר/אישה/דלג)
+- [x] `GenderedText.tsx` - Component לטקסטים מותאמים-מגדר
+- [x] `src/lib/gendered-content.ts` - 30+ מפתחות עברית (ניטרלי/גבר/אישה)
+- [x] `globals.css` - משתני CSS לגבר (כחול `#1E3A5F`) ואישה (טרקוטה ברירת מחדל)
+- [x] Flash-prevention script ב-`<head>` ב-layout.tsx
 
----
+### תמונות Gemini - 22 תמונות ✅
+נמצאות ב-`public/images/generated/`:
+- hero-homepage.jpg, homepage-about-section.jpg, homepage-couples.jpg
+- about-hero.jpg, about-elad-speaking.jpg
+- coaching-hero.jpg, coaching-transformation.jpg, coaching-results.jpg
+- hadrech-hero.jpg, hadrech-curriculum.jpg, hadrech-community.jpg
+- book-hero.jpg, book-reading.jpg
+- testimonials-hero.jpg, testimonials-wedding.jpg
+- podcast-hero.jpg, podcast-microphone.jpg
+- community-hero.jpg, contact-hero.jpg, thanks-hero.jpg, blog-hero.jpg
+- section-divider-warm.jpg
 
-## מה הושלם (שכתוב v2.0)
+### כל 11 דפים קיבלו hero images ✅
+Pattern: Next.js `<Image fill>` + overlay `bg-foreground/65-70` + טקסט לבן
 
-### תיקון תוכן קריטי
-- [x] הסרת כל התוכן הפיקטיבי (מגדר שגוי, אישורים מזויפים, המלצות בדויות)
-- [x] שכתוב מלא של דף הבית עם תוכן אותנטי (461 זוגות, ~20 שנות במה, NLP/CBT)
-- [x] החלפת מספרי טלפון מזויפים ב-051-251-8025 (אמיתי)
-- [x] עדכון כל ה-metadata ו-SEO tags
-- [x] עדכון JsonLd schema עם מידע נכון
+### תוכן אותנטי ✅
+- [x] הסרת כל ה-emojis (הוחלפו ב-SVG ובטקסט)
+- [x] פריסת טלפון אמיתי: 051-251-8025
+- [x] פודקאסט עם Spotify אמיתי: https://open.spotify.com/show/2mXzv3AS0rZw7eTCVjEbyZ
+- [x] SoundCloud: https://soundcloud.com/ohlovelive
+- [x] 461 זוגות (נתון אמיתי)
 
-### דפים חדשים/משוכתבים
-- [x] **דף בית** - שכתוב מלא: סטטיסטיקות אמיתיות, מוצרים, נקודות כאב, שיטת 4 שלבים, עדויות וידאו
-- [x] **אודות** (`/about`) - ביוגרפיה אמיתית, ערכים, אישורים
-- [x] **ליווי אישי** (`/coaching`) - דף פאנל מכירות (מאושר ע"י אלי שביט), FAQ
-- [x] **תוכנית הדרך** (`/hadrech`) - 12 שבועות, 4 שלבים, תוכן מפורט
-- [x] **הספר** (`/book`) - 10 פרקים, 32 תרגילים, הקדמה, הבטחות
-- [x] **סיפורי הצלחה** (`/testimonials`) - 12 עדויות אותנטיות + וידאו YouTube
-- [x] **פודקאסט** (`/podcast`) - דף "בקרוב" עם נושאים מתוכננים
-- [x] **קהילה** (`/community`) - 3 מסלולי הצטרפות, יתרונות
-- [x] **תודות** (`/thanks`) - 6 אנשים: אלי שביט, אליהו ארנד, אלי תמיר קרניאל, דודו נחום, דפנה לשם, אראל הנדלר
+### Footer ✅
+- [x] 5 רשתות חברתיות אמיתיות: WhatsApp, Telegram, Facebook, YouTube, Spotify
+- [x] לינקי ניווט כוללים `/thanks` ו-`/community`
+- [x] לינקי שירותים כוללים `/community`
 
-### תשתית
-- [x] Header - ניווט מעודכן (9 דפים)
-- [x] Footer - לינקים מעודכנים, טלפון אמיתי
-- [x] WhatsApp Button - מספר אמיתי
-- [x] Sitemap - כולל כל הדפים החדשים
-- [x] הסרת route group `(site)/` (גרם לקונפליקטים)
+### עדויות WhatsApp ✅
+- 5 צילומי מסך אמיתיים ב-`public/assets/testimonials/`
+- מוצגים בדף `/testimonials`
 
-### מחקר ותוכן
-- [x] ספריית תוכן מאוחדת (`.claude/extracted-content/content-library.md`)
-- [x] תשובות אלעד (`.claude/ELAD_ANSWERS.md`)
-- [x] מחקר אנשי תודות (`.claude/acknowledgments-research.md`)
-- [x] ארכיטקטורת עיצוב מותאם-מגדר (`.claude/gender-adaptive-design.md`)
-- [x] תמונות מיוצרות עם Gemini (`public/images/generated/` - 10 תמונות)
-- [x] תמונות שהורדו (`public/assets/` - brand, media, products, elad-photos)
-- [x] תוכן משוחזר מקבצים מקומיים (65+ תמלולי שיעורים, 10+ lead magnets)
+### פריסת Vercel ✅
+- [x] `.vercelignore` נוצר (מוציא 187MB של תמונות conference + photoshoot-2025)
+- [x] פרוס בהצלחה: https://omanut-hakesher-website.vercel.app
+
+### מדריך צעדים ידניים ✅
+- [x] `.claude/MANUAL_STEPS_GUIDE.html` - הסברים מפורטים ל:
+  - צעד 1: ייצוא תוכן מ-RavMeser (Cloudflare חוסם גישה אוטומטית)
+  - צעד 4: הגדרת Google Analytics 4 (קבל Measurement ID G-XXXXXXXXXX)
+
+### Git commits (v3.0)
+- `4e3c353` - feat: major update - gender-adaptive design, 22 Gemini images
+- `e46dccf` - feat: integrate Gemini images + WhatsApp testimonials
+- `e3a8044` - feat: all pages get Gemini hero images
 
 ---
 
 ## TODO - מה נשאר
 
-### עדיפות גבוהה
-- [ ] **עיצוב מותאם-מגדר**: הטמעת GenderProvider, WelcomeModal, GenderedText (מסמך ארכיטקטורה מוכן)
-- [ ] **Stitch MCP**: שימוש ב-Google Stitch לעיצוב מחדש (אלעד ביקש במפורש)
-- [ ] **תמונות Gemini**: להוסיף תמונות לדפים שחסרים (coaching, hadrech, about)
-- [ ] **עדכון דף הבלוג**: המאמרים עדיין עם תוכן ישן (זוגות, לא רווקים)
-- [ ] **עדכון דף צור קשר**: כמה טקסטים עדיין "זוגיות" במקום "מציאת זוגיות"
+### ממתין לקלט מאלעד (חסום)
+- [ ] **RavMeser תוכן** - אלעד צריך לייצא ידנית מהאדמין (מדריך: MANUAL_STEPS_GUIDE.html - שלב 1)
+  - 9 דפי עדויות: https://ohalove.ravpage.co.il/תמלול-*
+  - 5 דפי מוצרים: coaching, hadrech, book, podcast, community
+  - לשלוח: טקסטים + תמונות + שמות מלאים
+- [ ] **Google Analytics** - אלעד צריך לקבל Measurement ID (מדריך: MANUAL_STEPS_GUIDE.html - שלב 4)
+  - לאחר קבלת ID (G-XXXXXXXXXX) → Claude מטמיע ב-layout.tsx
 
-### עדיפות בינונית
-- [ ] **קאנבה**: לחפש תמונות של שגיא (אלעד נתן אישור)
-- [ ] **Lead magnets**: להוסיף הורדות חינם (23 סיבות, 7 עקרונות, 36 שאלות)
-- [ ] **Email marketing**: חיבור ל-Responder API
-- [ ] **YouCanBookMe**: שילוב בדפי booking
-- [ ] **טלגרם**: להחיות את הערוץ (189 מנויים)
+### קלט שצריך מאלעד
+- [ ] **תחבורת דומיין**: ohlove.co.il → Vercel (הוסף CNAME ב-DNS)
+- [ ] **תמונות Canva**: אלעד ציין שיש תמונות עם שגיא בקאנבה
 
-### עדיפות נמוכה
-- [ ] ניקוי דפים ישנים (services, course, gallery, resources)
-- [ ] הוספת דף הקדשות אישיות מאלעד (לכל אחד מ-6 האנשים)
-- [ ] שיפור ביצועי טעינה
-- [ ] E2E tests
+### עבודה עצמאית (ניתן לביצוע מיידי)
+- [ ] **עדכון 6 מאמרי הבלוג** - עדיין עם תוכן ישן (מיועד לזוגות, לא לרווקים)
+- [ ] **דף פרטיות** (`/privacy`) - אלעד ביקש עזרה עם דף משפטי
+- [ ] **ניקוי דפים ישנים** - services, gallery, resources, course (עדיין ב-sitemap)
+- [ ] **Lead magnets** - דפי נחיתה להורדות חינם:
+  - "23 הסיבות למה עדיין לבד"
+  - "7 עקרונות לזוגיות"
+  - "36 השאלות שמקרבות"
+
+### אינטגרציות עתידיות
+- [ ] **YouCanBookMe** - שילוב ווידג'ט הזמנות בדפי coaching/contact
+- [ ] **Responder API** - חיבור email marketing לניוזלטר בפוטר
+- [ ] **הקדשות אישיות** - דף לכל אחד מ-6 אנשי התודות
 
 ---
 
@@ -80,14 +100,18 @@
 - Tailwind CSS 4
 - npm (לא bun - בעיות ב-Windows)
 - Vercel לדיפלוי
-- פורט: 3333
+- פורט פיתוח: 3333
 
 ## קבצי מפתח
+
 | קובץ | תיאור |
 |------|-------|
-| `.claude/ELAD_ANSWERS.md` | תשובות אלעד לשאלות המחקר |
-| `.claude/extracted-content/content-library.md` | ספריית תוכן מאוחדת |
-| `.claude/gender-adaptive-design.md` | מסמך ארכיטקטורת עיצוב מותאם-מגדר |
-| `.claude/acknowledgments-research.md` | מחקר על 6 אנשי התודות |
-| `public/assets/` | תמונות ונכסים שהורדו |
-| `public/images/generated/` | תמונות שיוצרו עם Gemini |
+| `.claude/MANUAL_STEPS_GUIDE.html` | מדריך לצעדים 1 (RavMeser) ו-4 (GA4) |
+| `src/components/GenderProvider.tsx` | Context + localStorage לבחירת מגדר |
+| `src/components/WelcomeModal.tsx` | מודל קבלת פנים בביקור ראשון |
+| `src/lib/gendered-content.ts` | 30+ מפתחות טקסט מותאמי-מגדר |
+| `public/images/generated/` | 22 תמונות שנוצרו עם Gemini |
+| `public/assets/testimonials/` | 5 צילומי מסך WhatsApp אמיתיים |
+| `.vercelignore` | מוציא תמונות גדולות מהדיפלוי |
+| `.env.local` | משתני סביבה (GA, Resend) |
+| `src/lib/blog-posts.ts` | תוכן מאמרי הבלוג |
