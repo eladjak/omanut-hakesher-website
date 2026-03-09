@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { chapters as chapterData } from "@/data/book/chapters";
 
 export const metadata: Metadata = {
   title: "הספר ״אומנות הקשר״ - הדרך לזוגיות שאתה ראוי לה",
@@ -23,83 +24,11 @@ export const metadata: Metadata = {
   },
 };
 
-const chapters = [
-  {
-    number: 1,
-    title: "מבפנים החוצה",
-    subtitle: "הכרת עצמך האמיתית",
-    description: "הבנת מי אתה באמת, מעבר לסיפורים שסיפרת לעצמך. כי לפני שמוצאים מישהו - צריך להכיר את עצמך.",
-    story: "נועם, 34 - שהיה משוכנע ש׳כל הטובות תפוסות׳",
-  },
-  {
-    number: 2,
-    title: "הגבולות שמגנים עליך",
-    subtitle: "גבולות בריאים בדרך לקשר",
-    description: "איך לזהות מה באמת חשוב לך, ואיך לתקשר את זה - בלי להתנצל ובלי להתנגח.",
-    story: "ענבל, 29 - שהייתה אומרת ׳כן׳ לכולם חוץ מלעצמה",
-  },
-  {
-    number: 3,
-    title: "הדפוסים שמחזיקים אותך",
-    subtitle: "שבירת מעגלי חזרה",
-    description: "זיהוי הדפוסים שחוזרים על עצמם בדייטים ובקשרים - ואיך לשבור אותם.",
-    story: "יואב, 38 - שגילה שהוא מחפש את מה שאבא שלו רצה",
-  },
-  {
-    number: 4,
-    title: "14 הפחדים",
-    subtitle: "מה באמת עוצר אותך",
-    description: "מיפוי 14 הפחדים הנפוצים ביותר בדרך לזוגיות - ואיך לעבוד איתם במקום נגדם.",
-  },
-  {
-    number: 5,
-    title: "השריון שלך",
-    subtitle: "פגיעות ככוח",
-    description: "למה ההגנות שבנית בדיוק מה שמרחיק ממך את הזוגיות, ואיך להוריד אותן בזהירות.",
-    story: "עידו, 36 - שהפסיק ללבוש את ׳חליפת השריון׳ שלו",
-  },
-  {
-    number: 6,
-    title: "לצאת לדרך",
-    subtitle: "כלים מעשיים לדייטינג",
-    description: "כל מה שצריך לדעת על דייטינג - מפרופיל מנצח ועד שיחה ראשונה שיוצרת חיבור אמיתי.",
-    story: "דנה, 33 - שיום אחד החליטה שהיא לא צריכה לחכות שיפנו אליה",
-  },
-  {
-    number: 7,
-    title: "מעבר לפרופיל",
-    subtitle: "אותנטיות באונליין",
-    description: "איך להציג את עצמך באמת באפליקציות - בלי לשחק תפקיד ובלי לאבד את עצמך.",
-    story: "רון, 30 - שהיה עם הפרופיל הכי יפה והתוצאות הכי גרועות",
-  },
-  {
-    number: 8,
-    title: "שפת החיבור",
-    subtitle: "תקשורת שיוצרת קרבה",
-    description: "איך לדבר ככה שנשמעים. איך להקשיב ככה שהשני מרגיש שרואים אותו. שפת אינטימיות.",
-    story: "שירה, 27 - שהייתה מגיעה לדייטים עם רשימת שאלות בראש",
-  },
-  {
-    number: 9,
-    title: "מעבר לכימיה",
-    subtitle: "כשהרגש מגיע אחרי",
-    description: "למה כימיה מיידית זה לא סימן טוב, ואיך לזהות חיבור אמיתי שנבנה לאט.",
-    story: "אורי ולירון - שלא הייתה כימיה מיידית, ובדיוק בגלל זה זה עבד",
-  },
-  {
-    number: 10,
-    title: "בניית קשר אמיתי",
-    subtitle: "מחויבות, החלטה, שמירה",
-    description: "מה קורה אחרי שמוצאים? איך בונים קשר שנשמר ומתחזק - בלי לאבד את עצמך בדרך.",
-    story: "תמר ואיתי - שכמעט פרשו כי ׳הכל היה מושלם מדי׳",
-  },
-];
-
 const bookStats = [
-  { number: "10", label: "פרקים" },
-  { number: "32", label: "תרגילים מעשיים" },
-  { number: "250+", label: "עמודים" },
-  { number: "9", label: "סיפורי חיים אמיתיים" },
+  { number: "13", label: "פרקים" },
+  { number: "32+", label: "תרגילים מעשיים" },
+  { number: "300+", label: "עמודים" },
+  { number: "10+", label: "סיפורי חיים אמיתיים" },
 ];
 
 export default function BookPage() {
@@ -270,7 +199,7 @@ export default function BookPage() {
               תוכן עניינים
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              10 פרקים. דרך <span className="text-primary">שלמה</span>.
+              13 פרקים. דרך <span className="text-primary">שלמה</span>.
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               כל פרק כולל תרגילים מעשיים וסיפור אמיתי של מישהו שעבר את הדרך
@@ -278,30 +207,52 @@ export default function BookPage() {
           </div>
 
           <div className="space-y-4">
-            {chapters.map((chapter) => (
-              <Card key={chapter.number} className="border-border/50 hover:border-primary/20 transition-colors">
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-5">
-                    <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
-                      <span className="text-primary font-bold text-lg">{chapter.number}</span>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 mb-1">
-                        <h3 className="text-lg font-bold">{chapter.title}</h3>
-                        <span className="text-sm text-muted-foreground">- {chapter.subtitle}</span>
+            {chapterData
+              .filter((ch) => ch.number !== null)
+              .map((chapter) => (
+              <Link key={chapter.slug} href={`/book/${chapter.slug}`}>
+                <Card className="border-border/50 hover:border-primary/20 hover:shadow-md transition-all group">
+                  <CardContent className="p-6">
+                    <div className="flex items-start gap-5">
+                      <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <span className="text-primary font-bold text-lg">{chapter.number}</span>
                       </div>
-                      <p className="text-sm text-muted-foreground leading-relaxed mb-2">
-                        {chapter.description}
-                      </p>
-                      {chapter.story && (
-                        <p className="text-xs text-primary/70 italic">
-                          הסיפור של {chapter.story}
+                      <div className="flex-1">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 mb-1">
+                          <h3 className="text-lg font-bold group-hover:text-primary transition-colors">{chapter.title}</h3>
+                          <span className="text-sm text-muted-foreground">- {chapter.subtitle}</span>
+                        </div>
+                        <p className="text-sm text-muted-foreground leading-relaxed mb-2">
+                          {chapter.description}
                         </p>
-                      )}
+                        {chapter.story && (
+                          <p className="text-xs text-primary/70 italic">
+                            הסיפור של {chapter.story}
+                          </p>
+                        )}
+                        {chapter.tools.length > 0 && (
+                          <div className="flex gap-2 mt-2">
+                            {chapter.tools.map((tool) => (
+                              <span key={tool.slug} className="text-xs bg-muted px-2 py-0.5 rounded-full text-muted-foreground">
+                                {tool.icon} {tool.title}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      <svg
+                        className="w-5 h-5 text-muted-foreground/30 group-hover:text-primary transition-colors shrink-0 rotate-180 mt-3"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>
