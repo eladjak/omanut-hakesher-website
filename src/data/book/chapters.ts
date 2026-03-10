@@ -270,7 +270,6 @@ export const chapters: ChapterData[] = [
         description: "כלי מעקב יומי למעשי אומץ קטנים",
         type: "interactive",
         icon: "🦁",
-        comingSoon: true,
       },
     ],
   },
@@ -295,10 +294,9 @@ export const chapters: ChapterData[] = [
       {
         slug: "date-report",
         title: "דו״ח דייט",
-        description: "שאלון מהיר (5 שאלות) ומעמיק (7 שאלות) אחרי כל דייט",
+        description: "12 שאלות לעיבוד כל דייט — אותנטיות, חיבור, צמיחה ועניין",
         type: "quiz",
         icon: "📊",
-        comingSoon: true,
       },
     ],
   },
@@ -423,7 +421,6 @@ export const chapters: ChapterData[] = [
         description: "קלפי שאלות דיגיטליים ליצירת קרבה",
         type: "interactive",
         icon: "🃏",
-        comingSoon: true,
       },
       {
         slug: "vulnerability-art",
