@@ -262,7 +262,6 @@ export const chapters: ChapterData[] = [
         description: "שאלון 3 רמות לזיהוי מה באמת מושך אותך",
         type: "quiz",
         icon: "🧲",
-        comingSoon: true,
       },
       {
         slug: "courage-tracker",
@@ -361,7 +360,6 @@ export const chapters: ChapterData[] = [
         description: "שאלון 4 צירים למדידת עומק החיבור",
         type: "quiz",
         icon: "💯",
-        comingSoon: true,
       },
       {
         slug: "chemistry-quiz",
@@ -413,7 +411,6 @@ export const chapters: ChapterData[] = [
         description: "שאלון לזיהוי שלב הפגיעות שלך בקשר",
         type: "quiz",
         icon: "🏊",
-        comingSoon: true,
       },
       {
         slug: "36-questions",
