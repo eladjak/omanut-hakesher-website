@@ -1,13 +1,42 @@
 # סטטוס פרויקט: אומנות הקשר
 
 > **עדכון אחרון:** 2026-03-10
-> **גרסה:** 4.0.0
-> **סטטוס:** 82 דפים, 22 כלים אינטראקטיביים, נכסי מותג, build עובר
+> **גרסה:** 4.1.0
+> **סטטוס:** 85+ דפים, 22 כלים אינטראקטיביים, 3 Lead Magnets, נכסי מותג משולבים, build עובר
 > **URL פרודקשן:** https://omanut-hakesher-website.vercel.app
 
 ---
 
-## מה הושלם (v4.0 - מרץ 2026)
+## מה הושלם (v4.1 - מרץ 2026)
+
+### Lead Magnets — /lead/ (חדש!) ✅
+3 דפי נחיתה מעוצבים עם טפסי הרשמה:
+- `/lead/23-reasons` — "23 הסיבות האמיתיות שאתה עדיין רווק/ה"
+- `/lead/7-principles` — "7 עקרונות הזהב למציאת זוגיות"
+- `/lead/36-questions` — "36 השאלות שיכולות ליצור אהבה"
+- כל דף: hero image, 3 benefits, טופס הרשמה, WhatsApp חלופי, תצוגה מקדימה
+- ⚠️ טפסים ויזואליים בלבד — ממתין לחיבור Responder
+
+### ניקוי דפים ישנים ✅
+- `/services` → redirect ל-`/coaching`
+- `/gallery` → redirect ל-`/testimonials`
+- `/resources` → redirect ל-`/blog`
+- `/course` → redirect ל-`/hadrech`
+- תוקנו הפניות ב-`not-found.tsx` ו-`FreeWorkshopBanner.tsx`
+
+### שילוב נכסי מותג אמיתיים בדפים ✅
+- פודקאסט: כריכה אמיתית מ-Apple + תמונות פרקים ep1-ep6
+- אודות: תמונות אלעד אמיתיות (ohlove-photo-1, ohlove-photo-3)
+- ליווי אישי: תמונות שירותים אמיתיות + תמונת אלעד
+- דף בית: תמונות YouTube testimonials אמיתיות
+
+### דף פרטיות עודכן ✅
+- הוספת סעיף Supabase (כלים אינטראקטיביים)
+- הוספת סעיף תוצאות כלים (ללא זיהוי אישי)
+
+### Supabase אינטגרציה ✅
+- `src/lib/supabase.ts` — client setup
+- כריכת ספר אמיתית (v2-path, מנצחת קבוצת מיקוד)
 
 ### סקשן הספר — /book/ (Sprint 1-4) ✅
 22 כלים אינטראקטיביים פועלים, מחולקים לפי פרקים:
@@ -27,42 +56,19 @@
 | סיום | future-letter, readiness-retest | אינטראקטיבי, שאלון |
 
 ### מערכת הזדהות לספר ✅
-- Access code authentication (קוד גישה בתוך הספר)
-- Layout wrapper לכל סקשן /book/
-
-### נכסי מותג ✅ (v4.0)
-- `public/assets/brand/` (2.2MB) — 16 קבצים: לוגו, אייקונים חברתיים, כיסוי פודקאסט
-- `public/assets/media/` (1.7MB) — 19 קבצים: תמונות פודקאסט (12 פרקים), YouTube (7)
-- `public/assets/products/` (5.6MB) — 9 קבצים: קורסים, שירותים, תוכנית נשים
-- `public/assets/MANIFEST.md` — תיעוד מלא של הנכסים
-- `public/assets/elad-photos/` (187MB) — מקומי בלבד (.gitignore), לא ב-git
-
 ### עיצוב מותאם-מגדר ✅
-- [x] GenderProvider.tsx — Context + localStorage + CSS class
-- [x] WelcomeModal.tsx — מודל בביקור ראשון
-- [x] GenderedText.tsx — טקסטים מותאמי-מגדר
-- [x] gendered-content.ts — 30+ מפתחות עברית
-- [x] Flash-prevention script
-
 ### תמונות Gemini — 22 תמונות ✅
-- כל 11 דפים עם hero images
-- Pattern: `<Image fill>` + overlay `bg-foreground/65-70` + טקסט לבן
-
 ### תוכן אותנטי ✅
-- [x] הסרת כל ה-emojis (SVG icons)
-- [x] טלפון: 051-251-8025
-- [x] פודקאסט Spotify + SoundCloud
-- [x] 461 זוגות (נתון אמיתי)
-
 ### Footer + WhatsApp עדויות ✅
-
 ### פריסת Vercel ✅
-- `.vercelignore` מוגדר (מוציא תמונות גדולות)
-- Build עובר (82 דפים, 0 שגיאות)
 
 ---
 
-## Git History (30 commits)
+## Git History
+
+### v4.1 (10.03.2026)
+- `ba7983c` — feat: add Supabase integration + real book cover from focus group winner
+- (pending commit) — feat: lead magnets, old page redirects, brand assets integration
 
 ### v4.0 (10.03.2026)
 - `bce3a16` — feat: add brand assets, media thumbnails, product images + fix build deps
@@ -75,8 +81,6 @@
 - `a7a2c79` — feat: add future-letter page + real book cover on landing
 - `5fcd81a` — fix: add 8 missing tools to chapters.ts (sync with book QR codes)
 - `c922a81` — feat: add access code authentication system for book section
-- `3f86f57` — feat: add who-am-i quiz
-- `25793aa` — feat: add readiness retest quiz
 
 ### v3.0 (03.03.2026)
 - Gender-adaptive design, 22 Gemini images, WhatsApp testimonials
@@ -85,34 +89,37 @@
 
 ## TODO — מה נשאר
 
-### כלים comingSoon (15 כלים — בעיקר תוכן אודיו/וידאו)
-- פרק 1: morning-audio (אודיו בוקר)
-- פרק 2: beliefs-audio (מדיטציה אמונות)
-- פרק 3: boundaries-quiz, self-worth-letter, values-exercise (3 כלים)
-- פרק 4: communication-audio, nvc-practice (2 כלים)
-- פרק 6: feelings-inventory (PDF)
-- פרק 7: readiness-checklist (PDF), first-message-templates (PDF)
-- פרק 9: photo-tips (וידאו)
-- פרק 10: intimacy-conversation (אודיו), love-languages-quiz
-- פרק 13: the-choice (וידאו), future-meditation (אודיו)
-
 ### ממתין לקלט מאלעד (חסום)
-- [ ] **RavMeser תוכן** — ייצוא ידני מהאדמין
 - [ ] **Google Analytics** — Measurement ID (G-XXXXXXXXXX)
 - [ ] **דומיין**: ohlove.co.il → Vercel
+- [ ] **Responder** — API key + רשימות לחיבור Lead Magnets
+- [ ] **RavMeser תוכן** — ייצוא ידני מהאדמין
 - [ ] **תמונות Canva**: תמונות עם שגיא
-- [ ] **בחירת כריכה**: 15 עיצובים ב-omanut-hakesher-book/cover/
+- [ ] **YouCanBookMe** — ווידג'ט הזמנות (חשבון + Booking URL)
 
-### עבודה עצמאית (ניתן לביצוע)
-- [ ] **עדכון 6 מאמרי הבלוג** — עדיין תוכן ישן (זוגות, לא רווקים)
-- [ ] **דף פרטיות** (`/privacy`) — כבר קיים, לשפר
-- [ ] **ניקוי דפים ישנים** — services, gallery, resources, course (עדיין ב-sitemap)
-- [ ] **Lead magnets** — דפי נחיתה להורדות חינם
+### כלים comingSoon (15 כלים)
+**5 אינטראקטיביים (ניתן לביצוע עצמאי):**
+- פרק 3: boundaries-quiz, self-worth-letter, values-exercise
+- פרק 4: nvc-practice
+- פרק 10: love-languages-quiz
 
-### אינטגרציות עתידיות
-- [ ] YouCanBookMe — ווידג'ט הזמנות
-- [ ] Responder API — email marketing
-- [ ] שילוב נכסי מותג אמיתיים (brand/, media/, products/) בדפים
+**5 אודיו (צריך הקלטה מאלעד):**
+- פרק 1: morning-audio
+- פרק 2: beliefs-audio
+- פרק 4: communication-audio
+- פרק 10: intimacy-conversation
+- פרק 13: future-meditation
+
+**3 PDF (צריך אישור על תוכן):**
+- פרק 6: feelings-inventory
+- פרק 7: readiness-checklist, first-message-templates
+
+**2 וידאו (צריך צילום):**
+- פרק 9: photo-tips
+- פרק 13: the-choice
+
+### מסמך סקירה
+- `.claude/REVIEW-FOR-ELAD.html` — מסמך מעוצב עם כל המשימות החסומות + צעדים מפורטים
 
 ---
 
@@ -122,7 +129,7 @@
 |--------|--------|--------|----------|
 | **ספר** (book) | v7.0, ציון 9.18/10 | 15 כריכות | 29 QR codes |
 | **קורס** (course) | 98%, 73 תסריטים | — | — |
-| **אתר** (website) | v4.0, 82 דפים | כריכה בלנדינג | 22 כלים פעילים |
+| **אתר** (website) | v4.1, 85+ דפים | כריכה v2-path | 22 כלים + 3 Lead Magnets |
 
 **Design language מיושר**: #E85D75, #1E3A5F, #D4A853, Heebo, radius 0.75rem
 
@@ -132,6 +139,7 @@
 - Next.js 16 (App Router)
 - TypeScript
 - Tailwind CSS 4
+- Supabase (כלים אינטראקטיביים)
 - npm (לא bun — בעיות Windows)
 - Vercel לדיפלוי
 - פורט פיתוח: 3333
@@ -141,10 +149,13 @@
 | קובץ | תיאור |
 |------|-------|
 | `.claude/PROJECT_STATUS.md` | אתה כאן |
+| `.claude/REVIEW-FOR-ELAD.html` | מסמך סקירה מעוצב |
 | `.claude/MANUAL_STEPS_GUIDE.html` | מדריך RavMeser + GA4 |
 | `src/data/book/chapters.ts` | מודל נתונים — 15 פרקים, 29+ כלים |
+| `src/app/lead/` | 3 דפי Lead Magnets |
 | `src/components/book/` | כל קומפוננטות הספר |
 | `src/components/GenderProvider.tsx` | Context מגדר |
+| `src/lib/supabase.ts` | Supabase client |
 | `public/images/generated/` | 22 תמונות Gemini |
 | `public/assets/` | נכסי מותג (brand, media, products) |
 | `.vercelignore` | מוציא תמונות גדולות מדיפלוי |

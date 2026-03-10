@@ -124,7 +124,7 @@ export function FreeWorkshopBanner() {
               הרשמו עכשיו - חינם
             </Link>
             <Link
-              href="/services#workshops"
+              href="/coaching"
               className="inline-flex px-8 py-4 border-2 border-white/50 text-white rounded-full font-semibold text-lg hover:bg-white/10 transition-colors"
             >
               פרטים נוספים

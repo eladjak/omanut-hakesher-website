@@ -65,6 +65,7 @@ export default function PrivacyPage() {
               <li className="ms-6 mb-2"><strong>הודעות:</strong> תוכן ההודעות שאתם שולחים דרך טפסי יצירת הקשר</li>
               <li className="ms-6 mb-2"><strong>נתוני שימוש:</strong> אנליטיקס אנונימי על איך משתמשים באתר (דרך Google Analytics)</li>
               <li className="ms-6 mb-2"><strong>העדפות:</strong> בחירת מגדר לצורך התאמת תוכן (נשמרת מקומית בדפדפן שלכם, לא אצלנו)</li>
+              <li className="ms-6 mb-2"><strong>תוצאות כלים:</strong> תוצאות שאלונים וכלים אינטראקטיביים (ללא זיהוי אישי, לצורך שיפור התוכן בלבד)</li>
             </ul>
 
             <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">3. איך אנחנו משתמשים במידע</h2>
@@ -84,7 +85,7 @@ export default function PrivacyPage() {
 
             <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">5. אחסון ואבטחה</h2>
             <p className="mb-4 text-muted-foreground leading-relaxed">
-              האתר מתאחסן על שרתי Vercel (ארה&quot;ב). כתובות אימייל שנאספות לניוזלטר מאוחסנות בשירות Responder (ישראל). אנחנו נוקטים באמצעי אבטחה סבירים להגנה על המידע שלכם, אך שום שיטה אינה מאובטחת ב-100%.
+              האתר מתאחסן על שרתי Vercel (ארה&quot;ב). כתובות אימייל שנאספות לניוזלטר מאוחסנות בשירות Responder (ישראל). נתוני שימוש בכלים אינטראקטיביים (כמו שאלוני הספר) מאוחסנים ב-Supabase (ענן, ללא זיהוי אישי). אנחנו נוקטים באמצעי אבטחה סבירים להגנה על המידע שלכם, אך שום שיטה אינה מאובטחת ב-100%.
             </p>
 
             <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">6. הזכויות שלכם</h2>

@@ -84,12 +84,12 @@ export default function PodcastPage() {
               בבית ספר. בלי קלישאות, בלי בולשיט - רק אמת.
             </p>
 
-            {/* Podcast microphone image */}
+            {/* Podcast cover image */}
             <div className="flex items-center justify-center mb-10">
-              <div className="relative w-32 h-32 rounded-3xl overflow-hidden shadow-lg">
+              <div className="relative w-40 h-40 rounded-3xl overflow-hidden shadow-xl">
                 <Image
-                  src="/images/generated/podcast-microphone.jpg"
-                  alt="מיקרופון פודקאסט"
+                  src="/assets/brand/podcast-cover-apple.jpg"
+                  alt="מוצאים אהבה - עטיפת הפודקאסט"
                   fill
                   className="object-cover"
                 />
@@ -199,8 +199,14 @@ export default function PodcastPage() {
             {podcastTopics.map((topic, index) => (
               <Card key={index} className="border-border/50 hover:border-primary/20 transition-colors">
                 <CardContent className="p-5 flex items-start gap-4">
-                  <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
-                    <span className="text-primary font-bold text-sm">{index + 1}</span>
+                  <div className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 shadow-sm">
+                    <Image
+                      src={`/assets/media/podcast-ep${index + 1}.jpg`}
+                      alt={`פרק ${index + 1} - ${topic.title}`}
+                      fill
+                      className="object-cover"
+                      sizes="64px"
+                    />
                   </div>
                   <div>
                     <h3 className="font-bold mb-1">{topic.title}</h3>

@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>סקירת אתר אומנות הקשר — מה נשאר לעשות</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --pink: #E85D75;
+      --navy: #1E3A5F;
+      --gold: #D4A853;
+      --sage: #7C9A8E;
+      --bg: #FAFAF8;
+      --text: #2D2D2D;
+      --muted: #6B7280;
+      --card: #FFFFFF;
+      --border: #E5E7EB;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --danger: #EF4444;
+      --info: #3B82F6;
+    }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 0;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #2a4f7a 50%, var(--navy) 100%);
+      color: white;
+      padding: 60px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -25%;
+      width: 80%;
+      height: 200%;
+      background: radial-gradient(ellipse, rgba(232,93,117,0.15) 0%, transparent 70%);
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .hero .subtitle {
+      font-size: 1.15rem;
+      opacity: 0.85;
+      font-weight: 300;
+      position: relative;
+    }
+    .hero .date {
+      margin-top: 16px;
+      font-size: 0.9rem;
+      opacity: 0.6;
+      position: relative;
+    }
+
+    /* Stats bar */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 28px 40px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--pink);
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Container */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 48px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+    }
+    .section-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 16px;
+      transition: box-shadow 0.2s;
+    }
+    .card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .badge-done { background: #D1FAE5; color: #065F46; }
+    .badge-blocked { background: #FEE2E2; color: #991B1B; }
+    .badge-waiting { background: #FEF3C7; color: #92400E; }
+    .badge-auto { background: #DBEAFE; color: #1E40AF; }
+    .badge-new { background: #EDE9FE; color: #5B21B6; }
+
+    .card p, .card li {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .card ul {
+      padding-right: 20px;
+      margin-top: 8px;
+    }
+    .card li {
+      margin-bottom: 6px;
+    }
+
+    /* Priority indicator */
+    .priority {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 2px 0;
+    }
+    .priority-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .priority-high .priority-dot { background: var(--danger); }
+    .priority-medium .priority-dot { background: var(--warning); }
+    .priority-low .priority-dot { background: var(--sage); }
+
+    /* Steps */
+    .steps {
+      counter-reset: step;
+      list-style: none;
+      padding: 0;
+      margin-top: 12px;
+    }
+    .steps li {
+      counter-increment: step;
+      padding: 10px 0 10px 0;
+      padding-right: 40px;
+      position: relative;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .steps li:last-child { border-bottom: none; }
+    .steps li::before {
+      content: counter(step);
+      position: absolute;
+      right: 0;
+      top: 10px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Done section */
+    .done-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 12px;
+    }
+    .done-item {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .done-check {
+      color: var(--success);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    /* Highlight box */
+    .highlight {
+      background: linear-gradient(135deg, rgba(232,93,117,0.06), rgba(212,168,83,0.06));
+      border: 1px solid rgba(232,93,117,0.2);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .highlight-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--pink);
+      margin-bottom: 8px;
+    }
+
+    /* Links */
+    a {
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px dashed var(--navy);
+    }
+    a:hover {
+      color: var(--pink);
+      border-color: var(--pink);
+    }
+
+    /* Code / paths */
+    code {
+      background: #F3F4F6;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-family: 'Courier New', monospace;
+      direction: ltr;
+      display: inline-block;
+    }
+
+    /* Summary table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    th, td {
+      padding: 12px 16px;
+      text-align: right;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+    th {
+      background: #F9FAFB;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* CTA */
+    .cta-box {
+      background: var(--navy);
+      color: white;
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+      margin: 40px 0;
+    }
+    .cta-box h3 {
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+    }
+    .cta-box p {
+      opacity: 0.8;
+      margin-bottom: 20px;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--pink);
+      color: white;
+      padding: 12px 32px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      border: none;
+      transition: transform 0.2s;
+    }
+    .cta-btn:hover {
+      transform: scale(1.03);
+      border: none;
+      color: white;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Sync section */
+    .sync-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 16px 0;
+    }
+    .sync-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .sync-card h4 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+    .sync-card .version {
+      color: var(--pink);
+      font-weight: 700;
+      font-size: 1.3rem;
+    }
+    .sync-card p {
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 40px 20px; }
+      .hero h1 { font-size: 1.8rem; }
+      .stats-bar { gap: 20px; padding: 20px; }
+      .stat-number { font-size: 1.5rem; }
+      .sync-grid { grid-template-columns: 1fr; }
+      .done-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1>סקירת אתר אומנות הקשר</h1>
+    <div class="subtitle">מה בוצע, מה ממתין לך, ומה הצעדים הבאים</div>
+    <div class="date">10 במרץ 2026 | גרסה 4.1</div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-number">82+</div>
+      <div class="stat-label">דפים באתר</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">22</div>
+      <div class="stat-label">כלים אינטראקטיביים</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">3</div>
+      <div class="stat-label">דפי Lead Magnets חדשים</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">461</div>
+      <div class="stat-label">זוגות שמצאו אהבה</div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- ============================================ -->
+    <!-- DONE SECTION -->
+    <!-- ============================================ -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: #D1FAE5; color: #065F46;">&#10003;</div>
+        <div>
+          <div class="section-title">מה הושלם עכשיו (סשן זה)</div>
+          <div class="section-subtitle">שינויים שכבר נמצאים בקוד ומוכנים לדיפלוי</div>
+        </div>
+      </div>
+
+      <div class="done-grid">
+        <div class="done-item"><span class="done-check">&#10003;</span> דפים ישנים מפנים לדפים חדשים</div>
+        <div class="done-item"><span class="done-check">&#10003;</span> services &rarr; coaching</div>
+        <div class="done-item"><span class="done-check">&#10003;</span> gallery &rarr; testimonials</div>
+        <div class="done-item"><span class="done-check">&#10003;</span> resources &rarr; blog</div>
+        <div class="done-item"><span class="done-check">&#10003;</span> course &rarr; hadrech</div>
+        <div class="done-item"><span class="done-check">&#10003;</span> 3 דפי Lead Magnet חדשים</div>
+        <div class="done-item"><span class="done-check">&#10003;</span> דף פרטיות עודכן (Supabase)</div>
+        <div class="done-item"><span class="done-check">&#10003;</span> Supabase אינטגרציה</div>
+        <div class="done-item"><span class="done-check">&#10003;</span> כריכת ספר אמיתית באתר</div>
+        <div class="done-item"><span class="done-check">&#10003;</span> נכסי מותג משולבים בדפים</div>
+        <div class="done-item"><span class="done-check">&#10003;</span> הפניות שבורות תוקנו</div>
+        <div class="done-item"><span class="done-check">&#10003;</span> סנכרון עם פרויקט הספר והקורס</div>
+      </div>
+
+      <div class="highlight" style="margin-top: 24px;">
+        <div class="highlight-title">דפי Lead Magnet חדשים</div>
+        <p>שלושה דפי נחיתה עם טפסי הרשמה, מוכנים לקבל מיילים:</p>
+        <ul style="margin-top: 8px;">
+          <li><strong>/lead/23-reasons</strong> — "23 הסיבות האמיתיות שאתה עדיין רווק/ה"</li>
+          <li><strong>/lead/7-principles</strong> — "7 עקרונות הזהב למציאת זוגיות"</li>
+          <li><strong>/lead/36-questions</strong> — "36 השאלות שיכולות ליצור אהבה"</li>
+        </ul>
+        <p style="margin-top: 12px; color: var(--warning); font-weight: 600;">&#9888; הטפסים עובדים ויזואלית אבל עוד לא מחוברים ל-Responder/Mailchimp. ראה משימה #3 למטה.</p>
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SYNC SECTION -->
+    <!-- ============================================ -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: #DBEAFE; color: #1E40AF;">&#8644;</div>
+        <div>
+          <div class="section-title">סנכרון 3 פרויקטים</div>
+          <div class="section-subtitle">omanut-hakesher-book + course + website</div>
+        </div>
+      </div>
+
+      <div class="sync-grid">
+        <div class="sync-card">
+          <h4>הספר</h4>
+          <div class="version">v7.0</div>
+          <p>15 פרקים, ~64K מילים<br>15 כריכות, ציון 9.18/10</p>
+        </div>
+        <div class="sync-card">
+          <h4>הקורס</h4>
+          <div class="version">98%</div>
+          <p>73 תסריטים, 34 PDFs<br>12 דפי סיכום שבועיים</p>
+        </div>
+        <div class="sync-card">
+          <h4>האתר</h4>
+          <div class="version">v4.1</div>
+          <p>82+ דפים, 22 כלים<br>3 דפי Lead Magnets</p>
+        </div>
+      </div>
+
+      <p style="color: var(--muted); font-size: 0.9rem; margin-top: 8px;">
+        שפת העיצוב מיושרת: <code>#E85D75</code> <code>#1E3A5F</code> <code>#D4A853</code> | Heebo | radius 0.75rem
+      </p>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- BLOCKED - NEEDS ELAD -->
+    <!-- ============================================ -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: #FEE2E2; color: #991B1B;">&#9888;</div>
+        <div>
+          <div class="section-title">ממתין לפעולה שלך</div>
+          <div class="section-subtitle">משימות שרק אתה יכול לעשות - ברגע שתסיים, אני אמשיך</div>
+        </div>
+      </div>
+
+      <!-- Task 1: GA4 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">1. Google Analytics — Measurement ID</div>
+          <span class="badge badge-blocked">חסום</span>
+        </div>
+        <div class="priority priority-high"><span class="priority-dot"></span> עדיפות גבוהה</div>
+        <p style="margin-top: 10px;">
+          האתר מוכן לאנליטיקס אבל חסר ה-Measurement ID. בלי זה אין נתונים על תנועה.
+        </p>
+        <ol class="steps">
+          <li>כנס ל-<a href="https://analytics.google.com" target="_blank">analytics.google.com</a></li>
+          <li>צור חשבון חדש (או השתמש בקיים) &rarr; Property חדש בשם "אומנות הקשר"</li>
+          <li>בחר <strong>Web</strong> &rarr; הכנס את הכתובת <code>omanut-hakesher.co.il</code></li>
+          <li>העתק את ה-<strong>Measurement ID</strong> (נראה כך: <code>G-XXXXXXXXXX</code>)</li>
+          <li>שלח לי את ה-ID ואני אשלב אותו באתר</li>
+        </ol>
+      </div>
+
+      <!-- Task 2: Domain -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">2. חיבור דומיין ohlove.co.il</div>
+          <span class="badge badge-blocked">חסום</span>
+        </div>
+        <div class="priority priority-high"><span class="priority-dot"></span> עדיפות גבוהה</div>
+        <p style="margin-top: 10px;">
+          האתר עולה ב-vercel.app אבל צריך את הדומיין האמיתי. זה דורש גישה לספק הדומיין שלך.
+        </p>
+        <ol class="steps">
+          <li>כנס לאיפה שקנית את הדומיין (iWantMyName? Namecheap? אחר?)</li>
+          <li>כנס ל-<a href="https://vercel.com/dashboard" target="_blank">vercel.com</a> &rarr; הפרויקט &rarr; Settings &rarr; Domains</li>
+          <li>הוסף <code>ohlove.co.il</code> ו-<code>www.ohlove.co.il</code></li>
+          <li>Vercel יציג לך רשומות DNS שצריך להוסיף אצל ספק הדומיין</li>
+          <li>הוסף את רשומות ה-CNAME/A בהגדרות ה-DNS של הדומיין</li>
+          <li>חכה 5-30 דקות עד שהדומיין מתחבר (Vercel יראה סטטוס ירוק)</li>
+        </ol>
+        <div class="highlight" style="margin-top: 12px;">
+          <div class="highlight-title">לא בטוח מי ספק הדומיין?</div>
+          <p>נסה לחפש במייל שלך "ohlove.co.il" — בדרך כלל יש מייל חידוש שנתי מהספק.</p>
+        </div>
+      </div>
+
+      <!-- Task 3: Responder -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">3. חיבור דפי Lead Magnets ל-Responder</div>
+          <span class="badge badge-waiting">ממתין</span>
+        </div>
+        <div class="priority priority-medium"><span class="priority-dot"></span> עדיפות בינונית</div>
+        <p style="margin-top: 10px;">
+          שלושת דפי ה-Lead Magnets מוכנים ויזואלית. כדי שהם ירשמו אנשים לרשימת התפוצה, צריך לחבר ל-Responder.
+        </p>
+        <ol class="steps">
+          <li>כנס ל-<a href="https://app.responder.co.il" target="_blank">Responder</a></li>
+          <li>צור 3 רשימות חדשות: "23 סיבות", "7 עקרונות", "36 שאלות"</li>
+          <li>לכל רשימה, צור <strong>טופס הרשמה</strong> וקבל את ה-API key / Form URL</li>
+          <li>שלח לי את הפרטים ואני אחבר את הטפסים באתר</li>
+        </ol>
+        <p style="margin-top: 10px;">
+          <strong>חלופה:</strong> אם אין לך חשבון Responder, אפשר להשתמש ב-Mailchimp (חינם עד 500 נרשמים) או ConvertKit.
+        </p>
+      </div>
+
+      <!-- Task 4: RavMeser -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">4. ייצוא תוכן מ-RavMeser</div>
+          <span class="badge badge-blocked">חסום</span>
+        </div>
+        <div class="priority priority-medium"><span class="priority-dot"></span> עדיפות בינונית</div>
+        <p style="margin-top: 10px;">
+          לאתר RavMeser הישן יש תוכן שיכול להעשיר את האתר החדש. Cloudflare חוסם גישה אוטומטית, אז צריך ייצוא ידני.
+        </p>
+        <ol class="steps">
+          <li>כנס לאדמין של RavMeser (רבמסר) עם הסיסמה שלך</li>
+          <li>ייצא את התכנים הבאים:
+            <ul>
+              <li>מאמרים / פוסטים</li>
+              <li>דפי נחיתה</li>
+              <li>רשימת נרשמים (CSV)</li>
+            </ul>
+          </li>
+          <li>שמור את הקבצים בתיקייה ב-OneDrive ותגיד לי</li>
+        </ol>
+        <p style="margin-top: 10px; font-size: 0.85rem; color: var(--muted);">
+          מדריך מפורט נמצא בקובץ: <code>.claude/MANUAL_STEPS_GUIDE.html</code>
+        </p>
+      </div>
+
+      <!-- Task 5: Canva -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">5. תמונות Canva עם שגיא</div>
+          <span class="badge badge-waiting">ממתין</span>
+        </div>
+        <div class="priority priority-low"><span class="priority-dot"></span> עדיפות נמוכה</div>
+        <p style="margin-top: 10px;">
+          יש תמונות מקצועיות ב-Canva שצולמו עם שגיא. ברגע שיהיו זמינות, נשלב אותן בדפי ה-About ו-Coaching במקום תמונות ה-AI.
+        </p>
+        <ol class="steps">
+          <li>פתח את ה-Canva שלך</li>
+          <li>מצא את הפרויקט עם התמונות של אלעד + שגיא</li>
+          <li>הורד את התמונות ב-JPG (איכות גבוהה)</li>
+          <li>שמור ב: <code>public/assets/photos/</code> בפרויקט</li>
+        </ol>
+      </div>
+
+      <!-- Task 6: YouCanBookMe -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">6. הגדרת YouCanBookMe</div>
+          <span class="badge badge-waiting">ממתין</span>
+        </div>
+        <div class="priority priority-low"><span class="priority-dot"></span> עדיפות נמוכה</div>
+        <p style="margin-top: 10px;">
+          כדי שאנשים יוכלו לקבוע שיחת היכרות חינם ישירות מהאתר (במקום WhatsApp), אפשר לחבר ווידג'ט של YouCanBookMe.
+        </p>
+        <ol class="steps">
+          <li>צור חשבון ב-<a href="https://youcanbook.me" target="_blank">youcanbook.me</a> (יש תוכנית חינם)</li>
+          <li>הגדר זמינות (ימים ושעות שפנויים לשיחות)</li>
+          <li>שלח לי את ה-Booking URL ואני אשלב אותו בדף Coaching</li>
+        </ol>
+      </div>
+
+    </div>
+
+    <!-- ============================================ -->
+    <!-- CONTENT DECISIONS -->
+    <!-- ============================================ -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: #FEF3C7; color: #92400E;">&#128172;</div>
+        <div>
+          <div class="section-title">החלטות תוכן</div>
+          <div class="section-subtitle">דברים שצריכים את הדעה שלך</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">כריכת הספר הסופית</div>
+          <span class="badge badge-waiting">ממתין</span>
+        </div>
+        <p>
+          קבוצת המיקוד בחרה ב-<strong>v2-path</strong> (השביל הזהב, ציון 8.15) כמנצחת.
+          כרגע היא מופיעה באתר. אם אתה רוצה לשנות — יש 15 אפשרויות בתיקייה:
+        </p>
+        <p style="margin-top: 8px;"><code>omanut-hakesher-book/cover/</code></p>
+        <table>
+          <thead>
+            <tr>
+              <th>דירוג</th>
+              <th>כריכה</th>
+              <th>ציון</th>
+              <th>תיאור</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>#1</strong></td>
+              <td>v2-path</td>
+              <td>8.15</td>
+              <td>שביל זהב מתפתל, אקוורל (מוצגת כרגע)</td>
+            </tr>
+            <tr>
+              <td>#2</td>
+              <td>v3-red-thread</td>
+              <td>7.73</td>
+              <td>חוט אדום אלגנטי, ייחודי</td>
+            </tr>
+            <tr>
+              <td>#3</td>
+              <td>v2-hearts-logo</td>
+              <td>7.48</td>
+              <td>שני לבבות על קרם, מסגרת זהב</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top: 8px; font-size: 0.85rem; color: var(--muted);">
+          דוח מלא: <code>omanut-hakesher-book/COVER-FOCUS-GROUP-REPORT.html</code>
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">15 כלים "coming soon" — מה לפתח ראשון?</div>
+          <span class="badge badge-waiting">ממתין</span>
+        </div>
+        <p>יש 15 כלים שמוצגים כ-"בקרוב" בסקשן הספר. רובם אודיו/וידאו. סדר העדיפויות:</p>
+        <table>
+          <thead>
+            <tr>
+              <th>סוג</th>
+              <th>כלים</th>
+              <th>מה צריך ממך</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>אודיו</td>
+              <td>morning-audio, beliefs-audio, communication-audio, intimacy-conversation, future-meditation</td>
+              <td>להקליט את הקבצים (יש תסריטים מוכנים בקורס)</td>
+            </tr>
+            <tr>
+              <td>וידאו</td>
+              <td>photo-tips, the-choice</td>
+              <td>לצלם סרטונים קצרים</td>
+            </tr>
+            <tr>
+              <td>PDF</td>
+              <td>feelings-inventory, readiness-checklist, first-message-templates</td>
+              <td>אישור על תוכן (טיוטות מוכנות בקורס)</td>
+            </tr>
+            <tr>
+              <td>אינטראקטיבי</td>
+              <td>boundaries-quiz, self-worth-letter, values-exercise, nvc-practice, love-languages-quiz</td>
+              <td>אישור פשוט — אני אבנה</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="highlight" style="margin-top: 12px;">
+          <div class="highlight-title">המלצה: נתחיל מ-5 הכלים האינטראקטיביים</div>
+          <p>את אלה אני יכול לבנות לבד בלי קלט ממך. תגיד "קדימה" ואני מתחיל.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">תוכן PDF מפרויקט הקורס</div>
+          <span class="badge badge-new">חדש</span>
+        </div>
+        <p>
+          בפרויקט הקורס (<code>omanut-hakesher-course</code>) יש 34 PDFs ו-73 תסריטים.
+          חלקם יכולים להפוך לכלים אינטראקטיביים או תכני בלוג.
+        </p>
+        <p style="margin-top: 8px;">
+          <strong>דוגמאות:</strong> דפי סיכום שבועיים, שאלוני עבודה עצמית, תרגילי NVC, מדריך לשיחות ראשונות.
+        </p>
+        <p style="margin-top: 8px;">
+          <strong>האם תרצה שאמיר תכנים מהקורס לאתר?</strong> זה יכול להעשיר משמעותית את הבלוג ואת הכלים.
+        </p>
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- NEXT STEPS -->
+    <!-- ============================================ -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: #EDE9FE; color: #5B21B6;">&#9889;</div>
+        <div>
+          <div class="section-title">מה אני יכול לעשות ברגע שתאשר</div>
+          <div class="section-subtitle">עבודה עצמאית שממתינה לאור ירוק ממך</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">א. בניית 5 כלים אינטראקטיביים חדשים</div>
+          <span class="badge badge-auto">עצמאי</span>
+        </div>
+        <p>boundaries-quiz, self-worth-letter, values-exercise, nvc-practice, love-languages-quiz</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">ב. שילוב GA4 באתר</div>
+          <span class="badge badge-blocked">צריך Measurement ID</span>
+        </div>
+        <p>ברגע שתשלח לי את ה-ID, זה עניין של 5 דקות.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">ג. חיבור Lead Magnets ל-Responder</div>
+          <span class="badge badge-blocked">צריך API key</span>
+        </div>
+        <p>ברגע שתגדיר רשימות ב-Responder ותשלח API key.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">ד. שילוב תמונות אמיתיות</div>
+          <span class="badge badge-blocked">צריך תמונות Canva</span>
+        </div>
+        <p>ברגע שתוריד את התמונות מ-Canva, אני אחליף את תמונות ה-AI בתמונות אמיתיות.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">ה. דיפלוי לדומיין ohlove.co.il</div>
+          <span class="badge badge-blocked">צריך הגדרות DNS</span>
+        </div>
+        <p>ברגע שתחבר את הדומיין ב-Vercel + DNS, אני אעדכן את כל הלינקים הפנימיים.</p>
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- PRIORITY SUMMARY -->
+    <!-- ============================================ -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: #F3F4F6; color: var(--text);">&#128203;</div>
+        <div>
+          <div class="section-title">סיכום עדיפויות</div>
+          <div class="section-subtitle">מה הכי חשוב לעשות ראשון</div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>משימה</th>
+            <th>מי עושה</th>
+            <th>זמן משוער</th>
+            <th>עדיפות</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Google Analytics ID</td>
+            <td>אלעד</td>
+            <td>10 דקות</td>
+            <td><span class="priority priority-high"><span class="priority-dot"></span> גבוהה</span></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>חיבור דומיין ohlove.co.il</td>
+            <td>אלעד</td>
+            <td>15 דקות</td>
+            <td><span class="priority priority-high"><span class="priority-dot"></span> גבוהה</span></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Responder — רשימות + API key</td>
+            <td>אלעד</td>
+            <td>20 דקות</td>
+            <td><span class="priority priority-medium"><span class="priority-dot"></span> בינונית</span></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>אישור בניית 5 כלים חדשים</td>
+            <td>אלעד (אישור) + Claude (בנייה)</td>
+            <td>אישור: 1 דקה</td>
+            <td><span class="priority priority-medium"><span class="priority-dot"></span> בינונית</span></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>RavMeser ייצוא</td>
+            <td>אלעד</td>
+            <td>30 דקות</td>
+            <td><span class="priority priority-medium"><span class="priority-dot"></span> בינונית</span></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>תמונות Canva</td>
+            <td>אלעד</td>
+            <td>15 דקות</td>
+            <td><span class="priority priority-low"><span class="priority-dot"></span> נמוכה</span></td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>YouCanBookMe</td>
+            <td>אלעד</td>
+            <td>20 דקות</td>
+            <td><span class="priority priority-low"><span class="priority-dot"></span> נמוכה</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <h3>מוכן להתחיל?</h3>
+      <p>תתחיל עם GA4 + דומיין (30 דקות ביחד) — ותקבל אתר מקצועי על ohlove.co.il עם אנליטיקס מלא</p>
+      <a href="https://analytics.google.com" target="_blank" class="cta-btn">התחל עם Google Analytics &larr;</a>
+    </div>
+
+    <!-- Production link -->
+    <div class="highlight">
+      <div class="highlight-title">קישור לאתר הנוכחי</div>
+      <p>
+        <a href="https://omanut-hakesher-website.vercel.app" target="_blank" style="font-size: 1.1rem;">
+          omanut-hakesher-website.vercel.app
+        </a>
+      </p>
+      <p style="margin-top: 8px;">כל השינויים מהסשן הזה יעלו אחרי הדיפלוי הבא (<code>npx vercel</code>).</p>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    נוצר אוטומטית | אומנות הקשר | מרץ 2026
+  </div>
+
+</body>
+</html>

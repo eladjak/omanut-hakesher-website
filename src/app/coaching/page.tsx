@@ -411,8 +411,8 @@ export default function CoachingPage() {
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="relative w-full h-72 rounded-2xl overflow-hidden">
             <Image
-              src="/images/generated/coaching-transformation.jpg"
-              alt="תהליך שינוי וצמיחה אישית"
+              src="/assets/products/ohlove-service-1.png"
+              alt="ליווי אישי - תהליך שינוי וצמיחה"
               fill
               className="object-cover"
             />
@@ -497,8 +497,8 @@ export default function CoachingPage() {
           <div className="mt-12 max-w-xs mx-auto">
             <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-lg">
               <Image
-                src="/images/generated/coaching-results.jpg"
-                alt="תוצאות הליווי - זוגות מאושרים"
+                src="/assets/products/ohlove-support-image.png"
+                alt="ליווי אישי - תמיכה מלאה לאורך הדרך"
                 fill
                 className="object-cover"
               />
@@ -531,7 +531,7 @@ export default function CoachingPage() {
             <div className="relative">
               <div className="aspect-[4/5] bg-gradient-to-br from-primary/20 via-secondary/10 to-accent/20 rounded-3xl overflow-hidden">
                 <Image
-                  src="/assets/elad-photos/profile-current.jpg"
+                  src="/assets/brand/ohlove-photo-2.jpg"
                   alt="אלעד יעקובוביץ׳ - מייסד אומנות הקשר"
                   fill
                   className="object-cover"

@@ -211,7 +211,7 @@ export default function AboutPage() {
             <div className="relative order-2 lg:order-1">
               <div className="aspect-[4/5] bg-gradient-to-br from-primary/20 via-secondary/10 to-accent/20 rounded-3xl overflow-hidden">
                 <Image
-                  src="/assets/elad-photos/profile-current.jpg"
+                  src="/assets/brand/ohlove-photo-1.jpg"
                   alt="אלעד יעקובוביץ׳ - מייסד אומנות הקשר"
                   fill
                   className="object-cover"
@@ -309,7 +309,7 @@ export default function AboutPage() {
             <div className="relative">
               <div className="aspect-[4/5] rounded-3xl overflow-hidden">
                 <Image
-                  src="/images/generated/about-elad-speaking.jpg"
+                  src="/assets/brand/ohlove-photo-3.jpg"
                   alt="אלעד יעקובוביץ׳ על הבמה"
                   fill
                   className="object-cover"
