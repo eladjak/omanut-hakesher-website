@@ -42,3 +42,10 @@ next-env.d.ts
 
 .vercel
 .env*.local
+
+# Large photo archives (too big for git, use Cloudinary/S3 for production)
+public/assets/elad-photos/
+
+# Temp/review files
+*.docx
+~$*.docx
