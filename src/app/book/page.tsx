@@ -3,14 +3,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { chapters as chapterData } from "@/data/book/chapters";
 
 export const metadata: Metadata = {
   title: "הספר ״אומנות הקשר״ - הדרך לזוגיות שאתה ראוי לה",
   description:
-    "הספר שמלמד את מה שלא לימדו אותך על זוגיות. 10 פרקים, 32 תרגילים מעשיים, וסיפורים אמיתיים של אנשים שעברו את הדרך. מאת אלעד יעקובוביץ׳.",
+    "הספר שמלמד את מה שלא לימדו אותך על זוגיות. 13 פרקים, 32 תרגילים מעשיים, וסיפורים אמיתיים של אנשים שעברו את הדרך. מאת אלעד יעקובוביץ׳.",
   alternates: {
     canonical: "/book",
   },
@@ -71,7 +71,7 @@ export default function BookPage() {
 
               <div className="flex flex-wrap gap-4 mb-8">
                 <span className="text-sm bg-white/20 text-white px-3 py-1.5 rounded-full">
-                  10 פרקים
+                  13 פרקים
                 </span>
                 <span className="text-sm bg-white/20 text-white px-3 py-1.5 rounded-full">
                   32 תרגילים
@@ -108,18 +108,14 @@ export default function BookPage() {
             {/* Book Cover */}
             <div className="flex justify-center">
               <div className="relative">
-                <div className="w-72 h-[430px] bg-gradient-to-br from-primary/20 via-accent/10 to-secondary/20 rounded-2xl shadow-2xl flex items-center justify-center border border-border/30">
-                  <div className="text-center px-8">
-                    <div className="w-16 h-16 bg-primary/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                      </svg>
-                    </div>
-                    <h3 className="text-2xl font-bold mb-2">אומנות הקשר</h3>
-                    <Separator className="my-3 bg-primary/20" />
-                    <p className="text-sm text-muted-foreground">הדרך לזוגיות שאתה ראוי לה</p>
-                    <p className="text-xs text-muted-foreground mt-4">אלעד יעקובוביץ׳</p>
-                  </div>
+                <div className="w-72 h-[430px] rounded-2xl shadow-2xl overflow-hidden">
+                  <Image
+                    src="/images/generated/book-cover.jpg"
+                    alt='כריכת הספר "אומנות הקשר - הדרך לזוגיות שאתה ראוי לה"'
+                    fill
+                    className="object-cover"
+                    priority
+                  />
                 </div>
                 <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-accent/20 rounded-full blur-xl" />
                 <div className="absolute -top-4 -right-4 w-16 h-16 bg-primary/20 rounded-full blur-xl" />
