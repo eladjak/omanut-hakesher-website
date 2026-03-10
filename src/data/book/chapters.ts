@@ -64,7 +64,6 @@ export const chapters: ChapterData[] = [
         description: "שאלון שעוזר לזהות את הנרטיב שאתה נושא על עצמך בזוגיות",
         type: "quiz",
         icon: "📖",
-        comingSoon: true,
       },
       {
         slug: "four-a-day",
@@ -93,7 +92,6 @@ export const chapters: ChapterData[] = [
         description: "מפה את 14 הפחדים ותגלה אילו מהם שולטים בך",
         type: "quiz",
         icon: "🗺️",
-        comingSoon: true,
       },
       {
         slug: "inner-dialogue",
@@ -208,7 +206,6 @@ export const chapters: ChapterData[] = [
         description: "כלי אינטראקטיבי לזיהוי ומיפוי רגשות",
         type: "interactive",
         icon: "🎡",
-        comingSoon: true,
       },
       {
         slug: "active-listening",
