@@ -110,7 +110,7 @@ export default function BookPage() {
               <div className="relative">
                 <div className="w-72 h-[430px] rounded-2xl shadow-2xl overflow-hidden">
                   <Image
-                    src="/images/generated/book-cover.jpg"
+                    src="/assets/book/cover.jpg"
                     alt='כריכת הספר "אומנות הקשר - הדרך לזוגיות שאתה ראוי לה"'
                     fill
                     className="object-cover"
