@@ -71,7 +71,6 @@ export const chapters: ChapterData[] = [
         description: "תזכורות יומיות לאימון חשיבה חדשה",
         type: "interactive",
         icon: "💬",
-        comingSoon: true,
       },
     ],
   },
@@ -288,7 +287,6 @@ export const chapters: ChapterData[] = [
         description: "מדריך ויזואלי לתמונות שעובדות באפליקציות",
         type: "interactive",
         icon: "📸",
-        comingSoon: true,
       },
       {
         slug: "date-report",
@@ -367,7 +365,6 @@ export const chapters: ChapterData[] = [
         description: "15 שאלות לזיהוי סוג הכימיה שלך",
         type: "quiz",
         icon: "⚗️",
-        comingSoon: true,
       },
       {
         slug: "real-chemistry",
@@ -383,7 +380,6 @@ export const chapters: ChapterData[] = [
         description: "כלי החלטה אינטראקטיבי - ירוק, צהוב או אדום",
         type: "interactive",
         icon: "🚦",
-        comingSoon: true,
       },
       {
         slug: "butterflies-audio",
@@ -462,7 +458,6 @@ export const chapters: ChapterData[] = [
         description: "5 הפחדים הגדולים מהתחייבות - ואיך להתמודד",
         type: "quiz",
         icon: "🗺️",
-        comingSoon: true,
       },
       {
         slug: "readiness-quiz",
@@ -470,7 +465,6 @@ export const chapters: ChapterData[] = [
         description: "7 + 13 שאלות לבדיקת מוכנות להתחייבות",
         type: "quiz",
         icon: "💍",
-        comingSoon: true,
       },
       {
         slug: "the-choice",
