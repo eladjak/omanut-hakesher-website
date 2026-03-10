@@ -49,7 +49,7 @@ export default function NotFound() {
             variant="outline"
             className="rounded-full border-primary text-primary hover:bg-primary/5 px-8"
           >
-            <Link href="/services">השירותים שלנו</Link>
+            <Link href="/coaching">השירותים שלנו</Link>
           </Button>
           <Button
             asChild

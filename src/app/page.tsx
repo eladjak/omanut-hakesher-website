@@ -384,14 +384,24 @@ export default function HomePage() {
             </h2>
           </div>
 
-          {/* Couples image */}
-          <div className="relative w-full h-64 rounded-2xl overflow-hidden mb-10 max-w-4xl mx-auto">
-            <Image
-              src="/images/generated/homepage-couples.jpg"
-              alt="זוגות שמצאו אהבה דרך אומנות הקשר"
-              fill
-              className="object-cover"
-            />
+          {/* Testimonial thumbnails */}
+          <div className="grid grid-cols-2 gap-4 mb-10 max-w-4xl mx-auto">
+            <div className="relative w-full h-48 rounded-2xl overflow-hidden shadow-md">
+              <Image
+                src="/assets/media/youtube-testimonial-1.jpg"
+                alt="סיפור הצלחה - לקוחות של אומנות הקשר"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative w-full h-48 rounded-2xl overflow-hidden shadow-md">
+              <Image
+                src="/assets/media/youtube-testimonial-2.jpg"
+                alt="סיפור הצלחה - לקוחות של אומנות הקשר"
+                fill
+                className="object-cover"
+              />
+            </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
