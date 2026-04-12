@@ -38,3 +38,9 @@ Open [http://localhost:3333](http://localhost:3333) in your browser.
 ## License
 
 MIT
+
+---
+
+⭐ If you find this useful, please star the repo!
+
+*[README בעברית](README.he.md)*
