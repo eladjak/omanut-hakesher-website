@@ -42,7 +42,7 @@ export async function POST(request: Request) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: "אומנות הקשר <noreply@omanut-hakesher.co.il>",
+          from: "אומנות הקשר <omanut@eladjak.com>",
           to: [contactEmail],
           subject: `פנייה חדשה מ${data.firstName} ${data.lastName}`,
           html: `
