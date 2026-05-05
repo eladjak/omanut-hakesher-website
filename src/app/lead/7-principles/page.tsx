@@ -47,13 +47,13 @@ const principles = [
   },
 ];
 
-type FormStatus = "idle" | "submitting" | "success";
+type FormStatus = "idle" | "submitting" | "success" | "error";
 
 export default function SevenPrinciplesPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<FormStatus>("idle");
-  const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
+  const [errors, setErrors] = useState<{ name?: string; email?: string; submit?: string }>({});
 
   const validate = () => {
     const newErrors: { name?: string; email?: string } = {};
@@ -67,8 +67,23 @@ export default function SevenPrinciplesPage() {
     e.preventDefault();
     if (!validate()) return;
     setStatus("submitting");
-    await new Promise((r) => setTimeout(r, 800));
-    setStatus("success");
+    try {
+      const res = await fetch("/api/lead/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim(), name: name.trim(), slug: "7-principles" }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setErrors({ submit: data.error === "invalid-email" ? "כתובת אימייל לא תקינה" : "משהו השתבש. נסה/י שוב בעוד רגע." });
+        setStatus("error");
+        return;
+      }
+      setStatus("success");
+    } catch {
+      setErrors({ submit: "אין חיבור לרשת. בדוק/י את החיבור ונסה/י שוב." });
+      setStatus("error");
+    }
   };
 
   return (
@@ -183,9 +198,12 @@ export default function SevenPrinciplesPage() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
-                      <h3 className="text-2xl font-bold mb-3">7 העקרונות בדרך אליך!</h3>
+                      <h3 className="text-2xl font-bold mb-3">תודה — 7 העקרונות בדרך</h3>
                       <p className="text-muted-foreground leading-relaxed">
-                        שלחנו לך את המדריך לאימייל. בדוק/י את תיבת הדואר שלך (וגם את תיקיית הספאם).
+                        שלחנו לך אותם עכשיו לאימייל. בדוק/י את תיבת הדואר תוך כמה דקות — לפעמים זה נוחת בספאם.
+                      </p>
+                      <p className="text-sm text-muted-foreground mt-4">
+                        לא הגיע? <Link href="/contact" className="text-primary underline-offset-4 hover:underline">כתוב/כתבי לי</Link> ואשלח לך ידנית.
                       </p>
                     </div>
                   ) : (
@@ -195,6 +213,11 @@ export default function SevenPrinciplesPage() {
                         ממש כאן, ממש עכשיו. בלי תשלום, בלי התחייבות.
                       </p>
                       <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+                        {errors.submit && (
+                          <div className="rounded-xl bg-destructive/10 border border-destructive/30 px-4 py-3 text-sm text-destructive" role="alert">
+                            {errors.submit}
+                          </div>
+                        )}
                         <div>
                           <label htmlFor="name-7p" className="block text-sm font-medium mb-2">
                             שם <span className="text-destructive">*</span>

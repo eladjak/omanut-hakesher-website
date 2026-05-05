@@ -1,7 +1,28 @@
 # אתר אומנות הקשר - התקדמות
 
-## סטטוס: deployed
-## עדכון אחרון: 2026-02-24
+## סטטוס: deployed · lead-magnet forms wired to Rav-Messer 2026-05-05
+## עדכון אחרון: 2026-05-05
+
+### Session 2026-05-05 (2) — Lead-magnet forms wired live
+שלוש הטפסים תחת `/lead/*` היו ויזואליים בלבד (`setTimeout(800)` ואז success מזויף). חוברו לחיבור אמיתי:
+
+- ✅ `src/lib/ravmesser.ts` — לקוח Rav-Messer V2 OAuth מצומצם (subscribe + token cache)
+- ✅ `src/lib/lead-magnets.ts` — מיפוי slug → list/tags/asset לכל 3 המגנטים. כולם עוברים לרשימת master 22958 עם תיוג `lead:23-reasons` / `lead:7-principles` / `lead:36-questions` לסגמנטציה
+- ✅ `POST /api/lead/subscribe` — ולידציה, Rav-Messer subscribe, Resend welcome email. אם Rav-Messer לא מוגדר (dev/preview) — נשלח רק אימייל, המשתמש לא חווה כשל
+- ✅ 3 הטפסים (`/lead/23-reasons`, `/lead/7-principles`, `/lead/36-questions`) מקריאים את ה-API, מציגים שגיאות שליחה, ומחזירים success state מחודד (קול אלעד: "תודה — המדריך בדרך")
+- ✅ `.env.example` עודכן עם `RAVMESSER_CLIENT_ID/SECRET/USER_TOKEN`
+- ✅ TypeScript: 0 שגיאות. Build: עובר (47 routes כולל `/api/lead/subscribe`)
+
+**הפער היחיד שנותר:** הוספת ערכי `RAVMESSER_CLIENT_SECRET` + `RAVMESSER_USER_TOKEN` ב-Vercel env (אותם ערכים שב-content-studio). ברגע שמוזנים — לידים נכנסים אוטומטית לרשימת 2153 המנויים.
+
+### Session 2026-05-05 (1) — OAuth refresh + Rav-Messer integration noted
+- ✅ `omanuthakesher@gmail.com` Gmail OAuth token refreshed via Google OAuth Playground (granted 13:30 UTC). שייך לאתר אומנות הקשר.
+- ℹ️ Rav-Messer Pro account 1001688 (2153 subs, 120K/mo) integrated via delegator :3900 — see `~/.claude/projects/C--Users-eladj/memory/reference_rav_messer_integration_may_04.md`.
+
+---
+
+### Original status: deployed
+### Original update: 2026-02-24
 
 ## מצב נוכחי
 האתר בנוי ועובד. MVP+ הושלם כולל כל הדפים, אופטימיזציות ביצועים, ופיצ'רים אינטראקטיביים. נוספו: Course Preview אינטראקטיבי עם כפתורי "למידע נוסף", אקורדיון FAQ בדף אודות (8 שאלות), breadcrumbs בכל הדפים הפנימיים, כפתור scroll-to-top, ובאנר CTA לסדנה חינמית עם countdown timer. Build עובר ללא שגיאות. TypeScript נקי.
