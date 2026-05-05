@@ -1,7 +1,23 @@
 # אתר אומנות הקשר - התקדמות
 
-## סטטוס: deployed · lead-magnet forms wired to Rav-Messer 2026-05-05
+## סטטוס: deployed · lead-magnet pipeline LIVE in production 2026-05-05
 ## עדכון אחרון: 2026-05-05
+
+### Session 2026-05-05 (3) — Production wiring + smoke tests passed
+הצינור באוויר. `RAV_MESSER_*` + `RESEND_API_KEY` + `CONTACT_EMAIL` נוספו ל-Vercel env (production), אומנות הקשר עברה deploy חדש, ונבדקה.
+
+- ✅ תיקון שם משתנים: `RAVMESSER_*` → `RAV_MESSER_*` (התאמה ל-content-studio לשימוש חוזר)
+- ✅ הועלו ל-Vercel production (5 משתנים): RAV_MESSER_CLIENT_ID/SECRET/USER_TOKEN, RESEND_API_KEY, CONTACT_EMAIL
+- ✅ Deploy חדש: https://omanut-hakesher-website.vercel.app
+- ✅ **Production smoke tests (5/5 עוברים, אף אחד לא נוגע ב-Rav-Messer):**
+  - invalid-email → HTTP 400 ✓
+  - invalid-name → HTTP 400 ✓
+  - unknown-magnet → HTTP 400 ✓
+  - invalid-json → HTTP 400 ✓
+  - GET method → HTTP 405 ✓
+- ✅ **Dev smoke test (email-only fallback):** HTTP 200, `mode: 'email-only'`, log מאשר "Rav-Messer not configured, skipping list subscription". בדיקת success-path בלי לזהם רשימה אמיתית.
+
+**מצב הצינור:** מלא. טופס → fetch → API → Rav-Messer subscribe + tag → Resend welcome email → success state. דבר אחד נשאר לפני שיש לידים אמיתיים: לבדוק ערוץ אחד מקצה לקצה עם אימייל בדיקה אמיתי + לוודא ב-Rav-Messer שהמנוי נוסף + לנקות אותו. עוצרים פה לפי הוראתך — "רק בודקים, לא שולחים לאף ליד אמיתי".
 
 ### Session 2026-05-05 (2) — Lead-magnet forms wired live
 שלוש הטפסים תחת `/lead/*` היו ויזואליים בלבד (`setTimeout(800)` ואז success מזויף). חוברו לחיבור אמיתי:
@@ -10,10 +26,8 @@
 - ✅ `src/lib/lead-magnets.ts` — מיפוי slug → list/tags/asset לכל 3 המגנטים. כולם עוברים לרשימת master 22958 עם תיוג `lead:23-reasons` / `lead:7-principles` / `lead:36-questions` לסגמנטציה
 - ✅ `POST /api/lead/subscribe` — ולידציה, Rav-Messer subscribe, Resend welcome email. אם Rav-Messer לא מוגדר (dev/preview) — נשלח רק אימייל, המשתמש לא חווה כשל
 - ✅ 3 הטפסים (`/lead/23-reasons`, `/lead/7-principles`, `/lead/36-questions`) מקריאים את ה-API, מציגים שגיאות שליחה, ומחזירים success state מחודד (קול אלעד: "תודה — המדריך בדרך")
-- ✅ `.env.example` עודכן עם `RAVMESSER_CLIENT_ID/SECRET/USER_TOKEN`
+- ✅ `.env.example` עודכן עם `RAV_MESSER_CLIENT_ID/SECRET/USER_TOKEN`
 - ✅ TypeScript: 0 שגיאות. Build: עובר (47 routes כולל `/api/lead/subscribe`)
-
-**הפער היחיד שנותר:** הוספת ערכי `RAVMESSER_CLIENT_SECRET` + `RAVMESSER_USER_TOKEN` ב-Vercel env (אותם ערכים שב-content-studio). ברגע שמוזנים — לידים נכנסים אוטומטית לרשימת 2153 המנויים.
 
 ### Session 2026-05-05 (1) — OAuth refresh + Rav-Messer integration noted
 - ✅ `omanuthakesher@gmail.com` Gmail OAuth token refreshed via Google OAuth Playground (granted 13:30 UTC). שייך לאתר אומנות הקשר.

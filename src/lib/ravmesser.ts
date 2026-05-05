@@ -7,10 +7,10 @@
  *
  * Account: 1001688 (eladjak Pro plan, ~2153 subscribers, 120K msg/mo).
  *
- * Env vars required:
- *   RAVMESSER_CLIENT_ID
- *   RAVMESSER_CLIENT_SECRET
- *   RAVMESSER_USER_TOKEN
+ * Env vars required (names match content-studio for shared Vercel reuse):
+ *   RAV_MESSER_CLIENT_ID
+ *   RAV_MESSER_CLIENT_SECRET
+ *   RAV_MESSER_USER_TOKEN
  *
  * If any are missing the client returns a typed "not-configured" result so the
  * caller can degrade to email-only (Resend) or to a queued-for-manual flow.
@@ -27,9 +27,9 @@ export type SubscribeResult =
   | { ok: false; reason: 'not-configured' | 'auth-failed' | 'api-error'; detail?: string }
 
 function readCreds() {
-  const clientId = process.env.RAVMESSER_CLIENT_ID
-  const clientSecret = process.env.RAVMESSER_CLIENT_SECRET
-  const userToken = process.env.RAVMESSER_USER_TOKEN
+  const clientId = process.env.RAV_MESSER_CLIENT_ID
+  const clientSecret = process.env.RAV_MESSER_CLIENT_SECRET
+  const userToken = process.env.RAV_MESSER_USER_TOKEN
   if (!clientId || !clientSecret || !userToken) return null
   return { clientId, clientSecret, userToken }
 }
