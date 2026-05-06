@@ -17,7 +17,7 @@
  */
 
 const API_BASE = 'https://graph.responder.live/v2'
-const TOKEN_TTL_MS = 50 * 60 * 1000 // V2 tokens last ~1h; refresh 10 min early
+const TOKEN_REFRESH_BUFFER_SEC = 3600 // refresh 1h before expiry; tokens last ~14d
 
 type TokenCache = { token: string; expiresAt: number } | null
 let cachedToken: TokenCache = null
@@ -41,11 +41,14 @@ async function getAccessToken(): Promise<string | null> {
   const creds = readCreds()
   if (!creds) return null
 
-  const res = await fetch(`${API_BASE}/auth/token`, {
+  // V2 swagger: POST /oauth/token (NOT /auth/token — that's a 404).
+  // Body matches content-studio's working client (scope:'*' included).
+  const res = await fetch(`${API_BASE}/oauth/token`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       grant_type: 'client_credentials',
+      scope: '*',
       client_id: creds.clientId,
       client_secret: creds.clientSecret,
       user_token: creds.userToken,
@@ -53,11 +56,13 @@ async function getAccessToken(): Promise<string | null> {
   })
 
   if (!res.ok) return null
-  const data = (await res.json()) as { access_token?: string; token?: string }
+  const data = (await res.json()) as { access_token?: string; token?: string; expires_in?: number }
   const token = data.access_token ?? data.token
   if (!token) return null
 
-  cachedToken = { token, expiresAt: Date.now() + TOKEN_TTL_MS }
+  // expires_in is in seconds; refresh 1h before expiry to avoid edge cases.
+  const ttlSec = (data.expires_in ?? 3600) - TOKEN_REFRESH_BUFFER_SEC
+  cachedToken = { token, expiresAt: Date.now() + Math.max(ttlSec, 60) * 1000 }
   return token
 }
 
