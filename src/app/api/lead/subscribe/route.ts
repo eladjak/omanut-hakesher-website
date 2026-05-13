@@ -60,8 +60,13 @@ async function sendWelcomeEmail(args: {
         </div>
       `,
     }),
-  }).catch(() => {
-    // best-effort: subscription already succeeded, mail failure is not fatal
+  }).catch((err) => {
+    // best-effort: subscription already succeeded, mail failure is not fatal.
+    // Log so silent failures appear in Vercel logs and we don't ship orphan subscribers.
+    console.error('[lead/subscribe] welcome email failed', {
+      email,
+      reason: err instanceof Error ? err.message : String(err),
+    })
   })
 }
 
@@ -80,16 +85,21 @@ export async function POST(request: Request) {
   if (!email || !EMAIL_RE.test(email)) {
     return NextResponse.json({ error: 'invalid-email' }, { status: 400 })
   }
-  if (name.length < 2) {
-    return NextResponse.json({ error: 'invalid-name' }, { status: 400 })
-  }
 
   const magnet = getLeadMagnet(slug)
   if (!magnet) {
     return NextResponse.json({ error: 'unknown-magnet', slug }, { status: 400 })
   }
 
-  const { firstName, lastName } = splitName(name)
+  // Newsletter signups don't require a name (lower-friction inline form).
+  // All other lead magnets keep the name validation.
+  const requiresName = slug !== 'newsletter'
+  if (requiresName && name.length < 2) {
+    return NextResponse.json({ error: 'invalid-name' }, { status: 400 })
+  }
+
+  const effectiveName = name.length >= 2 ? name : (email.split('@')[0] ?? 'חבר/ה')
+  const { firstName, lastName } = splitName(effectiveName)
 
   // If Rav-Messer is not configured (dev / preview), don't fail the user —
   // log and still send the welcome email so the asset is delivered.

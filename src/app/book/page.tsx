@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "הספר ״אומנות הקשר״ | הדרך לזוגיות שאתה ראוי לה",
     description:
-      "10 פרקים, 32 תרגילים מעשיים. הספר שמלמד את מה שלא לימדו אותך על זוגיות.",
+      "13 פרקים, 32 תרגילים מעשיים. הספר שמלמד את מה שלא לימדו אותך על זוגיות.",
     url: "/book",
     locale: "he_IL",
     type: "website",
@@ -77,7 +77,7 @@ export default function BookPage() {
                   32 תרגילים
                 </span>
                 <span className="text-sm bg-white/20 text-white px-3 py-1.5 rounded-full">
-                  9 סיפורים אמיתיים
+                  10+ סיפורים אמיתיים
                 </span>
               </div>
 

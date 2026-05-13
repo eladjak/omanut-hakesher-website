@@ -82,11 +82,6 @@ export async function subscribeToList(input: {
     return { ok: false, reason: 'not-configured' }
   }
 
-  const token = await getAccessToken()
-  if (!token) {
-    return { ok: false, reason: 'auth-failed' }
-  }
-
   const body: Record<string, unknown> = {
     email: input.email,
     list_id: input.listId,
@@ -96,14 +91,29 @@ export async function subscribeToList(input: {
   if (input.tags?.length) body.tags = input.tags
   if (input.customFields) body.custom_fields = input.customFields
 
-  const res = await fetch(`${API_BASE}/subscribers`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  })
+  async function doRequest(): Promise<Response | null> {
+    const token = await getAccessToken()
+    if (!token) return null
+    return fetch(`${API_BASE}/subscribers`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    })
+  }
+
+  let res = await doRequest()
+  if (!res) return { ok: false, reason: 'auth-failed' }
+
+  // 401 = token rejected mid-window (cached token expired server-side, or
+  // revoked). Clear cache and retry once with a fresh token before failing.
+  if (res.status === 401) {
+    cachedToken = null
+    res = await doRequest()
+    if (!res) return { ok: false, reason: 'auth-failed' }
+  }
 
   if (!res.ok) {
     const detail = await res.text().catch(() => 'unknown')

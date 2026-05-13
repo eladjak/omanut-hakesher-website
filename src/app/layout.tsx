@@ -9,7 +9,11 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipToContent } from "@/components/SkipToContent";
-import { OrganizationJsonLd } from "@/components/JsonLd";
+import {
+  OrganizationJsonLd,
+  PersonJsonLd,
+  WebSiteJsonLd,
+} from "@/components/JsonLd";
 import { GenderProvider } from "@/components/GenderProvider";
 import { WelcomeModal } from "@/components/WelcomeModal";
 
@@ -38,18 +42,21 @@ export const metadata: Metadata = {
     "רווקים",
     "דייטינג",
   ],
-  metadataBase: new URL("https://omanut-hakesher.co.il"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ??
+      "https://omanut-hakesher-website.vercel.app",
+  ),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "אומנות הקשר | מצא את הזוגיות שמגיעה לך - אלעד יעקובוביץ׳",
     description:
-      "461 זוגות כבר מצאו אהבה. תוכנית ״הדרך״ + ליווי אישי עם התחייבות לתוצאה. שיחת היכרות חינם.",
+      "461 זוגות כבר מצאו אהבה. תוכנית הדרך + ליווי אישי עם התחייבות לתוצאה. שיחת היכרות חינם.",
     locale: "he_IL",
     type: "website",
     siteName: "אומנות הקשר",
-    url: "https://omanut-hakesher.co.il",
+    url: "/",
     images: [
       {
         url: "/opengraph-image",
@@ -96,7 +103,11 @@ export default function RootLayout({
             __html: `(function(){try{var g=localStorage.getItem("gender-preference");if(g==="male")document.documentElement.classList.add("gender-male");else if(g==="female")document.documentElement.classList.add("gender-female");}catch(e){}})()`,
           }}
         />
+        <meta name="geo.region" content="IL" />
+        <meta name="geo.placename" content="Israel" />
         <OrganizationJsonLd />
+        <PersonJsonLd />
+        <WebSiteJsonLd />
       </head>
       <body className={`${heebo.variable} font-sans antialiased`}>
         <ThemeProvider>

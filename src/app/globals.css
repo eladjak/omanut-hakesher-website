@@ -246,6 +246,8 @@
 body {
   font-family: var(--font-sans);
   line-height: 1.7;
+  /* Hebrew + Latin numbers align in tables, stat strips, prices, countdowns */
+  font-variant-numeric: tabular-nums;
 }
 
 html {

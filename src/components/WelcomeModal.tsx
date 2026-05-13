@@ -77,7 +77,7 @@ export function WelcomeModal() {
           id="welcome-title"
           className="text-2xl font-bold mb-2 text-foreground"
         >
-          ברוכים הבאים לאומנות הקשר
+          שמחים שהגעת לאומנות הקשר
         </h2>
         <p className="text-muted-foreground mb-8 text-base leading-relaxed">
           כדי שנוכל להתאים לך את החוויה הטובה ביותר,
@@ -119,7 +119,7 @@ export function WelcomeModal() {
           onClick={() => handleChoice("neutral")}
           className="text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4"
         >
-          המשך בלי לציין
+          להמשיך בלי לציין
         </button>
       </div>
 

@@ -6,18 +6,19 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { NewsletterForm } from "@/components/NewsletterForm";
 
 export const metadata: Metadata = {
   title: "בלוג",
   description:
-    "מאמרים, טיפים ותובנות לרווקים ורווקות בדרך לזוגיות מאושרת",
+    "מאמרים, טיפים ותובנות לרווקים ורווקות בדרך לזוגיות מאושרת. מאלעד יעקובוביץ׳ - מנטור הזוגיות שעזר ל-461 זוגות למצוא אחד את השני.",
   alternates: {
     canonical: "/blog",
   },
   openGraph: {
     title: "בלוג | אומנות הקשר",
     description:
-      "מאמרים, טיפים ותובנות לרווקים ורווקות בדרך לזוגיות מאושרת",
+      "מאמרים, טיפים ותובנות לרווקים ורווקות בדרך לזוגיות מאושרת. מאלעד יעקובוביץ׳ - מנטור הזוגיות שעזר ל-461 זוגות.",
     url: "/blog",
     locale: "he_IL",
     type: "website",
@@ -167,24 +168,12 @@ export default function BlogPage() {
               <p className="text-muted-foreground mb-8">
                 הירשמו לניוזלטר וקבלו טיפים, תובנות ותוכן בלעדי שיעזרו לכם בדרך לזוגיות
               </p>
-              <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" aria-label="הרשמה לניוזלטר">
-                <label htmlFor="newsletter-email-blog" className="sr-only">כתובת אימייל</label>
-                <input
-                  type="email"
-                  id="newsletter-email-blog"
-                  placeholder="האימייל שלך"
-                  className="flex-1 px-5 py-3 border border-border rounded-full bg-background focus:outline-none focus:ring-2 focus:ring-primary text-sm"
-                  dir="ltr"
-                  autoComplete="email"
-                  required
-                />
-                <button
-                  type="submit"
-                  className="px-6 py-3 bg-primary text-white rounded-full font-medium hover:bg-primary-dark transition-colors text-sm"
-                >
-                  הרשמה
-                </button>
-              </form>
+              <NewsletterForm
+                variant="light"
+                placeholder="האימייל שלך"
+                buttonLabel="הרשמה"
+                className="max-w-md mx-auto"
+              />
             </CardContent>
           </Card>
         </div>

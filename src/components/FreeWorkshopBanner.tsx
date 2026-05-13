@@ -95,8 +95,8 @@ export function FreeWorkshopBanner() {
             סדנת היכרות חינמית
           </h2>
           <p className="text-lg md:text-xl opacity-90 mb-8 max-w-2xl mx-auto leading-relaxed">
-            הצטרפו לסדנה חינמית בנושא &quot;5 מפתחות לתקשורת זוגית
-            טובה&quot; וגלו כלים מעשיים שתוכלו ליישם מיד
+            הצטרפו לסדנה חינמית בנושא ״5 מפתחות לדייט שני שמוביל לזוגיות״
+            וגלו כלים מעשיים שתוכלו ליישם כבר השבוע
           </p>
 
           {/* Countdown */}
@@ -132,7 +132,7 @@ export function FreeWorkshopBanner() {
           </div>
 
           <p className="text-sm opacity-70 mt-4">
-            מקומות מוגבלים | ללא התחייבות | אונליין
+            מקומות מוגבלים | ללא התחייבות | מקוון בזום
           </p>
         </div>
       </div>

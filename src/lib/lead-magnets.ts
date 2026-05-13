@@ -29,6 +29,14 @@ export interface LeadMagnetConfig {
 const OMANUT_HAKESHER_LIST_ID = 22958
 
 export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
+  newsletter: {
+    slug: 'newsletter',
+    titleHe: 'הניוזלטר השבועי של אומנות הקשר',
+    listId: OMANUT_HAKESHER_LIST_ID,
+    tags: ['newsletter', 'source:website'],
+    assetUrl: 'https://omanut-hakesher-website.vercel.app/',
+    welcomeSubject: 'ברוך/ה הבא/ה לניוזלטר של אומנות הקשר',
+  },
   '23-reasons': {
     slug: '23-reasons',
     titleHe: '23 הסיבות שאתה עדיין רווק/ה',

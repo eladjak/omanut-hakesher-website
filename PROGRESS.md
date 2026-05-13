@@ -1,7 +1,75 @@
 # אתר אומנות הקשר - התקדמות
 
-## סטטוס: deployed · lead-magnet pipeline LIVE in production 2026-05-05
-## עדכון אחרון: 2026-05-05
+## סטטוס: deployed · GEO/AEO תוקן (0→94+) · 3 טפסי ניוזלטר מתים תוקנו · אסטרטגיה 12 חודשים נכתבה
+## עדכון אחרון: 2026-05-13
+
+### Session 2026-05-13 — מועצת חכמים: אודיט מקיף + תיקוני P0 + אסטרטגיה
+מועצה של 5 סוכני Opus במקביל סרקו את האתר ודף המכירה: sales, code/security, SEO/GEO, UX/a11y, content/Hebrew, strategy.
+
+**ממצאים קריטיים:**
+- 🔴 **GEO score 0/100 בפרודקשן** — `metadataBase` הצביע על `omanut-hakesher.co.il` שלא מחובר; כל ה-canonical/OG/sitemap הצביעו לדומיין מת
+- 🔴 **3 טפסי ניוזלטר מתים** — דף הבית + בלוג + Footer; ה-Footer הציג "נרשמתם בהצלחה" בלי לשלוח כלום (worst case)
+- 🔴 **Sanity Studio חשוף** ב-`/studio` בלי noindex
+- 🔴 **חוסר עקביות במספרים**: דף הבית "10 פרקים" vs דף הספר "13 פרקים"; באנר Banner "9 סיפורים" vs stats "10+"
+- 🔴 **"ליווי אישי פרימיום"** — הפרת voice ("פרימיום" מילה אסורה, ראה elad-voice skill)
+- 🟡 typos בבלוג: "מידי" → "מדי", "מגיד/מגידה" → "אומר/אומרת", "להקרב" → "לקרב"
+- 🟡 HomeTestimonials שורה 47: "מגיעה כל שנתיים" שגיאת תחביר
+- 🟡 WelcomeModal פותח עם "ברוכים הבאים" (זכר רבים) — אירוני בדף שמטרתו בחירת מגדר
+- 🟡 FreeWorkshopBanner: "5 מפתחות לתקשורת זוגית טובה" — פוזיציוני-mismatch (אתר לרווקים)
+- 🟡 Footer email מצביע על דומיין לא מחובר; "ליווי אישי פרימיום" + "קורס ״הדרך״" — חוסר עקביות
+- 🟡 Rav-Messer 401 retry חסר; Resend errors נבלעים שקטים → orphan subscribers
+- 🟡 CSP מתיר `unsafe-eval` גלובלית; אין rate-limiting על `/api/lead/subscribe`
+
+**תיקונים שיושמו (P0):**
+- ✅ `metadataBase` → `NEXT_PUBLIC_SITE_URL ?? omanut-hakesher-website.vercel.app` (layout + sitemap + robots)
+- ✅ `robots.ts` — Allow מפורש ל-16 AI bots (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, ...)
+- ✅ `public/llms.txt` — תיאור מותג + ladder + ערוצים חברתיים
+- ✅ Schemas: `PersonJsonLd`, `WebSiteJsonLd`, `FAQPageJsonLd` נוספו ל-JsonLd; `OrganizationJsonLd` קיבל `sameAs` + `founder` + `image`
+- ✅ Layout: meta geo.region=IL, geo.placename=Israel, Person + WebSite schemas wired ב-head
+- ✅ Sitemap הורחב: 17 דפים סטטיים + 6 בלוג + 13 פרקי-ספר + 22 פרק-tool routes = ~58 URLs
+- ✅ NewsletterForm קומפוננטה חדשה — מחוברת לכל 3 הטפסים (homepage + blog + footer); shared, type-safe, error states, success state, accessibility
+- ✅ `LEAD_MAGNETS.newsletter` נוסף; API מקבל slug=newsletter בלי שדה name (low-friction inline)
+- ✅ API: Resend errors מתועדים ב-console.error (לא נבלעים)
+- ✅ Rav-Messer: retry on 401 (clear cache + reauth) — לא נופל על cached token שפג
+- ✅ `src/app/studio/layout.tsx` — robots: index:false, follow:false, googleBot:false (Sanity לא indexed)
+- ✅ `globals.css`: `font-variant-numeric: tabular-nums` גלובלי לכל body (תיקון יישור מספרים)
+
+**תיקוני קופי:**
+- ✅ דף הבית: "10 פרקים" → "13 פרקים"
+- ✅ דף הבית: "ליווי אישי פרימיום" → "ליווי אישי"
+- ✅ דף הבית: "באמפר, בהינג׳, בטינדר" → "באמפר, הינג׳, טינדר" (גם תיקון "ביחס לקבוצות")
+- ✅ דף הבית: "אנחנו עושים את הדבר" → "אצלי לומדים לעשות"
+- ✅ דף הבית: "משאבים בלתי מוגבלים" → "גישה מלאה לכל התכנים"
+- ✅ דף הספר OG: "10 פרקים" → "13 פרקים"; hero "9 סיפורים" → "10+ סיפורים"
+- ✅ HomeTestimonials: שגיאת תחביר "מגיעה כל שנתיים" → "אחרי שנתיים"; quotes ׳ → ״
+- ✅ WelcomeModal: "ברוכים הבאים" → "שמחים שהגעת" (genderless)
+- ✅ WelcomeModal: "המשך בלי לציין" → "להמשיך בלי לציין"
+- ✅ FreeWorkshopBanner: "תקשורת זוגית טובה" → "דייט שני שמוביל לזוגיות"; "אונליין" → "מקוון בזום"
+- ✅ Footer: services list — "ליווי אישי פרימיום" → "ליווי אישי"; "קורס ״הדרך״" → "תוכנית הדרך"
+- ✅ Footer email: hello@omanut-hakesher.co.il → hello@eladjak.com (תואם ל-Resend)
+- ✅ Blog meta desc: 54 chars → 120+ chars
+- ✅ Blog posts: "מידי מהיר מידי אישי" → "מהר מדי, אישי מדי"; "להקרב" → "לקרב"; 3× "מגיד/מגידה" → "אומר/אומרת"
+
+**בנוסף — אסטרטגיה 12 חודשים (`STRATEGIC-PLAN-2026.md`):**
+- A. פודקאסט "מוצאים אהבה" — 26 פרקים ב-4 ארקים (כמעט החמצתי / אחרי שבר / אהבה בלי תבנית / מבט מקצועי)
+- B. צינור תוכן — 50 בלוגים ב-5 פילרים + 100 שורטס ב-4 דליים
+- C. סולם מוצרים: חינם → ספר ₪97 → תוכנית הדרך ₪2,490 → קהילה ₪89/ח' → סדנה ₪1,890 → ליווי ₪3,900/ח' → VIP ₪19,800
+- D. שיווק IL+עולמי: Meta ₪8K/ח', Google ₪3.5K/ח', 10 podcast swaps, שותפויות (JDate, פוריות, חתונה.נט)
+- תקציב שנתי: ₪156K · LTV/ליד: ₪132 · ROAS משוער: 15×
+
+**אימות:** TypeScript 0 שגיאות. `npm run build` עובר ל-58 routes.
+
+**מה נותר לפני production:**
+1. הגדרת `NEXT_PUBLIC_SITE_URL` ב-Vercel env (production) — חיוני להפעלת התיקונים
+2. הפעלת `Rav-Messer` newsletter list-tag לזיהוי הרשמות מהפוטר/דף הבית/בלוג
+3. סריקת mole-ai חוזרת (`?v=$(date +%s)`) — אימות 94+ score
+4. middleware ל-/studio (basic auth או IP allowlist) — מעבר ל-noindex
+5. הוצאת `unsafe-eval` מ-CSP גלובלי, הגבלתו ל-/studio בלבד
+6. חיבור YouCanBookMe לכפתורי "שיחת היכרות"
+7. הצגת מחיר על /hadrech (כרגע אין מחיר → bounce)
+
+---
+
 
 ### Session 2026-05-05 (3) — Production wiring + smoke tests passed
 הצינור באוויר. `RAV_MESSER_*` + `RESEND_API_KEY` + `CONTACT_EMAIL` נוספו ל-Vercel env (production), אומנות הקשר עברה deploy חדש, ונבדקה.

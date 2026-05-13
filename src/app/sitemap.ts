@@ -1,102 +1,32 @@
 import type { MetadataRoute } from "next";
 import { getAllBlogSlugs } from "@/lib/blog-posts";
+import { chapters } from "@/data/book/chapters";
 
-const BASE_URL = "https://omanut-hakesher.co.il";
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  "https://omanut-hakesher-website.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const blogSlugs = getAllBlogSlugs();
 
   const staticPages: MetadataRoute.Sitemap = [
-    {
-      url: BASE_URL,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1.0,
-    },
-    {
-      url: `${BASE_URL}/about`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/coaching`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.95,
-    },
-    {
-      url: `${BASE_URL}/hadrech`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${BASE_URL}/book`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/testimonials`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${BASE_URL}/podcast`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: `${BASE_URL}/community`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: `${BASE_URL}/blog`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/contact`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/thanks`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    {
-      url: `${BASE_URL}/privacy`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.2,
-    },
-    {
-      url: `${BASE_URL}/lead/23-reasons`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${BASE_URL}/lead/7-principles`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${BASE_URL}/lead/36-questions`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
+    { url: BASE_URL, lastModified: new Date(), changeFrequency: "weekly", priority: 1.0 },
+    { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE_URL}/coaching`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.95 },
+    { url: `${BASE_URL}/hadrech`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE_URL}/book`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE_URL}/book/intro`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    { url: `${BASE_URL}/book/closing`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
+    { url: `${BASE_URL}/testimonials`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE_URL}/podcast`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    { url: `${BASE_URL}/community`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    { url: `${BASE_URL}/blog`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE_URL}/contact`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE_URL}/thanks`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
+    { url: `${BASE_URL}/privacy`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.2 },
+    { url: `${BASE_URL}/lead/23-reasons`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE_URL}/lead/7-principles`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE_URL}/lead/36-questions`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
   ];
 
   const blogPages: MetadataRoute.Sitemap = blogSlugs.map((slug) => ({
@@ -106,5 +36,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...blogPages];
+  // Book chapter hub pages (numbered chapters only) + their tool routes
+  const bookPages: MetadataRoute.Sitemap = chapters
+    .filter((ch) => ch.number !== null)
+    .flatMap((chapter) => {
+      const hub: MetadataRoute.Sitemap[number] = {
+        url: `${BASE_URL}/book/${chapter.slug}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.5,
+      };
+      const tools: MetadataRoute.Sitemap = chapter.tools.map((tool) => ({
+        url: `${BASE_URL}/book/${chapter.slug}/${tool.slug}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly" as const,
+        priority: 0.4,
+      }));
+      return [hub, ...tools];
+    });
+
+  return [...staticPages, ...blogPages, ...bookPages];
 }
