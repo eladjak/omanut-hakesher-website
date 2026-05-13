@@ -25,8 +25,15 @@ export interface LeadMagnetConfig {
   welcomeSubject: string
 }
 
-/** Master list for omanut-hakesher (Rav-Messer account 1001688). */
-const OMANUT_HAKESHER_LIST_ID = 22958
+/** Master list for omanut-hakesher (Rav-Messer account 1001688).
+ *  Verified 2026-05-14 via Rav-Messer V2 /lists API:
+ *    22820 = "כל הנמענים" (master, all subs)
+ *    22823 = תכנית "הדרך" 11 + חדר כושר לדייטים 3 (program subs)
+ *    22958 = נרשמים לאירוע אומנות הקשר (event signups — narrow)
+ *  Earlier value 22958 was the event list; master is 22820 so all magnets
+ *  reach the broadest audience and downstream segmentation runs via tags.
+ */
+const OMANUT_HAKESHER_LIST_ID = 22820
 
 export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
   newsletter: {

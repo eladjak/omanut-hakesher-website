@@ -49,3 +49,4 @@ public/assets/elad-photos/
 # Temp/review files
 *.docx
 ~$*.docx
+.claude/ravpage-scrape/
