@@ -1,0 +1,160 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "updated": "2026-05-15",
+    "source": "RavPage Testemon graphics (9) + WhatsApp screenshots (5). OCR via Claude Opus 4.7 multimodal.",
+    "note": "Privacy: testimonials with initials only (ד, י, ל) keep silhouette images. Real graphic + full text preserved."
+  },
+  "graphic": [
+    {
+      "id": "benny-schneider",
+      "author": "בני סניידר",
+      "image_quote": "אלו הדיוקים הקטנים שהליווי נתן לי שבזכותם פגשתי את מי שהפכה אשתי! :)",
+      "role": "בוגר תכנית הליווי, בזוגיות מאושרת!",
+      "image": "/assets/testimonials/graphic/benny-schneider.png",
+      "narrative": "אחרי שנים לבד שבהם קשרים הסתיימו לו במשפטים \"זה לא אתה זה אני\" ו\"זה לא זה\", התחיל תהליך ארוך ויסודי ובסופו מצא זוגיות מאושרת. לא מזמן נולדה לו ולאשתו ילדה חדשה.",
+      "outcome": "נשוי + ילדה חדשה",
+      "youtube_id": "Kbd7BRJ25TM",
+      "source": "coaching",
+      "featured": true
+    },
+    {
+      "id": "limor-shaked",
+      "author": "לימור שקד",
+      "image_quote": "התחברתי מיד! לא עזבת אותי עד שמצאתי את עדי! תודה לבורא עולם ותודה לאלעד! :)",
+      "role": "בוגרת תכנית הליווי, בזוגיות מאושרת!",
+      "image": "/assets/testimonials/graphic/limor-shaked.png",
+      "narrative": "התחברה מיידית לתהליך. בליווי אישי של אלעד מצאה את עדי, בן זוגה.",
+      "outcome": "בזוגיות עם עדי",
+      "source": "coaching",
+      "featured": true
+    },
+    {
+      "id": "yael-cohen",
+      "author": "י.",
+      "image_quote": "ב\"ה חודש (!) אחרי שהצטרפתי לתוכנית זכיתי להכיר את בחיר ליבי, ישי! תודה אלעד!",
+      "role": "בוגרת תכנית הליווי, בזוגיות מאושרת!",
+      "image": "/assets/testimonials/graphic/yael-cohen.png",
+      "narrative": "תוך חודש בלבד אחרי שהצטרפה לתוכנית, הכירה את ישי - בחיר ליבה.",
+      "outcome": "בזוגיות עם ישי (תוך חודש מהצטרפות)",
+      "source": "coaching",
+      "featured": true,
+      "privacy": "initials"
+    },
+    {
+      "id": "d-client",
+      "author": "ד.",
+      "image_quote": "אלעד, תודה על הכל, עזרת לי מאוד בלהפגיש אותי עם אהבת חיי, החצי השני שלי!",
+      "role": "בוגרת תכנית הליווי, בזוגיות מאושרת!",
+      "image": "/assets/testimonials/graphic/d-client.png",
+      "outcome": "פגשה את אהבת חייה",
+      "source": "coaching",
+      "privacy": "initials"
+    },
+    {
+      "id": "m-l-client",
+      "author": "ל.",
+      "image_quote": "לא האמנתי שבגילי ובמצב שלי מישהו יוכל לעזור לי... תוך זמן קצר מתחילת הליווי הכרתי את אהבת חיי והתחתנתי! תודה אלעד!",
+      "role": "בוגר תכנית הליווי, בזוגיות מאושרת!",
+      "image": "/assets/testimonials/graphic/m-l-client.png",
+      "narrative": "הגיע סקפטי - לא האמין שבגילו ובמצבו מישהו יוכל לעזור. תוך זמן קצר התחתן.",
+      "outcome": "נשוי",
+      "source": "coaching",
+      "privacy": "initials"
+    },
+    {
+      "id": "mark-lusky",
+      "author": "מארק לוסקי",
+      "image_quote": "אחרי שנים לבד אני בזוגיות מאושרת! תודה אלעד!",
+      "role": "בוגר תכנית הליווי, בזוגיות מאושרת!",
+      "image": "/assets/testimonials/graphic/mark-lusky.png",
+      "outcome": "בזוגיות מאושרת",
+      "source": "coaching"
+    },
+    {
+      "id": "david-lovinstein",
+      "author": "דוד לוינשטרן",
+      "image_quote": "פשוט מדהים! אם אתם רוצים כבר אהבה וזוגיות - אל תתלבטו! לכו על זה!",
+      "role": "בוגר תכנית הליווי, בזוגיות מאושרת!",
+      "image": "/assets/testimonials/graphic/david-lovinstein.png",
+      "outcome": "בזוגיות מאושרת",
+      "source": "coaching"
+    },
+    {
+      "id": "oriya-ashta",
+      "author": "אוריה אשטה",
+      "image_quote": "ניצחתי את המגבלה שלי - ובזכות אלעד מצאתי את אהבת חיי!",
+      "role": "בוגרת תכנית הליווי, בזוגיות מאושרת!",
+      "image": "/assets/testimonials/graphic/oriya-ashta.png",
+      "narrative": "ניצחה מגבלה אישית ומצאה את אהבת חייה.",
+      "outcome": "בזוגיות עם אהבת חייה",
+      "source": "coaching"
+    },
+    {
+      "id": "meir-david-hai",
+      "author": "מאיר דוד חי",
+      "image_quote": "בזכות אלעד מצאתי את אהבת חיי! תודה רבה על הכל!",
+      "role": "בוגר תכנית הליווי, בזוגיות מאושרת!",
+      "image": "/assets/testimonials/graphic/meir-david-hai.png",
+      "outcome": "בזוגיות עם אהבת חייו",
+      "source": "coaching"
+    }
+  ],
+  "whatsapp": [
+    {
+      "id": "whatsapp-1",
+      "type": "wedding-photo",
+      "image": "/assets/testimonials/whatsapp-1.jpg",
+      "description": "תמונת חתונה מבוגרי התוכנית"
+    },
+    {
+      "id": "lily-anat",
+      "author": "לילי ענת",
+      "full_text": "יובלות לא כתבתי בקבוצה 😊 @אלעד יעקובוביץ' רציתי להגיד לך תודה! בזכות התוכנית שלך וההכוונה שלנו, מכל הלב, אני מרגישה שסללתי לעצמי דרך חדשה. דרך שהניבה קשר משמעותי של כמעט שנה, ופתחה אותי לדברים נוספים. וזה יפה לגילי המכובד 😅\n\nאמנם! הקשר הסתיים לאחרונה, אבל אני שמחה עליו ושמחה על התהליך ועל מה שזכיתי בזכותו.\n\nבזכות התוכנית והעבודה העצמית שהונחת לעשות, נפתחתי להיכרות מסוג שבטוח לא היה מתאפשר חצי שנה קודם. נפתחתי למנעד רחב יותר של אפשרויות, ומצד שני, מיקדתי ודייקתי לעצמי מה הכי הכי חשוב לי (לכאורה שני מהלכים סותרים, אבל לא). ידעתי להסתכל בבחור על מה שטוב ומתאים ואת זה להעצים.\n\nכל הזמן הרגשתי שזה בזכות התוכנית. אמרתי את זה גם לו וגם לחברות שלי בדרך 😊\n\nאז תודה על הכל! ולקראת ט\"ו באב, מאחלת לך הצלחה רבה בלהמשיך לעזור וללוות נוספים, ולכולם- למצוא אהבה וזוגיות מבורכת 🙏\n\nמכל הלב 💜 לילי ענת 🌷",
+      "short_quote": "סללתי לעצמי דרך חדשה. דרך שהניבה קשר משמעותי של כמעט שנה, ופתחה אותי לדברים נוספים",
+      "image": "/assets/testimonials/whatsapp-2.jpg",
+      "source": "course",
+      "context": "תכנית הדרך - 2023",
+      "featured": true
+    },
+    {
+      "id": "hagit-marsha",
+      "author": "חגית מרשה",
+      "full_text": "לילי מדהימה שאת, נשמע שאכן הדרך שינתה את חייך כפי שכתבת. איזה כיף לדעת שאנשים עשו דרך. אשמח לשמוע עוד שיתופים זה בהחלט מדרבן ונותן כוחות 🥰. לגמרי, בטח. עכשיו אני עם לב פתוח לדבר הטוב הבא בע\"ה 😇🙏 עם הגישה הבריאה הזו בטוחה שיגיע בקרוב יותר ממה שאת מדמיינת 😊",
+      "short_quote": "עכשיו אני עם לב פתוח לדבר הטוב הבא בע\"ה",
+      "image": "/assets/testimonials/whatsapp-3.jpg",
+      "source": "course",
+      "context": "תכנית הדרך - 2023"
+    },
+    {
+      "id": "aviel",
+      "author": "אביאל",
+      "full_text": "כיף לשמוע :) בהזדמנות זו אגיד שגם אני למדתי דברים שעזרו בתהליך ומידי פעם נכנס לסרטונים כדי לרענן דברים. ובעיקר עם הכרטיס החדש שבניתי בהשראת התוכנית שמביא לי יום הצעות מאנשים ונשים בעצמם.. ככה שתמיד יש משהו על הפרק. תודה לכם 🙂",
+      "short_quote": "הכרטיס החדש שבניתי בהשראת התוכנית מביא לי יום הצעות מאנשים ונשים בעצמם",
+      "image": "/assets/testimonials/whatsapp-4.jpg",
+      "source": "course",
+      "context": "תכנית הדרך - 2023"
+    },
+    {
+      "id": "hai-levi",
+      "author": "חי לוי",
+      "full_text": "גם אני רוצה להגיד לכם חברי הקבוצה שבוע טוב שהתוכנית דרך של אלעד עשתה לי רק טוב ברוך השם והתקדמתי מאוד ואפילו הייתי בקשר מעמיק 5 חודשים שניגמר אבל עשיתי התקדמות ואני לא מפחד לקפוץ למים",
+      "short_quote": "התוכנית עשתה לי רק טוב... אני לא מפחד לקפוץ למים",
+      "image": "/assets/testimonials/whatsapp-5.jpg",
+      "source": "course",
+      "context": "תכנית הדרך - 2023"
+    }
+  ],
+  "video": [
+    {
+      "id": "Kbd7BRJ25TM",
+      "title": "עדויות של מלווים",
+      "youtube_id": "Kbd7BRJ25TM"
+    },
+    {
+      "id": "chvsmJzcihE",
+      "title": "סיפורי הצלחה",
+      "youtube_id": "chvsmJzcihE"
+    }
+  ]
+}

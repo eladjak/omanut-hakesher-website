@@ -175,7 +175,7 @@ export default function HomePage() {
             <div className="mt-16 flex flex-wrap gap-8 md:gap-12">
               {stats.map((stat, i) => (
                 <div key={i} className="text-center">
-                  <div className="text-2xl md:text-3xl font-bold text-accent-light">{stat.number}</div>
+                  <div className="text-2xl md:text-3xl font-bold text-accent-light tabular-nums">{stat.number}</div>
                   <div className="text-sm text-white/70 mt-1">{stat.label}</div>
                 </div>
               ))}

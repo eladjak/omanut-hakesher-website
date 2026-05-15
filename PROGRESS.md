@@ -1,7 +1,46 @@
 # אתר אומנות הקשר - התקדמות
 
-## סטטוס: deployed · lead-magnet pipeline LIVE in production 2026-05-05
-## עדכון אחרון: 2026-05-05
+## סטטוס: deployed · 14 real testimonials live · Sumit checkout ready (sandbox) · BRAND canonical
+## עדכון אחרון: 2026-05-15
+
+### Session 2026-05-15 — OCR + Sumit + brand canonical + polish
+**Goal:** OCR 14 testimonial graphics, replace mock testimonials with real bilingual gallery, add Sumit checkout (sandbox), sync brand, polish 47 routes.
+
+- ✅ **OCR 14 עדויות** (Claude Opus 4.7 multimodal — NOT Daily model):
+  - 9 PNG מ-RavPage (בני סניידר, לימור שקד, י., ד., ל., מארק לוסקי, דוד לוינשטרן, אוריה אשטה, מאיר דוד חי)
+  - 5 WhatsApp screenshots (תמונת חתונה + לילי ענת + חגית מרשה + אביאל + חי לוי)
+  - שמירת hierarchy: image_quote + narrative + outcome + privacy flag לכל אחת
+- ✅ **`src/data/testimonials.json`** — מקור יחיד לעדויות (graphic/whatsapp/video sections)
+- ✅ **`/testimonials` שופץ**: gallery + lightbox + featured WhatsApp + short-quotes grid + screenshots + video. הוסר 12 ציטוטים מומצאים.
+- ✅ **`TestimonialLightbox.tsx`** (client): framer-motion, Escape-to-close, focus-trap, scroll-lock
+- ✅ **`HomeTestimonials.tsx`** משתמש בעדויות אמיתיות (featured + 4 others)
+- ✅ **Sumit integration (sandbox-ready)**:
+  - `src/lib/sumit.ts` — `getCheckoutUrl(product)` עם 3 מצבים (live/sandbox/unconfigured)
+  - `src/components/BuyButton.tsx` — קומפוננטה אחת, מציגה badge "sandbox" אוטומטית
+  - `.env.example` עודכן עם 5 משתנים חדשים (`SUMIT_SANDBOX` + 4 product URLs)
+  - משולב ב-`/hadrech` CTA. ללא env vars → fallback ל-"בקרוב"
+- ✅ **BRAND.md canonical**: הועתק מ-haderech-next לכאן (האתר הוא source of truth, הקורס משתחזר)
+- ✅ **פוליש 47 routes (CSS גלובלי)**:
+  - `text-wrap: balance` על h1/h2/h3
+  - `text-wrap: pretty` על p/blockquote
+  - `font-variant-numeric: tabular-nums` על body + `.stat-num`
+  - `overflow-wrap: anywhere` על כותרות+ציטוטים
+  - `overflow-x: hidden` על body (מונע גלילה מ-rose-circle decorations)
+  - `.italic-quote` utility (Hebrew italic alternative — bold + tracking)
+- ✅ **TypeScript: 0 שגיאות. Build: 47 routes עוברים**
+- ✅ **9 PNG הועתקו** ל-`public/assets/testimonials/graphic/`
+- ✅ **Council of Sages**: delegator (37.27.31.1:3900) לא זמין → best-judgment fallback. ההמלצות אומצו: Sumit anchor links · BRAND canonical כאן · 3-polish set: balance/pretty/tabular.
+
+**מה ממך אלעד:**
+1. 4 URLs מ-Sumit (תכנית הדרך / ליווי / ספר / סדנה) → אוסיף ל-Vercel env
+2. אישור על שיוך תמונות בעדויות הגרפיות (פומבי?)
+3. YouTube ID נכון לעדות וידאו #2 (`chvsmJzcihE` היה הימור)
+
+**Files modified (10):** src/data/testimonials.json (new), src/components/TestimonialLightbox.tsx (new), src/components/BuyButton.tsx (new), src/lib/sumit.ts (new), src/app/testimonials/page.tsx, src/components/HomeTestimonials.tsx, src/app/globals.css, src/app/page.tsx, src/app/hadrech/page.tsx, .env.example, BRAND.md (new from haderech-next).
+
+**Review HTML:** `.claude/REVIEW-2026-05-15.html` — סקירה מעוצבת unique (rose+navy+gold, Caveat signature, glassmorphism hero).
+
+---
 
 ### Session 2026-05-05 (3) — Production wiring + smoke tests passed
 הצינור באוויר. `RAV_MESSER_*` + `RESEND_API_KEY` + `CONTACT_EMAIL` נוספו ל-Vercel env (production), אומנות הקשר עברה deploy חדש, ונבדקה.

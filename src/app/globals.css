@@ -246,10 +246,55 @@
 body {
   font-family: var(--font-sans);
   line-height: 1.7;
+  /* Prevent horizontal overflow from off-screen decorations */
+  overflow-x: hidden;
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Tabular numbers for stats, prices, dates, percentages */
+.num,
+.tabular,
+[data-num] {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hebrew-RTL: prevent very long words from breaking layout */
+h1,
+h2,
+h3,
+h4,
+blockquote {
+  overflow-wrap: anywhere;
+}
+
+/* Site-wide polish: balanced headings + pretty paragraph wrap */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+blockquote {
+  text-wrap: pretty;
+}
+
+/* Stats/numbers default to tabular */
+.stat-num,
+[data-stat] {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.005em;
+}
+
+/* Italic-quote utility: bold + spacing instead of true italic on Hebrew serif (rule: hebrew-rtl-web-gotchas #1) */
+.italic-quote {
+  font-weight: 500;
+  letter-spacing: 0.005em;
 }
 
 /* Respect reduced motion preferences */

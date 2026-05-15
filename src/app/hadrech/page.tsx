@@ -17,6 +17,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { BuyButton } from "@/components/BuyButton";
 
 export const metadata: Metadata = {
   title: 'תוכנית "הדרך" - 12 שבועות למציאת זוגיות',
@@ -795,15 +796,10 @@ export default function HaDrechPage() {
             כל מה שצריך כדי להתחיל את המסע שלך לזוגיות אמיתית.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              href="/contact"
-              className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
-            >
-              התחל את הדרך שלך
-            </Link>
+            <BuyButton product="hadrech" label="הצטרפות לתוכנית הדרך" />
             <Link
               href="/coaching"
-              className="inline-flex px-10 py-4 border-2 border-white/50 text-white rounded-full font-semibold text-lg hover:bg-white/10 transition-colors"
+              className="inline-flex items-center px-10 py-4 border-2 border-white/50 text-white rounded-full font-semibold text-lg hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
             >
               מעדיף ליווי אישי?
             </Link>

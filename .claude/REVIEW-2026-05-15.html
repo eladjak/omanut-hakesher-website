@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>סקירת איטרציה — אומנות הקשר · 15.05.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rose:#E85D75; --rose-soft:#F08C9E; --rose-deep:#C94A62;
+    --navy:#1E3A5F; --navy-light:#2C5280; --navy-deep:#152B47;
+    --gold:#D4A853; --gold-light:#E8C97D;
+    --cream:#FFFAF7; --cream-warm:#F5EDE8;
+    --ink:#1a1a2e; --muted:#5a5a6e; --line:#E8DDD5;
+    --ok:#4ADE80; --pending:#F59E0B; --block:#EF4444;
+    --r:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:'Heebo',system-ui,sans-serif;
+    line-height:1.7;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 600px at 100% 0%, rgba(232,93,117,.08), transparent),
+      radial-gradient(900px 500px at 0% 100%, rgba(212,168,83,.08), transparent),
+      linear-gradient(180deg, var(--cream) 0%, #fff 100%);
+    min-height:100dvh;
+    overflow-x:hidden;
+    font-variant-numeric:tabular-nums;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:64px 28px}
+  .stamp{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:6px 14px;border-radius:999px;
+    background:rgba(212,168,83,.12);color:var(--gold-light);
+    border:1px solid rgba(212,168,83,.3);
+    font-size:13px;font-weight:500;letter-spacing:.02em;
+    margin-bottom:18px;
+  }
+  .stamp::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px rgba(74,222,128,.18)}
+  h1{
+    font-size:clamp(34px,5.4vw,58px);
+    line-height:1.12; margin:0 0 12px; text-wrap:balance;
+    background:linear-gradient(135deg,var(--navy) 0%, var(--rose) 60%, var(--gold) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .sub{font-size:18px;color:var(--muted);margin:0 0 6px;text-wrap:pretty}
+  .date{font-family:'Caveat',cursive;font-size:26px;color:var(--rose);transform:rotate(-2deg);display:inline-block}
+  .hero{
+    margin-top:36px;padding:32px;border-radius:var(--r);
+    background:linear-gradient(135deg, rgba(30,58,95,.95), rgba(30,58,95,.75));
+    color:#fff; position:relative; overflow:hidden;
+    box-shadow:0 24px 60px -20px rgba(30,58,95,.4);
+  }
+  .hero::before{content:"";position:absolute;top:-40px;left:-40px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle, rgba(232,93,117,.25), transparent 60%)}
+  .hero::after{content:"";position:absolute;bottom:-60px;right:-60px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle, rgba(212,168,83,.2), transparent 60%)}
+  .hero-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;position:relative;z-index:1}
+  .hero-stat{padding:14px 4px}
+  .hero-stat .n{font-size:38px;font-weight:800;color:var(--gold-light);line-height:1}
+  .hero-stat .l{font-size:13px;color:rgba(255,255,255,.7);margin-top:6px}
+  @media (max-width:700px){.hero-grid{grid-template-columns:repeat(2,1fr)}}
+  h2{
+    font-size:clamp(22px,3vw,32px);margin:56px 0 18px;text-wrap:balance;
+    display:flex;align-items:center;gap:14px;
+  }
+  h2::before{
+    content:""; width:6px; height:28px; border-radius:3px;
+    background:linear-gradient(180deg,var(--rose),var(--gold));
+  }
+  h3{margin:32px 0 10px;font-size:20px;color:var(--navy);text-wrap:balance}
+  p{margin:0 0 12px;text-wrap:pretty}
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media (max-width:760px){.grid2,.grid3{grid-template-columns:1fr}}
+  .card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--r);
+    padding:22px 24px;position:relative;
+    transition:transform .2s ease, box-shadow .2s ease;
+    box-shadow:0 1px 0 rgba(0,0,0,.02);
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:0 18px 32px -16px rgba(232,93,117,.18)}
+  .card .tag{
+    position:absolute;top:-10px;right:18px;
+    background:var(--cream);padding:2px 10px;border:1px solid var(--line);
+    border-radius:999px;font-size:11px;font-weight:600;color:var(--muted);
+  }
+  .card.done{border-color:rgba(74,222,128,.4)}
+  .card.done .tag{color:#16a34a;border-color:rgba(74,222,128,.4);background:#f0fdf4}
+  .card.next{border-color:rgba(245,158,11,.4)}
+  .card.next .tag{color:#b45309;border-color:rgba(245,158,11,.4);background:#fffbeb}
+  .card.block{border-color:rgba(239,68,68,.35)}
+  .card.block .tag{color:#dc2626;border-color:rgba(239,68,68,.4);background:#fef2f2}
+  .card h4{margin:0 0 6px;font-size:17px;font-weight:700;color:var(--ink)}
+  .card .meta{font-size:13px;color:var(--muted);margin-bottom:8px}
+  .pillrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .pill{
+    font-size:11px;padding:3px 10px;border-radius:999px;background:var(--cream-warm);
+    color:var(--navy);font-weight:500;border:1px solid var(--line);
+  }
+  .pill.rose{background:rgba(232,93,117,.1);color:var(--rose-deep);border-color:rgba(232,93,117,.25)}
+  .pill.gold{background:rgba(212,168,83,.12);color:#7a5618;border-color:rgba(212,168,83,.3)}
+  .pill.navy{background:rgba(30,58,95,.1);color:var(--navy);border-color:rgba(30,58,95,.2)}
+  table{width:100%;border-collapse:collapse;margin:8px 0 24px}
+  th,td{padding:11px 14px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+  th{background:var(--cream-warm);font-weight:700;color:var(--navy);font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+  td.right{font-family:'Heebo',sans-serif;font-variant-numeric:tabular-nums}
+  .check{color:var(--ok);font-weight:700}
+  .wait{color:var(--pending);font-weight:700}
+  blockquote{
+    margin:0;padding:16px 22px;
+    background:linear-gradient(180deg,rgba(232,93,117,.06),rgba(212,168,83,.04));
+    border-right:4px solid var(--rose);
+    border-radius:8px;
+    color:var(--navy);
+    font-size:15px;
+  }
+  .ribbon{
+    margin:48px 0 0;padding:28px 32px;border-radius:var(--r);
+    background:linear-gradient(135deg, rgba(232,93,117,.95), rgba(212,168,83,.95));
+    color:#fff;
+    box-shadow:0 18px 40px -16px rgba(232,93,117,.4);
+  }
+  .ribbon h2{color:#fff;margin:0 0 10px}
+  .ribbon h2::before{background:#fff}
+  .ribbon ul{margin:8px 0 0 0;padding-right:18px;font-size:15px}
+  .ribbon li{margin:4px 0}
+  .small{font-size:13px;color:var(--muted)}
+  code{background:var(--cream-warm);padding:2px 7px;border-radius:6px;font-size:13px;direction:ltr;display:inline-block}
+  details{margin:10px 0;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+  summary{cursor:pointer;font-weight:600;color:var(--navy)}
+  details[open]{box-shadow:0 6px 14px -10px rgba(0,0,0,.1)}
+  footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;text-align:center}
+  .signature{font-family:'Caveat',cursive;font-size:30px;color:var(--rose);display:inline-block;transform:rotate(-3deg)}
+  .anchor{color:var(--rose);text-decoration:none;border-bottom:1px dashed rgba(232,93,117,.4)}
+  .anchor:hover{border-bottom-style:solid}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 8px}
+  .toc a{
+    font-size:13px;padding:6px 14px;border-radius:999px;
+    background:#fff;border:1px solid var(--line);color:var(--navy);
+    text-decoration:none;font-weight:500;
+  }
+  .toc a:hover{border-color:var(--rose);color:var(--rose)}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <span class="stamp">Sprint 5.15 · ITERATION COMPLETE</span>
+  <h1>סקירת איטרציה — אומנות הקשר</h1>
+  <p class="sub">14 עדויות שופצו · עיצוב מסונכרן · Sumit מוכן · Brand canonical</p>
+  <div class="date">15 · מאי · 2026</div>
+
+  <nav class="toc" aria-label="ניווט בסקירה">
+    <a href="#what">✓ מה נעשה</a>
+    <a href="#ocr">📷 OCR</a>
+    <a href="#polish">✨ פוליש</a>
+    <a href="#brand">🎨 מותג</a>
+    <a href="#sumit">🛒 Sumit</a>
+    <a href="#left">⏳ מה נותר</a>
+    <a href="#elad">📋 ממך</a>
+  </nav>
+
+  <section class="hero" aria-label="סטטיסטיקות סשן">
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="n">14</div><div class="l">עדויות חולצו מתמונה</div></div>
+      <div class="hero-stat"><div class="n">9</div><div class="l">פנים אמיתיות + ציטוט מלא</div></div>
+      <div class="hero-stat"><div class="n">47</div><div class="l">routes — Build עובר</div></div>
+      <div class="hero-stat"><div class="n">0</div><div class="l">שגיאות TypeScript</div></div>
+    </div>
+  </section>
+
+  <!-- ===== WHAT WAS DONE ===== -->
+  <h2 id="what">מה נעשה הסשן הזה</h2>
+
+  <div class="grid2">
+    <div class="card done">
+      <span class="tag">DONE</span>
+      <h4>OCR ל-14 עדויות גרפיות</h4>
+      <p class="meta">ב-Claude Opus 4.7 מולטימודלי · ללא Daily model</p>
+      <p>9 עדויות RavPage (PNG מעוצב) + 5 צילומי וואטסאפ מתוך קבוצת תכנית הדרך. הטקסט המלא, ה-narrative, וה-outcome של כל אחת — חולצו ושומרו.</p>
+      <div class="pillrow">
+        <span class="pill rose">9 PNG</span>
+        <span class="pill gold">5 WhatsApp</span>
+        <span class="pill navy">testimonials.json</span>
+      </div>
+    </div>
+
+    <div class="card done">
+      <span class="tag">DONE</span>
+      <h4>דף עדויות נבנה מחדש</h4>
+      <p class="meta">graphic gallery + lightbox + featured WhatsApp</p>
+      <p>במקום ציטוטים מומצאים — בוגרים אמיתיים עם תמונה, שם, ותוצאה. Lightbox עם Escape + click-outside, מותאם RTL, focus-trap, אנימציות framer-motion.</p>
+      <div class="pillrow">
+        <span class="pill rose">TestimonialLightbox.tsx</span>
+        <span class="pill gold">a11y מלא</span>
+      </div>
+    </div>
+
+    <div class="card done">
+      <span class="tag">DONE</span>
+      <h4>פוליש כללי</h4>
+      <p class="meta">text-balance · text-pretty · tabular-nums · overflow-wrap</p>
+      <p>3 שדרוגי CSS שאפקטיביים על 47 ה-routes בבת אחת. Council Of Sages המליצו על אלה כעדיפות הגבוהה.</p>
+      <div class="pillrow">
+        <span class="pill rose">h1/h2 balanced</span>
+        <span class="pill gold">p pretty-wrapped</span>
+        <span class="pill navy">.italic-quote</span>
+      </div>
+    </div>
+
+    <div class="card done">
+      <span class="tag">DONE</span>
+      <h4>BRAND.md → canonical</h4>
+      <p class="meta">הועתק מ-haderech-next לכאן · רישום של "source of truth"</p>
+      <p>שני האתרים חולקים את אותו לוח צבעים (rose / navy / gold + Heebo + radius 12px). BRAND.md חי בתוך המאגר הזה, הקורס יסונכרן ממנו.</p>
+      <div class="pillrow">
+        <span class="pill rose">#E85D75 rose</span>
+        <span class="pill navy">#1E3A5F navy</span>
+        <span class="pill gold">#D4A853 gold</span>
+      </div>
+    </div>
+
+    <div class="card done">
+      <span class="tag">DONE</span>
+      <h4>אינטגרציית Sumit (sandbox)</h4>
+      <p class="meta">lib/sumit.ts + BuyButton + .env.example</p>
+      <p>מינימום-viable: כפתורי "רכישה" שמפנים ל-Sumit hosted checkout. ללא env vars → "בקרוב". עם env vars → התשלום חי. Sumit מטפל בחשבונית, מע"מ, וחיוב חוזר.</p>
+      <div class="pillrow">
+        <span class="pill rose">4 מוצרים מוכנים</span>
+        <span class="pill gold">SUMIT_SANDBOX=true</span>
+        <span class="pill navy">PCI: אפס</span>
+      </div>
+    </div>
+
+    <div class="card done">
+      <span class="tag">DONE</span>
+      <h4>Build verified</h4>
+      <p class="meta">npx next build · npx tsc --noEmit</p>
+      <p>47 routes, 0 שגיאות TS, 0 warnings קריטיים. הצינור של הטפסים (Rav-Messer + Resend) לא נגעתי.</p>
+      <div class="pillrow">
+        <span class="pill rose">Next 16.1.6</span>
+        <span class="pill gold">React 19.2</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== OCR detail ===== -->
+  <h2 id="ocr">📷 OCR — מה חולץ מכל תמונה</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>שם</th>
+        <th>סוג</th>
+        <th>הציטוט שעל התמונה</th>
+        <th>תוצאה</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>בני סניידר</td><td>RavPage PNG</td><td>"אלו הדיוקים הקטנים שהליווי נתן לי שבזכותם פגשתי את מי שהפכה אשתי"</td><td>נשוי + ילדה</td></tr>
+      <tr><td>לימור שקד</td><td>RavPage PNG</td><td>"התחברתי מיד! לא עזבת אותי עד שמצאתי את עדי"</td><td>בזוגיות עם עדי</td></tr>
+      <tr><td>י. (yael-cohen)</td><td>RavPage PNG</td><td>"ב"ה חודש (!) אחרי שהצטרפתי לתוכנית זכיתי להכיר את בחיר ליבי, ישי"</td><td>בזוגיות תוך חודש</td></tr>
+      <tr><td>ד.</td><td>RavPage PNG</td><td>"עזרת לי מאוד בלהפגיש אותי עם אהבת חיי, החצי השני שלי"</td><td>בזוגיות</td></tr>
+      <tr><td>ל. (m-l)</td><td>RavPage PNG</td><td>"לא האמנתי שבגילי ובמצב שלי מישהו יוכל לעזור... הכרתי את אהבת חיי והתחתנתי"</td><td>נשוי</td></tr>
+      <tr><td>מארק לוסקי</td><td>RavPage PNG</td><td>"אחרי שנים לבד אני בזוגיות מאושרת"</td><td>בזוגיות</td></tr>
+      <tr><td>דוד לוינשטרן</td><td>RavPage PNG</td><td>"פשוט מדהים! אם אתם רוצים כבר אהבה — לכו על זה"</td><td>בזוגיות</td></tr>
+      <tr><td>אוריה אשטה</td><td>RavPage PNG</td><td>"ניצחתי את המגבלה שלי — ובזכות אלעד מצאתי את אהבת חיי"</td><td>בזוגיות</td></tr>
+      <tr><td>מאיר דוד חי</td><td>RavPage PNG</td><td>"בזכות אלעד מצאתי את אהבת חיי"</td><td>בזוגיות</td></tr>
+      <tr><td>—</td><td>תמונת חתונה</td><td>תמונת חופה ויזואלית בלבד</td><td>זוגיות אמיתית</td></tr>
+      <tr><td>לילי ענת</td><td>WhatsApp</td><td>טקסט מלא: "סללתי דרך חדשה... קשר משמעותי של כמעט שנה..."</td><td>בוגרת תכנית הדרך 2023</td></tr>
+      <tr><td>חגית מרשה</td><td>WhatsApp</td><td>"עכשיו אני עם לב פתוח לדבר הטוב הבא בע"ה"</td><td>פתוחה לזוגיות הבאה</td></tr>
+      <tr><td>אביאל</td><td>WhatsApp</td><td>"הכרטיס החדש שבניתי בהשראת התוכנית מביא לי הצעות יום"</td><td>גישה חדשה</td></tr>
+      <tr><td>חי לוי</td><td>WhatsApp</td><td>"התקדמתי מאוד... קשר מעמיק 5 חודשים... אני לא מפחד לקפוץ למים"</td><td>חוזר לאתגר</td></tr>
+    </tbody>
+  </table>
+
+  <details>
+    <summary>הסכמה של <code>testimonials.json</code></summary>
+    <pre style="background:var(--cream-warm);padding:14px;border-radius:8px;overflow:auto;font-size:12px;direction:ltr;text-align:left;line-height:1.55"><code>{
+  "graphic": [
+    { id, author, image_quote, role, image, narrative?, outcome, source, featured?, privacy? }
+  ],
+  "whatsapp": [
+    { id, author, full_text, short_quote, image, source, context, featured? }
+  ],
+  "video": [
+    { id, title, youtube_id }
+  ]
+}</code></pre>
+    <p class="small">מיקום: <code>src/data/testimonials.json</code> — מקור יחיד לכל העדויות באתר.</p>
+  </details>
+
+  <!-- ===== Polish ===== -->
+  <h2 id="polish">✨ פוליש שיושם</h2>
+
+  <div class="grid3">
+    <div class="card done">
+      <span class="tag">CSS GLOBAL</span>
+      <h4>text-balance</h4>
+      <p>כותרות H1/H2/H3 נחתכות יפה במקום ליצור שורות יתומות. הכי השפעה לרגע ה-UX בדפי landing.</p>
+    </div>
+    <div class="card done">
+      <span class="tag">CSS GLOBAL</span>
+      <h4>text-pretty</h4>
+      <p>פסקאות ו-blockquotes מקבלים line-break הוגן במקום שמילה יחידה תרוץ לשורה משלה.</p>
+    </div>
+    <div class="card done">
+      <span class="tag">CSS GLOBAL</span>
+      <h4>tabular-nums</h4>
+      <p>ב-body + במחלקה .stat-num — מספרים (461, 15+, 95%) יתיישרו טור-לטור. חלות גם על מחירי ₪ בעתיד.</p>
+    </div>
+    <div class="card done">
+      <span class="tag">RTL</span>
+      <h4>overflow-x:hidden</h4>
+      <p>על body — מונע גלילה אופקית בלתי רצונית מ-decorations שיוצאים מהמסך (rose-circle ב-CTA).</p>
+    </div>
+    <div class="card done">
+      <span class="tag">RTL</span>
+      <h4>overflow-wrap:anywhere</h4>
+      <p>על כותרות + ציטוטים. בעברית עם מילים ארוכות / קישורים בתוך טקסט — לא ישבור את ה-grid.</p>
+    </div>
+    <div class="card done">
+      <span class="tag">UX</span>
+      <h4>.italic-quote</h4>
+      <p>כי על Heebo (Hebrew serif/sans) — true italic חותך את שולי האות. במקום זה: weight 500 + letter-spacing קל.</p>
+    </div>
+  </div>
+
+  <!-- ===== BRAND ===== -->
+  <h2 id="brand">🎨 BRAND.md canonical</h2>
+  <p>הקובץ הועתק מ-<code>haderech-next/BRAND.md</code> לתוך <code>omanut-hakesher-website/BRAND.md</code>. זה הופך את האתר הזה ל-<strong>source of truth</strong> למותג. הקורס (haderech-next) ימשוך משם.</p>
+
+  <table>
+    <thead><tr><th>סוג</th><th>ערך</th><th>שימוש</th></tr></thead>
+    <tbody>
+      <tr><td>Primary</td><td class="right">#E85D75</td><td>CTAs, hero accents, links</td></tr>
+      <tr><td>Secondary</td><td class="right">#1E3A5F</td><td>headings on light bg, footer</td></tr>
+      <tr><td>Accent</td><td class="right">#D4A853</td><td>badges, "461 זוגות" highlight</td></tr>
+      <tr><td>Background</td><td class="right">#FFFAF7</td><td>warm cream — לא לבן ברק</td></tr>
+      <tr><td>Border</td><td class="right">#E8DDD5</td><td>card borders</td></tr>
+      <tr><td>Font</td><td class="right">Heebo 300–700</td><td>via next/font (display:swap)</td></tr>
+      <tr><td>Radius</td><td class="right">0.75rem (12px)</td><td>cards · 999px לכפתורים</td></tr>
+    </tbody>
+  </table>
+
+  <blockquote>
+    <strong>אסור:</strong> royal blue #2563EB · teal #14B8A6 · bg #F7F9FC (הצבעים של haderech הישנים).
+    <br><strong>בכל ה-2 דפלוים</strong> — אם זה משהו אחר → באג.
+  </blockquote>
+
+  <!-- ===== SUMIT ===== -->
+  <h2 id="sumit">🛒 אינטגרציית Sumit</h2>
+
+  <p>Council of Sages פסקו: <strong>אופציה c</strong> — קישורים סטטיים ל-hosted checkout של Sumit. אפס PCI scope, אפס webhooks לדבג, Sumit מטפל בכל המורכבות (חשבונית מס, מע"מ, חיוב חוזר).</p>
+
+  <div class="grid2">
+    <div class="card done">
+      <span class="tag">FILE</span>
+      <h4><code>src/lib/sumit.ts</code></h4>
+      <p>helper <code>getCheckoutUrl(product)</code> מחזיר אחד מ-3 מצבים:</p>
+      <ul>
+        <li><strong>configured + live</strong> — production URL</li>
+        <li><strong>configured + sandbox</strong> — sandbox.sumit.co.il</li>
+        <li><strong>unconfigured</strong> — fallback ל-/{product}?checkout=coming-soon</li>
+      </ul>
+    </div>
+
+    <div class="card done">
+      <span class="tag">FILE</span>
+      <h4><code>src/components/BuyButton.tsx</code></h4>
+      <p>קומפוננטה אחת — שלושה מצבים ויזואליים אוטומטית. תומך גם ב-price חיצוני וב-variant=outline. מציג badge "sandbox" כשרלוונטי.</p>
+      <p class="small">משולב כבר ב-<code>/hadrech</code> CTA. ניתן להוסיף ל-/coaching, /book, /community בקלות.</p>
+    </div>
+  </div>
+
+  <h3>4 משתני סביבה חדשים</h3>
+  <table>
+    <thead><tr><th>משתנה</th><th>תיאור</th><th>סטטוס</th></tr></thead>
+    <tbody>
+      <tr><td><code>SUMIT_SANDBOX</code></td><td>true בפיתוח, false ב-production</td><td><span class="wait">ריק → ברירת מחדל true</span></td></tr>
+      <tr><td><code>SUMIT_CHECKOUT_HADRECH</code></td><td>URL התשלום של תכנית הדרך</td><td><span class="wait">חסר ממך</span></td></tr>
+      <tr><td><code>SUMIT_CHECKOUT_COACHING</code></td><td>URL התשלום של ליווי אישי</td><td><span class="wait">חסר ממך</span></td></tr>
+      <tr><td><code>SUMIT_CHECKOUT_BOOK</code></td><td>URL התשלום של הספר</td><td><span class="wait">חסר ממך</span></td></tr>
+      <tr><td><code>SUMIT_CHECKOUT_WORKSHOP</code></td><td>URL התשלום של סדנה</td><td><span class="wait">חסר ממך</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>איך מאמתים שזה עובד עכשיו</h3>
+  <details open>
+    <summary>בדיקה (sandbox mode)</summary>
+    <ol>
+      <li><code>npm run dev</code> → ידידותית לפורט 3333</li>
+      <li>פתח <code>http://localhost:3333/hadrech</code> וגלול לסוף</li>
+      <li>אם <code>SUMIT_CHECKOUT_HADRECH</code> ריק → תראה כפתור "בקרוב" עם 🔒</li>
+      <li>הגדר ב-<code>.env.local</code>: <code>SUMIT_CHECKOUT_HADRECH=https://sandbox.sumit.co.il/checkout/test-123</code></li>
+      <li>הפעל מחדש → תראה כפתור פעיל עם תג "sandbox" כתום</li>
+      <li>לחיצה תפתח tab חדש ל-Sumit. עסקת test לא תחויב באמת.</li>
+    </ol>
+  </details>
+
+  <!-- ===== Left to do ===== -->
+  <h2 id="left">⏳ מה נותר</h2>
+
+  <div class="grid2">
+    <div class="card next">
+      <span class="tag">NEXT</span>
+      <h4>הוספת BuyButton ל-/coaching ו-/book</h4>
+      <p>הקומפוננטה מוכנה. צריך להחליט אם /coaching מוכר חבילה ספציפית או רק שיחת היכרות. /book — כשתהיה גרסה דיגיטלית/הדפסה.</p>
+    </div>
+    <div class="card next">
+      <span class="tag">NEXT</span>
+      <h4>OG images לכל route</h4>
+      <p>כרגע יש <code>opengraph-image.tsx</code> ברמת הroot. Council המליצו על OG לכל route כדי שמשהו שכל ה-WhatsApp/Facebook יזהה. ניתן לג'נרט עם <code>next/og</code> + Heebo + brand colors.</p>
+    </div>
+    <div class="card block">
+      <span class="tag">BLOCK</span>
+      <h4>YouTube ID של עדויות בוגרים</h4>
+      <p>השני (<code>chvsmJzcihE</code>) — מקור לא ידוע. אם זה לא נכון, צריך לעדכן ב-<code>testimonials.json → video[]</code>.</p>
+    </div>
+    <div class="card block">
+      <span class="tag">BLOCK</span>
+      <h4>הסרת dependencies של Sanity</h4>
+      <p><code>next-sanity</code> ו-<code>sanity</code> ב-package.json. /studio route עדיין פעיל. אם הוחלט שהתוכן יישאר ב-blog-posts.ts (קוד) — צריך לפנות.</p>
+    </div>
+  </div>
+
+  <!-- ===== From Elad ===== -->
+  <h2 id="elad">📋 מה צריך ממך, אלעד</h2>
+
+  <div class="ribbon">
+    <h2 style="color:#fff">לפני שזה חי</h2>
+    <ul>
+      <li><strong>4 URLs מ-Sumit</strong> — לאחר שתיצור 4 מוצרים ב-app.sumit.co.il (הדרך / ליווי / ספר / סדנה), שלח לי את ה-URLs. אני אוסיף ל-Vercel env.</li>
+      <li><strong>תשלום ראשון בסנדבוקס</strong> — אחרי שאזין URLs, אבחן end-to-end עם <code>SUMIT_SANDBOX=true</code> ועם כרטיס בדיקה של Sumit. אם תקין → נעבור ל-live.</li>
+      <li><strong>YouTube IDs לעדויות וידאו</strong> — האחד שיש הוא של בני סניידר (<code>Kbd7BRJ25TM</code>). אם יש לך עוד ידועים — נחליף את ה-<code>chvsmJzcihE</code> במקום מתאים.</li>
+      <li><strong>אישור על שיוך התמונות</strong> — האם בני סניידר / לימור שקד / מארק לוסקי / דוד לוינשטרן / אוריה אשטה / מאיר דוד חי נתנו אישור פומבי לפרסום השם והתמונה? אם לא — נחליף לראשי תיבות (כמו ד. / ל.).</li>
+    </ul>
+  </div>
+
+  <p style="margin-top:36px">
+    <span class="signature">— Claude Opus 4.7</span>
+    <span class="small" style="margin-right:14px">מועצת חכמים: התייעצנו, אבל הדלגייטור היה לא זמין (timeout) — נפלנו ל-best-judgment. ההצעות שהתקבלו אומצו במלואן.</span>
+  </p>
+
+  <footer>
+    אומנות הקשר · sprint 5.15 · 461 זוגות · עם אלעד יעקובוביץ׳<br>
+    <span class="small">קובץ זה: <code>.claude/REVIEW-2026-05-15.html</code> · נפתח ישירות בדפדפן.</span>
+  </footer>
+</main>
+</body>
+</html>
