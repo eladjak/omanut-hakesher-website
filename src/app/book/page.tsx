@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { SumitCheckoutButton } from "@/components/SumitCheckoutButton";
 import { chapters as chapterData } from "@/data/book/chapters";
 
 export const metadata: Metadata = {
@@ -90,12 +91,13 @@ export default function BookPage() {
               </blockquote>
 
               <div className="flex flex-wrap gap-4">
-                <Link
-                  href="/contact"
+                <SumitCheckoutButton
+                  productSlug="book-preorder"
+                  label="לרכישה מוקדמת"
+                  productTitle='הספר "אומנות הקשר" — מכירה מוקדמת'
+                  displayPrice="₪89"
                   className="inline-flex px-8 py-3.5 bg-primary text-white rounded-full font-semibold hover:bg-primary-dark transition-colors shadow-md shadow-primary/20"
-                >
-                  רוצה לשמוע כשיוצא
-                </Link>
+                />
                 <Link
                   href="/hadrech"
                   className="inline-flex px-8 py-3.5 border-2 border-white/50 text-white rounded-full font-semibold hover:bg-white/10 transition-colors"

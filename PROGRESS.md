@@ -1,7 +1,51 @@
 # אתר אומנות הקשר - התקדמות
 
-## סטטוס: deployed · lead-magnet pipeline LIVE in production 2026-05-05
-## עדכון אחרון: 2026-05-05
+## סטטוס: deployed · lead-magnet LIVE · Sumit checkout READY (blocked-on-credentials)
+## עדכון אחרון: 2026-05-14
+
+## 2026-05-14: scrape Rav-Messer + Sumit migration
+
+### מה בוצע
+**1. Stripe — אין בקוד הפועל.** `grep stripe/Stripe/STRIPE` ב-`src/` + `.env.local` + `package.json` החזיר 0 תוצאות. ההתייחסויות היחידות הן ב-`.claude/extracted-content/*.md` (תיעוד היסטורי בלבד). לא היה מה להחליף.
+
+**2. תשתית Sumit מלאה — מוכנה לפרודקשן ברגע שיגיעו credentials:**
+- `src/lib/sumit-products.ts` — קטלוג 4 מוצרים (hadrech-full ₪2,997 · discovery-call ₪197 · book-preorder ₪89 · coaching-3pack ₪1,497). מקור-אמת יחיד למחירים + SKUs + תגיות Rav-Messer.
+- `src/lib/sumit-client-inline.ts` — TypeScript port של `@elad/sumit-client` (הוטמע פנימה כי Turbopack לא פותר symlinks ל-file: deps).
+- `src/lib/sumit.ts` — wrapper דק: `createCheckout()` + `verifyWebhookSignature()` (HMAC-SHA256).
+- `src/app/api/sumit/checkout/route.ts` — POST → יוצר תשלום hosted ב-Sumit, מחזיר URL להפניה. ולידציה מלאה (email/name/product). 503 אם אין credentials → UI עובר ל-fallback של `/contact`.
+- `src/app/api/sumit/webhook/route.ts` — מקבל events מ-Sumit, מאמת חתימה, מתייג קונה ב-Rav-Messer עם `customer` + `product:<slug>` + מתעד `sumit_payment_id`. Idempotent (in-memory Set).
+- `src/components/SumitCheckoutButton.tsx` — קומפוננטה אינטראקטיבית עם Radix Dialog: שם+מייל+טלפון → POST → redirect ל-Sumit hosted page. מציגה מחיר. fallback אוטומטי ל-`/contact` אם 503.
+- `src/app/thanks/purchase/page.tsx` — דף תודה (`robots: noindex`), מקבל `?product=<slug>` ומציג שם המוצר בעברית.
+
+**3. כפתורי תשלום מחוברים לעמודים:**
+- `/hadrech` — 2 CTAs (hero + final) הוחלפו מ-`Link href="/contact"` ל-`SumitCheckoutButton productSlug="hadrech-full" ₪2,997`.
+- `/book` — CTA הראשי הוחלף ל-`book-preorder ₪89`.
+
+**4. Verification:**
+- ✅ `npx tsc --noEmit` — 0 שגיאות
+- ✅ `npm run build` — עובר. 64 routes (כולל 3 חדשים: `/api/sumit/checkout`, `/api/sumit/webhook`, `/thanks/purchase`).
+- ✅ `.env.example` עודכן עם `SUMIT_COMPANY_ID` + `SUMIT_API_KEY` + `SUMIT_WEBHOOK_SECRET` + `NEXT_PUBLIC_SITE_URL`.
+- ✅ Backups: `*.pre-sumit-rebuild-bak` של hadrech/book/package.json/.env.example.
+
+**5. Rav-Messer scrape — חלקי:**
+- Delegator endpoint `:3900/email/*` לא נגיש מהמכונה המקומית (connection timeout דרך IP ישיר; Cloudflare hub עובד אבל לא חושף את ה-email endpoints).
+- מבנה הקמפיינים נלמד מ-`.claude/extracted-content/course-platform.md` (כבר נסרק קודם): brand identity (Dark Blue #1E3A5F + Warm Pink #E85D75 + Gold #D4A853), טון מכירתי ("מבקשי זוגיות שמרגישים תקיעות"), 3 הבטחות (אמת/כלים/כבוד), 12-שבועות בחלוקה ל-4 שלבים.
+- ה-website כבר משקף את התוכן הזה. לא נדרש rebuild של עיצוב/copy — דווקא ההיעדר שתשלום שיהיה בעמוד.
+
+### מצב Sumit
+**BLOCKED-ON-CREDENTIALS.** הקוד מוכן. ברגע ש-`SUMIT_COMPANY_ID` + `SUMIT_API_KEY` + `SUMIT_WEBHOOK_SECRET` נכנסים ל-Vercel env, התשלומים עובדים מיד.
+- צריך גם להגדיר webhook URL ב-dashboard של Sumit ל-`https://omanut-hakesher.co.il/api/sumit/webhook`.
+- Wiring ב-Rav-Messer: list 22958, tags `customer` + `product:hadrech-full` (וכו') — מוכן בקוד, יעבוד אוטומטית כשהווהבק יקבל אירועים.
+
+### מה נשאר פתוח
+1. **Sumit credentials** (חיצוני — אלעד צריך לקבל מ-Sumit dashboard לפי `SUMIT_INTEGRATION.md` ב-pdf-empire-il).
+2. **Webhook secret** — להגדיר ב-dashboard של Sumit ולהעתיק ל-Vercel env.
+3. **persistent billing_events** — כרגע idempotency דרך in-memory Set; אחרי 10 רכישות ראשונות לעבור ל-Supabase table.
+4. **Recurring billing** — `coaching-3pack` בנוי כתשלום חד-פעמי. אם נרצה הוראת קבע, להוסיף `recurring:true` בקטלוג + endpoint נפרד.
+5. **GEO/AEO scan** — לא רץ בסשן הזה (לא היו שינויי SEO/Schema).
+6. **דף `/coaching` + `/discovery-call`** — לא חוברו לכפתורי Sumit, רק `/hadrech` + `/book`. אלעד יחליט אם להוסיף.
+
+---
 
 ### Session 2026-05-05 (3) — Production wiring + smoke tests passed
 הצינור באוויר. `RAV_MESSER_*` + `RESEND_API_KEY` + `CONTACT_EMAIL` נוספו ל-Vercel env (production), אומנות הקשר עברה deploy חדש, ונבדקה.
@@ -188,3 +232,11 @@
 - כשתמונות אמיתיות מתקבלות: החלף gradients ב-OptimizedImage עם blur placeholders
 - צור og-image.png (1200x630) לפני דיפלוי
 - עדכן תאריך/פרטי סדנה חינמית ב-FreeWorkshopBanner כשפרטים אמיתיים מוכנים
+
+## 2026-05-19 — content.eladjak.com subdomain LIVE + daily-rhythm staging
+- next.config.ts: host-based rewrite content.eladjak.com → /content (excludes api|_next|favicon|content-sw)
+- public/content-sw.js: PWA service worker; manifest start_url+scope changed `/content`→`"."` (works on apex + legacy path)
+- .deploy-rhythm/: 6 files staged for Sprint 7.29 (broadcaster/closure-rollup/Box+Kaylee+Solis rhythm sections + inject-kami-rhythm.py)
+- 26 modified files total (uncommitted) · backups: vercel.json + next.config.ts .pre-content-subdomain-20260519-183124.bak
+- All 4 URLs verified 200 (`/`, `/ai-agents-4-hours`, `/manifest.webmanifest`, `/api/content?key=…`)
+- CONTENT_REVIEW_KEY unchanged · zero commits pushed today (working tree dirty)

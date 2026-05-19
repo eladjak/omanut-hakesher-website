@@ -8,6 +8,28 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
 
+  // Host-based rewrites: route content.eladjak.com → /content sub-app.
+  // Existing omanut-hakesher-website.vercel.app/content URL still works,
+  // and content.eladjak.com/<slug> still resolves to /content/<slug>.
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: "/",
+          destination: "/content",
+          has: [{ type: "host", value: "content.eladjak.com" }],
+        },
+        {
+          source: "/:path((?!content|api|_next|favicon\\.ico|content-sw\\.js).*)",
+          destination: "/content/:path",
+          has: [{ type: "host", value: "content.eladjak.com" }],
+        },
+      ],
+      afterFiles: [],
+      fallback: [],
+    };
+  },
+
   // Caching headers for static assets and pages
   async headers() {
     return [

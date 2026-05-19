@@ -49,3 +49,16 @@ public/assets/elad-photos/
 # Temp/review files
 *.docx
 ~$*.docx
+
+.vercel
+
+# Claude worktrees + local scraping
+.claude/worktrees/
+.claude/scrape/
+
+# Local deploy rhythm
+.deploy-rhythm/
+
+# Pre-rebuild backups
+*.pre-*-bak
+*.pre-*.bak

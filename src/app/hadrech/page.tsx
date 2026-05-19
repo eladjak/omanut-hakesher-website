@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { SumitCheckoutButton } from "@/components/SumitCheckoutButton";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import {
   StaggerContainer,
@@ -368,12 +369,13 @@ export default function HaDrechPage() {
                 אמיתית.
               </p>
               <div className="mt-10 flex flex-wrap gap-4">
-                <Link
-                  href="/contact"
+                <SumitCheckoutButton
+                  productSlug="hadrech-full"
+                  label="להירשם עכשיו"
+                  productTitle='תוכנית "הדרך" — מסלול מלא'
+                  displayPrice="₪2,997"
                   className="px-8 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
-                >
-                  התחל את הדרך שלך
-                </Link>
+                />
                 <a
                   href="#phases"
                   className="px-8 py-4 border-2 border-secondary text-secondary rounded-full font-semibold text-lg hover:bg-secondary hover:text-white transition-colors"
@@ -795,12 +797,13 @@ export default function HaDrechPage() {
             כל מה שצריך כדי להתחיל את המסע שלך לזוגיות אמיתית.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              href="/contact"
+            <SumitCheckoutButton
+              productSlug="hadrech-full"
+              label="להירשם עכשיו"
+              productTitle='תוכנית "הדרך" — מסלול מלא'
+              displayPrice="₪2,997"
               className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
-            >
-              התחל את הדרך שלך
-            </Link>
+            />
             <Link
               href="/coaching"
               className="inline-flex px-10 py-4 border-2 border-white/50 text-white rounded-full font-semibold text-lg hover:bg-white/10 transition-colors"
