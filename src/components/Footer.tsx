@@ -15,6 +15,7 @@ const footerLinks = {
     { href: "/podcast", label: "פודקאסט" },
     { href: "/contact", label: "צור קשר" },
     { href: "/thanks", label: "תודות" },
+    { href: "/cv-elad-yaakobovitch-he.pdf", label: "קורות חיים — אלעד יעקובוביץ" },
   ],
   services: [
     { href: "/coaching", label: "ליווי אישי פרימיום" },
