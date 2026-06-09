@@ -32,7 +32,7 @@ export async function POST(request: Request) {
 
     // If Resend API key is configured, send email
     const resendApiKey = process.env.RESEND_API_KEY;
-    const contactEmail = process.env.CONTACT_EMAIL || "hello@omanut-hakesher.co.il";
+    const contactEmail = process.env.CONTACT_EMAIL || "eladjak.agents@gmail.com";
 
     if (resendApiKey) {
       const response = await fetch("https://api.resend.com/emails", {

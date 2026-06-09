@@ -26,7 +26,17 @@ const stats = [
   { number: "20+", label: "שנים על הבמה" },
 ];
 
-const products = [
+type Product = {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  href: string;
+  color: string;
+  cta: string;
+  external?: boolean;
+};
+
+const products: Product[] = [
   {
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -58,10 +68,11 @@ const products = [
       </svg>
     ),
     title: "הספר ״אומנות הקשר״",
-    description: "10 פרקים, 32 תרגילים מעשיים ועשרות סיפורים מהשטח. לא עוד ספר טיפים - דרך שלמה ומובנית למציאת הזוגיות שמגיעה לך.",
-    href: "/book",
+    description: "10 פרקים, 32 תרגילים מעשיים ועשרות סיפורים מהשטח. לא עוד ספר טיפים - דרך שלמה ומובנית למציאת הזוגיות שמגיעה לך. זמין לרכישה באתר הספר.",
+    href: "https://ohlove.co.il",
     color: "bg-accent/10 text-accent-dark",
-    cta: "לפרטים על הספר",
+    cta: "לרכישת הספר",
+    external: true,
   },
   {
     icon: (
@@ -88,7 +99,7 @@ const painPoints = [
   },
   {
     title: "כבר ניסית ליווי ולא עבד?",
-    description: "שדכנים נותנים הזדמנויות. פסיכולוגים עוזרים להבין. אנחנו עושים את הדבר עם ליווי בשטח.",
+    description: "אתרי היכרויות נותנים הזדמנויות. פסיכולוגים עוזרים להבין. אנחנו עושים את הדבר עם ליווי זוגי בשטח.",
   },
 ];
 
@@ -345,8 +356,8 @@ export default function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {products.map((product, index) => (
-              <Link key={index} href={product.href} className="group">
+            {products.map((product, index) => {
+              const cardInner = (
                 <Card className="h-full border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200">
                   <CardContent className="p-8">
                     <div className={`inline-flex p-3 rounded-xl mb-5 ${product.color}`}>
@@ -363,8 +374,23 @@ export default function HomePage() {
                     </span>
                   </CardContent>
                 </Card>
-              </Link>
-            ))}
+              );
+              return product.external ? (
+                <a
+                  key={index}
+                  href={product.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group"
+                >
+                  {cardInner}
+                </a>
+              ) : (
+                <Link key={index} href={product.href} className="group">
+                  {cardInner}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
