@@ -9,7 +9,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipToContent } from "@/components/SkipToContent";
-import { OrganizationJsonLd } from "@/components/JsonLd";
+import { OrganizationJsonLd, FaqJsonLd } from "@/components/JsonLd";
 import { GenderProvider } from "@/components/GenderProvider";
 import { WelcomeModal } from "@/components/WelcomeModal";
 
@@ -41,6 +41,15 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://omanut-hakesher.co.il"),
   alternates: {
     canonical: "/",
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-192x192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
   },
   openGraph: {
     title: "אומנות הקשר | מצא את הזוגיות שמגיעה לך - אלעד יעקובוביץ׳",
@@ -97,6 +106,7 @@ export default function RootLayout({
           }}
         />
         <OrganizationJsonLd />
+        <FaqJsonLd />
       </head>
       <body className={`${heebo.variable} font-sans antialiased`}>
         <ThemeProvider>

@@ -20,10 +20,11 @@ const footerLinks = {
   services: [
     { href: "/coaching", label: "ליווי אישי פרימיום" },
     { href: "/hadrech", label: "קורס ״הדרך״" },
-    { href: "/book", label: "הספר" },
+    { href: "/book", label: "הספר (גרסה דיגיטלית)" },
+    { href: "https://ohlove.co.il", label: "לרכישת הספר", external: true },
     { href: "/community", label: "קהילת אומנות הקשר" },
     { href: "/podcast", label: "פודקאסט" },
-  ],
+  ] as { href: string; label: string; external?: boolean }[],
 };
 
 export function Footer() {
@@ -171,12 +172,23 @@ export function Footer() {
             <ul className="space-y-2.5">
               {footerLinks.services.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-background/60 hover:text-primary-light transition-colors text-sm"
-                  >
-                    {link.label}
-                  </Link>
+                  {link.external ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-background/60 hover:text-primary-light transition-colors text-sm"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="text-background/60 hover:text-primary-light transition-colors text-sm"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -189,8 +201,8 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="mailto:hello@omanut-hakesher.co.il" dir="ltr" className="hover:text-primary-light transition-colors">
-                  hello@omanut-hakesher.co.il
+                <a href="mailto:omanut-hakesher@eladjak.com" dir="ltr" className="hover:text-primary-light transition-colors">
+                  omanut-hakesher@eladjak.com
                 </a>
               </li>
             </ul>

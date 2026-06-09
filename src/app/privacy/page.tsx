@@ -53,7 +53,7 @@ export default function PrivacyPage() {
 
             <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">1. מי אנחנו</h2>
             <p className="mb-4 text-muted-foreground leading-relaxed">
-              אומנות הקשר הוא עסק של אלעד יעקובוביץ&apos;, מאמן זוגיות ותקשורת. כתובת העסק: ישראל. דוא&quot;ל ליצירת קשר: <a href="mailto:hello@omanut-hakesher.co.il" className="text-primary hover:underline" dir="ltr">hello@omanut-hakesher.co.il</a>.
+              אומנות הקשר הוא עסק של אלעד יעקובוביץ&apos;, מאמן זוגיות ותקשורת. כתובת העסק: ישראל. דוא&quot;ל ליצירת קשר: <a href="mailto:omanut-hakesher@eladjak.com" className="text-primary hover:underline" dir="ltr">omanut-hakesher@eladjak.com</a>.
             </p>
 
             <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">2. מה אנחנו אוספים</h2>
@@ -99,7 +99,7 @@ export default function PrivacyPage() {
               <li className="ms-6 mb-2">לבטל הרשמה לניוזלטר בכל עת (לחיצה על "הסר" בכל מייל)</li>
             </ul>
             <p className="mb-4 text-muted-foreground">
-              לממש זכויות אלו, שלחו הודעה ל: <a href="mailto:hello@omanut-hakesher.co.il" className="text-primary hover:underline" dir="ltr">hello@omanut-hakesher.co.il</a>
+              לממש זכויות אלו, שלחו הודעה ל: <a href="mailto:omanut-hakesher@eladjak.com" className="text-primary hover:underline" dir="ltr">omanut-hakesher@eladjak.com</a>
             </p>
 
             <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">7. קישורים לאתרים חיצוניים</h2>
@@ -119,8 +119,8 @@ export default function PrivacyPage() {
             <ul className="list-none mb-6 text-muted-foreground">
               <li className="mb-2">
                 <strong>אימייל:</strong>{" "}
-                <a href="mailto:hello@omanut-hakesher.co.il" className="text-primary hover:underline" dir="ltr">
-                  hello@omanut-hakesher.co.il
+                <a href="mailto:omanut-hakesher@eladjak.com" className="text-primary hover:underline" dir="ltr">
+                  omanut-hakesher@eladjak.com
                 </a>
               </li>
               <li className="mb-2">

@@ -7,7 +7,7 @@ export function OrganizationJsonLd() {
       "ליווי מקצועי לרווקים ורווקות בדרך לזוגיות מאושרת. 461 זוגות כבר מצאו אהבה עם אלעד יעקובוביץ׳.",
     url: "https://omanut-hakesher.co.il",
     telephone: "+972512518025",
-    email: "hello@omanut-hakesher.co.il",
+    email: "omanut-hakesher@eladjak.com",
     areaServed: {
       "@type": "Country",
       name: "Israel",
@@ -33,12 +33,17 @@ export function OrganizationJsonLd() {
         closes: "13:00",
       },
     ],
-    // TODO: Replace with real social media profiles
-    // sameAs: [
-    //   "https://facebook.com/omanut-hakesher",
-    //   "https://instagram.com/omanut_hakesher",
-    // ],
-    // TODO: Add real aggregate rating when reviews are collected
+    founder: {
+      "@type": "Person",
+      name: "אלעד יעקובוביץ׳",
+      url: "https://omanut-hakesher.co.il/about",
+    },
+    sameAs: [
+      "https://ohlove.co.il",
+      "https://www.facebook.com/groups/mateemlizugiut",
+      "https://t.me/MatimLiZugiut",
+      "https://open.spotify.com/show/2mXzv3AS0rZw7eTCVjEbyZ",
+    ],
   };
 
   return (
@@ -129,7 +134,7 @@ export function LocalBusinessJsonLd() {
       "ליווי מקצועי לרווקים ורווקות בדרך לזוגיות מאושרת. 461 זוגות כבר מצאו אהבה עם אלעד יעקובוביץ׳.",
     url: "https://omanut-hakesher.co.il",
     telephone: "+972512518025",
-    email: "hello@omanut-hakesher.co.il",
+    email: "omanut-hakesher@eladjak.com",
     address: {
       "@type": "PostalAddress",
       addressLocality: "מרכז הארץ",
@@ -161,6 +166,71 @@ export function LocalBusinessJsonLd() {
     //   "https://instagram.com/omanut_hakesher",
     // ],
     // TODO: Add real aggregate rating when reviews are collected
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
+
+const FAQ_ITEMS: { question: string; answer: string }[] = [
+  {
+    question: "מהי הגישה של אומנות הקשר?",
+    answer:
+      "הגישה משלבת מספר שיטות מבוססות מחקר: תקשורת לא אלימה (NVC), טיפול ממוקד רגש (EFT) וגישה קוגניטיבית-התנהגותית (CBT), יחד עם רקע של כ-20 שנה בתחום הבמה. השילוב יוצר ליווי זוגי מעשי שמחבר בין כלים יישומיים להבנה רגשית עמוקה.",
+  },
+  {
+    question: "כמה זמן נמשך תהליך הליווי הזוגי?",
+    answer:
+      "משך התהליך משתנה לפי הצרכים והמטרות. תהליך ממוקד נמשך כ-6 עד 10 מפגשים, ותהליך עמוק יותר 3 עד 6 חודשים. כבר מהמפגשים הראשונים מקבלים כלים מעשיים שאפשר ליישם מיד.",
+  },
+  {
+    question: "מה קורה בשיחת ההיכרות הראשונה?",
+    answer:
+      "שיחת ההיכרות היא הזדמנות להכיר, להבין את הצרכים שלך ולבדוק התאמה. משוחחים על מה שהביא אותך ועל המטרות, ואלעד מסביר על דרך העבודה. השיחה ללא התחייבות ובסיומה אתה מחליט אם ואיך להמשיך.",
+  },
+  {
+    question: "אפשר להגיע לליווי לבד, בלי בן או בת זוג?",
+    answer:
+      "בהחלט. הליווי האישי מיועד בדיוק לזה - עבודה אישית על דפוסי תקשורת, הכנה לזוגיות והתמודדות עם מצבים אישיים. לעיתים העבודה האישית היא הצעד הראשון שמוביל לשינוי גם בזוגיות.",
+  },
+  {
+    question: "מה ההבדל בין תוכנית ״הדרך״ לליווי האישי?",
+    answer:
+      "תוכנית ״הדרך״ היא קורס מובנה של 12 שבועות עם שיעורי וידאו, תרגילים וקהילה תומכת, ומתאימה ללמידה עצמאית בקצב שלך. הליווי האישי הוא תהליך פרטני ומותאם, עם מפגשים אישיים, תמיכה בווטסאפ ומשוב בזמן אמת והתחייבות לתוצאה.",
+  },
+  {
+    question: "האם המפגשים אונליין יעילים כמו מפגשים פרונטליים?",
+    answer:
+      "מחקרים מראים שליווי מקוון יעיל באותה מידה כמו פרונטלי. המפגשים אונליין מציעים נוחות, גמישות בזמנים וחיסכון בנסיעות, בסביבה מאובטחת ופרטית.",
+  },
+  {
+    question: "האם יש סודיות מלאה בתהליך?",
+    answer:
+      "סודיות היא ערך עליון. כל מה שנאמר במפגשים נשאר חסוי לחלוטין בהתאם לכללי האתיקה המקצועיים, ולא משותף עם גורם שלישי ללא הסכמתך המפורשת.",
+  },
+  {
+    question: "איך אדע שזה הזמן הנכון לפנות לליווי?",
+    answer:
+      "אין זמן ״מושלם״. בין אם אתה תקוע בדייטים שלא מובילים לכלום, מרגיש שמשהו חוסם אותך מזוגיות, או מתכונן לשלב חדש - זה תמיד זמן טוב להשקיע בעצמך ובקשרים שלך. הצעד הראשון הוא הקשה ביותר, אבל גם החשוב ביותר.",
+  },
+];
+
+export function FaqJsonLd() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ_ITEMS.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
   };
 
   return (

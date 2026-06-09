@@ -112,7 +112,7 @@ export default function ContactPage() {
                     <Separator />
 
                     {/* Email */}
-                    <a href="mailto:hello@omanut-hakesher.co.il" className="flex items-center gap-4 group">
+                    <a href="mailto:omanut-hakesher@eladjak.com" className="flex items-center gap-4 group">
                       <div className="w-11 h-11 bg-accent/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-accent/20 transition-colors">
                         <svg className="w-5 h-5 text-accent-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -120,7 +120,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <p className="text-sm text-muted-foreground">אימייל</p>
-                        <p className="font-medium group-hover:text-primary transition-colors" dir="ltr">hello@omanut-hakesher.co.il</p>
+                        <p className="font-medium group-hover:text-primary transition-colors" dir="ltr">omanut-hakesher@eladjak.com</p>
                       </div>
                     </a>
 
