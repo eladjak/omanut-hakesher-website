@@ -1,7 +1,13 @@
 # אתר אומנות הקשר - התקדמות
 
 ## סטטוס: deployed · lead-magnet LIVE · Sumit checkout READY (blocked-on-credentials)
-## עדכון אחרון: 2026-05-14
+## עדכון אחרון: 2026-06-09
+
+## 2026-06-09 — eladjak.com overhaul: links + SEO + brand upgrade
+- חיווט CTA-ים לספר / קורס / ליווי (book/course/coaching) + FAQ schema + קופי תואם-מותג (commit `94ca294`).
+- מיזוג שדרוג links+SEO+brand (commit `ba0bf9e`).
+- חלק מ-mandate ה-eladjak.com overhaul. האתר החלופי הזה משודרג עד שדומיין אומנות-הקשר (NXDOMAIN) יהוגר; בינתיים hub מפנה ל-https://www.ohlove.co.il/.
+- live: omanut-hakesher Vercel project. (הערה: מקור-אמת סטטוס מפורט = `.claude/PROJECT_STATUS.md`.)
 
 ## 2026-05-14: scrape Rav-Messer + Sumit migration
 
