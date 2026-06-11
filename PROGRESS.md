@@ -246,3 +246,6 @@
 - 26 modified files total (uncommitted) · backups: vercel.json + next.config.ts .pre-content-subdomain-20260519-183124.bak
 - All 4 URLs verified 200 (`/`, `/ai-agents-4-hours`, `/manifest.webmanifest`, `/api/content?key=…`)
 - CONTENT_REVIEW_KEY unchanged · zero commits pushed today (working tree dirty)
+
+### 11.6.2026 — מעבר שיפורים רוחבי (Fable-5 sweep)
+- tsc ✓0 · branch `chore/next-16.2.9-security` — next 16.1.6→16.2.9, build ירוק, ממתין ל-merge אחרי preview · חוב lint: 42 שגיאות (בעיקר <a>→<Link> בדפי book + setState-in-effect ב-7 קומפוננטות) — שינוי התנהגותי, לא בוצע באתר חי.
