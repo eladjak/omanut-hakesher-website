@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
-import { useState } from "react";
+import { NewsletterForm } from "@/components/NewsletterForm";
 
 const footerLinks = {
   navigation: [
@@ -29,16 +29,6 @@ const footerLinks = {
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
-
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setEmail("");
-    }
-  };
 
   return (
     <footer className="bg-foreground text-background/90">
@@ -55,35 +45,12 @@ export function Footer() {
               </p>
             </div>
 
-            {subscribed ? (
-              <div className="flex items-center gap-2 text-secondary-light">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span>נרשמתם בהצלחה!</span>
-              </div>
-            ) : (
-              <form onSubmit={handleNewsletterSubmit} className="flex gap-2 w-full md:w-auto" aria-label="הרשמה לניוזלטר">
-                <label htmlFor="newsletter-email-footer" className="sr-only">כתובת אימייל</label>
-                <input
-                  type="email"
-                  id="newsletter-email-footer"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="האימייל שלכם"
-                  required
-                  dir="ltr"
-                  autoComplete="email"
-                  className="flex-1 md:w-64 px-4 py-2.5 rounded-full bg-background/10 border border-background/20 text-background placeholder:text-background/40 text-sm focus:outline-none focus:ring-2 focus:ring-primary-light"
-                />
-                <button
-                  type="submit"
-                  className="px-6 py-2.5 bg-primary-light text-foreground rounded-full text-sm font-medium hover:bg-primary transition-colors"
-                >
-                  הרשמה
-                </button>
-              </form>
-            )}
+            <NewsletterForm
+              theme="dark"
+              layout="row"
+              placeholder="האימייל שלכם"
+              ariaLabel="הרשמה לניוזלטר"
+            />
           </div>
         </div>
       </div>
