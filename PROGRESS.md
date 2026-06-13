@@ -3,6 +3,14 @@
 ## סטטוס: deployed · lead-magnet LIVE · newsletter forms LIVE · Sumit checkout READY (blocked-on-credentials)
 ## עדכון אחרון: 2026-06-13
 
+## 2026-06-13 (2) — שדרוג brand-site (team-build elevation, safe-live-refactor)
+- **GEO/AEO 78→~100 (Vercel deploy baseline 78).** 3 פערים נסגרו: (1) 5-schema bundle — נוספו `WebSiteJsonLd`+`PersonJsonLd` ב-layout (sitewide) + `WebPageJsonLd` בדף הבית; ה-HTML עכשיו נושא WebSite+Organization+Person+WebPage+FAQPage כ-plain `<script>`. (2) `<h4>` — 0→5 (סקשן מחקר). (3) external citation links ב-`<main>` — 1→5 (Aron 36-questions, NVC/cnvc, EFT/iceeft, Gottman, attachment theory — מקורות אמיתיים).
+- **ויזואלי:** hero-scrim חם (color-mix gradient מותגי במקום overlay שטוח); typographic rhythm (text-balance/pretty, lh≥1.2, tabular-nums, font-smoothing); hover-lift עדין (transform-only, motion-safe, ≤200ms) על הכרטיסים.
+- **משפך/חוזה:** תוקן לינק ספר מעגלי — דף הבית + footer הצביעו externally ל-`https://ohlove.co.il` (שזה האתר הזה עצמו!) → הופנו ל-`/book` הפנימי (אין אתר-ספר ייעודי, OPEN-Q #1). הוסר import מת.
+- **שערים:** tsc ✓0 · build ✓ (63 routes) · eslint ✓0 · agent-browser desktop+mobile+hero verified (`docs/screenshots/`). commit בענף `feat/elevate-brand-site-jun13` → Vercel preview.
+- **ממצא DNS חשוב:** `www.ohlove.co.il` החי מגיש אתר Wix ישן (static.parastorage.com), GEO=53 — לא ה-Next.js. השדרוג חי רק ב-`omanut-hakesher-website.vercel.app` עד שאלעד יכוון DNS ל-Vercel. נדרשת החלטה.
+- **לא בוצע (לא בודה):** מחיר ספר / buy-flow (Sumit blocked-on-credentials); לינק bypass ל-haderech-next (המשפך הקיים brand→/hadrech→Sumit→LMS תקין).
+
 ## 2026-06-13 — חיווט 3 טפסי ניוזלטר מתים (Shabbat deep-iteration)
 - **הבעיה:** טפסי הניוזלטר בדף הבית, בבלוג וב-footer היו ויזואליים בלבד — דף הבית/בלוג בלי `onSubmit` בכלל, ה-footer עם `setSubscribed(true)` מזויף ללא קריאת רשת. כפתורים מתים = איבוד לידים.
 - **התיקון:** קומפוננטה משותפת חדשה `src/components/NewsletterForm.tsx` (client) שמתחברת לצינור הקיים `/api/lead/subscribe` עם מצבי loading/success/error אמיתיים, ולידציית אימייל בצד לקוח, ונגישות מלאה (aria-invalid, role=alert/status, useId, theme light/dark, layout row/stack).

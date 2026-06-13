@@ -20,8 +20,7 @@ const footerLinks = {
   services: [
     { href: "/coaching", label: "ליווי אישי פרימיום" },
     { href: "/hadrech", label: "קורס ״הדרך״" },
-    { href: "/book", label: "הספר (גרסה דיגיטלית)" },
-    { href: "https://ohlove.co.il", label: "לרכישת הספר", external: true },
+    { href: "/book", label: "הספר ״אומנות הקשר״ + כלים" },
     { href: "/community", label: "קהילת אומנות הקשר" },
     { href: "/podcast", label: "פודקאסט" },
   ] as { href: string; label: string; external?: boolean }[],
