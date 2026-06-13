@@ -1,7 +1,18 @@
 # אתר אומנות הקשר - התקדמות
 
-## סטטוס: deployed · lead-magnet LIVE · Sumit checkout READY (blocked-on-credentials)
-## עדכון אחרון: 2026-06-09
+## סטטוס: deployed · lead-magnet LIVE · newsletter forms LIVE · Sumit checkout READY (blocked-on-credentials)
+## עדכון אחרון: 2026-06-13
+
+## 2026-06-13 — חיווט 3 טפסי ניוזלטר מתים (Shabbat deep-iteration)
+- **הבעיה:** טפסי הניוזלטר בדף הבית, בבלוג וב-footer היו ויזואליים בלבד — דף הבית/בלוג בלי `onSubmit` בכלל, ה-footer עם `setSubscribed(true)` מזויף ללא קריאת רשת. כפתורים מתים = איבוד לידים.
+- **התיקון:** קומפוננטה משותפת חדשה `src/components/NewsletterForm.tsx` (client) שמתחברת לצינור הקיים `/api/lead/subscribe` עם מצבי loading/success/error אמיתיים, ולידציית אימייל בצד לקוח, ונגישות מלאה (aria-invalid, role=alert/status, useId, theme light/dark, layout row/stack).
+- מגנט חדש `newsletter` ב-`lead-magnets.ts` (רשימת Rav-Messer 22958, תגית `newsletter`+`source:website`). ה-API מאפשר הרשמת ניוזלטר ללא שם; מגנטים גייטד עדיין דורשים שם (נבדק regression). מייל ברוכים-הבאים בגרסת newsletter (בלי שפת "מדריך להורדה").
+- **חוברו:** `src/app/page.tsx` (hero newsletter), `src/app/blog/page.tsx`, `src/components/Footer.tsx`.
+- **שערים:** `tsc --noEmit` ✓0 · `npm run build` ✓ (63 routes) · smoke מקומי: newsletter בלי שם→200 · אימייל לא תקין→400 · slug לא ידוע→400 · מגנט גייטד בלי שם→400, עם שם→200 · 3 הטפסים נרנדרו בדפים.
+- **commit** `e72b495` בענף `feat/newsletter-forms-live` (נדחף ל-origin → Vercel preview). לא מוזג ל-master (safe-live-refactor: הפרויקט הזה מגיש את ohlove.co.il החי).
+- **ממצא:** כל 22 הכלים מסוג comingSoon הם audio/video/pdf בלבד (דורשים הקלטה/צילום/אישור-תוכן מאלעד) — אין כלי quiz/interactive שניתן להשלים בלי המצאת תוכן שלא קיים בספר. GEO/AEO כבר במצב טוב (JSON-LD כ-plain script, FAQ schema, llms.txt, robots, sitemap). הדומיין omanut-hakesher.co.il עדיין NXDOMAIN; החי = ohlove.co.il + vercel app (שניהם 200).
+
+## 2026-06-09 — eladjak.com overhaul: links + SEO + brand upgrade
 
 ## 2026-06-09 — eladjak.com overhaul: links + SEO + brand upgrade
 - חיווט CTA-ים לספר / קורס / ליווי (book/course/coaching) + FAQ schema + קופי תואם-מותג (commit `94ca294`).

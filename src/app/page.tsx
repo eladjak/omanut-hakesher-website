@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { GenderedText } from "@/components/GenderedText";
+import { NewsletterForm } from "@/components/NewsletterForm";
 
 // Dynamic imports for below-fold components
 const HomeTestimonials = dynamic(
@@ -508,24 +509,11 @@ export default function HomePage() {
               <p className="text-muted-foreground mb-8">
                 <GenderedText id="newsletter.join-cta" /> בלי ספאם, רק ערך אמיתי.
               </p>
-              <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" aria-label="הרשמה לרשימת תפוצה">
-                <label htmlFor="newsletter-email-home" className="sr-only">כתובת אימייל</label>
-                <input
-                  type="email"
-                  id="newsletter-email-home"
-                  placeholder="האימייל שלך"
-                  className="flex-1 px-5 py-3 border border-border rounded-full bg-background focus:outline-none focus:ring-2 focus:ring-primary text-sm"
-                  dir="ltr"
-                  autoComplete="email"
-                  required
-                />
-                <button
-                  type="submit"
-                  className="px-6 py-3 bg-primary text-white rounded-full font-medium hover:bg-primary-dark transition-colors text-sm"
-                >
-                  שלח לי!
-                </button>
-              </form>
+              <NewsletterForm
+                layout="stack"
+                buttonLabel="שלח לי!"
+                ariaLabel="הרשמה לרשימת תפוצה"
+              />
             </CardContent>
           </Card>
         </div>

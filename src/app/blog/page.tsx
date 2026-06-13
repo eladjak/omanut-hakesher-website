@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { NewsletterForm } from "@/components/NewsletterForm";
 
 export const metadata: Metadata = {
   title: "בלוג",
@@ -167,24 +168,7 @@ export default function BlogPage() {
               <p className="text-muted-foreground mb-8">
                 הירשמו לניוזלטר וקבלו טיפים, תובנות ותוכן בלעדי שיעזרו לכם בדרך לזוגיות
               </p>
-              <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" aria-label="הרשמה לניוזלטר">
-                <label htmlFor="newsletter-email-blog" className="sr-only">כתובת אימייל</label>
-                <input
-                  type="email"
-                  id="newsletter-email-blog"
-                  placeholder="האימייל שלך"
-                  className="flex-1 px-5 py-3 border border-border rounded-full bg-background focus:outline-none focus:ring-2 focus:ring-primary text-sm"
-                  dir="ltr"
-                  autoComplete="email"
-                  required
-                />
-                <button
-                  type="submit"
-                  className="px-6 py-3 bg-primary text-white rounded-full font-medium hover:bg-primary-dark transition-colors text-sm"
-                >
-                  הרשמה
-                </button>
-              </form>
+              <NewsletterForm layout="stack" ariaLabel="הרשמה לניוזלטר" />
             </CardContent>
           </Card>
         </div>

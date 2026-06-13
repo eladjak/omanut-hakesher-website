@@ -53,6 +53,16 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
     assetUrl: 'https://omanut-hakesher.co.il/lead/36-questions/download',
     welcomeSubject: 'המדריך שלך מוכן: 36 השאלות שיכולות ליצור אהבה',
   },
+  // General newsletter signup (footer / homepage / blog). No downloadable
+  // asset — just joins the list. name is optional for this magnet.
+  newsletter: {
+    slug: 'newsletter',
+    titleHe: 'רשימת התפוצה של אומנות הקשר',
+    listId: OMANUT_HAKESHER_LIST_ID,
+    tags: ['newsletter', 'source:website'],
+    assetUrl: 'https://www.ohlove.co.il/',
+    welcomeSubject: 'נרשמת לרשימת אומנות הקשר',
+  },
 }
 
 export function getLeadMagnet(slug: string): LeadMagnetConfig | undefined {
