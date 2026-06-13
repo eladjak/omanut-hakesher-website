@@ -246,10 +246,41 @@
 body {
   font-family: var(--font-sans);
   line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Typographic rhythm — Hebrew RTL-aware headings.
+   line-height >= 1.15 (hebrew-rtl-web-gotchas), balanced wrapping,
+   tabular numerals so stats/prices align in RTL. */
+h1, h2, h3 {
+  text-wrap: balance;
+  line-height: 1.2;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+.tabular-nums,
+.num,
+[data-stat] {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Warm directional hero scrim — replaces flat foreground/65 with an
+   intimate brand-tinted gradient that keeps white text legible. */
+.hero-scrim {
+  background-image: linear-gradient(
+    105deg,
+    color-mix(in srgb, var(--secondary-dark) 88%, transparent) 0%,
+    color-mix(in srgb, var(--foreground) 72%, transparent) 45%,
+    color-mix(in srgb, var(--primary-dark) 60%, transparent) 100%
+  );
 }
 
 /* Respect reduced motion preferences */

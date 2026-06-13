@@ -9,7 +9,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipToContent } from "@/components/SkipToContent";
-import { OrganizationJsonLd, FaqJsonLd } from "@/components/JsonLd";
+import { OrganizationJsonLd, FaqJsonLd, WebSiteJsonLd, PersonJsonLd } from "@/components/JsonLd";
 import { GenderProvider } from "@/components/GenderProvider";
 import { WelcomeModal } from "@/components/WelcomeModal";
 
@@ -105,7 +105,9 @@ export default function RootLayout({
             __html: `(function(){try{var g=localStorage.getItem("gender-preference");if(g==="male")document.documentElement.classList.add("gender-male");else if(g==="female")document.documentElement.classList.add("gender-female");}catch(e){}})()`,
           }}
         />
+        <WebSiteJsonLd />
         <OrganizationJsonLd />
+        <PersonJsonLd />
         <FaqJsonLd />
       </head>
       <body className={`${heebo.variable} font-sans antialiased`}>

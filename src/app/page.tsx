@@ -5,9 +5,43 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { GenderedText } from "@/components/GenderedText";
 import { NewsletterForm } from "@/components/NewsletterForm";
+import { WebPageJsonLd } from "@/components/JsonLd";
+
+// Real research sources behind the method — credibility + AI-citation signal.
+const researchSources = [
+  {
+    title: "36 השאלות להתאהבות",
+    detail: "מחקרו של ד״ר ארתור ארון על קרבה הדדית מואצת — בסיס לתרגיל האינטימיות.",
+    href: "https://en.wikipedia.org/wiki/36_questions_that_lead_to_love",
+    source: "Arthur Aron, 1997",
+  },
+  {
+    title: "תקשורת מקרבת (NVC)",
+    detail: "שיטת התקשורת של מרשל רוזנברג — לדבר על רגשות וצרכים בלי האשמה.",
+    href: "https://www.cnvc.org/learn-nvc/what-is-nvc",
+    source: "Marshall Rosenberg",
+  },
+  {
+    title: "טיפול ממוקד רגש (EFT)",
+    detail: "עבודתה של ד״ר סו ג׳ונסון על דפוסי התקשרות בזוגיות.",
+    href: "https://iceeft.com/what-is-eft/",
+    source: "Sue Johnson, ICEEFT",
+  },
+  {
+    title: "מחקר הזוגיות של גוטמן",
+    detail: "ארבעים שנות מחקר על מה שמחזיק קשר לאורך זמן.",
+    href: "https://www.gottman.com/about/research/",
+    source: "The Gottman Institute",
+  },
+  {
+    title: "תורת ההתקשרות",
+    detail: "סגנונות ההתקשרות שמעצבים את הדרך שבה אנחנו נקשרים.",
+    href: "https://en.wikipedia.org/wiki/Attachment_theory",
+    source: "Bowlby & Ainsworth",
+  },
+];
 
 // Dynamic imports for below-fold components
 const HomeTestimonials = dynamic(
@@ -69,11 +103,10 @@ const products: Product[] = [
       </svg>
     ),
     title: "הספר ״אומנות הקשר״",
-    description: "10 פרקים, 32 תרגילים מעשיים ועשרות סיפורים מהשטח. לא עוד ספר טיפים - דרך שלמה ומובנית למציאת הזוגיות שמגיעה לך. זמין לרכישה באתר הספר.",
-    href: "https://ohlove.co.il",
+    description: "10 פרקים, 32 תרגילים מעשיים ועשרות סיפורים מהשטח. לא עוד ספר טיפים - דרך שלמה ומובנית למציאת הזוגיות שמגיעה לך. עם כלים אינטראקטיביים לכל פרק.",
+    href: "/book",
     color: "bg-accent/10 text-accent-dark",
-    cta: "לרכישת הספר",
-    external: true,
+    cta: "לסקשן הספר",
   },
   {
     icon: (
@@ -134,6 +167,11 @@ const method = [
 export default function HomePage() {
   return (
     <>
+      <WebPageJsonLd
+        name="אומנות הקשר | מצא את הזוגיות שמגיעה לך"
+        description="בית הספר למציאת זוגיות מאושרת. תוכנית ״הדרך״, ליווי אישי, הספר ״אומנות הקשר״ וקהילה תומכת — עם אלעד יעקובוביץ׳."
+        url="https://omanut-hakesher.co.il/"
+      />
       {/* Hero Section */}
       <section className="relative min-h-[92dvh] flex items-center overflow-hidden">
         {/* Background image */}
@@ -145,7 +183,7 @@ export default function HomePage() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-foreground/65" />
+          <div className="absolute inset-0 hero-scrim" />
         </div>
 
         <div className="container mx-auto px-4 py-20 relative z-10">
@@ -187,7 +225,7 @@ export default function HomePage() {
             <div className="mt-16 flex flex-wrap gap-8 md:gap-12">
               {stats.map((stat, i) => (
                 <div key={i} className="text-center">
-                  <div className="text-2xl md:text-3xl font-bold text-accent-light">{stat.number}</div>
+                  <div className="text-2xl md:text-3xl font-bold text-accent-light tabular-nums">{stat.number}</div>
                   <div className="text-sm text-white/70 mt-1">{stat.label}</div>
                 </div>
               ))}
@@ -210,7 +248,7 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-3 gap-6">
             {painPoints.map((point, index) => (
-              <Card key={index} className="border-border/50 hover:border-primary/30 hover:shadow-lg transition-all duration-200">
+              <Card key={index} className="border-border/50 hover:border-primary/30 hover:shadow-lg transition-all duration-200 motion-safe:hover:-translate-y-1">
                 <CardContent className="p-8 text-center">
                   <h3 className="text-lg font-semibold mb-3">{point.title}</h3>
                   <p className="text-muted-foreground leading-relaxed">{point.description}</p>
@@ -314,7 +352,7 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {method.map((item, index) => (
-              <Card key={index} className="relative overflow-hidden border-border/50 hover:shadow-lg transition-all duration-200 group">
+              <Card key={index} className="relative overflow-hidden border-border/50 hover:shadow-lg transition-all duration-200 group motion-safe:hover:-translate-y-1">
                 <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-l ${item.color}`} />
                 <CardContent className="p-6 pt-8">
                   <div className="text-5xl font-bold text-muted/30 mb-4 group-hover:text-primary/20 transition-colors">
@@ -341,8 +379,49 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Products/Services Section */}
+      {/* Research Foundation Section — credibility + citation signal */}
       <section className="py-24">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-14 max-w-2xl mx-auto">
+            <Badge variant="outline" className="mb-4 text-secondary border-secondary/30">
+              על מה זה מבוסס
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">
+              לא אינטואיציה. <span className="text-primary">מחקר.</span>
+            </h2>
+            <p className="text-lg text-muted-foreground leading-relaxed text-pretty">
+              הכלים של אומנות הקשר נשענים על עשורים של מחקר בזוגיות, תקשורת והתקשרות -
+              מעובדים לשפה פשוטה ולתרגילים שאפשר ליישם כבר היום.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
+            {researchSources.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block rounded-2xl border border-border/60 bg-card p-6 transition-all duration-200 hover:border-primary/40 hover:shadow-lg motion-safe:hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              >
+                <h4 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
+                  {item.title}
+                </h4>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  {item.detail}
+                </p>
+                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-secondary">
+                  {item.source}
+                  <span className="text-primary transition-transform duration-200 group-hover:-translate-x-0.5" aria-hidden="true">&larr;</span>
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Products/Services Section */}
+      <section className="py-24 bg-muted/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30">
@@ -359,7 +438,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-6">
             {products.map((product, index) => {
               const cardInner = (
-                <Card className="h-full border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200">
+                <Card className="h-full border-border/50 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200 motion-safe:group-hover:-translate-y-1">
                   <CardContent className="p-8">
                     <div className={`inline-flex p-3 rounded-xl mb-5 ${product.color}`}>
                       {product.icon}

@@ -54,6 +54,116 @@ export function OrganizationJsonLd() {
   );
 }
 
+export function WebSiteJsonLd() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "אומנות הקשר",
+    alternateName: "אומנות הקשר - בית הספר למציאת זוגיות",
+    url: "https://omanut-hakesher.co.il",
+    inLanguage: "he-IL",
+    description:
+      "בית הספר למציאת זוגיות מאושרת עם אלעד יעקובוביץ׳. תוכנית ״הדרך״, ליווי אישי, הספר ״אומנות הקשר״ וקהילה תומכת.",
+    publisher: {
+      "@type": "Organization",
+      name: "אומנות הקשר",
+      url: "https://omanut-hakesher.co.il",
+    },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: "https://omanut-hakesher.co.il/blog?q={search_term_string}",
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
+
+export function PersonJsonLd() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "אלעד יעקובוביץ׳",
+    url: "https://omanut-hakesher.co.il/about",
+    jobTitle: "מנחה ומלווה אישי לזוגיות",
+    description:
+      "מייסד אומנות הקשר, מנחה ומלווה אישי בדרך לזוגיות. מוסמך NLP ו-CBT, קואצ׳ יהודי, עם רקע של כ-20 שנה בתחום הבמה כשחקן, מוזיקאי ובובנאי.",
+    knowsAbout: [
+      "מציאת זוגיות",
+      "תקשורת מקרבת",
+      "ליווי אישי לרווקים",
+      "דייטינג",
+      "אינטימיות ופגיעות",
+    ],
+    worksFor: {
+      "@type": "Organization",
+      name: "אומנות הקשר",
+      url: "https://omanut-hakesher.co.il",
+    },
+    sameAs: [
+      "https://www.facebook.com/groups/mateemlizugiut",
+      "https://t.me/MatimLiZugiut",
+      "https://open.spotify.com/show/2mXzv3AS0rZw7eTCVjEbyZ",
+    ],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
+
+export function WebPageJsonLd({
+  name,
+  description,
+  url,
+  datePublished = "2026-02-24",
+  dateModified,
+}: {
+  name: string;
+  description: string;
+  url: string;
+  datePublished?: string;
+  dateModified?: string;
+}) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name,
+    description,
+    url,
+    inLanguage: "he-IL",
+    datePublished,
+    dateModified: dateModified ?? new Date().toISOString().slice(0, 10),
+    isPartOf: {
+      "@type": "WebSite",
+      name: "אומנות הקשר",
+      url: "https://omanut-hakesher.co.il",
+    },
+    about: {
+      "@type": "Thing",
+      name: "מציאת זוגיות וליווי אישי",
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
+
 export function BreadcrumbJsonLd({
   items,
 }: {
