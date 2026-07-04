@@ -1,7 +1,13 @@
 "use client";
 
 import { useGender } from "@/components/GenderProvider";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
+
+// Pages where the first-visit gender modal must NOT appear.
+// /welcome is the comeback-post landing page — a popup before "hello" is
+// hostile to arrivals; the page itself is the welcome.
+const SUPPRESSED_PATHS = ["/welcome"];
 
 function HeartIcon({ className }: { className?: string }) {
   return (
@@ -19,9 +25,11 @@ function HeartIcon({ className }: { className?: string }) {
 export function WelcomeModal() {
   const { isFirstVisit, setGender, dismissWelcome } = useGender();
   const dialogRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const suppressed = SUPPRESSED_PATHS.includes(pathname);
 
   useEffect(() => {
-    if (!isFirstVisit) return;
+    if (!isFirstVisit || suppressed) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -44,14 +52,14 @@ export function WelcomeModal() {
     };
     // handleChoice is stable - defined inline below
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFirstVisit]);
+  }, [isFirstVisit, suppressed]);
 
   function handleChoice(choice: "male" | "female" | "neutral") {
     setGender(choice);
     dismissWelcome();
   }
 
-  if (!isFirstVisit) return null;
+  if (!isFirstVisit || suppressed) return null;
 
   return (
     <div
