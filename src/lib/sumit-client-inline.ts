@@ -145,6 +145,12 @@ export function createSumitClient({
       charge: (payload) => call('/billing/payments/charge/', payload),
       get: (paymentId) => call('/billing/payments/get/', { PaymentID: paymentId }),
       list: (filter = {}) => call('/billing/payments/list/', filter),
+      /**
+       * @deprecated Sumit moved hosted-checkout to the CreditGuy gateway (2026).
+       * This old rail fails on live accounts. Use
+       * `raw('/creditguy/gateway/beginredirect/', { Mode, Amount, Identifier, RedirectURL })`
+       * instead — see sumit.ts createCheckout() (ported from pdf-empire-il, verified 1.7.2026).
+       */
       beginRedirect: (payload) => call('/billing/payments/beginredirect/', payload),
     },
 
