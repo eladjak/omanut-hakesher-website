@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { NewsletterForm } from "@/components/NewsletterForm";
+import { ELAD_WORLD } from "@/lib/elad-world";
 
 const footerLinks = {
   navigation: [
@@ -22,6 +23,11 @@ const footerLinks = {
     { href: "/hadrech", label: "קורס ״הדרך״" },
     { href: "/book", label: "הספר ״אומנות הקשר״ + כלים" },
     { href: "/community", label: "קהילת אומנות הקשר" },
+    {
+      href: ELAD_WORLD.community.href,
+      label: "״העולם של אלעד״ בוואטסאפ — חינם",
+      external: true,
+    },
     { href: "/podcast", label: "פודקאסט" },
   ] as { href: string; label: string; external?: boolean }[],
 };
