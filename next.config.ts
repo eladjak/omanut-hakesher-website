@@ -30,6 +30,31 @@ const nextConfig: NextConfig = {
     };
   },
 
+  // Legacy Wix URL redirects — the old ohlove.co.il (Wix) URL structure,
+  // mapped so links/SEO survive the DNS cutover to this site.
+  // Source: www.ohlove.co.il/pages-sitemap.xml + blog-posts-sitemap.xml
+  // (scanned 2026-07-05). Inert until DNS points here — safe to ship early.
+  // See docs/DNS-CUTOVER-RUNBOOK.md.
+  async redirects() {
+    return [
+      { source: "/amlatsot", destination: "/testimonials", permanent: true },
+      // NOTE: /services and /blog exist on the new site with the same paths — no redirect needed.
+      { source: "/workshops", destination: "/services", permanent: true },
+      { source: "/support", destination: "/contact", permanent: true },
+      { source: "/members", destination: "/community", permanent: true },
+      { source: "/women", destination: "/", permanent: true },
+      { source: "/men", destination: "/", permanent: true },
+      { source: "/m", destination: "/", permanent: true },
+      { source: "/blank", destination: "/", permanent: true },
+      { source: "/blank-:rest", destination: "/", permanent: true },
+      // Old Wix blog posts (2015-2018): /post/YYYY/MM/DD/<slug> → blog index.
+      // Individual mapping isn't possible (old posts don't exist on the new
+      // site) — the blog index is the honest landing.
+      { source: "/post/:year/:month/:day/:slug", destination: "/blog", permanent: true },
+      { source: "/post/:slug*", destination: "/blog", permanent: true },
+    ];
+  },
+
   // Caching headers for static assets and pages
   async headers() {
     return [
