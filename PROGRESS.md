@@ -1,7 +1,19 @@
 # אתר אומנות הקשר - התקדמות
 
-## סטטוס: deployed · lead-magnet LIVE · newsletter forms LIVE · Sumit checkout READY (blocked-on-credentials)
-## עדכון אחרון: 2026-06-13
+## סטטוס: deployed · lead-magnet LIVE · newsletter forms LIVE · Sumit checkout **עובד (CreditGuy, מאומת חי מקומית)** — ממתין למיזוג-ענף + env ב-Vercel
+## עדכון אחרון: 2026-07-05
+
+## 2026-07-05 — ריצת-הקאמבק (A1-A9, ענף feat/comeback-launch-2026-07-05, נדחף ל-origin)
+- **הקשר:** פוסט-הקאמבק של אלעד יוצא הערב 20:45. פירוט מלא + טבלת-אימות: `MASTERPIECE-PLAN.md` (עדכון-ביצוע 5.7) + עותק ב-`Documents/reports/mega-plan-2026-07-05/`.
+- **A1** לינקי "העולם של אלעד" (וואטסאפ, אומתו 200×3) → `/community` (סקשן חדש) + Footer; מקור-אמת חדש `src/lib/elad-world.ts`.
+- **A2** עמוד `/welcome` חדש לבאים-מהפוסט (+sitemap, +JSON-LD, +צילומים ב-docs/screenshots).
+- **A4** 🔑 **Sumit תוקן:** פורט CreditGuy מ-pdf-empire — checkout מחזיר קישור-תשלום אמיתי (אומת מקומית מול Sumit חי, בלי חיוב); + `verifyCreditGuyTransaction` (Shva 000, fail-closed); מזהה ייחודי-לפי-הזמנה. **ה-credentials נמצאו ב-.env.local — הסטטוס הישן "blocked-on-credentials" מבוטל.** נשאר: העתקת SUMIT_* ל-Vercel env (אלעד).
+- **A3** `docs/DNS-CUTOVER-RUNBOOK.md` (ממצא: הדומיין על Wix nameservers) + redirects מדפי-Wix ישנים ב-next.config (אומתו 308 מקומית; רדומים עד ההסטה).
+- **A7** `content-bank/post-drafts-comeback-week-2026-07.md` — 5 טיוטות (בלבד!) לשבוע שאחרי, מסלול ראנץ'→אלעד.
+- **A8** QA מסע: 15 ראוטים ✓ · APIs (ולידציה 400, checkout 200-חי) · ממצא+תיקון: מודאל בחירת-המגדר כיסה את /welcome → הושתק בעמוד הזה בלבד (רגרסיה נבדקה).
+- **A9** קו"ח he.pdf (מקושר מה-Footer, היה **404 בפרוד**) — קומיט. פתוח: logo*/og-image/3-CV לא-עקובים (החלטת-אלעד), ענף chore/next-16.2.9, git לריפו-הקורס.
+- **שערים:** tsc ✓0 · build ✓64 ראוטים · Vercel preview ●Ready (`...-eik1io94n-...`, מוגן-SSO) · אימות התנהגותי מלא על שרת-prod מקומי :4333.
+- **צעד-אלעד:** מיזוג הענף → master · DNS לפי ה-runbook · SUMIT_* ל-Vercel · חבילת-אישור-הספר (`Documents/reports/book-approval-pack-2026-07-05.html`) · אישור טיוטות.
 
 ## 2026-06-13 (2) — שדרוג brand-site (team-build elevation, safe-live-refactor)
 - **GEO/AEO 78→~100 (Vercel deploy baseline 78).** 3 פערים נסגרו: (1) 5-schema bundle — נוספו `WebSiteJsonLd`+`PersonJsonLd` ב-layout (sitewide) + `WebPageJsonLd` בדף הבית; ה-HTML עכשיו נושא WebSite+Organization+Person+WebPage+FAQPage כ-plain `<script>`. (2) `<h4>` — 0→5 (סקשן מחקר). (3) external citation links ב-`<main>` — 1→5 (Aron 36-questions, NVC/cnvc, EFT/iceeft, Gottman, attachment theory — מקורות אמיתיים).
