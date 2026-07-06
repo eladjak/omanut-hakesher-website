@@ -1,7 +1,19 @@
 # אתר אומנות הקשר - התקדמות
 
+## 2026-07-06 — מיזוג לפרודקשן: feat/comeback-launch-2026-07-05 → master, פריסה חיה ✅ (prod-push run)
+
+**מוזג ל-master (FF, ‏8 קומיטים) ונדחף → Vercel פרס אוטומטית ל-Production (deploy `j3k6xhlh9` = ●Ready).**
+- שער-אימות לפני מיזוג: `tsc --noEmit`=0 · `next build`=ירוק (‏64 ראוטים, `/welcome` + `/thanks/purchase` נכללים).
+- מה עלה: עמוד-קאמבק **`/welcome`** (דיכוי מודאל-מגדר בביקור-ראשון) · תיקון **Sumit CreditGuy** (port מוכח מ-pdf-empire, `/creditguy/gateway/beginredirect/` + `gettransaction` verify) · לינקי-וואטסאפ אמיתיים "עולם של אלעד" (community+footer, `elad-world.ts`) · תיקון **CV pdf 404** (`cv-elad-yaakobovitch-he.pdf` שהפוטר-החי מקשר אליו) · **redirects מדפי-Wix הישנים** (רדומים עד הסטת-DNS).
+- **אימות פרוד חי:** `omanut-hakesher-website.vercel.app/` → 200 · `/welcome` → 200 (תוכן עברי אמיתי) · `/cv-elad-yaakobovitch-he.pdf` → **200** (ה-404 נפתר) · `/community` → 200 עם לינקי wa.me/chat.whatsapp.
+- בטיחות: ענף-גיבוי `backup/master-pre-prod-push-20260706`. קבצי CV/logo לא-מקומיטים בעץ נשארו כפי-שהם (לא חלק מהפיצ'ר).
+
+**📋 נשאר לאלעד (חסמים חיצוניים — לא ניתן אוטונומית):**
+1. **הסטת DNS של `ohlove.co.il`** — כרגע מצביע ל-Wix הישן (GEO 53), כל מה שנבנה בלתי-נראה לציבור. לפי `docs/DNS-CUTOVER-RUNBOOK.md` (~10 דק'; ה-nameservers על Wix). ה-redirects כבר בקוד, רדומים עד ההסטה.
+2. **Vercel env: להעתיק `SUMIT_*`** (‏3 משתנים מ-`.env.local`, ואופציונלית `SUMIT_PUBLIC_API_KEY`) ל-Production → הקנייה חיה (הקוד מוכן ומאומת מקומית).
+
 ## סטטוס: deployed · lead-magnet LIVE · newsletter forms LIVE · Sumit checkout **עובד (CreditGuy, מאומת חי מקומית)** — ממתין למיזוג-ענף + env ב-Vercel
-## עדכון אחרון: 2026-07-05
+## עדכון אחרון: 2026-07-06
 
 ## 2026-07-05 — ריצת-הקאמבק (A1-A9, ענף feat/comeback-launch-2026-07-05, נדחף ל-origin)
 - **הקשר:** פוסט-הקאמבק של אלעד יוצא הערב 20:45. פירוט מלא + טבלת-אימות: `MASTERPIECE-PLAN.md` (עדכון-ביצוע 5.7) + עותק ב-`Documents/reports/mega-plan-2026-07-05/`.
