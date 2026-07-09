@@ -209,9 +209,9 @@ export default function CommunityPage() {
                 number: "2",
                 title: "תוכנית הדרך",
                 description:
-                  "רכישת תוכנית הדרך כוללת גישה לקהילה. 12 שבועות של תוכנית + קהילה תומכת.",
+                  "רכישת תוכנית הדרך כוללת גישה לקהילה. 90 יום של תוכנית + קהילה תומכת.",
                 cta: "לפרטים על תוכנית הדרך",
-                href: "/hadrech",
+                href: "/programs/the-way",
                 highlight: false,
               },
               {

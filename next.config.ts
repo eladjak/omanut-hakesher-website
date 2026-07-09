@@ -37,7 +37,11 @@ const nextConfig: NextConfig = {
   // See docs/DNS-CUTOVER-RUNBOOK.md.
   async redirects() {
     return [
-      { source: "/amlatsot", destination: "/testimonials", permanent: true },
+      // Canonical-merge redirects (2026-07-09): the salvaged catalog-driven
+      // pages won the duplicate-page decision — legacy routes 301 to them.
+      { source: "/hadrech", destination: "/programs/the-way", permanent: true },
+      { source: "/testimonials", destination: "/sipurim", permanent: true },
+      { source: "/amlatsot", destination: "/sipurim", permanent: true },
       // NOTE: /services and /blog exist on the new site with the same paths — no redirect needed.
       { source: "/workshops", destination: "/services", permanent: true },
       { source: "/support", destination: "/contact", permanent: true },
