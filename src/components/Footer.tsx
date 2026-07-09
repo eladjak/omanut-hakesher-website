@@ -11,7 +11,7 @@ const footerLinks = {
     { href: "/about", label: "אודות אלעד" },
     { href: "/hadrech", label: "תוכנית הדרך" },
     { href: "/coaching", label: "ליווי אישי" },
-    { href: "/testimonials", label: "סיפורי הצלחה" },
+    { href: "/sipurim", label: "סיפורי הצלחה" },
     { href: "/blog", label: "בלוג" },
     { href: "/podcast", label: "פודקאסט" },
     { href: "/contact", label: "צור קשר" },
