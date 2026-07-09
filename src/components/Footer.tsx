@@ -9,7 +9,7 @@ const footerLinks = {
   navigation: [
     { href: "/", label: "בית" },
     { href: "/about", label: "אודות אלעד" },
-    { href: "/hadrech", label: "תוכנית הדרך" },
+    { href: "/programs/the-way", label: "תוכנית הדרך" },
     { href: "/coaching", label: "ליווי אישי" },
     { href: "/sipurim", label: "סיפורי הצלחה" },
     { href: "/blog", label: "בלוג" },
@@ -20,7 +20,7 @@ const footerLinks = {
   ],
   services: [
     { href: "/coaching", label: "ליווי אישי פרימיום" },
-    { href: "/hadrech", label: "קורס ״הדרך״" },
+    { href: "/programs/the-way", label: "תוכנית ״הדרך״" },
     { href: "/book", label: "הספר ״אומנות הקשר״ + כלים" },
     { href: "/community", label: "קהילת אומנות הקשר" },
     {

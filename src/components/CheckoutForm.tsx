@@ -66,7 +66,7 @@ export function CheckoutForm({ product, compact = false }: Props) {
     <div className="space-y-5">
       {!compact && (
         <div>
-          <p className="text-3xl font-bold text-primary leading-none">
+          <p className="text-3xl font-bold text-primary leading-none tabular-nums">
             {formatILS(product.price.amount)}
             {product.type === "recurring-monthly" && (
               <span className="text-base font-medium text-muted-foreground mr-2">/ חודש</span>

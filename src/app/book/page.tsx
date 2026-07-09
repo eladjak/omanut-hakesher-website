@@ -99,7 +99,7 @@ export default function BookPage() {
                   className="inline-flex px-8 py-3.5 bg-primary text-white rounded-full font-semibold hover:bg-primary-dark transition-colors shadow-md shadow-primary/20"
                 />
                 <Link
-                  href="/hadrech"
+                  href="/programs/the-way"
                   className="inline-flex px-8 py-3.5 border-2 border-white/50 text-white rounded-full font-semibold hover:bg-white/10 transition-colors"
                 >
                   בינתיים - תוכנית הדרך
@@ -381,7 +381,7 @@ export default function BookPage() {
               לשיחת היכרות חינם
             </Link>
             <Link
-              href="/hadrech"
+              href="/programs/the-way"
               className="inline-flex px-10 py-4 border-2 border-white/50 text-white rounded-full font-semibold text-lg hover:bg-white/10 transition-colors"
             >
               גלה את תוכנית הדרך

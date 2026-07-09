@@ -28,22 +28,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.95,
     },
     {
-      url: `${BASE_URL}/hadrech`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
       url: `${BASE_URL}/book`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/testimonials`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
     },
     {
       url: `${BASE_URL}/podcast`,
@@ -88,6 +76,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.2,
     },
     // --- Salvaged 2026-07-09: commerce pages (bold-leavitt-80e5cc) + sipurim (vigorous-solomon-1cb14d) ---
+    {
+      url: `${BASE_URL}/programs`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
     {
       url: `${BASE_URL}/programs/the-way`,
       lastModified: new Date(),

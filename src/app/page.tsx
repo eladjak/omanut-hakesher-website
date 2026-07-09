@@ -57,7 +57,7 @@ const FreeWorkshopBanner = dynamic(
 const stats = [
   { number: "461", label: "זוגות שנוצרו" },
   { number: "15+", label: "שנות ניסיון" },
-  { number: "12", label: "שבועות תוכנית" },
+  { number: "90", label: "ימי תוכנית" },
   { number: "20+", label: "שנים על הבמה" },
 ];
 
@@ -79,8 +79,8 @@ const products: Product[] = [
       </svg>
     ),
     title: "תוכנית ״הדרך״",
-    description: "קורס 12 שבועות מובנה שמוביל אותך צעד אחר צעד מהעבודה הפנימית ועד למציאת הזוגיות. כולל 18+ שיעורי וידאו, תרגילים מעשיים וקהילה תומכת.",
-    href: "/hadrech",
+    description: "תוכנית 90 יום מובנית שמובילה אותך צעד אחר צעד מהעבודה הפנימית ועד למציאת הזוגיות. סרטון יומי קצר, ליווי ממנטור וקהילה תומכת.",
+    href: "/programs/the-way",
     color: "bg-primary/10 text-primary",
     cta: "לפרטים על הדרך",
   },
@@ -214,7 +214,7 @@ export default function HomePage() {
                 לשיחת היכרות חינם
               </Link>
               <Link
-                href="/hadrech"
+                href="/programs/the-way"
                 className="px-8 py-4 border-2 border-secondary text-secondary rounded-full font-semibold text-lg hover:bg-secondary hover:text-white transition-colors"
               >
                 על תוכנית ״הדרך״
@@ -369,7 +369,7 @@ export default function HomePage() {
 
           <div className="text-center mt-12">
             <Link
-              href="/hadrech"
+              href="/programs/the-way"
               className="inline-flex items-center gap-2 px-8 py-4 bg-secondary text-white rounded-full font-semibold text-lg hover:bg-secondary-dark transition-colors shadow-lg shadow-secondary/20"
             >
               גלה את תוכנית הדרך
