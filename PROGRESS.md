@@ -1,6 +1,15 @@
 # אתר אומנות הקשר - התקדמות
 
-## 2026-07-06 — מיזוג לפרודקשן: feat/comeback-launch-2026-07-05 → master, פריסה חיה ✅ (prod-push run)
+## 2026-07-09 — חילוץ Worktrees: פרויקט 9 דפי-המכירה + מערכת סיפורי-לקוחות (ענף feat/salvage-2026-07-09, לא-מוזג)
+**הרקע:** בליל 14–15.5.2026 נבנתה עבודה גדולה ב-3 worktrees ומעולם לא נשמרה בקומיט. חולצה היום לענף `feat/salvage-2026-07-09` לפי טבלת-ההחלטות `Documents/reports/worktrees-decision-2026-07-09.html`. **ענף בלבד — לא נגעתי ב-master (האתר מפורס אוטומטית ב-Vercel).**
+- **מ-bold-leavitt-80e5cc (מסחר, מסלולים קנוניים לפי INVENTORY.md):** `INVENTORY.md` (מפת-דרכים 9 מוצרים+מחירים; קטע-טוקן הושחר) · קטלוג `src/lib/products.ts` · `CheckoutForm` · `/api/checkout` (**הותאם ל-sumit.ts הנוכחי של master — CreditGuy 5.7 — במקום ה-rail הישן**) · דפי מכירה: `/programs/the-way` (₪1,850), `/programs/the-way-plus` (₪2,970), `/club` (מועדון 90D), `/products/dating-card` (₪97), `/coaching/vip`, `/coaching/book`, `/events/love-event` (+confirmed), `/checkout/success` + אינדקסים.
+- **מ-hardcore-hoover-5e3797 (הופעל במקביל באותו לילה — סכימת-routes מתנגשת):** אומצו הייחודיים — 3 מגנטי-לידים חדשים `/lead/courage` · `/lead/vision` · `/lead/dating-talks` + `LeadMagnetTemplate` (331 שורות) + באנר-בלוג→eladjak.com + רשומות lead-magnets. דפי-המוצר הכפולים שלו נשמרו כטקסט ב-`docs/salvage-2026-05-14-worktrees/hoover-variants/` (קופי שיווקי עשיר למיזוג ידני). ה-summit.ts (iframe חשבונית-ירוקה) נזרק — ה-checkout של master עדיף.
+- **מ-vigorous-solomon-1cb14d (מערכת המלצות מבוססת-נתונים):** `src/data/testimonials.json` (סיפורי לקוחות אמיתיים בשמות מלאים) + 39 תמונות אמיתיות `public/testimonials/images/` (‏15MB) + `/sipurim` + `/sipurim/[slug]` + `TestimonialCard` + lib + sitemap. ניווט Header/Footer הוסב ל-`/sipurim` (דף `/testimonials` הישן נשאר קיים — החלטת-מוצר לאלעד).
+- **מ-exciting-hopper-710bf1:** דוח-המועצה הועתק ל-`Documents/reports/omanut-website-REVIEW-2026-05-15-COUNCIL.html`. שאר ה-worktree ריק-ערך.
+- **מיזוגים ידניים:** sitemap (מוצרים+סיפורים+לידים) · Header (ניווט: the-way/VIP/מועדון/סיפורים + CTA→`/coaching/book`) · coaching BOOKING_URL→`/coaching/book` · lead-magnets (4 רשומות חדשות). דילגתי על .env.example של ה-worktree (master חדש יותר).
+- **⚠️ להחלטת אלעד לפני מיזוג ל-master:** (1) כפילות `/hadrech` (חי, Sumit עובד) מול `/programs/the-way` החדש — הניווט בענף מצביע על החדש. (2) `/testimonials` מול `/sipurim`. (3) למגנטי-הלידים החדשים אין עדיין נכסי PDF ב-`/lead/*/download`. (4) המחירים בדפים מ-14.5 — לאמת מולו לפני פרסום.
+
+
 
 **מוזג ל-master (FF, ‏8 קומיטים) ונדחף → Vercel פרס אוטומטית ל-Production (deploy `j3k6xhlh9` = ●Ready).**
 - שער-אימות לפני מיזוג: `tsc --noEmit`=0 · `next build`=ירוק (‏64 ראוטים, `/welcome` + `/thanks/purchase` נכללים).
