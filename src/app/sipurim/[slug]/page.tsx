@@ -49,7 +49,7 @@ function getRelated(current: TestimonialItem): TestimonialItem[] {
 
 const ctaLabels: Record<string, string> = {
   "/coaching": "לליווי אישי עם אלעד",
-  "/hadrech": "לתוכנית הדרך",
+  "/programs/the-way": "לתוכנית הדרך",
   "/book": "להזמנת הספר",
   "/contact": "לשיחת היכרות חינם",
 };

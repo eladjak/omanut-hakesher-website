@@ -22,6 +22,21 @@ export interface WhatsAppShot {
   image: string;
 }
 
+/**
+ * Image-less authentic quotes salvaged from Elad's email sequences
+ * (folded 2026-07-09 from the legacy /testimonials page — the only
+ * quotes there with a verified source; see content-library §5).
+ */
+export interface EmailQuote {
+  id: string;
+  author: string;
+  age?: number;
+  occupation?: string;
+  context: string;
+  quote: string;
+  source: string;
+}
+
 export interface TestimonialVideo {
   id: string;
   title: string;
@@ -29,6 +44,7 @@ export interface TestimonialVideo {
 }
 
 export const testimonials = data.items as TestimonialItem[];
+export const emailQuotes = data.quotes as EmailQuote[];
 export const whatsappShots = data.whatsapp_screenshots as WhatsAppShot[];
 export const videos = data.videos as TestimonialVideo[];
 

@@ -85,7 +85,7 @@
       "aspect": "portrait",
       "short_quote": "התחילו את הקשר אחרי תכנית הדרך.",
       "context": "נתנאל ורחל — זוג שנוצר בעקבות תהליך אומנות הקשר. עדות מצולמת בתמונה.",
-      "cta_target": "/hadrech",
+      "cta_target": "/programs/the-way",
       "source": "OneDrive archive",
       "featured": false
     },
@@ -218,6 +218,35 @@
       "cta_target": "/coaching",
       "source": "Downloads",
       "featured": false
+    }
+  ],
+  "quotes": [
+    {
+      "id": "danny-38",
+      "author": "דני",
+      "age": 38,
+      "occupation": "מהנדס",
+      "context": "נשוי שנתיים",
+      "quote": "הגעתי לאלעד אחרי 5 שנים של דייטים כושלים. הייתי בטוח שמשהו לא בסדר איתי. תוך 3 חודשים הבנתי שהבעיה הייתה לא מה שחשבתי - למדתי שאני בורח מקרבה בגלל פחד מדחייה. היום אני נשוי כבר שנתיים לאישה הכי מדהימה שפגשתי.",
+      "source": "email-sequences (content-library §5, most-authentic tier)"
+    },
+    {
+      "id": "michal-34",
+      "author": "מיכל",
+      "age": 34,
+      "occupation": "עורכת דין",
+      "context": "בזוגיות מאושרת",
+      "quote": "ניסיתי הכל - אפליקציות, אירועי היכרויות, מפגשים. שום דבר לא עבד. הליווי עם אלעד היה שונה לגמרי. הוא לא רק עזר לי להבין מה אני רוצה, אלא גם לימד אותי איך לתקשר את זה. פגשתי את בן זוגי אחרי חודשיים וחצי.",
+      "source": "email-sequences (content-library §5, most-authentic tier)"
+    },
+    {
+      "id": "uri-42",
+      "author": "אורי",
+      "age": 42,
+      "occupation": "יזם",
+      "context": "גרים ביחד",
+      "quote": "הייתי סקפטי בהתחלה. חשבתי שאני יודע הכל על דייטינג. אלעד הראה לי כמה דברים בסיסיים שפספסתי לגמרי. הייתה לי חברה תוך 6 שבועות. היום אנחנו גרים ביחד.",
+      "source": "email-sequences (content-library §5, most-authentic tier)"
     }
   ],
   "whatsapp_screenshots": [

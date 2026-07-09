@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { TestimonialCard } from "@/components/TestimonialCard";
-import { testimonials, whatsappShots, videos } from "@/lib/testimonials";
+import { testimonials, emailQuotes, whatsappShots, videos } from "@/lib/testimonials";
 
 export const metadata: Metadata = {
   title: "סיפורי הצלחה אמיתיים | אומנות הקשר",
@@ -93,6 +95,54 @@ export default function SipurimPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featured.map((t, i) => (
               <TestimonialCard key={t.slug} item={t} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Email quotes — authentic first-name stories from the email sequences */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <div className="text-center mb-14">
+            <Badge variant="outline" className="mb-4 border-primary/40 text-primary">
+              מתוך המיילים
+            </Badge>
+            <h2 className="text-balance text-3xl md:text-4xl font-bold mb-3">
+              סיפורים <span className="text-primary">שנכתבו לי</span>
+            </h2>
+            <p className="text-pretty text-muted-foreground max-w-xl mx-auto">
+              שלוש עדויות מתוך סדרות המייל — בשם פרטי, כפי שנשלחו.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {emailQuotes.map((q) => (
+              <Card key={q.id} className="border-border/50 h-full hover:shadow-md transition-shadow">
+                <CardContent className="p-6 flex flex-col h-full">
+                  <span aria-hidden className="text-5xl text-primary/20 font-serif leading-none mb-3">
+                    “
+                  </span>
+                  <blockquote className="text-sm leading-relaxed mb-4 text-pretty flex-1">
+                    {q.quote}
+                  </blockquote>
+                  <Separator className="mb-4" />
+                  <div className="flex items-center gap-3">
+                    <div className="size-10 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                      <span className="text-primary font-bold text-sm">{q.author.charAt(0)}</span>
+                    </div>
+                    <div>
+                      <cite className="not-italic font-semibold block text-sm">
+                        {q.author}
+                        {q.age ? `, ${q.age}` : ""}
+                      </cite>
+                      <span className="text-xs text-muted-foreground">
+                        {q.occupation ? `${q.occupation} · ` : ""}
+                        {q.context}
+                      </span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
