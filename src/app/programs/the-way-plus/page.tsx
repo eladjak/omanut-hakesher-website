@@ -44,6 +44,26 @@ const bonuses = [
 
 const totalValue = includes.reduce((s, i) => s + i.value, 0);
 
+// Folded 2026-07-09 from the hoover-variant hadrech-jim page.
+const faqs = [
+  {
+    q: "כמה זמן ביום אני צריך להשקיע?",
+    a: "5-10 דקות ביום. הסרטונים קצרים, התרגילים מעשיים. כל אחד מסוגל.",
+  },
+  {
+    q: "מתאים גם לדתיים / חרדים?",
+    a: "מתאים. אני עצמי שומר תורה ומצוות, ויש בקהילה גם דתיים, חרדים וחילונים.",
+  },
+  {
+    q: "מה ההבדל בין זה לבין הליווי האישי?",
+    a: "כאן יש ליווי יומיומי דרך צ׳אט פרטי + קהילה + מפגשי תרגול. הליווי האישי הוא 1-על-1 אינטנסיבי. שני המסלולים מובילים לתוצאה.",
+  },
+  {
+    q: "ומה אם אני לא רואה תוצאות?",
+    a: "אחריות יישומית של חצי שנה — אפשר להקפיא ולהתחיל מחדש. אבל בסוף — אם אתה לא משקיע, אף תוכנית לא תעבוד.",
+  },
+];
+
 export default function TheWayPlusPage() {
   return (
     <>
@@ -178,6 +198,38 @@ export default function TheWayPlusPage() {
               <CheckoutForm product={product} />
             </CardContent>
           </Card>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <div className="text-center mb-12">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30">
+              שאלות נפוצות
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-balance">לפני שאתה מתחיל</h2>
+          </div>
+          <div className="space-y-4">
+            {faqs.map((f) => (
+              <Card key={f.q} className="border-border/50">
+                <CardContent className="p-6">
+                  <h3 className="font-bold text-lg mb-2">{f.q}</h3>
+                  <p className="text-muted-foreground leading-relaxed text-pretty">{f.a}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <div className="mt-10 text-center">
+            <p className="text-muted-foreground mb-4">עדיין מתלבט/ת?</p>
+            <Link
+              href="/coaching/book"
+              className="inline-flex items-center gap-2 text-primary font-semibold underline-offset-4 hover:underline"
+            >
+              <span>שיחת היכרות חינמית של 30 דקות</span>
+              <span aria-hidden style={{ transform: "scaleX(-1)" }}>→</span>
+            </Link>
+          </div>
         </div>
       </section>
     </>

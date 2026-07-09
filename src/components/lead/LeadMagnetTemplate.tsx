@@ -319,7 +319,7 @@ export function LeadMagnetTemplate(props: LeadMagnetTemplateProps) {
             המדריך הוא ההתחלה. אם תרצה/י ללכת עמוק יותר — שיחת היכרות בחינם מחכה לך.
           </p>
           <Link
-            href="/programs/vip"
+            href="/coaching/vip"
             className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
           >
             לשיחת היכרות חינם

@@ -213,12 +213,23 @@ export default function VipCoachingPage() {
           <p className="text-xl opacity-90 mb-8 max-w-xl mx-auto leading-relaxed text-pretty">
             30+ דקות. בלי עלות. בלי מחויבות. נחליט שנינו אם זה מתאים.
           </p>
-          <Link
-            href="/coaching/book"
-            className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
-          >
-            לתיאום שיחה — עכשיו
-          </Link>
+          <div className="flex flex-wrap justify-center items-center gap-4">
+            <Link
+              href="/coaching/book"
+              className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
+            >
+              לתיאום שיחה — עכשיו
+            </Link>
+            <Link
+              href="https://wa.me/972512518025?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%90%D7%9C%D7%A2%D7%93%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%9C%D7%99%D7%95%D7%95%D7%99%20VIP%20-%20%D7%90%D7%A4%D7%A9%D7%A8%20%D7%9C%D7%AA%D7%90%D7%9D%20%D7%A9%D7%99%D7%97%D7%AA%20%D7%94%D7%9B%D7%A8%D7%95%D7%AA%3F"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex px-8 py-4 border-2 border-white/50 text-white rounded-full font-medium text-base hover:bg-white/10 transition-colors"
+            >
+              או ישירות בוואטסאפ
+            </Link>
+          </div>
+          <p className="mt-4 text-white/80 text-sm">מענה תוך 24 שעות, ימים א׳-ה׳.</p>
         </div>
       </section>
     </>

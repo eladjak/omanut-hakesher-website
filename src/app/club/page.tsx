@@ -45,6 +45,27 @@ const benefits = [
   },
 ];
 
+// Folded 2026-07-09 from the hoover-variant club page — the questions every
+// new member actually asks.
+const faqs = [
+  {
+    q: "מה ההבדל בין המועדון לתוכנית ׳הדרך׳?",
+    a: "המועדון = תמיכה שוטפת ללא תוכנית מובנית. ׳הדרך׳ = תוכנית 90 ימים צעד-צעד. שניהם משלימים, לא תחליפים.",
+  },
+  {
+    q: "אפשר לבטל בכל עת?",
+    a: "כן. ביטול בכל עת, מבלי לתת סיבות. אנחנו לא רוצים לקוחות חודשיים כפויים.",
+  },
+  {
+    q: "האם החיוב יומי? (מודל Daily)",
+    a: "לא. חיוב חודשי בלבד. אנחנו לא מאמינים במודל Daily של חיוב יומי — זה לא הוגן.",
+  },
+  {
+    q: "לכמה זמן מתחייבים?",
+    a: "חודש בכל פעם. אפשר לעצור אחרי חודש, אפשר להמשיך שנה. אתה בוחר.",
+  },
+];
+
 const anchorAmount = product.price.anchorAmount ?? 30;
 
 export default function ClubPage() {
@@ -151,6 +172,40 @@ export default function ClubPage() {
               </div>
             </CardContent>
           </Card>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-20">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <div className="text-center mb-12">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30">
+              שאלות נפוצות
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-balance">
+              מה שכל חבר/ה חדש/ה שואל/ת
+            </h2>
+          </div>
+          <div className="space-y-4">
+            {faqs.map((f) => (
+              <Card key={f.q} className="border-border/50">
+                <CardContent className="p-6">
+                  <h3 className="font-bold text-lg mb-2">{f.q}</h3>
+                  <p className="text-muted-foreground leading-relaxed text-pretty">{f.a}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <div className="mt-10 text-center">
+            <p className="text-muted-foreground mb-4">רוצה משהו יותר אינטנסיבי?</p>
+            <Link
+              href="/programs/the-way"
+              className="inline-flex items-center gap-2 text-primary font-semibold underline-offset-4 hover:underline"
+            >
+              <span>לתוכנית הדרך — 90 ימים בליווי</span>
+              <span aria-hidden style={{ transform: "scaleX(-1)" }}>→</span>
+            </Link>
+          </div>
         </div>
       </section>
     </>

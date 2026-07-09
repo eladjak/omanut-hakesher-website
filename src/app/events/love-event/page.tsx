@@ -13,6 +13,22 @@ type Status = "idle" | "submitting" | "success" | "error";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Folded 2026-07-09 from the hoover-variant event page — the concrete agenda
+// and audience copy that make the event feel real.
+const agenda = [
+  { time: "20:30", title: "ברוכים הבאים + היכרות", desc: "מי בחדר, מה מצפים, איך אנחנו עובדים" },
+  { time: "20:40", title: "הדרכה חיה ממני", desc: "נושא משתנה כל שבוע — תקשורת, פחדים, פלירטוט, חזון" },
+  { time: "21:20", title: "שאלות ותשובות", desc: "בלייב. את/ה שואל/ת, אני עונה. אין הסתרות." },
+  { time: "21:50", title: "סיכום + צעדים הבאים", desc: "המשימה השבועית + מי ממשיך לאן" },
+];
+
+const audience = [
+  "פנויים ופנויות בני 25-45",
+  "מי שהבין שעוד דייט מקרי לא יביא לתוצאה",
+  "מי שאוהב/ת ללמוד ולהתפתח עם קהילה",
+  "כל הרמות הדתיות — חילוני/ת, מסורתי/ת, דתי/ה, חרדי/ה",
+];
+
 export default function LoveEventPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -53,7 +69,7 @@ export default function LoveEventPage() {
   return (
     <>
       <div className="bg-muted/50 border-b border-border/30">
-        <Breadcrumbs items={[{ label: "אירועים", href: "/events/love-event" }, { label: "אירוע אהבה" }]} />
+        <Breadcrumbs items={[{ label: "אירוע אהבה" }]} />
       </div>
 
       {/* Hero */}
@@ -105,6 +121,50 @@ export default function LoveEventPage() {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Agenda + audience */}
+      <section className="py-16 bg-muted/20">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <div className="grid lg:grid-cols-2 gap-10 items-start">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-balance">לוח הזמנים של המפגש</h2>
+              <div className="space-y-4">
+                {agenda.map((item) => (
+                  <Card key={item.time} className="border-border/50">
+                    <CardContent className="p-5 flex gap-4 items-start">
+                      <div className="shrink-0 text-primary font-bold tabular-nums min-w-[56px]" dir="ltr">
+                        {item.time}
+                      </div>
+                      <div>
+                        <h3 className="font-bold mb-1">{item.title}</h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed text-pretty">{item.desc}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            <div className="lg:mt-14">
+              <div className="p-6 rounded-2xl bg-primary/5 border border-primary/10">
+                <h2 className="text-xl font-bold mb-4">למי זה מתאים</h2>
+                <ul className="space-y-3">
+                  {audience.map((a) => (
+                    <li key={a} className="flex gap-2.5 text-sm items-start">
+                      <span className="shrink-0 mt-0.5 text-primary">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </span>
+                      <span className="leading-relaxed">{a}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -202,6 +262,18 @@ export default function LoveEventPage() {
                       ההרשמה לא מחייבת — אם לא הגעת, פשוט לא הגעת.
                     </p>
                   </form>
+
+                  <div className="mt-6 pt-6 border-t border-border/50 text-center">
+                    <p className="text-sm text-muted-foreground mb-3">שאלות לפני שמגיעים?</p>
+                    <Link
+                      href="https://wa.me/972512518025?text=%D7%A9%D7%9C%D7%95%D7%9D%2C%20%D7%99%D7%A9%20%D7%9C%D7%99%20%D7%A9%D7%90%D7%9C%D7%94%20%D7%A2%D7%9C%20%D7%90%D7%99%D7%A8%D7%95%D7%A2%20%D7%94%D7%90%D7%94%D7%91%D7%94"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm font-medium text-secondary-dark hover:opacity-80 transition-opacity"
+                    >
+                      לשאלות בוואטסאפ
+                    </Link>
+                  </div>
                 </>
               )}
             </CardContent>
