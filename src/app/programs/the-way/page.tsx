@@ -70,6 +70,10 @@ const includes = [
 
 const objections = [
   {
+    q: "למי תוכנית הדרך מתאימה?",
+    a: "לרווקים ורווקות בגילאי 25-55 שמחפשים זוגיות רצינית ומוכנים לעשות עבודה אמיתית. לא משנה אם אתה אחרי פרידה, אחרי גירושין, או פשוט מרגיש תקוע — אם אתה מוכן לשינוי, התוכנית בשבילך.",
+  },
+  {
     q: "ואם אין לי זמן ל-90 יום שלמים?",
     a: "השיטה בנויה ל-5-10 דקות ביום. בערך כמו צפייה בריל. אם אין לך 10 דקות ביום לעצמך, נדבר על זה לפני שאתה משקיע — ייתכן שעכשיו לא הזמן הנכון.",
   },
@@ -82,8 +86,37 @@ const objections = [
     a: "כן. אני עצמי שומר תורה ומצוות. השיטה אגנוסטית מבחינה דתית — היא מדברת על תקשורת, פגיעות, חיבור. הכלים זהים, ההקשר משתנה.",
   },
   {
+    q: "האם התוכנית מתאימה גם לנשים?",
+    a: "בהחלט. התוכנית נכתבה בשפה מכלילה ומתאימה לגברים ולנשים כאחד. העקרונות אוניברסליים — הבנת עצמך, תקשורת, פגיעות ומחויבות רלוונטיים לכולם.",
+  },
+  {
     q: "יש החזר כספי?",
     a: "לא. אני בטוח באיכות מספיק בשביל לא להציע ערבות החזר — אבל יש לי אחריות יישומית של חצי שנה. אם נתקעת, אנחנו עוצרים, מחזירים אחורה, מתחילים מחדש. בלי תוספת.",
+  },
+];
+
+// Folded 2026-07-09 from the legacy /hadrech page (canonical merge) — the
+// differentiation copy Elad's audience already responded to.
+const comparison = [
+  {
+    approach: "אפליקציות דייטינג",
+    description: "נותנות הזדמנויות, אבל בלי כלים. זה כמו לתת למישהו מפתח בלי ללמד אותו לנהוג.",
+    verdict: "הזדמנויות ללא כלים",
+  },
+  {
+    approach: "אתרי היכרויות",
+    description: "מספקים התאמות, אבל לא מטפלים בסיבה שדייטים קודמים נכשלו.",
+    verdict: "התאמות ללא עבודה פנימית",
+  },
+  {
+    approach: "טיפול פסיכולוגי",
+    description: "עוזר להבין את עצמך, אבל לרוב לא מלווה אותך בשטח ולא נותן כלים מעשיים לדייטינג.",
+    verdict: "הבנה ללא ליווי בשטח",
+  },
+  {
+    approach: "ספרי עזרה עצמית",
+    description: "טיפים מעניינים, אבל קוראים, מתלהבים, ואחרי שבוע חוזרים לאותם דפוסים.",
+    verdict: "השראה ללא מסגרת",
   },
 ];
 
@@ -174,8 +207,90 @@ export default function TheWayProgramPage() {
         </div>
       </section>
 
-      {/* What's included */}
+      {/* Why this works where alternatives don't — folded from legacy /hadrech */}
       <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <Badge variant="outline" className="mb-4 text-accent-dark border-accent/40">
+                למה דווקא הדרך?
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">
+                מה <span className="text-primary">באמת</span> עובד?
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
+                כבר ניסית דברים אחרים. הנה למה הם לא עבדו — ולמה הדרך שונה.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-5 mb-10">
+              {comparison.map((item) => (
+                <Card key={item.approach} className="border-border/50 h-full">
+                  <CardContent className="p-6">
+                    <h3 className="text-lg font-bold mb-2">{item.approach}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-3 text-pretty">
+                      {item.description}
+                    </p>
+                    <Badge
+                      variant="secondary"
+                      className="bg-destructive/10 text-destructive border-0 text-xs"
+                    >
+                      {item.verdict}
+                    </Badge>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <Card className="border-primary/30 bg-gradient-to-br from-primary/5 via-background to-secondary/5 shadow-lg">
+              <CardContent className="p-8 text-center">
+                <Badge className="mb-4 bg-primary/10 text-primary border-primary/20 hover:bg-primary/10">
+                  תוכנית הדרך
+                </Badge>
+                <h3 className="text-2xl font-bold mb-4 text-balance">
+                  עבודה פנימית + מיומנויות + ליווי + קהילה
+                </h3>
+                <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto text-pretty">
+                  הדרך משלבת את מה שחסר בכל גישה אחרת: עבודה עמוקה על עצמך, כלים מעשיים
+                  לדייטינג, ליווי יומיומי שמחזיק אותך, וקהילה של אנשים שעוברים את אותו
+                  מסע. זו לא עוד גישה — זו <strong className="text-foreground">הדרך השלמה</strong>.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Core concept — "פנוי לקשר" (folded from legacy /hadrech) */}
+      <section className="py-20 md:py-24 bg-secondary text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" aria-hidden />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" aria-hidden />
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-3xl mx-auto text-center">
+            <Badge className="mb-6 bg-white/10 text-white border-white/20 hover:bg-white/10">
+              הרעיון המרכזי
+            </Badge>
+            <h2 className="text-3xl md:text-5xl font-bold mb-8 text-balance">
+              ״פנוי לקשר״ — זה לא מצב.
+              <br />
+              זו <span className="text-accent">מיומנות</span>.
+            </h2>
+            <p className="text-xl opacity-90 leading-relaxed mb-6 text-pretty">
+              יש הבדל בין <strong>לרצות</strong> זוגיות לבין <strong>להיות פנוי</strong>{" "}
+              לזוגיות. רוב האנשים שאומרים ״אני מחפש זוגיות״ בעצם לא באמת פנויים — לא
+              בגלל שהם משקרים, אלא בגלל שמשהו חוסם אותם.
+            </p>
+            <p className="text-lg opacity-80 leading-relaxed text-pretty">
+              תוכנית הדרך מזהה את החסם ומפתחת את הכלים לעבור ממצב של ״לא פנוי״
+              ל״פנוי לקשר״. הזוגיות שמגיעה לך לא תדפוק בדלת — אבל אם תצא לדרך,
+              היא מחכה לך.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* What's included */}
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
@@ -273,6 +388,25 @@ export default function TheWayProgramPage() {
               </Card>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Social proof → full stories */}
+      <section className="py-16">
+        <div className="container mx-auto px-4 max-w-3xl text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-3 text-balance">
+            רוצה לשמוע ממי שכבר עבר את הדרך?
+          </h2>
+          <p className="text-muted-foreground mb-6 text-pretty">
+            עדויות אמיתיות — שמות מלאים, תמונות, צילומי וואטסאפ ווידאו.
+          </p>
+          <Link
+            href="/sipurim"
+            className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all"
+          >
+            <span>לכל סיפורי ההצלחה</span>
+            <span aria-hidden style={{ transform: "scaleX(-1)" }}>→</span>
+          </Link>
         </div>
       </section>
 
