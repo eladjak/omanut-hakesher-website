@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { FUNCTIONAL_BASE_URL } from "@/lib/site-url";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -537,7 +538,7 @@ export function EmotionWheelClient() {
           </button>
           <a
             href={`https://wa.me/?text=${encodeURIComponent(
-              `עשיתי צ'ק-אין רגשי עם גלגל הרגשות של "אומנות הקשר" 🎡\n\nהרגשתי: ${selectedSub.label} (${selectedEmotion.name})\n\nכלי מעולה לפתח מודעות רגשית בזוגיות:\nhttps://www.omanut-hakesher.co.il/book/6/emotion-wheel`
+              `עשיתי צ'ק-אין רגשי עם גלגל הרגשות של "אומנות הקשר" 🎡\n\nהרגשתי: ${selectedSub.label} (${selectedEmotion.name})\n\nכלי מעולה לפתח מודעות רגשית בזוגיות:\n${FUNCTIONAL_BASE_URL}/book/6/emotion-wheel`
             )}`}
             target="_blank"
             rel="noopener noreferrer"

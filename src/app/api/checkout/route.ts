@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createCheckout, isConfigured as isSumitConfigured } from "@/lib/sumit";
 import { getProduct } from "@/lib/products";
+import { FUNCTIONAL_BASE_URL } from "@/lib/site-url";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -20,9 +21,9 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_RE = /^0(5\d|2|3|4|7|8|9)[-\s]?\d{3}[-\s]?\d{4}$/;
 
 function siteUrl(): string {
-  const env = process.env.NEXT_PUBLIC_SITE_URL;
-  if (env) return env.replace(/\/+$/, "");
-  return "https://omanut-hakesher.co.il";
+  // Post-payment redirects must land on a domain that actually serves this
+  // app (omanut-hakesher.co.il is NXDOMAIN). Centralized in src/lib/site-url.ts.
+  return FUNCTIONAL_BASE_URL;
 }
 
 function generateOrderId(slug: string): string {

@@ -19,7 +19,11 @@ export interface LeadMagnetConfig {
   listId: number
   /** Tags applied on subscription — drives segmentation + automation */
   tags: string[]
-  /** Public asset URL (PDF / page) the subscriber gets after confirming */
+  /**
+   * Asset the subscriber gets after confirming. Site-relative path (preferred,
+   * resolved against FUNCTIONAL_BASE_URL from src/lib/site-url.ts at send time)
+   * or a full external URL.
+   */
   assetUrl: string
   /** Welcome email subject (optional — Resend send) */
   welcomeSubject: string
@@ -34,7 +38,7 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
     titleHe: '23 הסיבות שאתה עדיין רווק/ה',
     listId: OMANUT_HAKESHER_LIST_ID,
     tags: ['lead-magnet', 'lead:23-reasons', 'source:website'],
-    assetUrl: 'https://omanut-hakesher.co.il/lead/23-reasons/download',
+    assetUrl: '/lead/23-reasons/download',
     welcomeSubject: 'המדריך שלך מוכן: 23 הסיבות שאתה עדיין רווק/ה',
   },
   '7-principles': {
@@ -42,7 +46,7 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
     titleHe: '7 עקרונות הזהב למציאת זוגיות',
     listId: OMANUT_HAKESHER_LIST_ID,
     tags: ['lead-magnet', 'lead:7-principles', 'source:website'],
-    assetUrl: 'https://omanut-hakesher.co.il/lead/7-principles/download',
+    assetUrl: '/lead/7-principles/download',
     welcomeSubject: 'המדריך שלך מוכן: 7 עקרונות הזהב למציאת זוגיות',
   },
   '36-questions': {
@@ -50,7 +54,7 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
     titleHe: '36 השאלות שיכולות ליצור אהבה',
     listId: OMANUT_HAKESHER_LIST_ID,
     tags: ['lead-magnet', 'lead:36-questions', 'source:website'],
-    assetUrl: 'https://omanut-hakesher.co.il/lead/36-questions/download',
+    assetUrl: '/lead/36-questions/download',
     welcomeSubject: 'המדריך שלך מוכן: 36 השאלות שיכולות ליצור אהבה',
   },
   // --- Salvaged 2026-07-09 from worktrees bold-leavitt-80e5cc + hardcore-hoover-5e3797 ---
@@ -59,7 +63,7 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
     titleHe: '8 דרכים לחיים של אומץ',
     listId: OMANUT_HAKESHER_LIST_ID,
     tags: ['lead-magnet', 'lead:courage', 'source:website'],
-    assetUrl: 'https://omanut-hakesher.co.il/lead/courage/download',
+    assetUrl: '/lead/courage/download',
     welcomeSubject: 'המדריך שלך מוכן: 8 דרכים לחיים של אומץ',
   },
   vision: {
@@ -67,7 +71,7 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
     titleHe: 'איך לכתוב חזון אישי לזוגיות',
     listId: OMANUT_HAKESHER_LIST_ID,
     tags: ['lead-magnet', 'lead:vision', 'source:website'],
-    assetUrl: 'https://omanut-hakesher.co.il/lead/vision/download',
+    assetUrl: '/lead/vision/download',
     welcomeSubject: 'המדריך שלך מוכן: חזון אישי לזוגיות',
   },
   'dating-talks': {
@@ -75,7 +79,7 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
     titleHe: '10 כללים לשיחות דייט מנצחות',
     listId: OMANUT_HAKESHER_LIST_ID,
     tags: ['lead-magnet', 'lead:dating-talks', 'source:website'],
-    assetUrl: 'https://omanut-hakesher.co.il/lead/dating-talks/download',
+    assetUrl: '/lead/dating-talks/download',
     welcomeSubject: 'המדריך שלך מוכן: 10 כללים לשיחות דייט מנצחות',
   },
   'love-event-rsvp': {
@@ -84,7 +88,7 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
     listId: OMANUT_HAKESHER_LIST_ID,
     tags: ['event:love-event', 'source:website'],
     // Confirmation/details page — Resend email links here.
-    assetUrl: 'https://omanut-hakesher.co.il/events/love-event/confirmed',
+    assetUrl: '/events/love-event/confirmed',
     welcomeSubject: 'נרשמת בהצלחה לאירוע אהבה — פרטי החיבור בפנים',
   },
   // General newsletter signup (footer / homepage / blog). No downloadable
@@ -94,7 +98,7 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
     titleHe: 'רשימת התפוצה של אומנות הקשר',
     listId: OMANUT_HAKESHER_LIST_ID,
     tags: ['newsletter', 'source:website'],
-    assetUrl: 'https://www.ohlove.co.il/',
+    assetUrl: '/',
     welcomeSubject: 'נרשמת לרשימת אומנות הקשר',
   },
 }

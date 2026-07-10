@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { FUNCTIONAL_BASE_URL } from "@/lib/site-url";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -58,7 +59,7 @@ function buildGoogleCalendarUrl(name: string): string {
   const endStr = endDate.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
   const title = encodeURIComponent(`${name} — הגיע הזמן לפתוח את המכתב`);
   const details = encodeURIComponent(
-    `לפני שנה סיימת לקרוא את "אומנות הקשר" וכתבת מכתב לעצמך.\n\nהגיע הזמן לפתוח אותו.\n\nאפשר לקרוא אותו כאן:\nhttps://www.omanut-hakesher.co.il/book/closing/future-letter`
+    `לפני שנה סיימת לקרוא את "אומנות הקשר" וכתבת מכתב לעצמך.\n\nהגיע הזמן לפתוח אותו.\n\nאפשר לקרוא אותו כאן:\n${FUNCTIONAL_BASE_URL}/book/closing/future-letter`
   );
   return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dateStr}/${endStr}&details=${details}`;
 }
@@ -388,7 +389,7 @@ export function FutureLetterClient() {
           <div className="text-center">
             <a
               href={`https://wa.me/?text=${encodeURIComponent(
-                `סיימתי לקרוא את "אומנות הקשר" וכתבתי מכתב לעצמי בעוד שנה 💌\n\nאם גם אתם רוצים, זה כאן:\nhttps://www.omanut-hakesher.co.il/book/closing/future-letter`
+                `סיימתי לקרוא את "אומנות הקשר" וכתבתי מכתב לעצמי בעוד שנה 💌\n\nאם גם אתם רוצים, זה כאן:\n${FUNCTIONAL_BASE_URL}/book/closing/future-letter`
               )}`}
               target="_blank"
               rel="noopener noreferrer"

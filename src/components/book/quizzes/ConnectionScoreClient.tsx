@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FUNCTIONAL_BASE_URL } from "@/lib/site-url";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { QuizForm } from "../QuizForm";
@@ -80,7 +81,7 @@ function ConnectionResult({ scores, result, onRetry }: ConnectionResultProps) {
 
   const handleShare = () => {
     const text = encodeURIComponent(
-      `בדקתי את ציון החיבור שלי בספר "אומנות הקשר" ${result.emoji}\n\nהתוצאה: ${result.title}\nציון כולל: ${total}/${maxTotal}\n\nתנסה גם אתה: omanut-hakesher.co.il/book/11/connection-score`,
+      `בדקתי את ציון החיבור שלי בספר "אומנות הקשר" ${result.emoji}\n\nהתוצאה: ${result.title}\nציון כולל: ${total}/${maxTotal}\n\nתנסה גם אתה: ${FUNCTIONAL_BASE_URL}/book/11/connection-score`,
     );
     window.open(`https://wa.me/?text=${text}`, "_blank");
   };

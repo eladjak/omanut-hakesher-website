@@ -41,7 +41,8 @@ curl -sI "https://www.ohlove.co.il/post/2018/01/10/xyz"  # 308 → /blog
 ## שלב 4 — אחרי ההסטה (בשבוע שאחרי; קלוד יכול לעשות הכל חוץ מ-GSC)
 - [ ] סריקת GEO על `www.ohlove.co.il` (יעד ≥95; היום 53 על ה-Wix).
 - [ ] Google Search Console: לאמת בעלות (אם לא קיים) → Submit sitemap `https://www.ohlove.co.il/sitemap.xml`.
-- [ ] לעדכן `NEXT_PUBLIC_SITE_URL=https://www.ohlove.co.il` ב-Vercel env (production) — כרגע הקוד fallback ל-omanut-hakesher.co.il (NXDOMAIN!).
+- [ ] לעדכן `NEXT_PUBLIC_SITE_URL=https://www.ohlove.co.il` ב-Vercel env (production) → Redeploy. **מאז 10.7.2026** כל הקישורים הפונקציונליים (מיילי-מגנטים, שיתופי-וואטסאפ, redirect אחרי תשלום) עוברים דרך `src/lib/site-url.ts` — בלי env הם נופלים ל-vercel.app (עובד), ועם ה-env הם עוברים לדומיין הממותג אוטומטית.
+- [ ] לעדכן קנוניקל-SEO: ב-`src/lib/site-url.ts` להחליף את `CANONICAL_SITE_URL` ל-`https://www.ohlove.co.il`, ואז find-replace של `https://omanut-hakesher.co.il` בכל `src/` (layout metadataBase, JsonLd.tsx, sitemap.ts, robots.ts, בלוג) — כיום הם מצביעים בכוונה על דומיין שלא קיים (NXDOMAIN) עד ההסטה.
 - [ ] אתר-הספר: לעדכן `CROSS_LINKS.buyBook` ב-`omanut-hakesher-book/site/src/data.ts` מ-vercel.app → הדומיין האמיתי.
 - [ ] לשקול ביטול מנוי ה-Wix (אחרי שבועיים של יציבות — לא לפני; ביטול מוקדם עלול לשחרר את ניהול ה-DNS אם משתמשים במסלול א').
 

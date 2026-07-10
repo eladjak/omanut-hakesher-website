@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { FUNCTIONAL_BASE_URL } from "@/lib/site-url";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -140,7 +141,7 @@ function UserManualResult({
 }) {
   const handleWhatsApp = () => {
     const text = encodeURIComponent(
-      `יצרתי את המדריך למשתמש שלי בספר "אומנות הקשר" 📋\n\nמערכת ההפעלה שלי: ${profile.operatingSystem.attachmentStyleLabel}\nהצורך הכי עמוק שלי: ${profile.needs.deepestNeed}\nאני מקבל אהבה דרך: ${profile.needs.loveLanguageReceive}\n\nתנסה גם אתה: omanut-hakesher.co.il/book/5/who-am-i`,
+      `יצרתי את המדריך למשתמש שלי בספר "אומנות הקשר" 📋\n\nמערכת ההפעלה שלי: ${profile.operatingSystem.attachmentStyleLabel}\nהצורך הכי עמוק שלי: ${profile.needs.deepestNeed}\nאני מקבל אהבה דרך: ${profile.needs.loveLanguageReceive}\n\nתנסה גם אתה: ${FUNCTIONAL_BASE_URL}/book/5/who-am-i`,
     );
     window.open(`https://wa.me/?text=${text}`, "_blank");
   };

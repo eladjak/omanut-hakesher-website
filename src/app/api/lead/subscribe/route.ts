@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { subscribeToList, isConfigured as isRavMesserConfigured } from '@/lib/ravmesser'
 import { getLeadMagnet } from '@/lib/lead-magnets'
+import { absoluteFunctionalUrl } from '@/lib/site-url'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -31,7 +32,11 @@ async function sendWelcomeEmail(args: {
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey) return // silent: caller already returned success
 
-  const { email, firstName, subject, assetUrl, variant = 'guide' } = args
+  const { email, firstName, subject, variant = 'guide' } = args
+  // Relative asset paths are resolved against a domain that actually serves
+  // this app (fleet-sweep 2026-07-10: omanut-hakesher.co.il is NXDOMAIN —
+  // absolute links to it in welcome emails were dead on arrival).
+  const assetUrl = absoluteFunctionalUrl(args.assetUrl)
 
   const body =
     variant === 'newsletter'

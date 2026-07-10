@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FUNCTIONAL_BASE_URL } from "@/lib/site-url";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { QuizForm } from "../QuizForm";
@@ -107,7 +108,7 @@ function ChemistryResult({ scores, result, onRetry }: ChemistryResultProps) {
 
   const handleShare = () => {
     const text = encodeURIComponent(
-      `בדקתי את סוג הכימיה שלי בספר "אומנות הקשר" ${result.emoji}\n\nהתוצאה: ${result.title}\nציר מוביל: כימיה ${dominant.label}\n\nתנסה גם אתה: omanut-hakesher.co.il/book/11/chemistry-quiz`,
+      `בדקתי את סוג הכימיה שלי בספר "אומנות הקשר" ${result.emoji}\n\nהתוצאה: ${result.title}\nציר מוביל: כימיה ${dominant.label}\n\nתנסה גם אתה: ${FUNCTIONAL_BASE_URL}/book/11/chemistry-quiz`,
     );
     window.open(`https://wa.me/?text=${text}`, "_blank");
   };

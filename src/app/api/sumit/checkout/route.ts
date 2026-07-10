@@ -10,6 +10,7 @@
  */
 import { NextResponse } from 'next/server';
 import { createCheckout, isConfigured as isSumitConfigured } from '@/lib/sumit';
+import { FUNCTIONAL_BASE_URL } from '@/lib/site-url';
 import { getSumitProduct } from '@/lib/sumit-products';
 
 export const runtime = 'nodejs';
@@ -61,10 +62,9 @@ export async function POST(request: Request) {
     );
   }
 
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    process.env.NEXT_PUBLIC_BASE_URL ||
-    'https://omanut-hakesher.co.il';
+  // Post-payment redirects must land on a live domain (omanut-hakesher.co.il
+  // is NXDOMAIN). Centralized in src/lib/site-url.ts (env-overridable).
+  const baseUrl = FUNCTIONAL_BASE_URL;
 
   const successUrl = `${baseUrl}${product.successPath}`;
 
