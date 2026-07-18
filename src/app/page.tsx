@@ -209,12 +209,14 @@ export default function HomePage() {
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
                 href="/coaching"
+                data-wow-lift
                 className="px-8 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
               >
                 לשיחת היכרות חינם
               </Link>
               <Link
                 href="/programs/the-way"
+                data-wow-lift
                 className="px-8 py-4 border-2 border-secondary text-secondary rounded-full font-semibold text-lg hover:bg-secondary hover:text-white transition-colors"
               >
                 על תוכנית ״הדרך״
@@ -615,12 +617,14 @@ export default function HomePage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/coaching"
+              data-wow-lift
               className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
             >
               <GenderedText id="cta.free-call" />
             </Link>
             <Link
               href="/about"
+              data-wow-lift
               className="inline-flex px-10 py-4 border-2 border-white/50 text-white rounded-full font-semibold text-lg hover:bg-white/10 transition-colors"
             >
               <GenderedText id="final-cta.read-more" />
