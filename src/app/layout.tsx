@@ -12,6 +12,7 @@ import { SkipToContent } from "@/components/SkipToContent";
 import { OrganizationJsonLd, FaqJsonLd, WebSiteJsonLd, PersonJsonLd } from "@/components/JsonLd";
 import { GenderProvider } from "@/components/GenderProvider";
 import { WelcomeModal } from "@/components/WelcomeModal";
+import { WowMotion } from "@/components/animations/WowMotion";
 
 const heebo = Heebo({
   variable: "--font-heebo",
@@ -122,6 +123,7 @@ export default function RootLayout({
               <WelcomeModal />
               <WhatsAppButton />
               <ScrollToTop />
+              <WowMotion />
             </TooltipProvider>
           </GenderProvider>
         </ThemeProvider>
