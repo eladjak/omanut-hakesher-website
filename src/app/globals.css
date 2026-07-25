@@ -340,6 +340,24 @@ p {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  /* Killing the transition duration above is NOT enough: many components
+     use Tailwind v4 hover utilities (hover:-translate-y-1, hover:scale-105,
+     hover:rotate-*) which compile to separate `translate` / `scale` /
+     `rotate` CSS properties, not `transform` - so the lift/scale still
+     happens on hover, it just snaps instead of animating. Reset those
+     properties on the interactive states only (not the base/rest state,
+     where `-translate-x-1/2`-style utilities are used for static centering
+     and must be left alone). */
+  *:hover,
+  *:focus-visible,
+  *:active,
+  *:focus-within {
+    transform: none !important;
+    translate: none !important;
+    scale: none !important;
+    rotate: none !important;
+  }
 }
 
 ::selection {

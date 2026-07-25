@@ -13,6 +13,7 @@ import { OrganizationJsonLd, FaqJsonLd, WebSiteJsonLd, PersonJsonLd } from "@/co
 import { GenderProvider } from "@/components/GenderProvider";
 import { WelcomeModal } from "@/components/WelcomeModal";
 import { WowMotion } from "@/components/animations/WowMotion";
+import { MotionProvider } from "@/components/MotionProvider";
 
 const heebo = Heebo({
   variable: "--font-heebo",
@@ -114,17 +115,19 @@ export default function RootLayout({
       <body className={`${heebo.variable} font-sans antialiased`}>
         <ThemeProvider>
           <GenderProvider>
-            <TooltipProvider>
-              <SkipToContent />
-              <GoogleAnalytics />
-              <Header />
-              <main id="main-content">{children}</main>
-              <Footer />
-              <WelcomeModal />
-              <WhatsAppButton />
-              <ScrollToTop />
-              <WowMotion />
-            </TooltipProvider>
+            <MotionProvider>
+              <TooltipProvider>
+                <SkipToContent />
+                <GoogleAnalytics />
+                <Header />
+                <main id="main-content">{children}</main>
+                <Footer />
+                <WelcomeModal />
+                <WhatsAppButton />
+                <ScrollToTop />
+                <WowMotion />
+              </TooltipProvider>
+            </MotionProvider>
           </GenderProvider>
         </ThemeProvider>
       </body>
