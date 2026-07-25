@@ -68,7 +68,7 @@ export default function WelcomePage() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 hero-scrim" />
+          <div className="absolute inset-0 hero-scrim pointer-events-none" aria-hidden="true" />
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
@@ -76,7 +76,7 @@ export default function WelcomePage() {
               הגעתם מהפוסט? זה המקום
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white text-balance leading-tight">
-              ברוכים הבאים <span className="text-accent-light">הביתה</span>
+              ברוכים הבאים <span className="text-accent-on-dark">הביתה</span>
             </h1>
             <p className="mt-6 text-xl text-white/90 max-w-2xl mx-auto leading-relaxed text-pretty">
               אני אלעד. 15 שנה ליוויתי רווקים ורווקות בדרך לזוגיות, ואז נעלמתי

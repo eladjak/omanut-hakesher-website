@@ -204,13 +204,13 @@ export default function HomePage() {
               {" "}
               <strong className="text-white">אומנות הקשר</strong> היא דרך מובנית שכבר הובילה
               {" "}
-              <strong className="text-accent-light">461 זוגות</strong> לזוגיות מאושרת.
+              <strong className="text-accent-on-dark">461 זוגות</strong> לזוגיות מאושרת.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
                 href="/coaching"
                 data-wow-lift
-                className="px-8 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark [transition:background-color_.18s_ease] shadow-lg shadow-primary/20"
+                className="px-8 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark shadow-lg shadow-primary/20"
               >
                 לשיחת היכרות חינם
               </Link>
@@ -221,12 +221,17 @@ export default function HomePage() {
                   was written for a light section and never adjusted for the
                   hero. White-on-dark is the correct pairing here and inverts on
                   hover to the brand navy, so the identity colour still carries
-                  the interaction. Transition is scoped to background-color and
-                  color: transition-colors would also animate border-color. */}
+                  the interaction. No transition utility here on purpose:
+                  [data-wow-lift] owns the `transition` shorthand for these
+                  elements and would override any class-level one (equal
+                  specificity, and wow.css loads later), so the easing for
+                  colour is declared there instead. transition-colors is also
+                  avoided repo-wide on lifted elements: it animates
+                  border-color. */}
               <Link
                 href="/programs/the-way"
                 data-wow-lift
-                className="px-8 py-4 border-2 border-white/80 text-white rounded-full font-semibold text-lg hover:bg-white hover:text-secondary [transition:background-color_.18s_ease,color_.18s_ease]"
+                className="px-8 py-4 border-2 border-white/80 text-white rounded-full font-semibold text-lg hover:bg-white hover:text-secondary"
               >
                 על תוכנית ״הדרך״
               </Link>
@@ -236,7 +241,7 @@ export default function HomePage() {
             <div className="mt-16 flex flex-wrap gap-8 md:gap-12">
               {stats.map((stat, i) => (
                 <div key={i} className="text-center">
-                  <div className="text-2xl md:text-3xl font-bold text-accent-light tabular-nums">{stat.number}</div>
+                  <div className="text-2xl md:text-3xl font-bold text-accent-on-dark tabular-nums">{stat.number}</div>
                   <div className="text-sm text-white/70 mt-1">{stat.label}</div>
                 </div>
               ))}
@@ -618,7 +623,7 @@ export default function HomePage() {
           <h2 className="text-3xl md:text-5xl font-bold mb-6">
             הזוגיות שמגיעה לך לא תדפוק בדלת.
             <br />
-            <span className="text-accent-light">אבל אם תצא לדרך - היא מחכה לך.</span>
+            <span className="text-accent-on-dark">אבל אם תצא לדרך - היא מחכה לך.</span>
           </h2>
           <p className="text-xl opacity-90 max-w-2xl mx-auto mb-10 leading-relaxed">
             <GenderedText id="final-cta.body" />

@@ -209,6 +209,9 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-accent: var(--accent);
   --color-accent-light: var(--accent-light);
+  /* For text that always sits on a dark surface (the hero scrim, the rose CTA
+     band). See --accent-on-dark below: it does NOT flip with the theme. */
+  --color-accent-on-dark: var(--accent-on-dark);
   --color-accent-dark: var(--accent-dark);
   --color-accent-foreground: var(--accent-foreground);
   --color-muted: var(--muted);
@@ -288,12 +291,38 @@ p {
    under the text. The colours, the stop positions and the centre value are
    untouched — only the direction — so the photo is not dimmed any further
    through its middle. */
+/* SCRIM STOPS ARE THEME-INDEPENDENT (25.7).
+   The scrim was built from --secondary-dark / --foreground / --primary-dark.
+   All three INVERT under .dark (to #7BA3D0, #f5f5f5, #F5B0BD), but the text
+   the scrim protects is hardcoded white in both themes — so in dark mode the
+   scrim turned into a near-WHITE wash and the hero became unreadable. Measured
+   on the rendered dark page before this fix: 2.45:1 behind the headline,
+   1.80 mid-headline, 1.67 behind the lede, 1.34 behind the subhead, against an
+   AA floor of 4.5. That is the whole hero, not an edge case.
+   These stops pin the LIGHT-theme values of those three tokens, which is what
+   the gradient was always designed around, and are deliberately declared only
+   on :root so .dark cannot flip them. The scrim's job is to darken a PHOTO
+   behind white text; that job does not change with the colour scheme. */
+:root {
+  --scrim-deep: #152B47;   /* light-theme --secondary-dark */
+  --scrim-mid: #1a1a2e;    /* light-theme --foreground */
+  --scrim-warm: #C94A62;   /* light-theme --primary-dark */
+
+  /* Same reasoning, for the gold TEXT that sits on those dark surfaces.
+     --accent-light deliberately inverts under .dark (#E8C97D -> #B08A3A) so it
+     stays readable on light surfaces — correct for the rest of the site, wrong
+     on the hero, which is dark in BOTH themes now. Measured on /welcome in
+     dark before this: the gold heading ran 1.71:1 against a 3.0 large-text
+     floor. This token stays light, on :root only, for on-dark use. */
+  --accent-on-dark: #E8C97D;
+}
+
 .hero-scrim {
   background-image: linear-gradient(
     255deg,
-    color-mix(in srgb, var(--secondary-dark) 88%, transparent) 0%,
-    color-mix(in srgb, var(--foreground) 72%, transparent) 45%,
-    color-mix(in srgb, var(--primary-dark) 60%, transparent) 100%
+    color-mix(in srgb, var(--scrim-deep) 88%, transparent) 0%,
+    color-mix(in srgb, var(--scrim-mid) 72%, transparent) 45%,
+    color-mix(in srgb, var(--scrim-warm) 60%, transparent) 100%
   );
 }
 

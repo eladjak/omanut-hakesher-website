@@ -70,13 +70,31 @@
    existing per-element hover in the markup. transform + filter only;
    <=200ms; hover gated behind hover-capable pointers so touch never
    sticks. focus-visible mirrors hover for keyboard users. */
-/* box-shadow was in this list but nothing here ever changes a shadow, so it
-   only cost a repaint check per frame. Dropped 25.7 — the motion diet allows
-   transform and opacity/filter, not paint properties. */
+/* 25.7 — two fixes here.
+   (a) box-shadow left this list: nothing under [data-wow-lift] ever changes a
+       shadow, so it only bought a repaint check per frame. The motion diet
+       allows transform and opacity/filter, not paint properties.
+   (b) background-color and color JOINED it, because this shorthand was
+       silently killing them. [data-wow-lift] is an attribute selector (0,1,0)
+       and a Tailwind utility is a class (0,1,0) — equal specificity, and this
+       file loads after the utilities, so `transition` here REPLACED whatever
+       the element declared. Every element opted into the lift therefore lost
+       its own colour transition: the hero CTAs' hover has been snapping since
+       the lift was added, and `transition-colors` on them was inert. Verified
+       in-browser before the fix — computed transitionProperty on both CTAs
+       read "transform, filter", never their own colours.
+       Merging them here is the fix that actually holds, since a `transition`
+       shorthand cannot be additively extended from two rules. These two are
+       cheap paint (unlike box-shadow/border-color) and are inert on elements
+       whose colours never change.
+   The reduced-motion belt in globals.css still wins over all of it: it sets
+   transition-duration: 0.01ms with !important, which no rule here carries. */
 [data-wow-lift] {
   transition:
     transform 0.18s ease-out,
-    filter 0.18s ease-out;
+    filter 0.18s ease-out,
+    background-color 0.18s ease-out,
+    color 0.18s ease-out;
 }
 
 @media (hover: hover) {
