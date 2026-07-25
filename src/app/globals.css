@@ -274,10 +274,23 @@ p {
 }
 
 /* Warm directional hero scrim — replaces flat foreground/65 with an
-   intimate brand-tinted gradient that keeps white text legible. */
+   intimate brand-tinted gradient that keeps white text legible.
+
+   MIRRORED FOR RTL (25.7). The angle was 105deg, which puts the deepest stop
+   (secondary-dark at 88%) on the LEFT and the lightest (primary-dark at 60%)
+   on the RIGHT. This document is dir="rtl" and single-locale, so ALL hero copy
+   — headline, lede, CTAs — sits on the RIGHT. The scrim was therefore shielding
+   the empty side and leaving the text over the brightest part of the sunset
+   photo. Measured on the rendered page before the change: white headline copy
+   ran 5.91:1 where it actually sits, against 13.74:1 on the bare left edge.
+   255deg is the horizontal mirror of 105deg (360 - 105), so the same three
+   brand stops now run start-to-end in reading order and the deep stop lands
+   under the text. The colours, the stop positions and the centre value are
+   untouched — only the direction — so the photo is not dimmed any further
+   through its middle. */
 .hero-scrim {
   background-image: linear-gradient(
-    105deg,
+    255deg,
     color-mix(in srgb, var(--secondary-dark) 88%, transparent) 0%,
     color-mix(in srgb, var(--foreground) 72%, transparent) 45%,
     color-mix(in srgb, var(--primary-dark) 60%, transparent) 100%

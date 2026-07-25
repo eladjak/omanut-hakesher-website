@@ -47,6 +47,8 @@
 
 [data-wow-underline]::after {
   content: "";
+  /* Decorative: never a hit target, and it sits over the heading box. */
+  pointer-events: none;
   position: absolute;
   inset-inline-start: 0;
   bottom: -0.28em;
@@ -68,11 +70,13 @@
    existing per-element hover in the markup. transform + filter only;
    <=200ms; hover gated behind hover-capable pointers so touch never
    sticks. focus-visible mirrors hover for keyboard users. */
+/* box-shadow was in this list but nothing here ever changes a shadow, so it
+   only cost a repaint check per frame. Dropped 25.7 — the motion diet allows
+   transform and opacity/filter, not paint properties. */
 [data-wow-lift] {
   transition:
     transform 0.18s ease-out,
-    filter 0.18s ease-out,
-    box-shadow 0.18s ease-out;
+    filter 0.18s ease-out;
 }
 
 @media (hover: hover) {

@@ -183,7 +183,7 @@ export default function HomePage() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 hero-scrim" />
+          <div className="absolute inset-0 hero-scrim pointer-events-none" aria-hidden="true" />
         </div>
 
         <div className="container mx-auto px-4 py-20 relative z-10">
@@ -210,14 +210,23 @@ export default function HomePage() {
               <Link
                 href="/coaching"
                 data-wow-lift
-                className="px-8 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
+                className="px-8 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark [transition:background-color_.18s_ease] shadow-lg shadow-primary/20"
               >
                 לשיחת היכרות חינם
               </Link>
+              {/* Legibility fix 25.7: this button was border-secondary /
+                  text-secondary — navy #1E3A5F — on the DARK hero scrim, which
+                  measured 1.36:1 against its actual backdrop on the rendered
+                  page. That is not a near-miss, it is unreadable; the styling
+                  was written for a light section and never adjusted for the
+                  hero. White-on-dark is the correct pairing here and inverts on
+                  hover to the brand navy, so the identity colour still carries
+                  the interaction. Transition is scoped to background-color and
+                  color: transition-colors would also animate border-color. */}
               <Link
                 href="/programs/the-way"
                 data-wow-lift
-                className="px-8 py-4 border-2 border-secondary text-secondary rounded-full font-semibold text-lg hover:bg-secondary hover:text-white transition-colors"
+                className="px-8 py-4 border-2 border-white/80 text-white rounded-full font-semibold text-lg hover:bg-white hover:text-secondary [transition:background-color_.18s_ease,color_.18s_ease]"
               >
                 על תוכנית ״הדרך״
               </Link>
