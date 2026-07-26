@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { CoachingFAQ } from "./CoachingFAQ";
+import { testimonials as allTestimonials } from "@/lib/testimonials";
 
 export const metadata: Metadata = {
   title: "ליווי אישי למציאת זוגיות | שיחת היכרות חינם",
@@ -172,32 +173,13 @@ const included = [
   },
 ];
 
-const testimonials = [
-  {
-    name: "דני",
-    age: 38,
-    title: "מהנדס",
-    quote:
-      "הגעתי לאלעד אחרי 5 שנים של דייטים כושלים. הייתי בטוח שמשהו לא בסדר איתי. תוך 3 חודשים הבנתי שהבעיה הייתה לא מה שחשבתי - למדתי שאני בורח מקרבה בגלל פחד מדחייה. היום אני נשוי כבר שנתיים לאישה הכי מדהימה שפגשתי.",
-    highlight: "נשוי כבר שנתיים",
-  },
-  {
-    name: "מיכל",
-    age: 34,
-    title: "עורכת דין",
-    quote:
-      "ניסיתי הכל - אפליקציות, אירועי היכרויות, מפגשים. שום דבר לא עבד. הליווי עם אלעד היה שונה לגמרי. הוא לא רק עזר לי להבין מה אני רוצה, אלא גם לימד אותי איך לתקשר את זה. פגשתי את בן זוגי אחרי חודשיים וחצי.",
-    highlight: "מצאה בן זוג תוך חודשיים וחצי",
-  },
-  {
-    name: "אורי",
-    age: 42,
-    title: "יזם",
-    quote:
-      "הייתי סקפטי בהתחלה. חשבתי שאני יודע הכל על דייטינג. אלעד הראה לי כמה דברים בסיסיים שפספסתי לגמרי. הייתה לי חברה תוך 6 שבועות. היום אנחנו גרים ביחד.",
-    highlight: "מצא חברה תוך 6 שבועות",
-  },
-];
+// Real testimonials only — sourced from src/data/testimonials.json, the same
+// items published on /sipurim. This block previously held three invented-looking
+// persona quotes (first name + age + occupation, no image, no verifiable source)
+// sitting directly under the heading "לא שמות בדויים ולא סיפורים מומצאים".
+const testimonials = allTestimonials
+  .filter((t) => t.category === "text" && t.featured)
+  .slice(0, 3);
 
 const credentials = [
   "NLP מוסמך",
@@ -604,24 +586,26 @@ export default function CoachingPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="border-border/50 hover:shadow-lg transition-all duration-200">
+            {testimonials.map((testimonial) => (
+              <Card key={testimonial.slug} className="border-border/50 hover:shadow-lg transition-all duration-200">
                 <CardContent className="p-8">
                   {/* Quote mark */}
-                  <svg className="w-8 h-8 text-primary/20 mb-4" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-8 h-8 text-primary/20 mb-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11H10v10H0z" />
                   </svg>
-                  <p className="text-muted-foreground leading-relaxed mb-6 text-sm">
-                    ״{testimonial.quote}״
+                  <p className="text-muted-foreground leading-relaxed mb-6 text-sm text-pretty">
+                    ״{testimonial.full_text ?? testimonial.short_quote}״
                   </p>
                   <div className="border-t border-border/50 pt-4">
-                    <p className="font-semibold text-foreground">
-                      {testimonial.name}, {testimonial.age}
-                    </p>
+                    <p className="font-semibold text-foreground">{testimonial.name}</p>
                     <p className="text-sm text-muted-foreground">{testimonial.title}</p>
-                    <Badge variant="secondary" className="mt-2 bg-primary/10 text-primary border-primary/20 text-xs">
-                      {testimonial.highlight}
-                    </Badge>
+                    <Link
+                      href={`/sipurim/${testimonial.slug}`}
+                      className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-primary hover:gap-2 transition-all"
+                    >
+                      לסיפור המלא
+                      <span aria-hidden style={{ transform: "scaleX(-1)" }}>→</span>
+                    </Link>
                   </div>
                 </CardContent>
               </Card>
