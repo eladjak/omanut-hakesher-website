@@ -16,11 +16,13 @@ import { testimonials } from "@/lib/testimonials";
  * private personal photos of real couples rather than testimony they
  * composed for publication, so they stay on /sipurim and are not promoted
  * to the homepage.
+ *
+ * Only `portrait` items are used so every card in the grid shares one aspect
+ * ratio and the row does not go ragged.
  */
-const homeTestimonials = [
-  ...testimonials.filter((t) => t.category === "text" && t.featured),
-  ...testimonials.filter((t) => t.category === "graphic"),
-].slice(0, 6);
+const homeTestimonials = testimonials
+  .filter((t) => t.category === "graphic" && t.aspect === "portrait")
+  .slice(0, 6);
 
 export function HomeTestimonials() {
   if (homeTestimonials.length === 0) return null;
