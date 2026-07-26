@@ -19,10 +19,30 @@ import { testimonials } from "@/lib/testimonials";
  *
  * Only `portrait` items are used so every card in the grid shares one aspect
  * ratio and the row does not go ragged.
+ *
+ * PENDING ELAD'S APPROVAL — do not deploy this branch until he has signed off
+ * on this list item by item. The allowlist is explicit on purpose: nothing is
+ * included implicitly, so adding a testimonial to testimonials.json can never
+ * silently promote it to the homepage.
+ *
+ * meir-lewinger / dana-ezra / yaala-cohen are deliberately NOT here. Those
+ * cards are anonymised (silhouette avatar, initial only) but their filenames
+ * carry the person's full name, so serving the file de-anonymises someone who
+ * chose to stay anonymous. They stay out until the files are renamed to
+ * neutral slugs.
  */
-const homeTestimonials = testimonials
-  .filter((t) => t.category === "graphic" && t.aspect === "portrait")
-  .slice(0, 6);
+const APPROVED_FOR_HOMEPAGE = [
+  "meir-david-chai",
+  "mark-luski",
+  "benny-sneider",
+  "david-levinstern",
+  "limor-shaked",
+  "oria-asheta",
+] as const;
+
+const homeTestimonials = APPROVED_FOR_HOMEPAGE.map((slug) =>
+  testimonials.find((t) => t.slug === slug)
+).filter((t): t is NonNullable<typeof t> => t !== undefined);
 
 export function HomeTestimonials() {
   if (homeTestimonials.length === 0) return null;
