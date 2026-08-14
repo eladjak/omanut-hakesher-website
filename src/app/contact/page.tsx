@@ -54,7 +54,7 @@ export default function ContactPage() {
           </h1>
           <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
             שאלות, התלבטויות, או פשוט רוצה להתחיל - אני כאן.
-            שיחת היכרות של 30 דקות, בחינם, בלי התחייבות.
+            אפשר לתאם שיחת היכרות לבירור הצורך והצעד הבא.
           </p>
         </div>
       </section>
@@ -135,7 +135,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <p className="text-sm text-muted-foreground">זמן תגובה</p>
-                        <p className="font-medium">אחזור אליך תוך 24 שעות</p>
+                        <p className="font-medium">אחזור אליך בהקדם האפשרי</p>
                       </div>
                     </div>
                   </div>

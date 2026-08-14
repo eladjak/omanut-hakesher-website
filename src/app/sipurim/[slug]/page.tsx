@@ -51,7 +51,7 @@ const ctaLabels: Record<string, string> = {
   "/coaching": "לליווי אישי עם אלעד",
   "/programs/the-way": "לתוכנית הדרך",
   "/book": "להזמנת הספר",
-  "/contact": "לשיחת היכרות חינם",
+  "/contact": "לתיאום שיחת היכרות",
 };
 
 export default async function TestimonialDetailPage({
@@ -64,7 +64,7 @@ export default async function TestimonialDetailPage({
   if (!item) notFound();
 
   const related = getRelated(item);
-  const ctaLabel = ctaLabels[item.cta_target] ?? "לשיחת היכרות חינם";
+  const ctaLabel = ctaLabels[item.cta_target] ?? "לתיאום שיחת היכרות";
 
   const reviewJsonLd = {
     "@context": "https://schema.org",
@@ -173,7 +173,7 @@ export default async function TestimonialDetailPage({
               <div className="rounded-2xl border border-primary/30 bg-primary/5 p-6 md:p-8">
                 <h3 className="text-lg font-bold mb-2">רוצה את הסיפור הבא להיות שלך?</h3>
                 <p className="text-sm text-muted-foreground mb-5">
-                  שיחת היכרות של 30+ דקות, חינם, בלי התחייבות.
+                  שיחת היכרות לבירור הצורך וההתאמה, בתיאום מראש.
                 </p>
                 <Link
                   href={item.cta_target}

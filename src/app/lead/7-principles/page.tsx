@@ -13,17 +13,17 @@ const principles = [
   {
     num: 1,
     title: "קודם כל — מסע פנימי",
-    desc: "לפני שמחפשים מישהו אחר, צריך להכיר את עצמך לעומק. מי אתה, מה אתה צריך, מה מפחיד אותך.",
+    desc: "היכרות עם עצמך יכולה לעזור לדייק מה חשוב לך, מה אתה צריך ומה מעורר בך חשש.",
   },
   {
     num: 2,
     title: "אמונות שמגבילות",
-    desc: "כולנו נושאים עמנו סיפורים ישנים על אהבה וזוגיות. זיהוי האמונות המגבילות הוא שלב קריטי.",
+    desc: "סיפורים ישנים על אהבה וזוגיות עשויים להשפיע על בחירות. זיהוי אמונות מגבילות מאפשר לבחון אותן מחדש.",
   },
   {
     num: 3,
     title: "תקשורת שיוצרת חיבור",
-    desc: "לא מה שאומרים אלא איך אומרים. מיומנויות תקשורת שמביאות אנשים קרוב אחד לשני.",
+    desc: "גם לתוכן וגם לאופן שבו אומרים אותו יש השפעה. אפשר לתרגל הקשבה, ניסוח צרכים ושיחה הדדית.",
   },
   {
     num: 4,
@@ -33,7 +33,7 @@ const principles = [
   {
     num: 5,
     title: "גבולות בריאים",
-    desc: "גבולות לא מרחיקים אנשים — הם מגדירים מי אתה ומה חשוב לך. זה מה שמושך.",
+    desc: "גבולות עוזרים להבהיר מי אתה ומה חשוב לך, ולבדוק אם יש התאמה בלי לוותר על עצמך.",
   },
   {
     num: 6,
@@ -144,7 +144,7 @@ export default function SevenPrinciplesPage() {
                     color: "bg-primary/10 text-primary",
                   },
                   {
-                    text: "כלים מתוכנית שליוותה 461 זוגות",
+                    text: "כלים שפותחו מתוך ניסיון מעשי בליווי",
                     icon: (
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -153,7 +153,7 @@ export default function SevenPrinciplesPage() {
                     color: "bg-accent/10 text-accent-dark",
                   },
                   {
-                    text: "גישה שעובדת גם לגברים וגם לנשים",
+                    text: "גישה שמתאימה את השפה והתרגול לאדם",
                     icon: (
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -180,8 +180,8 @@ export default function SevenPrinciplesPage() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-primary">461 זוגות</p>
-                    <p className="text-muted-foreground text-sm">כבר מצאו את הדרך עם אלעד</p>
+                    <p className="text-2xl font-bold text-primary">ניסיון מעשי</p>
+                    <p className="text-muted-foreground text-sm">בליווי אנשים בתהליכי שינוי וקשר</p>
                   </div>
                 </div>
               </div>
@@ -342,13 +342,13 @@ export default function SevenPrinciplesPage() {
             רוצה ליישם את העקרונות עם ליווי אישי?
           </h2>
           <p className="text-xl opacity-90 mb-8 max-w-xl mx-auto leading-relaxed">
-            7 עקרונות בידיים שלך זה התחלה. יישום עם מנטור — זה מה שמביא תוצאות.
+            7 עקרונות בידיים שלך הם התחלה. ליווי יכול לעזור להפוך אותם לתרגול עקבי.
           </p>
           <Link
             href="/coaching"
             className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
           >
-            לשיחת היכרות חינם
+            לתיאום שיחת היכרות
           </Link>
         </div>
       </section>

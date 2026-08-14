@@ -22,17 +22,31 @@ function splitName(full: string): { firstName: string; lastName: string } {
   return { firstName: parts[0]!, lastName: parts.slice(1).join(' ') }
 }
 
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, (character) => {
+    const entities: Record<string, string> = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+    }
+    return entities[character]!
+  })
+}
+
 async function sendWelcomeEmail(args: {
   email: string
   firstName: string
   subject: string
   assetUrl: string
   variant?: 'guide' | 'newsletter'
-}): Promise<void> {
+}): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY
-  if (!apiKey) return // silent: caller already returned success
+  if (!apiKey) return false
 
-  const { email, firstName, subject, variant = 'guide' } = args
+  const { email, subject, variant = 'guide' } = args
+  const firstName = escapeHtml(args.firstName)
   // Relative asset paths are resolved against a domain that actually serves
   // this app (fleet-sweep 2026-07-10: omanut-hakesher.co.il is NXDOMAIN —
   // absolute links to it in welcome emails were dead on arrival).
@@ -75,7 +89,7 @@ async function sendWelcomeEmail(args: {
         </div>
       `
 
-  await fetch('https://api.resend.com/emails', {
+  const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${apiKey}`,
@@ -87,9 +101,8 @@ async function sendWelcomeEmail(args: {
       subject,
       html: body,
     }),
-  }).catch(() => {
-    // best-effort: subscription already succeeded, mail failure is not fatal
-  })
+  }).catch(() => null)
+  return response?.ok === true
 }
 
 export async function POST(request: Request) {
@@ -112,10 +125,20 @@ export async function POST(request: Request) {
   if (!magnet) {
     return NextResponse.json({ error: 'unknown-magnet', slug }, { status: 400 })
   }
+  if (!magnet.deliverable) {
+    return NextResponse.json(
+      { error: 'asset-not-ready', message: 'המדריך עדיין אינו זמין למסירה.' },
+      { status: 503 },
+    )
+  }
 
   // The general newsletter magnet only collects an email — name is optional.
   // Every other (gated) magnet still requires a real name for the welcome flow.
   const isNewsletter = magnet.slug === 'newsletter'
+  const hasMarketingConsent = body.consent === true
+  if (isNewsletter && !hasMarketingConsent) {
+    return NextResponse.json({ error: 'consent-required' }, { status: 400 })
+  }
   if (!isNewsletter && name.length < 2) {
     return NextResponse.json({ error: 'invalid-name' }, { status: 400 })
   }
@@ -124,20 +147,38 @@ export async function POST(request: Request) {
     ? splitName(name)
     : { firstName: 'חבר/ה', lastName: '' }
 
+  // Delivering a requested guide does not imply consent to marketing. Only
+  // subscribe guide recipients who explicitly opted in.
+  if (!isNewsletter && !hasMarketingConsent) {
+    const delivered = await sendWelcomeEmail({
+      email,
+      firstName,
+      subject: magnet.welcomeSubject,
+      assetUrl: magnet.assetUrl,
+      variant: 'guide',
+    })
+    if (!delivered) {
+      return NextResponse.json({ error: 'asset-delivery-failed' }, { status: 502 })
+    }
+    return NextResponse.json({ ok: true, mode: 'asset-only', alreadySubscribed: false })
+  }
+
   // If Rav-Messer is not configured (dev / preview), don't fail the user —
   // log and still send the welcome email so the asset is delivered.
   if (!isRavMesserConfigured()) {
     console.warn('[lead/subscribe] Rav-Messer not configured, skipping list subscription', {
       slug,
-      email,
     })
-    await sendWelcomeEmail({
+    const delivered = await sendWelcomeEmail({
       email,
       firstName,
       subject: magnet.welcomeSubject,
       assetUrl: magnet.assetUrl,
       variant: isNewsletter ? 'newsletter' : 'guide',
     })
+    if (!delivered) {
+      return NextResponse.json({ error: 'email-delivery-not-configured' }, { status: 503 })
+    }
     return NextResponse.json({ ok: true, mode: 'email-only', alreadySubscribed: false })
   }
 
@@ -151,20 +192,25 @@ export async function POST(request: Request) {
       lead_magnet: magnet.slug,
       signup_source: 'website',
       signup_at: new Date().toISOString(),
+      consent_text_version: 'marketing-opt-in-v1-2026-08-13',
+      consent_at: new Date().toISOString(),
     },
   })
 
   if (!result.ok) {
     // Subscriber path failed — still try to deliver asset by email so the user
     // gets value. Surface the failure mode to the dashboard via console.
-    console.error('[lead/subscribe] Rav-Messer subscribe failed', { slug, email, result })
-    await sendWelcomeEmail({
+    console.error('[lead/subscribe] Rav-Messer subscribe failed', { slug, reason: result.reason })
+    const delivered = await sendWelcomeEmail({
       email,
       firstName,
       subject: magnet.welcomeSubject,
       assetUrl: magnet.assetUrl,
       variant: isNewsletter ? 'newsletter' : 'guide',
     })
+    if (!delivered) {
+      return NextResponse.json({ error: 'asset-delivery-failed' }, { status: 502 })
+    }
     return NextResponse.json(
       { ok: true, mode: 'email-fallback', alreadySubscribed: false, ravMesserReason: result.reason },
       { status: 200 },
@@ -173,13 +219,20 @@ export async function POST(request: Request) {
 
   // Send welcome email regardless of alreadyExists — the user just asked for
   // the asset, they expect it now.
-  await sendWelcomeEmail({
+  const delivered = await sendWelcomeEmail({
     email,
     firstName,
     subject: magnet.welcomeSubject,
     assetUrl: magnet.assetUrl,
-      variant: isNewsletter ? 'newsletter' : 'guide',
+    variant: isNewsletter ? 'newsletter' : 'guide',
   })
+
+  if (!delivered) {
+    return NextResponse.json(
+      { error: 'email-delivery-failed', subscribed: true },
+      { status: 502 },
+    )
+  }
 
   return NextResponse.json({
     ok: true,

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { BookAccessProvider } from "@/components/book/BookAccessProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -13,5 +12,5 @@ export default function BookLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <BookAccessProvider>{children}</BookAccessProvider>;
+  return children;
 }

@@ -152,8 +152,8 @@ export default function TwentyThreeReasonsPage() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-primary">461 זוגות</p>
-                    <p className="text-muted-foreground text-sm">כבר מצאו את הדרך עם אלעד</p>
+                    <p className="text-2xl font-bold text-primary">ניסיון מעשי</p>
+                    <p className="text-muted-foreground text-sm">בליווי אנשים בתהליכי שינוי וקשר</p>
                   </div>
                 </div>
               </div>
@@ -341,13 +341,13 @@ export default function TwentyThreeReasonsPage() {
             רוצה ליווי אישי?
           </h2>
           <p className="text-xl opacity-90 mb-8 max-w-xl mx-auto leading-relaxed">
-            המדריך הוא ההתחלה. אם תרצה ללכת עמוק יותר — שיחת היכרות בחינם מחכה לך.
+            המדריך הוא ההתחלה. אם תרצה ללכת עמוק יותר, אפשר לתאם שיחת היכרות.
           </p>
           <Link
             href="/coaching"
             className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
           >
-            לשיחת היכרות חינם
+            לתיאום שיחת היכרות
           </Link>
         </div>
       </section>

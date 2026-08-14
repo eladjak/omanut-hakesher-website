@@ -72,8 +72,8 @@ export function Footer() {
               אומנות הקשר
             </Link>
             <p className="mt-4 text-background/60 max-w-md leading-relaxed">
-              ליווי מקצועי לרווקים ורווקות בדרך לזוגיות מאושרת. 461 זוגות
-              כבר מצאו את האהבה - עכשיו תורך.
+              דרך מעשית לרווקים ולרווקות שרוצים להבין מה מעכב אותם, לתרגל
+              חיבור ולבנות קשר מתוך בהירות, בחירה וכבוד.
             </p>
 
             {/* Social Links */}
@@ -191,9 +191,13 @@ export function Footer() {
               מדיניות פרטיות
             </Link>
             <span className="text-background/20 text-xs">|</span>
-            <p className="text-background/30 text-xs">
-              נבנה באהבה לקשרים טובים יותר
-            </p>
+            <Link href="/terms" className="text-background/30 hover:text-primary-light transition-colors text-xs">
+              תנאי שימוש
+            </Link>
+            <span className="text-background/20 text-xs">|</span>
+            <Link href="/accessibility" className="text-background/30 hover:text-primary-light transition-colors text-xs">
+              נגישות
+            </Link>
           </div>
         </div>
       </div>

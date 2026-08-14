@@ -9,9 +9,33 @@ interface ContactFormData {
   message: string;
 }
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MAX_FIELD_LENGTH = 2_000;
+
+function cleanField(value: unknown): string {
+  return typeof value === "string" ? value.trim().slice(0, MAX_FIELD_LENGTH) : "";
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
 export async function POST(request: Request) {
   try {
-    const data: ContactFormData = await request.json();
+    const raw = (await request.json()) as Partial<ContactFormData>;
+    const data: ContactFormData = {
+      firstName: cleanField(raw.firstName),
+      lastName: cleanField(raw.lastName),
+      email: cleanField(raw.email).toLowerCase(),
+      phone: cleanField(raw.phone),
+      service: cleanField(raw.service),
+      message: cleanField(raw.message),
+    };
 
     // Validate required fields
     if (!data.firstName || !data.lastName || !data.email || !data.phone) {
@@ -22,8 +46,7 @@ export async function POST(request: Request) {
     }
 
     // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(data.email)) {
+    if (!EMAIL_RE.test(data.email)) {
       return NextResponse.json(
         { error: "כתובת אימייל לא תקינה" },
         { status: 400 }
@@ -34,8 +57,14 @@ export async function POST(request: Request) {
     const resendApiKey = process.env.RESEND_API_KEY;
     const contactEmail = process.env.CONTACT_EMAIL || "eladjak.agents@gmail.com";
 
-    if (resendApiKey) {
-      const response = await fetch("https://api.resend.com/emails", {
+    if (!resendApiKey) {
+      return NextResponse.json(
+        { error: "שירות שליחת הפניות אינו זמין כרגע. אפשר ליצור קשר באימייל או בוואטסאפ." },
+        { status: 503 }
+      );
+    }
+
+    const response = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${resendApiKey}`,
@@ -44,42 +73,41 @@ export async function POST(request: Request) {
         body: JSON.stringify({
           from: "אומנות הקשר <omanut@eladjak.com>",
           to: [contactEmail],
-          subject: `פנייה חדשה מ${data.firstName} ${data.lastName}`,
+          subject: `פנייה חדשה מ${escapeHtml(data.firstName)} ${escapeHtml(data.lastName)}`,
           html: `
             <div dir="rtl" style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
               <h2 style="color: #c97b63;">פנייה חדשה מהאתר</h2>
               <table style="width: 100%; border-collapse: collapse;">
                 <tr>
                   <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">שם:</td>
-                  <td style="padding: 10px; border-bottom: 1px solid #eee;">${data.firstName} ${data.lastName}</td>
+                  <td style="padding: 10px; border-bottom: 1px solid #eee;">${escapeHtml(data.firstName)} ${escapeHtml(data.lastName)}</td>
                 </tr>
                 <tr>
                   <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">אימייל:</td>
-                  <td style="padding: 10px; border-bottom: 1px solid #eee;">${data.email}</td>
+                  <td style="padding: 10px; border-bottom: 1px solid #eee;">${escapeHtml(data.email)}</td>
                 </tr>
                 <tr>
                   <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">טלפון:</td>
-                  <td style="padding: 10px; border-bottom: 1px solid #eee;">${data.phone}</td>
+                  <td style="padding: 10px; border-bottom: 1px solid #eee;">${escapeHtml(data.phone)}</td>
                 </tr>
                 <tr>
                   <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">שירות מבוקש:</td>
-                  <td style="padding: 10px; border-bottom: 1px solid #eee;">${data.service || "לא צוין"}</td>
+                  <td style="padding: 10px; border-bottom: 1px solid #eee;">${escapeHtml(data.service || "לא צוין")}</td>
                 </tr>
               </table>
               <h3 style="color: #c97b63; margin-top: 20px;">הודעה:</h3>
-              <p style="background: #f5f0e8; padding: 15px; border-radius: 8px;">${data.message || "לא נכתבה הודעה"}</p>
+              <p style="background: #f5f0e8; padding: 15px; border-radius: 8px;">${escapeHtml(data.message || "לא נכתבה הודעה")}</p>
             </div>
           `,
         }),
-      });
+    });
 
-      if (!response.ok) {
-        console.error("Failed to send email via Resend");
-        // Don't fail the request, just log the error
-      }
-    } else {
-      // Log the contact form submission for development
-      console.log("Contact form submission:", data);
+    if (!response.ok) {
+      console.error("Failed to send contact email via Resend", { status: response.status });
+      return NextResponse.json(
+        { error: "הפנייה לא נשלחה. אפשר לנסות שוב או ליצור קשר ישיר." },
+        { status: 502 }
+      );
     }
 
     return NextResponse.json({

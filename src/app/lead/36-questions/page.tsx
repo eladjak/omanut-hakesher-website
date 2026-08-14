@@ -105,7 +105,7 @@ export default function ThirtySixQuestionsPage() {
               <span className="text-accent-light">ליצור אהבה</span>
             </h1>
             <p className="text-xl text-white/85 max-w-xl mx-auto leading-relaxed">
-              מבוסס על המחקר המפורסם של ד״ר ארתור ארון — עם התאמה ישראלית מאלעד
+              בהשראת פרוטוקול השאלות של ד״ר ארתור ארון — עם התאמה ישראלית מאלעד
             </p>
           </div>
         </div>
@@ -124,7 +124,7 @@ export default function ThirtySixQuestionsPage() {
               <div className="space-y-6">
                 {[
                   {
-                    text: "שאלות שנבדקו מדעית ליצירת קרבה",
+                    text: "שאלות שמעמיקות את השיחה בהדרגה",
                     icon: (
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
@@ -164,9 +164,9 @@ export default function ThirtySixQuestionsPage() {
               <div className="mt-8 p-5 rounded-2xl bg-muted/60 border border-border/50">
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   <span className="font-semibold text-foreground">המחקר של ד״ר ארון:</span>{" "}
-                  ב-1997 פרסם הפסיכולוג ארתור ארון מחקר שהראה שזוגות שענו על 36 שאלות ספציפיות
-                  בזה אחר זה פיתחו תחושת קרבה עמוקה תוך 45 דקות בלבד.
-                  הגרסה של אלעד מותאמת למנטליות הישראלית ולשלבים שונים של היכרות.
+                  ב-1997 פורסם ניסוי שבחן אם סדרה מובנית של שאלות יכולה לעודד תחושת
+                  קרבה בין משתתפים. זהו כלי לשיחה ולהיכרות, לא מבחן התאמה ולא הבטחה
+                  לקרבה בתוך זמן קבוע. הגרסה של אלעד מותאמת לשפה הישראלית ולשלבים שונים של היכרות.
                 </p>
               </div>
 
@@ -179,8 +179,8 @@ export default function ThirtySixQuestionsPage() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-primary">461 זוגות</p>
-                    <p className="text-muted-foreground text-sm">כבר מצאו את הדרך עם אלעד</p>
+                    <p className="text-2xl font-bold text-primary">ניסיון מעשי</p>
+                    <p className="text-muted-foreground text-sm">בליווי אנשים בתהליכי שינוי וקשר</p>
                   </div>
                 </div>
               </div>
@@ -373,13 +373,13 @@ export default function ThirtySixQuestionsPage() {
             מוכן/ה לצאת לדייט עם הכלים הנכונים?
           </h2>
           <p className="text-xl opacity-90 mb-8 max-w-xl mx-auto leading-relaxed">
-            36 שאלות זה כלי אחד. אם תרצה לדעת איך להשתמש בהם נכון — שיחת היכרות בחינם מחכה לך.
+            36 שאלות זה כלי אחד. אם תרצה לדעת איך להשתמש בו בהקשר שלך, אפשר לתאם שיחת היכרות.
           </p>
           <Link
             href="/coaching"
             className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
           >
-            לשיחת היכרות חינם
+            לתיאום שיחת היכרות
           </Link>
         </div>
       </section>

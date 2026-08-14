@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PRODUCT_FACTS } from "@/lib/product-facts";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
@@ -11,14 +12,14 @@ import { chapters as chapterData } from "@/data/book/chapters";
 export const metadata: Metadata = {
   title: "הספר ״אומנות הקשר״ - הדרך לזוגיות שאתה ראוי לה",
   description:
-    "הספר שמלמד את מה שלא לימדו אותך על זוגיות. 13 פרקים, 32 תרגילים מעשיים, וסיפורים אמיתיים של אנשים שעברו את הדרך. מאת אלעד יעקובוביץ׳.",
+    `הספר שמלמד את מה שלא לימדו אותך על זוגיות. ${PRODUCT_FACTS.book.chapters} פרקים בחמישה חלקים, ${PRODUCT_FACTS.book.numberedExercises} תרגילים ממוספרים וסיפורים מהשטח. מאת אלעד יעקובוביץ׳.`,
   alternates: {
     canonical: "/book",
   },
   openGraph: {
     title: "הספר ״אומנות הקשר״ | הדרך לזוגיות שאתה ראוי לה",
     description:
-      "10 פרקים, 32 תרגילים מעשיים. הספר שמלמד את מה שלא לימדו אותך על זוגיות.",
+      `${PRODUCT_FACTS.book.chapters} פרקים בחמישה חלקים ו־${PRODUCT_FACTS.book.numberedExercises} תרגילים ממוספרים. דרך מעשית להבין דפוסים, לתרגל חיבור ולבנות קשר.`,
     url: "/book",
     locale: "he_IL",
     type: "website",
@@ -72,10 +73,10 @@ export default function BookPage() {
 
               <div className="flex flex-wrap gap-4 mb-8">
                 <span className="text-sm bg-white/20 text-white px-3 py-1.5 rounded-full">
-                  13 פרקים
+                  {PRODUCT_FACTS.book.chapters} פרקים
                 </span>
                 <span className="text-sm bg-white/20 text-white px-3 py-1.5 rounded-full">
-                  32 תרגילים
+                  {PRODUCT_FACTS.book.numberedExercises} תרגילים
                 </span>
                 <span className="text-sm bg-white/20 text-white px-3 py-1.5 rounded-full">
                   9 סיפורים אמיתיים
@@ -288,7 +289,7 @@ export default function BookPage() {
                 ),
                 title: "כלים",
                 description:
-                  "כל פרק כולל משהו שאפשר לעשות מחר בבוקר. לא תיאוריה מופשטת - 32 תרגילים שעובדים.",
+                  "כל פרק כולל צעדים שאפשר לתרגל. 54 התרגילים הממוספרים הופכים רעיונות לעבודה מעשית.",
               },
               {
                 icon: (
@@ -370,7 +371,7 @@ export default function BookPage() {
             <span className="text-accent-light">בינתיים - יש דרך להתחיל כבר עכשיו.</span>
           </h2>
           <p className="text-xl opacity-90 mb-10 max-w-2xl mx-auto leading-relaxed">
-            שיחת היכרות של 30+ דקות, בחינם, בלי התחייבות.
+            שיחת היכרות לבירור הצורך והצעד הבא, בתיאום מראש.
             נבין ביחד איפה אתה עומד ומה הצעד הבא בשבילך.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
@@ -378,7 +379,7 @@ export default function BookPage() {
               href="/coaching"
               className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
             >
-              לשיחת היכרות חינם
+              לתיאום שיחת היכרות
             </Link>
             <Link
               href="/programs/the-way"

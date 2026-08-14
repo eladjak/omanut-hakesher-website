@@ -5,9 +5,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const metadata: Metadata = {
-  title: "תיאום שיחת היכרות חינם | ליווי אישי | אומנות הקשר",
+  title: "תיאום שיחת היכרות | ליווי אישי | אומנות הקשר",
   description:
-    "שיחת היכרות חינם של 30+ דקות עם אלעד יעקובוביץ׳. נבחן יחד אם הליווי האישי מתאים לך — בלי מחויבות.",
+    "שיחת היכרות עם אלעד יעקובוביץ׳ לבירור הצורך, צורת העבודה וההתאמה לליווי אישי.",
   alternates: { canonical: "/coaching/book" },
   robots: { index: true, follow: true },
 };
@@ -28,7 +28,7 @@ export default function CoachingBookPage() {
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="text-center mb-10">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30">
-              שיחת היכרות · 30+ דקות · ללא עלות
+              שיחת היכרות · בדיקת התאמה
             </Badge>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-balance">
               נקבע שיחה — נראה אם זה מתאים
@@ -82,8 +82,8 @@ export default function CoachingBookPage() {
           <div className="mt-12 grid sm:grid-cols-3 gap-5">
             <Card className="border-border/50">
               <CardContent className="p-5 text-center">
-                <p className="text-sm font-semibold mb-1">30+ דקות</p>
-                <p className="text-xs text-muted-foreground">בלי הגבלת זמן קשיחה — נדבר כל זמן שנדרש</p>
+                <p className="text-sm font-semibold mb-1">תיאום מראש</p>
+                <p className="text-xs text-muted-foreground">משך השיחה ותנאיה יאושרו בעת התיאום</p>
               </CardContent>
             </Card>
             <Card className="border-border/50">

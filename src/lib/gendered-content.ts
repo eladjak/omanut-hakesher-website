@@ -30,9 +30,9 @@ export const genderedContent: Record<string, GenderedText> = {
     female: "צרי קשר",
   },
   "cta.free-call": {
-    neutral: "לשיחת היכרות חינם",
-    male: "לשיחת היכרות חינם",
-    female: "לשיחת היכרות חינם",
+    neutral: "לתיאום שיחת היכרות",
+    male: "לתיאום שיחת היכרות",
+    female: "לתיאום שיחת היכרות",
   },
 
   // === Hero Section ===
@@ -61,9 +61,9 @@ export const genderedContent: Record<string, GenderedText> = {
       "פגישת היכרות ראשונה ללא התחייבות. בואי נכיר ונראה איך אפשר לעזור לך לבנות את הקשר שאת רוצה.",
   },
   "final-cta.free-call": {
-    neutral: "בוא נבדוק ביחד - שיחת היכרות חינם",
-    male: "בוא נבדוק ביחד - שיחת היכרות חינם",
-    female: "בואי נבדוק ביחד - שיחת היכרות חינם",
+    neutral: "בוא נבדוק ביחד - שיחת היכרות",
+    male: "בוא נבדוק ביחד - שיחת היכרות",
+    female: "בואי נבדוק ביחד - שיחת היכרות",
   },
   "final-cta.read-more": {
     neutral: "קרא עוד עליי",

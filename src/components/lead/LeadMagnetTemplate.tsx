@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { getLeadMagnet } from "@/lib/lead-magnets";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
@@ -57,7 +58,9 @@ export function LeadMagnetTemplate(props: LeadMagnetTemplateProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<FormStatus>("idle");
+  const [marketingConsent, setMarketingConsent] = useState(false);
   const [errors, setErrors] = useState<{ name?: string; email?: string; submit?: string }>({});
+  const isDeliverable = getLeadMagnet(slug)?.deliverable === true;
 
   const validate = () => {
     const newErrors: { name?: string; email?: string } = {};
@@ -75,7 +78,12 @@ export function LeadMagnetTemplate(props: LeadMagnetTemplateProps) {
       const res = await fetch("/api/lead/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim(), name: name.trim(), slug }),
+        body: JSON.stringify({
+          email: email.trim(),
+          name: name.trim(),
+          slug,
+          consent: marketingConsent,
+        }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -142,8 +150,8 @@ export function LeadMagnetTemplate(props: LeadMagnetTemplateProps) {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-primary tabular-nums">461 זוגות</p>
-                    <p className="text-muted-foreground text-sm">כבר מצאו את הדרך עם אלעד</p>
+                    <p className="text-xl font-bold text-primary">כלים מתוך עבודה מעשית</p>
+                    <p className="text-muted-foreground text-sm">ניסיון שהפך לצעדים שאפשר לתרגל</p>
                   </div>
                 </div>
               </div>
@@ -166,6 +174,16 @@ export function LeadMagnetTemplate(props: LeadMagnetTemplateProps) {
                       <p className="text-sm text-muted-foreground mt-4">
                         לא הגיע? <Link href="/contact" className="text-primary underline-offset-4 hover:underline">כתוב/כתבי לי</Link> ואשלח לך ידנית.
                       </p>
+                    </div>
+                  ) : !isDeliverable ? (
+                    <div className="py-8 text-center">
+                      <h2 className="text-xl font-bold mb-3">המדריך בהכנה</h2>
+                      <p className="text-muted-foreground leading-relaxed">
+                        הקובץ עדיין לא מוכן למסירה, ולכן הטופס הושבת זמנית. אפשר לחזור לעמוד המדריכים ולבחור כלי שכבר זמין.
+                      </p>
+                      <Button asChild className="mt-6 rounded-full">
+                        <Link href="/lead">לכל המדריכים</Link>
+                      </Button>
                     </div>
                   ) : (
                     <>
@@ -228,9 +246,17 @@ export function LeadMagnetTemplate(props: LeadMagnetTemplateProps) {
                           )}
                         </Button>
 
-                        <p className="text-xs text-muted-foreground text-center leading-relaxed">
-                          לא ספאם, מעולם. אפשר להסיר בכל עת.
-                        </p>
+                        <label className="flex items-start gap-3 text-xs text-muted-foreground leading-relaxed">
+                          <input
+                            type="checkbox"
+                            checked={marketingConsent}
+                            onChange={(event) => setMarketingConsent(event.target.checked)}
+                            className="mt-0.5 size-4 shrink-0 accent-primary"
+                          />
+                          <span>
+                            בנוסף לשליחת המדריך, אני מסכים/ה לקבל מאומנות הקשר כלים ועדכונים במייל. ההסכמה אינה תנאי לקבלת המדריך, ואפשר להסיר אותה בכל עת.
+                          </span>
+                        </label>
                       </form>
 
                       <div className="mt-6 pt-6 border-t border-border/50 text-center">
@@ -316,13 +342,13 @@ export function LeadMagnetTemplate(props: LeadMagnetTemplateProps) {
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">רוצה ליווי אישי?</h2>
           <p className="text-pretty text-xl opacity-90 mb-8 max-w-xl mx-auto leading-relaxed">
-            המדריך הוא ההתחלה. אם תרצה/י ללכת עמוק יותר — שיחת היכרות בחינם מחכה לך.
+            המדריך הוא ההתחלה. אם תרצה/י ללכת עמוק יותר, אפשר לתאם שיחת היכרות.
           </p>
           <Link
             href="/coaching/vip"
             className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
           >
-            לשיחת היכרות חינם
+            לתיאום שיחת היכרות
           </Link>
         </div>
       </section>

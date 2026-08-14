@@ -14,6 +14,7 @@ import { GenderProvider } from "@/components/GenderProvider";
 import { WelcomeModal } from "@/components/WelcomeModal";
 import { WowMotion } from "@/components/animations/WowMotion";
 import { MotionProvider } from "@/components/MotionProvider";
+import { CANONICAL_SITE_URL } from "@/lib/site-url";
 
 const heebo = Heebo({
   variable: "--font-heebo",
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
     template: "%s | אומנות הקשר",
   },
   description:
-    "בית הספר למציאת זוגיות מאושרת. 461 זוגות כבר מצאו אהבה דרך תוכנית ״הדרך״ וליווי אישי עם אלעד יעקובוביץ׳. שיחת היכרות חינם.",
+    "דרך מעשית לרווקים ולרווקות שרוצים להבין מה מעכב אותם, לתרגל חיבור ולבנות קשר מתוך בהירות, בחירה וכבוד.",
   keywords: [
     "מציאת זוגיות",
     "ליווי אישי לזוגיות",
@@ -36,11 +37,11 @@ export const metadata: Metadata = {
     "קורס זוגיות",
     "איך למצוא זוגיות",
     "מנטור זוגיות",
-    "שיחת ייעוץ חינם",
+    "שיחת היכרות",
     "רווקים",
     "דייטינג",
   ],
-  metadataBase: new URL("https://omanut-hakesher.co.il"),
+  metadataBase: new URL(CANONICAL_SITE_URL),
   alternates: {
     canonical: "/",
   },
@@ -56,11 +57,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "אומנות הקשר | מצא את הזוגיות שמגיעה לך - אלעד יעקובוביץ׳",
     description:
-      "461 זוגות כבר מצאו אהבה. תוכנית ״הדרך״ + ליווי אישי עם התחייבות לתוצאה. שיחת היכרות חינם.",
+      "תוכנית ״הדרך״, הספר וליווי אישי: מסגרת מעשית ללמידה, תרגול ומשוב בדרך לקשר.",
     locale: "he_IL",
     type: "website",
     siteName: "אומנות הקשר",
-    url: "https://omanut-hakesher.co.il",
+    url: CANONICAL_SITE_URL,
     images: [
       {
         url: "/opengraph-image",
@@ -74,7 +75,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "אומנות הקשר | מצא את הזוגיות שמגיעה לך",
     description:
-      "461 זוגות כבר מצאו אהבה. שיחת היכרות חינם עם אלעד יעקובוביץ׳.",
+      "כלים מעשיים, תוכנית מובנית וליווי אישי בדרך לקשר.",
     images: ["/opengraph-image"],
   },
   robots: {
@@ -94,7 +95,6 @@ export default function RootLayout({
         {/* Preconnect to external origins for faster resource loading */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         {/* Prevent dark mode flash - runs before React hydration */}
         <script
           dangerouslySetInnerHTML={{

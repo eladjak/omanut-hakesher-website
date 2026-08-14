@@ -9,7 +9,7 @@
  * Env vars:
  *   SUMIT_COMPANY_ID         (required)
  *   SUMIT_API_KEY            (required — Sumit's term for "API token")
- *   SUMIT_WEBHOOK_SECRET     (optional but strongly recommended)
+ *   SUMIT_WEBHOOK_SECRET     (required for webhook processing)
  *   NEXT_PUBLIC_SITE_URL     (used to build redirect URLs)
  *
  * If credentials are missing, isConfigured() returns false and the API route
@@ -37,6 +37,20 @@ function readConfig(): SumitConfig | null {
 
 export function isConfigured(): boolean {
   return readConfig() !== null;
+}
+
+// Deliberately compile-time false until the repository contains a durable
+// pending-order/idempotency/amount-validation/fulfillment implementation.
+// This prevents a single environment-variable change from accepting a charge
+// that the current webhook is intentionally unable to fulfill.
+const PAYMENT_FULFILLMENT_IMPLEMENTED = false;
+
+/**
+ * Explicit launch gate. Credentials or an environment flag alone must never
+ * turn payments on: implementation and owner approval are both required.
+ */
+export function isPaymentsEnabled(): boolean {
+  return PAYMENT_FULFILLMENT_IMPLEMENTED && process.env.PAYMENTS_ENABLED === 'true';
 }
 
 function getClient() {
@@ -184,7 +198,6 @@ export async function verifyCreditGuyTransaction(ref: {
     const paid = data.Code === '000';
     const amount_ils = typeof data.Amount === 'number' ? data.Amount : 0;
     if (paid && amount_ils <= 0) {
-      // eslint-disable-next-line no-console
       console.warn('[sumit] gettransaction approved (Code 000) but no positive Amount — treating amount as unverified');
     }
     return {
@@ -204,16 +217,13 @@ export async function verifyCreditGuyTransaction(ref: {
 
 /**
  * Verify Sumit webhook signature (HMAC-SHA256 of raw body with shared secret).
- * If no secret is configured, returns true (accept) — but log a warning so
- * production is forced to set one before going live.
+ * Missing secret is a configuration failure and therefore rejects every event.
  */
 export function verifyWebhookSignature(rawBody: string, signature: string | null): boolean {
   const cfg = readConfig();
   if (!cfg?.webhookSecret) {
-    // No secret set yet — accept but warn
-    // eslint-disable-next-line no-console
-    console.warn('[sumit] SUMIT_WEBHOOK_SECRET not set — accepting webhook without signature check');
-    return true;
+    console.error('[sumit] SUMIT_WEBHOOK_SECRET not set — rejecting webhook');
+    return false;
   }
   if (!signature) return false;
 

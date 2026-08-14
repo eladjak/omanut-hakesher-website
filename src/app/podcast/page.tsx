@@ -232,14 +232,14 @@ export default function PodcastPage() {
           </h2>
           <p className="text-xl opacity-90 mb-10 max-w-xl mx-auto leading-relaxed">
             הפודקאסט נותן את ההשראה. הליווי האישי עושה את השינוי.
-            שיחת היכרות של 30+ דקות, בחינם, בלי התחייבות.
+            אפשר לתאם שיחת היכרות לבירור הצורך וההתאמה.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/coaching"
               className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
             >
-              לשיחת היכרות חינם
+              לתיאום שיחת היכרות
             </Link>
             <a
               href="https://open.spotify.com/show/2mXzv3AS0rZw7eTCVjEbyZ"

@@ -7,19 +7,20 @@
  *  1. DEV (NODE_ENV=development): reads from ~/Documents/drafts/pipeline-*
  *     directly. Lets Elad iterate on the PWA against live drafts on his
  *     workstation.
- *  2. PROD (NODE_ENV=production / Vercel): reads from a snapshot at
- *     /public/content-drafts.json that is committed alongside the build.
+ *  2. PROD (NODE_ENV=production / Vercel): reads from a server-bundled
+ *     snapshot. The snapshot is never placed under /public.
  *     The snapshot is updated by a separate sync script (TODO follow-up:
  *     wire `~/.claude/scripts/sync-content-snapshot.mjs` → push to repo).
  *
- * Auth: bearer-style ?key=<CONTENT_REVIEW_KEY> OR `Authorization: Bearer …`
- *     The key is independent of the main hub HMAC. Set CONTENT_REVIEW_KEY
- *     in Vercel env. Defaults to "dev" in local development.
+ * Auth: `Authorization: Bearer …` in production. The `?key=` convenience is
+ *     accepted only in local development. Set CONTENT_REVIEW_KEY in Vercel;
+ *     it defaults to "dev" only outside production.
  */
 import { NextResponse } from "next/server";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import os from "node:os";
+import contentSnapshot from "@/data/content-drafts.json";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -30,9 +31,14 @@ const EXPECTED_KEY =
 
 function isAuthorized(req: Request): boolean {
   if (!EXPECTED_KEY) return false;
-  const url = new URL(req.url);
-  const k = url.searchParams.get("key");
-  if (k && k === EXPECTED_KEY) return true;
+  // Query-string secrets leak into browser history and infrastructure logs.
+  // Keep the convenience only for local development; production accepts the
+  // Authorization header exclusively.
+  if (process.env.NODE_ENV !== "production") {
+    const url = new URL(req.url);
+    const k = url.searchParams.get("key");
+    if (k && k === EXPECTED_KEY) return true;
+  }
   const h = req.headers.get("authorization");
   if (h && h.startsWith("Bearer ") && h.slice(7) === EXPECTED_KEY) return true;
   return false;
@@ -97,14 +103,7 @@ async function readLocalManifests(): Promise<DraftCard[]> {
 }
 
 async function readSnapshot(): Promise<DraftCard[]> {
-  try {
-    const p = path.join(process.cwd(), "public", "content-drafts.json");
-    const raw = await fs.readFile(p, "utf8");
-    const snap = JSON.parse(raw);
-    return snap.drafts || [];
-  } catch {
-    return [];
-  }
+  return (contentSnapshot.drafts || []) as DraftCard[];
 }
 
 export async function GET(req: Request) {

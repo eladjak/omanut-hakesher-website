@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
 import { getAllBlogSlugs } from "@/lib/blog-posts";
 import { getAllSlugs as getAllTestimonialSlugs } from "@/lib/testimonials";
+import { CANONICAL_SITE_URL } from "@/lib/site-url";
 
-const BASE_URL = "https://omanut-hakesher.co.il";
+const BASE_URL = CANONICAL_SITE_URL;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const blogSlugs = getAllBlogSlugs();

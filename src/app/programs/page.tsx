@@ -8,7 +8,7 @@ import { getProduct, formatILS } from "@/lib/products";
 export const metadata: Metadata = {
   title: "תוכניות אומנות הקשר — בחר/י את המסלול שלך",
   description:
-    "6 דרכים להתחיל את הדרך לזוגיות: אירוע אהבה חינמי, מועדון 90D, כרטיס היכרויות מנצח, תוכנית הדרך, המסלול המלא וליווי VIP. בכל רמת השקעה יש נקודת התחלה.",
+    "מסלולים ושירותים של אומנות הקשר: אירועי הדרכה, קהילה, כתיבת פרופיל, תוכנית הדרך וליווי אישי. פרטי הזמינות והתנאים מוצגים בכל עמוד.",
   alternates: { canonical: "/programs" },
   openGraph: {
     title: "תוכניות אומנות הקשר | כל המסלולים",
@@ -43,35 +43,35 @@ const programs: ProgramCard[] = [
   {
     slug: "love-event",
     href: "/events/love-event",
-    badge: "חינם · נקודת התחלה",
+    badge: "אירוע הדרכה · פרטים בעמוד",
     badgeTone: "accent",
     title: "אירוע אהבה",
-    tagline: "מפגש זום שבועי — הדרכה, קהילה ותמיכה",
-    price: "₪0",
-    priceDetail: "יום ה׳, 20:30 — בזום",
+    tagline: "מפגש אונליין להדרכה, שאלות והיכרות עם הגישה",
+    price: "בדיקת זמינות",
+    priceDetail: "המועד והתנאים מתעדכנים בעמוד האירוע",
     features: [
       "הדרכה חיה ממני",
-      "קהילה של מתאימים לזוגיות",
+      "מפגש עם משתתפים נוספים",
       "שאלות ותשובות בלייב",
-      "ללא הקלטה — רק חי",
+      "פרטי הפורמט מוצגים לפני הרשמה",
     ],
     audience: "למי שמכיר אותנו פעם ראשונה",
-    cta: "להרשמה חינמית",
+    cta: "לבדיקת המועד",
   },
   {
     slug: club.slug,
     href: club.path,
-    badge: `חודש ראשון ${formatILS(club.price.amount)}`,
+    badge: "קהילה ותרגול",
     badgeTone: "secondary",
     title: club.nameHe,
-    tagline: "תמיכה שוטפת + קהילה + מפגשים שבועיים",
-    price: formatILS(club.price.amount),
-    priceDetail: `חודש ראשון · אחר כך ${formatILS(club.price.anchorAmount ?? 30)}/חודש · ביטול חופשי`,
+    tagline: "מסגרת קהילתית לתרגול, שיתוף ומפגשים",
+    price: "פרטים בעמוד",
+    priceDetail: "תנאי ההצטרפות והחידוש יאושרו לפני הפעלה",
     features: [
-      "מפגש שבועי בזום",
-      "ליווי יומי בצ׳אט",
-      "פורום + פייסבוק + וואטסאפ",
-      "כניסה חינמית לאירועים",
+      "מפגשי תרגול אונליין",
+      "ערוץ קהילתי לשיתוף",
+      "חומרי תרגול נלווים",
+      "פרטי הפעילות מוצגים לפני הצטרפות",
     ],
     audience: "למי שרוצה תמיכה שוטפת בלי להתחייב",
     cta: "להצטרפות למועדון",
@@ -84,12 +84,12 @@ const programs: ProgramCard[] = [
     title: datingCard.nameHe,
     tagline: "אלעד והצוות כותבים לך פרופיל מקצועי",
     price: formatILS(datingCard.price.amount),
-    priceDetail: "תשלום חד-פעמי · מסירה תוך 5-7 ימי עסקים",
+    priceDetail: "שירות חד-פעמי · מועד המסירה מאושר לפני הזמנה",
     features: [
       "שאלון אישי + ניסוח מקצועי",
       "מדריך לצילום פרופיל",
       "מדריך סטיילינג אישי",
-      "חודשיים חינם במועדון",
+      "משאב נלווה לתרגול הפרופיל",
     ],
     audience: "למי שכבר באפליקציות ולא מקבל פניות",
     cta: "להזמנת הכרטיס",
@@ -97,16 +97,16 @@ const programs: ProgramCard[] = [
   {
     slug: theWay.slug,
     href: theWay.path,
-    badge: "תוכנית 90 יום",
+    badge: "תוכנית 12 שבועות",
     badgeTone: "primary",
     title: theWay.nameHe,
-    tagline: "90 ימים למציאת זוגיות מאושרת — בליווי ובהתחייבות",
+    tagline: "12 שבועות של תוכן, תרגול וליווי בתהליך אישי",
     price: formatILS(theWay.price.amount),
-    priceDetail: `או עד ${theWay.maxPayments} תשלומים ללא ריבית`,
+    priceDetail: "המחיר ותנאי התשלום יאושרו לפני פתיחת הרכישה",
     features: [
-      "90 ימי תוכן (סרטון יומי קצר)",
-      "6 שלבי השיטה — צעד אחר צעד",
-      "ליווי יומי ממנטור בצ׳אט",
+      "תוכן ותרגול לאורך 12 שבועות",
+      "5 שלבים — גישה, תקשורת, מעבר, חיבור ומחויבות",
+      "משוב וליווי לפי מסגרת התוכנית",
       "קהילה תומכת",
     ],
     audience: "למי שרוצה תהליך מובנה עם ליווי",
@@ -115,17 +115,17 @@ const programs: ProgramCard[] = [
   {
     slug: theWayPlus.slug,
     href: theWayPlus.path,
-    badge: "המסלול המלא · המומלץ",
+    badge: "מסלול משולב",
     badgeTone: "primary",
     title: theWayPlus.nameHe,
     tagline: "תוכנית הדרך + 12 מפגשי תרגול מעשי אונליין",
     price: formatILS(theWayPlus.price.amount),
-    priceDetail: `או עד ${theWayPlus.maxPayments} תשלומים ללא ריבית`,
+    priceDetail: "המחיר ותנאי התשלום יאושרו לפני פתיחת הרכישה",
     features: [
       "כל מה שבתוכנית הדרך",
       "12 מפגשי תרגול מעשי",
-      "ליווי VIP יומי",
-      `8 בונוסים בשווי ${formatILS(4980)}`,
+      "ליווי ומשוב במסגרת המסלול",
+      "משאבים נלווים לתרגול",
     ],
     audience: "למי שרוצה את החבילה המלאה בלי VIP",
     cta: "למסלול המלא",
@@ -134,20 +134,20 @@ const programs: ProgramCard[] = [
   {
     slug: "vip-coaching",
     href: "/coaching/vip",
-    badge: "VIP · 10 לקוחות בלבד",
+    badge: "VIP · מותאם אישית",
     badgeTone: "primary",
     title: "ליווי אישי VIP",
-    tagline: "1-על-1 איתי. עד החופה. עם התחייבות.",
+    tagline: "1-על-1 איתי. תוכנית מותאמת ומשוב שוטף.",
     price: "מותאם",
     priceDetail: "המחיר נחשף בשיחת ההתאמה",
     features: [
       "צ׳אט פרטי איתי באופן אישי",
-      "מענה תוך 24 שעות",
-      "6-12 חודשים · אחריות יישומית",
+      "משוב לפי מסגרת הליווי",
+      "מסגרת עבודה מוגדרת · מעקב יישומי",
       "תוכנית מותאמת אישית",
     ],
     audience: "למי שמוכן/ה להשקיע ברצינות בעצמו",
-    cta: "לשיחת התאמה חינם",
+    cta: "לבדיקת התאמה",
   },
 ];
 
@@ -245,11 +245,11 @@ export default function ProgramsIndexPage() {
             לא בטוח/ה?
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">
-            שיחת התאמה חינמית
+            בדיקת התאמה
           </h2>
           <p className="text-lg text-muted-foreground mb-8 text-pretty">
-            30 דקות בזום או טלפון. אבחן את המצב שלך ואמליץ על המסלול הנכון — גם אם
-            זה אומר שאין מסלול בשלב הזה.
+            שיחת היכרות לבירור הצורך והמסלול הרלוונטי. ייתכן שהמסקנה תהיה שאין
+            כרגע מסלול מתאים — וגם זו תשובה לגיטימית.
           </p>
           <div className="flex flex-wrap justify-center items-center gap-4">
             <Link

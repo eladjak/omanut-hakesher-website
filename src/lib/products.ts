@@ -51,9 +51,9 @@ export const PRODUCTS: Record<string, Product> = {
     slug: "the-way",
     path: "/programs/the-way",
     nameHe: "תוכנית הדרך",
-    taglineHe: "90 ימים למציאת זוגיות מאושרת — בליווי ובהתחייבות",
+    taglineHe: "מסלול מובנה של 12 שבועות — תוכן, תרגול וליווי",
     descriptionHe:
-      "תוכנית מקיפה למציאת זוגיות מאושרת תוך 90 יום: 6 שלבי השיטה, ליווי יומיומי ממנטור, קהילה תומכת, חדר תרגול.",
+      "תוכנית של 12 שבועות להבנת דפוסים, תרגול תקשורת ופעולה בעולם ההיכרויות, לצד ליווי וקהילה.",
     type: "one-time",
     price: { amount: 1850, anchorAmount: 2050 },
     maxPayments: 12,
@@ -66,7 +66,7 @@ export const PRODUCTS: Record<string, Product> = {
     nameHe: "תוכנית הדרך + חדר כושר לדייטים",
     taglineHe: "המסלול המלא — תוכנית הדרך + 12 מפגשי תרגול אונליין",
     descriptionHe:
-      "תוכנית הדרך המלאה כולל חדר כושר לדייטים: 12 מפגשי תרגול אונליין לאימון מעשי, ליווי VIP, כל הבונוסים.",
+      "תוכנית הדרך לצד 12 מפגשי תרגול אונליין, משוב וקהילת תרגול.",
     type: "one-time",
     price: { amount: 2970, anchorAmount: 4500, valueAmount: 12420 },
     maxPayments: 12,
@@ -77,7 +77,7 @@ export const PRODUCTS: Record<string, Product> = {
     slug: "dating-card",
     path: "/products/dating-card",
     nameHe: "כרטיס היכרויות מנצח",
-    taglineHe: "אלעד והצוות יכתבו לך כרטיס היכרויות שמכפיל פניות",
+    taglineHe: "כתיבה אישית של כרטיס היכרויות — לא תבנית גנרית",
     descriptionHe:
       "כתיבה אישית של פרופיל היכרויות מקצועי. שאלון אישי → ניסוח על ידי הצוות → שליחה למייל. כולל 3 בונוסים.",
     type: "one-time",
@@ -90,9 +90,9 @@ export const PRODUCTS: Record<string, Product> = {
     slug: "club-90d",
     path: "/club",
     nameHe: "מועדון הדרך 90D",
-    taglineHe: "מועדון חודשי — מפגש שבועי, ליווי, קהילה",
+    taglineHe: "מסגרת קהילתית לתרגול, מפגשים ותמיכה",
     descriptionHe:
-      "מועדון מנויים חודשי: מפגש תמיכה שבועי, ליווי יומיומי בצ׳אט, קהילה, בונוסים. ללא התחייבות, ביטול בכל עת.",
+      "מסגרת קהילתית עם מפגשי תמיכה, תרגול ושיח. תנאי ההצטרפות וההמשך מוצגים לפני כל רכישה.",
     type: "recurring-monthly",
     price: { amount: 4, anchorAmount: 30 },
     sku: "OHK-CLUB-001",
@@ -102,9 +102,9 @@ export const PRODUCTS: Record<string, Product> = {
     slug: "vip-coaching",
     path: "/coaching/vip",
     nameHe: "ליווי אישי VIP",
-    taglineHe: "ליווי אישי עד החופה — מוגבל ל-10 לקוחות",
+    taglineHe: "ליווי אישי ממוקד ליישום, תרגול ומשוב",
     descriptionHe:
-      "ליווי אישי 6-12 חודשים עם התחייבות לתוצאה. שיחת היכרות חינמית של 30 דקות לבדיקת התאמה.",
+      "ליווי אישי בתוכנית עבודה מותאמת, עם מפגשים, תרגול ומשוב. מתחילים בבדיקת התאמה.",
     type: "booking-required",
     price: { amount: 0 },
     sku: "OHK-VIP-001",

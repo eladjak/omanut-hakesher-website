@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
-import { createCheckout, isConfigured as isSumitConfigured } from "@/lib/sumit";
+import {
+  createCheckout,
+  isConfigured as isSumitConfigured,
+  isPaymentsEnabled,
+} from "@/lib/sumit";
 import { getProduct } from "@/lib/products";
 import { FUNCTIONAL_BASE_URL } from "@/lib/site-url";
 
@@ -24,13 +28,6 @@ function siteUrl(): string {
   // Post-payment redirects must land on a domain that actually serves this
   // app (omanut-hakesher.co.il is NXDOMAIN). Centralized in src/lib/site-url.ts.
   return FUNCTIONAL_BASE_URL;
-}
-
-function generateOrderId(slug: string): string {
-  // Compact ULID-ish: timestamp + 6 random chars. Sortable + unique.
-  const ts = Date.now().toString(36);
-  const rand = Math.random().toString(36).slice(2, 8);
-  return `${slug}-${ts}-${rand}`;
 }
 
 export async function POST(request: Request) {
@@ -66,17 +63,23 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "invalid-phone" }, { status: 400 });
   }
 
+  if (!isPaymentsEnabled()) {
+    return NextResponse.json(
+      { error: "payments-disabled", message: "הרכישה המקוונת אינה זמינה כרגע." },
+      { status: 503 },
+    );
+  }
+
   if (!isSumitConfigured()) {
-    // Dev/preview path: skip Sumit, return a dummy redirect to /thanks so the
-    // UI flow can still be tested. Production deploys MUST set SUMIT_* env.
-    console.warn("[/api/checkout] Sumit not configured — returning dev fallback");
-    const orderId = generateOrderId(slug);
-    return NextResponse.json({
-      ok: true,
-      mode: "dev-fallback",
-      orderId,
-      redirectUrl: `${siteUrl()}/checkout/success?dev=1&order=${encodeURIComponent(orderId)}&product=${encodeURIComponent(slug)}`,
-    });
+    // Payment setup is an external dependency. Never manufacture a successful
+    // order when it is unavailable: preview UIs can mock this route explicitly.
+    return NextResponse.json(
+      {
+        error: "sumit-not-configured",
+        message: "מערכת התשלומים אינה זמינה כרגע. אנא נסו שוב מאוחר יותר.",
+      },
+      { status: 503 },
+    );
   }
 
   // 2026-07-09 salvage adaptation: this route (authored 2026-05-14 against the

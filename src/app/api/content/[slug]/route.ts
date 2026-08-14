@@ -12,6 +12,7 @@ import { NextResponse } from "next/server";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import os from "node:os";
+import contentSnapshot from "@/data/content-drafts.json";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,9 +23,11 @@ const EXPECTED_KEY =
 
 function isAuthorized(req: Request): boolean {
   if (!EXPECTED_KEY) return false;
-  const url = new URL(req.url);
-  const k = url.searchParams.get("key");
-  if (k && k === EXPECTED_KEY) return true;
+  if (process.env.NODE_ENV !== "production") {
+    const url = new URL(req.url);
+    const k = url.searchParams.get("key");
+    if (k && k === EXPECTED_KEY) return true;
+  }
   const h = req.headers.get("authorization");
   if (h && h.startsWith("Bearer ") && h.slice(7) === EXPECTED_KEY) return true;
   return false;
@@ -77,14 +80,8 @@ async function readLocalPack(slug: string) {
 }
 
 async function readSnapshotPack(slug: string) {
-  try {
-    const p = path.join(process.cwd(), "public", "content-drafts.json");
-    const raw = await fs.readFile(p, "utf8");
-    const snap = JSON.parse(raw);
-    return (snap.packs || {})[slug] || null;
-  } catch {
-    return null;
-  }
+  const packs = contentSnapshot.packs as Record<string, unknown>;
+  return packs[slug] || null;
 }
 
 export async function GET(

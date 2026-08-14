@@ -9,14 +9,14 @@ import { AboutFAQ } from "@/components/AboutFAQ";
 export const metadata: Metadata = {
   title: "אודות אלעד יעקובוביץ׳ | הסיפור מאחורי אומנות הקשר",
   description:
-    "הכירו את אלעד יעקובוביץ׳ - מנטור למציאת זוגיות עם ~20 שנות רקע בתחום הבמה ו-15+ שנות ניסיון בליווי רווקים לזוגיות מאושרת.",
+    "הכירו את אלעד יעקובוביץ׳ - מנטור לזוגיות שמחבר בין ניסיון מעשי בליווי, אמנויות הבמה וכלים לתקשורת ולשינוי דפוסים.",
   alternates: {
     canonical: "/about",
   },
   openGraph: {
     title: "אודות אלעד יעקובוביץ׳ | הסיפור מאחורי אומנות הקשר",
     description:
-      "הכירו את אלעד יעקובוביץ׳ - מנטור למציאת זוגיות עם ~20 שנות רקע בתחום הבמה ו-15+ שנות ניסיון בליווי רווקים לזוגיות מאושרת.",
+      "הכירו את אלעד יעקובוביץ׳ - מנטור לזוגיות שמחבר בין ניסיון מעשי בליווי, אמנויות הבמה וכלים לתקשורת ולשינוי דפוסים.",
     url: "/about",
     locale: "he_IL",
     type: "website",
@@ -59,7 +59,7 @@ const values = [
     ),
     title: "כלים",
     description:
-      "כל פרק, כל מפגש, כל שיחה - כולל משהו שאפשר לעשות מחר בבוקר. לא תיאוריה מופשטת - כלים שעובדים.",
+      "כל פרק, כל מפגש, כל שיחה - כולל משהו שאפשר לתרגל בחיים עצמם. לא רק תיאוריה מופשטת.",
     color: "bg-primary/10 text-primary",
   },
   {
@@ -82,8 +82,8 @@ const values = [
 
 const credentials = [
   {
-    title: "NLP מוסמך",
-    description: "תכנות נוירו-לשוני - כלים לשינוי דפוסי חשיבה והתנהגות",
+    title: "כלים מעולם ה-NLP",
+    description: "תרגילים להתבוננות בדפוסי חשיבה, בשפה ובהתנהגות",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
@@ -91,8 +91,8 @@ const credentials = [
     ),
   },
   {
-    title: "CBT",
-    description: "טיפול קוגניטיבי-התנהגותי - שיטה מבוססת מחקר לשינוי דפוסים",
+    title: "כלים מעולם ה-CBT",
+    description: "עבודה מעשית על הקשר בין מחשבות, רגשות ופעולות - לא טיפול קליני",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -100,8 +100,8 @@ const credentials = [
     ),
   },
   {
-    title: "קואצ׳ יהודי",
-    description: "אימון אישי המשלב ערכים ותובנות מהמסורת היהודית",
+    title: "אימון מבוסס ערכים",
+    description: "אימון אישי שיכול לשלב ערכים ותובנות מהמסורת היהודית",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
@@ -110,7 +110,7 @@ const credentials = [
   },
   {
     title: "דמיון מודרך",
-    description: "טכניקת הדמיה מונחית לפריצת חסמים רגשיים ומנטליים",
+    description: "תרגילי הדמיה מונחים להתבוננות בחסמים רגשיים ומנטליים",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -122,8 +122,8 @@ const credentials = [
 
 const stats = [
   {
-    number: "461",
-    label: "זוגות שנוצרו",
+    number: "אישי",
+    label: "ליווי המותאם לאדם",
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -131,8 +131,8 @@ const stats = [
     ),
   },
   {
-    number: "15+",
-    label: "שנות ניסיון בליווי",
+    number: "מעשי",
+    label: "כלים לעבודה בין המפגשים",
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -140,8 +140,8 @@ const stats = [
     ),
   },
   {
-    number: "~20",
-    label: "שנים על הבמה",
+    number: "יצירתי",
+    label: "רקע באמנויות הבמה",
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -198,7 +198,7 @@ export default function AboutPage() {
           </h1>
           <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
             הכירו את אלעד יעקובוביץ׳ - שחקן, מוזיקאי ובובנאי שהפך את המסע האישי שלו
-            לדרך שכבר עזרה ל-461 זוגות למצוא אהבה
+            למסגרת עבודה מעשית לחיפוש ולבניית קשר
           </p>
         </div>
       </section>
@@ -271,18 +271,18 @@ export default function AboutPage() {
                 הרקע הייחודי
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                ~20 שנה על <span className="text-primary">הבמה</span>
+                מהבמה אל <span className="text-primary">אומנות הקשר</span>
               </h2>
               <div className="space-y-5 text-lg text-muted-foreground leading-relaxed">
                 <p>
-                  לפני שהתחלתי ללוות אנשים לזוגיות, חייתי כמעט 20 שנה בעולם הבמה -
+                  לפני שהתחלתי ללוות אנשים לזוגיות, פעלתי בעולם הבמה -
                   כשחקן, מוזיקאי ובובנאי. זה לא סתם &quot;עבודה קודמת&quot;. זה מה שעיצב את
                   הדרך שבה אני רואה קשרים בין אנשים.
                 </p>
                 <p>
                   על הבמה למדתי שדברים שנראים פשוטים דורשים עבודה עמוקה. שכדי ליצור
                   חיבור אמיתי עם קהל - צריך קודם כל להיות אמיתי עם עצמך. שפגיעות היא
-                  לא חולשה - היא הדבר הכי חזק שאפשר להביא לכל מערכת יחסים.
+                  לא חולשה - היא יכולה להיות משאב משמעותי במערכת יחסים.
                 </p>
                 <p className="text-foreground font-medium">
                   השם &quot;אומנות הקשר&quot; הוא לא מקרי - הוא מחבר בין שני העולמות שלי.
@@ -334,7 +334,7 @@ export default function AboutPage() {
               איך נולדה <span className="text-primary">״הדרך״</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              לא טיפים מפוזרים - דרך שלמה ומובנית שנבנתה מניסיון בשטח עם מאות אנשים
+              לא טיפים מפוזרים - דרך שלמה ומובנית שנבנתה מתוך ניסיון מעשי בשטח
             </p>
           </div>
 
@@ -354,8 +354,8 @@ export default function AboutPage() {
                   </p>
                   <p className="text-foreground font-medium">
                     אז פיתחתי את &quot;הדרך&quot; - מסע מובנה ב-4 שלבים. לא מתוך ספרי לימוד,
-                    אלא מתוך עבודה אישית עם מאות אנשים. מתוך ניסיון, טעויות, לימוד מטובי
-                    המומחים בעולם, ובעיקר - מתוך הקשבה אמיתית למה שעובד ומה שלא.
+                    אלא מתוך עבודה אישית, התנסות ולמידה מתמשכת. ובעיקר - מתוך הקשבה
+                    לאתגרים שאנשים מביאים לתהליך ולכלים שהם מסוגלים ליישם בחיים עצמם.
                   </p>
                 </div>
 
@@ -388,14 +388,14 @@ export default function AboutPage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30">
-              הכשרות והסמכות
+              כלים וגישות
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               לא מהאקדמיה - <span className="text-primary">מהשטח</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              אני לא פסיכולוג ולא מטפל קליני. אני מגיע מהשטח, עם הכשרות מקצועיות
-              שנבחרו כי הן עובדות
+              אני לא פסיכולוג ולא מטפל קליני. אני מגיע מהשטח ומשלב בתהליך כלים
+              מעשיים מכמה עולמות, בהתאם לאדם ולמטרה
             </p>
           </div>
 
@@ -521,11 +521,11 @@ export default function AboutPage() {
               </h2>
               <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
                 <p>
-                  10 פרקים, 32 תרגילים מעשיים ועשרות סיפורים מהשטח.
+                  13 פרקים, תרגילים מעשיים ועשרות סיפורים מהשטח.
                   לא עוד ספר טיפים - דרך שלמה ומובנית למציאת הזוגיות שמגיעה לך.
                 </p>
                 <p>
-                  הספר מרכז את כל מה שלמדתי מ-15+ שנות ליווי רווקים ורווקות,
+                  הספר מרכז את העקרונות, הכלים והשאלות שפיתחתי לאורך העבודה עם רווקים ורווקות,
                   ומאפשר לכל אחד לצאת למסע - בקצב שלו, בזמן שלו.
                 </p>
               </div>
@@ -552,7 +552,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">בוא נכיר</h2>
           <p className="text-xl opacity-90 mb-4 max-w-xl mx-auto leading-relaxed">
-            שיחת היכרות של 30+ דקות, בחינם, בלי התחייבות.
+            שיחת היכרות לבירור הצורך, צורת העבודה וההתאמה.
           </p>
           <p className="text-lg opacity-80 mb-10 max-w-xl mx-auto leading-relaxed">
             אין פה מכירה בלחץ. אין טריקים. רק שיחה כנה על מה שאתה רוצה ואיך אני יכול לעזור.
@@ -561,7 +561,7 @@ export default function AboutPage() {
             href="/coaching"
             className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
           >
-            לשיחת היכרות חינם
+            לתיאום שיחת היכרות
           </Link>
         </div>
       </section>

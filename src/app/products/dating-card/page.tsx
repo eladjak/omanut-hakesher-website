@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -12,11 +11,11 @@ const product = getProduct("dating-card")!;
 export const metadata: Metadata = {
   title: `${product.nameHe} | ${formatILS(product.price.amount)} | אומנות הקשר`,
   description:
-    "אלעד והצוות יכתבו לך כרטיס היכרויות מקצועי שיגדיל פניות פי 3-5. שאלון אישי → ניסוח על ידי הצוות → שליחה למייל. כולל 3 בונוסים.",
+    "כתיבה אישית של כרטיס היכרויות: שאלון, ניסוח מותאם על ידי הצוות ושליחה למייל.",
   alternates: { canonical: product.path },
   openGraph: {
     title: `${product.nameHe} | אומנות הקשר`,
-    description: "כרטיס היכרויות שמכפיל פניות. ₪97 — כתיבה אישית, לא תבנית.",
+    description: "כרטיס היכרויות בכתיבה אישית ומותאמת — לא תבנית גנרית.",
     url: product.path,
     type: "website",
   },
@@ -25,53 +24,48 @@ export const metadata: Metadata = {
 const steps = [
   {
     num: "01",
-    title: "סליקה",
-    desc: "תשלום מאובטח דרך Sumit. חשבונית מס/קבלה אוטומטית.",
+    title: "בדיקת זמינות",
+    desc: "לפני הזמנה מאשרים שהשירות פעיל, מה כלול בו ומהו מועד המסירה.",
   },
   {
     num: "02",
     title: "שאלון אישי",
-    desc: "טופס 15 דקות עם השאלות הנכונות. בלי השאלות הסטנדרטיות שכולם שואלים.",
+    desc: "טופס היכרות שמרכז את המידע הדרוש לכתיבה אישית ומדויקת יותר.",
   },
   {
     num: "03",
     title: "ניסוח על ידי הצוות",
-    desc: "אלעד והצוות כותבים את הכרטיס עבורך. לא AI, לא תבנית — כתיבה אנושית מקצועית.",
+    desc: "אלעד והצוות מנסחים את הכרטיס על בסיס התשובות והדגשים שאושרו איתך.",
   },
   {
     num: "04",
     title: "קבלת הכרטיס למייל",
-    desc: "תוך 5-7 ימי עסקים תקבל את הכרטיס המלא + הוראות שימוש בכל אתר היכרויות.",
+    desc: "הכרטיס והנחיות השימוש נשלחים במועד שאושר מראש לפני ההזמנה.",
   },
 ];
 
 const whatYouGet = [
-  "פתיח שמושך לקרוא הלאה (לא ׳היי, אני XX, גר ב-YY׳)",
-  "תיאור אישיות שמשדר אמון ועניין — שני הרגשות הקריטיים",
-  "תיאור מה אתה מחפש — בלי שתישמע נוקשה או בורח",
-  "Call-to-action שאליו אנשים באמת מגיבים",
-  "התאמה לכל פלטפורמה: Tinder, Bumble, Hinge, JDate, Israel Mate",
+  "פתיח אישי שאינו נשען על תבנית גנרית",
+  "תיאור אישיות המבוסס על המידע שמסרת",
+  "ניסוח ברור של סוג ההיכרות והקשר שמעניינים אותך",
+  "הזמנה לשיחה בניסוח שמתאים לקול שלך",
+  "הנחיות להתאמת הטקסט לפלטפורמות היכרות שונות",
 ];
 
 const bonuses = [
   {
     title: "מדריך לצילום פרופיל",
-    value: 297,
     desc: "מה לצלם, איך לצלם, איפה לצלם — בעצמך או עם טלפון.",
   },
   {
-    title: "מדריך סטיילינג אישי",
-    value: 397,
-    desc: "מה ללבוש לפי סוג גוף, אירוע ופרופיל. בלי לחזור על אותה תמונה ב-5 פלטפורמות.",
+    title: "דגשים להצגה חזותית",
+    desc: "נקודות לבדיקה בבחירת לבוש, סביבה ומגוון תמונות לפרופיל.",
   },
   {
-    title: "חודשיים חינם במועדון VIP",
-    value: 397,
-    desc: "כניסה למועדון הדרך 90D עם תוכן, קהילה ומפגשים שבועיים.",
+    title: "משאב לתרגול הפרופיל",
+    desc: "דף עבודה לבחינת הניסוח וההתאמה שלו לפלטפורמות שונות.",
   },
 ];
-
-const totalBonusValue = bonuses.reduce((s, b) => s + b.value, 0);
 
 export default function DatingCardPage() {
   return (
@@ -85,7 +79,7 @@ export default function DatingCardPage() {
         <div className="absolute inset-0">
           <Image
             src="/images/generated/blog-confidence.jpg"
-            alt="כרטיס היכרויות מנצח"
+            alt="שירות כתיבה לכרטיס היכרויות"
             fill
             className="object-cover"
             priority
@@ -98,18 +92,18 @@ export default function DatingCardPage() {
               שירות חד-פעמי · {formatILS(product.price.amount)}
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight text-balance">
-              כרטיס היכרויות שמכפיל{" "}
-              <span className="text-accent-light">פניות</span>
+              כרטיס היכרויות שמספר{" "}
+              <span className="text-accent-light">מי אתם</span>
             </h1>
             <p className="text-xl text-white/90 max-w-2xl mx-auto leading-relaxed text-pretty">
-              אנחנו כותבים את הכרטיס שלך. לא AI, לא תבנית — כתיבה אנושית של אלעד והצוות, מותאמת אישית אליך.
+              אלעד והצוות מנסחים את הכרטיס על בסיס שאלון והדגשים שאישרת, בשפה שמתאימה לך.
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <a
                 href="#checkout"
                 className="inline-flex px-10 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark transition-colors shadow-lg"
               >
-                להזמנה — {formatILS(product.price.amount)}
+                לבדיקת זמינות
               </a>
             </div>
           </div>
@@ -123,7 +117,7 @@ export default function DatingCardPage() {
             <Badge variant="outline" className="mb-4 text-primary border-primary/30">
               איך זה עובד
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">4 צעדים, 5-7 ימי עסקים</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">4 צעדים מתיאום ועד מסירה</h2>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
             {steps.map((s) => (
@@ -160,22 +154,21 @@ export default function DatingCardPage() {
         </div>
       </section>
 
-      {/* Bonuses */}
+      {/* Supporting resources */}
       <section className="py-20">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-10">
             <Badge variant="outline" className="mb-4 text-accent-dark border-accent/40">
-              + 3 בונוסים כלולים
+              משאבים נלווים
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-balance">
-              שווי בונוסים: {formatILS(totalBonusValue)}
+              כלים שתומכים ביישום הכרטיס
             </h2>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
             {bonuses.map((b) => (
               <Card key={b.title} className="border-border/50">
                 <CardContent className="p-6">
-                  <div className="text-xs font-semibold text-accent-dark mb-2">שווי {formatILS(b.value)}</div>
                   <h3 className="text-lg font-bold mb-2">{b.title}</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed text-pretty">{b.desc}</p>
                 </CardContent>
@@ -192,7 +185,7 @@ export default function DatingCardPage() {
             <CardContent className="p-8 md:p-10">
               <div className="text-center mb-7">
                 <Badge variant="outline" className="mb-3 text-primary border-primary/30">
-                  הזמנה
+                  בדיקת זמינות
                 </Badge>
                 <h2 className="text-2xl md:text-3xl font-bold mb-2 text-balance">{product.nameHe}</h2>
                 <p className="text-muted-foreground text-pretty">{product.taglineHe}</p>

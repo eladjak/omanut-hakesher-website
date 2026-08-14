@@ -7,20 +7,13 @@
  * docs/DNS-CUTOVER-RUNBOOK.md). Until the cutover, the ONLY domain that
  * serves this app is `omanut-hakesher-website.vercel.app`.
  *
- * Two distinct needs:
- * 1. CANONICAL_SITE_URL — SEO-facing (canonical/JSON-LD/sitemap). Kept as the
- *    historical placeholder until Elad executes the DNS cutover, then flip it
- *    (one line here + set the Vercel env var).
- * 2. FUNCTIONAL_BASE_URL — links that must WORK TODAY: welcome-email download
- *    links, WhatsApp share texts, Sumit post-payment redirects. These must
- *    never point at a dead domain.
+ * Canonical and functional links both need to resolve today. The same validated
+ * environment value drives both; until the controlled ohlove.co.il cutover,
+ * they fall back to the live Vercel production alias.
  *
  * AT DNS CUTOVER (Elad, per runbook): set `NEXT_PUBLIC_SITE_URL=https://www.ohlove.co.il`
  * in Vercel production env → everything below flips automatically on redeploy.
  */
-
-/** SEO placeholder domain. Flip to https://www.ohlove.co.il at DNS cutover. */
-export const CANONICAL_SITE_URL = "https://omanut-hakesher.co.il";
 
 /** The domain that was never registered — never emit it in functional links. */
 const DEAD_DOMAIN = "omanut-hakesher.co.il";
@@ -48,6 +41,7 @@ function resolveFunctionalBase(): string {
  * both server and client bundles.)
  */
 export const FUNCTIONAL_BASE_URL = resolveFunctionalBase();
+export const CANONICAL_SITE_URL = FUNCTIONAL_BASE_URL;
 
 /** Prefix a site-relative path with the functional base. Absolute URLs pass through. */
 export function absoluteFunctionalUrl(path: string): string {

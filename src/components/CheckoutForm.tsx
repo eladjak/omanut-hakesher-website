@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { formatILS, type Product } from "@/lib/products";
+import { PRODUCT_FACTS } from "@/lib/product-facts";
 
 type Status = "idle" | "submitting" | "error";
 
@@ -16,7 +18,32 @@ interface Props {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_RE = /^0(5\d|2|3|4|7|8|9)[-\s]?\d{3}[-\s]?\d{4}$/;
 
-export function CheckoutForm({ product, compact = false }: Props) {
+export function CheckoutForm(props: Props) {
+  if (!PRODUCT_FACTS.commerce.onlineCheckoutAvailable) {
+    return (
+      <div
+        className="rounded-2xl border border-accent/40 bg-accent/10 px-6 py-7 text-center"
+        role="status"
+      >
+        <h3 className="text-lg font-bold mb-2">הרכישה המקוונת אינה זמינה כרגע</h3>
+        <p className="text-sm text-muted-foreground leading-relaxed mb-5">
+          מערכת התשלום והמסירה נמצאת בהשלמת בדיקות. לא נאסוף כאן פרטי הזמנה
+          ולא נחייב אותך עד שהמסלול המלא יאושר.
+        </p>
+        <Link
+          href="/contact"
+          className="inline-flex rounded-full border border-border bg-background px-6 py-3 text-sm font-semibold hover:bg-muted transition-colors"
+        >
+          לבירור זמינות
+        </Link>
+      </div>
+    );
+  }
+
+  return <EnabledCheckoutForm {...props} />;
+}
+
+function EnabledCheckoutForm({ product, compact = false }: Props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");

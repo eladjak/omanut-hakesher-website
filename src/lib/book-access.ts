@@ -1,15 +1,12 @@
 /**
- * Book Access Code System
- * Client-side only, localStorage-based (MVP - Supabase later)
+ * Deprecated client access shim.
+ *
+ * Client-side access codes cannot establish an entitlement and must never
+ * unlock protected content. The protected routes are fail-closed at the server
+ * boundary until an order/account-backed verifier is implemented.
  */
 
-const STORAGE_KEY = "omanut-book-access";
-
-const VALID_CODES: ReadonlySet<string> = new Set([
-  "AHK-2026-BOOK",
-  "AHK-BETA-TEST",
-  "AHK-ELAD-VIP",
-]);
+const LEGACY_STORAGE_KEY = "omanut-book-access";
 
 export interface AccessInfo {
   unlocked: boolean;
@@ -17,57 +14,24 @@ export interface AccessInfo {
   unlockedAt?: string;
 }
 
-interface StoredAccess {
-  code: string;
-  unlockedAt: string;
-}
-
-/**
- * Normalizes a code: uppercase, trim whitespace.
- */
-function normalizeCode(code: string): string {
-  return code.trim().toUpperCase();
-}
-
-/**
- * Validates an access code against the known valid list.
- */
+/** Client validation is intentionally disabled. */
 export function validateAccessCode(code: string): boolean {
-  return VALID_CODES.has(normalizeCode(code));
+  void code;
+  return false;
 }
 
-/**
- * Returns true if the book is currently unlocked in localStorage.
- * Safe to call on the server (returns false when localStorage is unavailable).
- */
+/** Always locked until a server-verified entitlement source is connected. */
 export function isBookUnlocked(): boolean {
-  if (typeof window === "undefined") return false;
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return false;
-    const stored = JSON.parse(raw) as StoredAccess;
-    return typeof stored.code === "string" && VALID_CODES.has(stored.code);
-  } catch {
-    return false;
-  }
+  return false;
 }
 
 /**
- * Validates the code and, if valid, saves it to localStorage.
- * Returns true on success, false if the code is invalid.
+ * Client code entry is no longer an authorization path. Kept as a fail-closed
+ * compatibility shim for any stale client bundle or import.
  */
 export function unlockBook(code: string): boolean {
-  const normalized = normalizeCode(code);
-  if (!VALID_CODES.has(normalized)) return false;
-
-  if (typeof window === "undefined") return false;
-
-  const stored: StoredAccess = {
-    code: normalized,
-    unlockedAt: new Date().toISOString(),
-  };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
-  return true;
+  void code;
+  return false;
 }
 
 /**
@@ -75,27 +39,10 @@ export function unlockBook(code: string): boolean {
  */
 export function lockBook(): void {
   if (typeof window === "undefined") return;
-  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(LEGACY_STORAGE_KEY);
 }
 
-/**
- * Returns full access info from localStorage.
- */
+/** Returns only the fail-closed state; never trusts legacy browser storage. */
 export function getAccessInfo(): AccessInfo {
-  if (typeof window === "undefined") return { unlocked: false };
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { unlocked: false };
-    const stored = JSON.parse(raw) as StoredAccess;
-    if (typeof stored.code !== "string" || !VALID_CODES.has(stored.code)) {
-      return { unlocked: false };
-    }
-    return {
-      unlocked: true,
-      code: stored.code,
-      unlockedAt: stored.unlockedAt,
-    };
-  } catch {
-    return { unlocked: false };
-  }
+  return { unlocked: false };
 }

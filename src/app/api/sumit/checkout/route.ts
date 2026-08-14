@@ -9,7 +9,11 @@
  * On Sumit-not-configured returns 503 so the client UI can degrade to "צור קשר".
  */
 import { NextResponse } from 'next/server';
-import { createCheckout, isConfigured as isSumitConfigured } from '@/lib/sumit';
+import {
+  createCheckout,
+  isConfigured as isSumitConfigured,
+  isPaymentsEnabled,
+} from '@/lib/sumit';
 import { FUNCTIONAL_BASE_URL } from '@/lib/site-url';
 import { getSumitProduct } from '@/lib/sumit-products';
 
@@ -52,6 +56,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'invalid-email' }, { status: 400 });
   }
 
+  if (!isPaymentsEnabled()) {
+    return NextResponse.json(
+      { error: 'payments-disabled', message: 'הרכישה המקוונת אינה זמינה כרגע.' },
+      { status: 503 },
+    );
+  }
+
   if (!isSumitConfigured()) {
     return NextResponse.json(
       {
@@ -90,8 +101,7 @@ export async function POST(request: Request) {
         { status: 503 },
       );
     }
-    // eslint-disable-next-line no-console
-    console.error('[sumit/checkout] failed', { productSlug, email, detail: result.detail });
+    console.error('[sumit/checkout] failed', { productSlug, detail: result.detail });
     return NextResponse.json(
       { error: 'checkout-failed', detail: result.detail ?? 'unknown' },
       { status: 502 },

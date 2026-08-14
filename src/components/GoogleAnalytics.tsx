@@ -1,11 +1,12 @@
 "use client";
 
 import Script from "next/script";
+import { PRODUCT_FACTS } from "@/lib/product-facts";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 export function GoogleAnalytics() {
-  if (!GA_ID) {
+  if (!PRODUCT_FACTS.privacy.analyticsAvailable || !GA_ID) {
     return null;
   }
 

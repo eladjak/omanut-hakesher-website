@@ -1,137 +1,145 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "מדיניות פרטיות",
-  description: "מדיניות הפרטיות של אומנות הקשר - כיצד אנו מטפלים במידע שלכם",
-  alternates: {
-    canonical: "/privacy",
-  },
+  description: "מידע מעשי על איסוף ושימוש במידע באתר אומנות הקשר",
+  alternates: { canonical: "/privacy" },
 };
+
+const CONTACT_EMAIL = "omanut-hakesher@eladjak.com";
 
 export default function PrivacyPage() {
   return (
     <>
-      {/* Breadcrumbs */}
       <div className="bg-muted/50 border-b border-border/30">
         <Breadcrumbs items={[{ label: "מדיניות פרטיות" }]} />
       </div>
 
-      {/* Hero */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src="/images/generated/privacy-hero.jpg"
-            alt="מדיניות פרטיות - אומנות הקשר"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-foreground/70" />
-        </div>
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
-            מדיניות <span className="text-accent-light">פרטיות</span>
-          </h1>
-          <p className="text-white/70 text-lg">
-            עודכן לאחרונה: מרץ 2026
-          </p>
+      <section className="py-16 md:py-20 bg-foreground text-background">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">מדיניות פרטיות</h1>
+          <p className="text-background/70">עודכן לאחרונה: 13 באוגוסט 2026</p>
         </div>
       </section>
 
-      {/* Content */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto prose prose-lg">
-
-            <div className="bg-primary/5 border border-primary/20 rounded-2xl p-6 mb-10">
-              <p className="text-foreground leading-relaxed m-0">
-                <strong>תמצית:</strong> אנחנו אוספים מידע מינימלי, לא מוכרים אותו לאף גורם שלישי, ומשתמשים בו רק כדי לספק לכם שירות טוב יותר. אם יש לכם שאלות, דברו איתנו ישירות.
-              </p>
-            </div>
-
-            <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">1. מי אנחנו</h2>
-            <p className="mb-4 text-muted-foreground leading-relaxed">
-              אומנות הקשר הוא עסק של אלעד יעקובוביץ&apos;, מאמן זוגיות ותקשורת. כתובת העסק: ישראל. דוא&quot;ל ליצירת קשר: <a href="mailto:omanut-hakesher@eladjak.com" className="text-primary hover:underline" dir="ltr">omanut-hakesher@eladjak.com</a>.
+      <section className="py-16 md:py-20">
+        <div className="container mx-auto px-4 max-w-3xl prose prose-lg">
+          <div className="bg-accent/10 border border-accent/30 rounded-2xl p-6 mb-10">
+            <p className="m-0 leading-relaxed">
+              העמוד מתאר את פעולת האתר כפי שהיא מיושמת כרגע. רכישה מקוונת,
+              הרשמה לאירוע ו-Google Analytics כבויים עד להשלמת בדיקות,
+              מנגנוני הסכמה ותנאים מאושרים.
             </p>
-
-            <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">2. מה אנחנו אוספים</h2>
-            <p className="mb-4 text-muted-foreground leading-relaxed">
-              אנחנו אוספים מידע רק כשאתם בוחרים לשתף אותו איתנו:
-            </p>
-            <ul className="list-disc mb-6 text-muted-foreground">
-              <li className="ms-6 mb-2"><strong>פרטי קשר:</strong> שם ואימייל כשנרשמים לניוזלטר או יוצרים קשר</li>
-              <li className="ms-6 mb-2"><strong>הודעות:</strong> תוכן ההודעות שאתם שולחים דרך טפסי יצירת הקשר</li>
-              <li className="ms-6 mb-2"><strong>נתוני שימוש:</strong> אנליטיקס אנונימי על איך משתמשים באתר (דרך Google Analytics)</li>
-              <li className="ms-6 mb-2"><strong>העדפות:</strong> בחירת מגדר לצורך התאמת תוכן (נשמרת מקומית בדפדפן שלכם, לא אצלנו)</li>
-              <li className="ms-6 mb-2"><strong>תוצאות כלים:</strong> תוצאות שאלונים וכלים אינטראקטיביים (ללא זיהוי אישי, לצורך שיפור התוכן בלבד)</li>
-            </ul>
-
-            <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">3. איך אנחנו משתמשים במידע</h2>
-            <ul className="list-disc mb-6 text-muted-foreground">
-              <li className="ms-6 mb-2">לשלוח ניוזלטר ותוכן שביקשתם לקבל</li>
-              <li className="ms-6 mb-2">לחזור אליכם בנוגע לפניות שילחתם</li>
-              <li className="ms-6 mb-2">לשפר את תוכן האתר על בסיס נתוני שימוש</li>
-            </ul>
-            <p className="mb-4 text-muted-foreground">
-              <strong>לא</strong> נמכור, נשכיר, או נשתף את המידע שלכם עם גורמים שלישיים לצורכי פרסום.
-            </p>
-
-            <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">4. Cookies ואנליטיקס</h2>
-            <p className="mb-4 text-muted-foreground leading-relaxed">
-              האתר משתמש ב-Google Analytics לצורך הבנת תנועת המשתמשים. המידע הנאסף הוא אנונימי ומצטבר. ניתן לבטל מעקב זה דרך הגדרות הדפדפן שלכם או דרך <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline" dir="ltr">Google Analytics Opt-out</a>.
-            </p>
-
-            <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">5. אחסון ואבטחה</h2>
-            <p className="mb-4 text-muted-foreground leading-relaxed">
-              האתר מתאחסן על שרתי Vercel (ארה&quot;ב). כתובות אימייל שנאספות לניוזלטר מאוחסנות בשירות Responder (ישראל). נתוני שימוש בכלים אינטראקטיביים (כמו שאלוני הספר) מאוחסנים ב-Supabase (ענן, ללא זיהוי אישי). אנחנו נוקטים באמצעי אבטחה סבירים להגנה על המידע שלכם, אך שום שיטה אינה מאובטחת ב-100%.
-            </p>
-
-            <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">6. הזכויות שלכם</h2>
-            <p className="mb-4 text-muted-foreground leading-relaxed">
-              בהתאם לחוק הגנת הפרטיות הישראלי ו-GDPR (אם רלוונטי), יש לכם זכות:
-            </p>
-            <ul className="list-disc mb-6 text-muted-foreground">
-              <li className="ms-6 mb-2">לדעת אילו נתונים יש לנו עליכם</li>
-              <li className="ms-6 mb-2">לבקש תיקון של מידע שגוי</li>
-              <li className="ms-6 mb-2">לבקש מחיקה של המידע שלכם</li>
-              <li className="ms-6 mb-2">לבטל הרשמה לניוזלטר בכל עת (לחיצה על "הסר" בכל מייל)</li>
-            </ul>
-            <p className="mb-4 text-muted-foreground">
-              לממש זכויות אלו, שלחו הודעה ל: <a href="mailto:omanut-hakesher@eladjak.com" className="text-primary hover:underline" dir="ltr">omanut-hakesher@eladjak.com</a>
-            </p>
-
-            <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">7. קישורים לאתרים חיצוניים</h2>
-            <p className="mb-4 text-muted-foreground leading-relaxed">
-              האתר מכיל קישורים לרשתות חברתיות ופלטפורמות חיצוניות (YouTube, Spotify, Facebook, WhatsApp, Telegram). מדיניות הפרטיות של אותם שירותים חלה על הנתונים שאוספים הם - לא עלינו.
-            </p>
-
-            <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">8. שינויים במדיניות</h2>
-            <p className="mb-4 text-muted-foreground leading-relaxed">
-              נעדכן מדיניות זו מעת לעת. עדכונים מהותיים יפורסמו באתר. המשך השימוש באתר לאחר עדכון מהווה הסכמה למדיניות המעודכנת.
-            </p>
-
-            <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">9. יצירת קשר</h2>
-            <p className="mb-4 text-muted-foreground leading-relaxed">
-              לשאלות בנוגע למדיניות הפרטיות:
-            </p>
-            <ul className="list-none mb-6 text-muted-foreground">
-              <li className="mb-2">
-                <strong>אימייל:</strong>{" "}
-                <a href="mailto:omanut-hakesher@eladjak.com" className="text-primary hover:underline" dir="ltr">
-                  omanut-hakesher@eladjak.com
-                </a>
-              </li>
-              <li className="mb-2">
-                <strong>טלפון:</strong>{" "}
-                <a href="tel:+972512518025" className="text-primary hover:underline" dir="ltr">
-                  051-251-8025
-                </a>
-              </li>
-            </ul>
-
           </div>
+
+          <h2>1. מי מפעיל את האתר</h2>
+          <p>
+            אתר ״אומנות הקשר״ מופעל עבור פעילותו של אלעד יעקובוביץ׳. לשאלות
+            פרטיות ולבקשות בנוגע למידע אפשר לפנות ל־{" "}
+            <a href={`mailto:${CONTACT_EMAIL}`} dir="ltr">
+              {CONTACT_EMAIL}
+            </a>
+            .
+          </p>
+
+          <h2>2. מידע שנמסר באופן יזום</h2>
+          <ul>
+            <li>
+              בטופס יצירת קשר: שם, אימייל, טלפון, השירות המבוקש ותוכן ההודעה.
+            </li>
+            <li>
+              ברשימת תפוצה או בקבלת מדריך: אימייל, שם אם נמסר, המקור שממנו
+              נרשמת, גרסת ההסכמה ומועד ההסכמה.
+            </li>
+            <li>
+              בשיחה, במייל או בוואטסאפ: המידע שבחרת למסור באותו ערוץ, בכפוף
+              גם למדיניות של ספק הערוץ.
+            </li>
+          </ul>
+
+          <h2>3. מידע שנשמר במכשיר שלך</h2>
+          <p>
+            העדפות תצוגה, בחירת סגנון פנייה ותוצאות של חלק מכלי הספר נשמרות
+            ב־localStorage בדפדפן. חלק מהכלים יכולים לכלול שמות, תשובות או
+            טקסט אישי שהקלדת. המידע הזה נשאר במכשיר ולא נשלח לשרת לפי הקוד
+            הנוכחי, אך כל מי שיש לו גישה לאותו פרופיל דפדפן עשוי לראותו. אפשר
+            למחוק אותו דרך הגדרות האתר או ניקוי נתוני הדפדפן.
+          </p>
+
+          <h2>4. מטרות השימוש</h2>
+          <ul>
+            <li>מענה לפנייה שביקשת שנחזור אליה.</li>
+            <li>מסירת מדריך או מידע שנרשמת לקבל.</li>
+            <li>שליחת דיוור שיווקי רק לאחר סימון הסכמה מפורשת.</li>
+            <li>תפעול, אבטחה ואיתור תקלות באתר.</li>
+          </ul>
+
+          <h2>5. ספקים שמקבלים מידע</h2>
+          <ul>
+            <li>
+              <strong>Vercel</strong> — אחסון והגשת האתר ולוגים תפעוליים בהתאם
+              להגדרות השירות.
+            </li>
+            <li>
+              <strong>Resend</strong> — שליחת פניות ומיילי מסירה כאשר השירות
+              מוגדר.
+            </li>
+            <li>
+              <strong>Rav Messer</strong> — ניהול רשימת תפוצה, תגיות והסרה
+              כאשר בחרת להצטרף לדיוור.
+            </li>
+            <li>
+              קישורים ל־WhatsApp, YouTube, Spotify ורשתות נוספות מובילים לשירות
+              חיצוני; המדיניות של אותו שירות חלה מרגע המעבר אליו.
+            </li>
+          </ul>
+          <p>
+            איננו מצהירים שהספקים הופכים את המידע ל״אנונימי״. כל ספק עשוי לעבד
+            נתוני חיבור ותפעול לפי תנאיו, מיקומי השרתים שלו וההגדרות שנבחרו.
+          </p>
+
+          <h2>6. Analytics, cookies ותשלומים</h2>
+          <p>
+            Google Analytics אינו נטען כרגע, גם אם קיים מזהה בסביבת ההפעלה.
+            הוא יופעל רק יחד עם מנגנון הסכמה ועדכון למדיניות. מערכת התשלום
+            המקוונת כבויה ואינה אוספת פרטי הזמנה או אשראי דרך האתר. אם אחד
+            המנגנונים יופעל, העמוד יעודכן לפני ההפעלה.
+          </p>
+
+          <h2>7. שמירה ומחיקה</h2>
+          <p>
+            תקופות שמירה מלאות לכל ספק עדיין דורשות אישור במסמך retention
+            תפעולי. עד להשלמתו, אין באתר הבטחה למחיקה אוטומטית במועד קבוע.
+            אפשר לבקש עיון, תיקון, הסרה מרשימת דיוור או מחיקה של מידע שבשליטתנו
+            באמצעות האימייל למעלה. נבדוק את הבקשה, נבקש פרטים הדרושים לזיהוי
+            ונשיב בהתאם לדין ולמגבלות הטכניות והחוקיות הרלוונטיות.
+          </p>
+
+          <h2>8. אבטחה וזהירות בתוכן</h2>
+          <p>
+            אנו משתמשים באמצעים תפעוליים וטכניים סבירים, אך אין מערכת חסינה
+            לחלוטין. אין לשלוח בטופס מידע רפואי, סיסמאות, פרטי אשראי, מסמכי
+            זיהוי או מידע אינטימי שאינו דרוש לפנייה.
+          </p>
+
+          <h2>9. דיוור והסרה</h2>
+          <p>
+            הצטרפות לרשימת התפוצה דורשת checkbox מפורש. אפשר להסיר את ההסכמה
+            דרך קישור ההסרה במייל או בפנייה ישירה. בקשת מדריך לבדה אינה אמורה
+            להצטרף לדיוור שיווקי בלי הסכמה נפרדת.
+          </p>
+
+          <h2>10. עדכונים ויצירת קשר</h2>
+          <p>
+            נעדכן את התאריך ואת התוכן כאשר משתנים ספק, מטרה, קטגוריית מידע או
+            מנגנון איסוף מהותי. שאלות ובקשות: {" "}
+            <a href={`mailto:${CONTACT_EMAIL}`} dir="ltr">
+              {CONTACT_EMAIL}
+            </a>
+            . אפשר גם לעבור ל־<Link href="/contact">עמוד יצירת הקשר</Link>.
+          </p>
         </div>
       </section>
     </>

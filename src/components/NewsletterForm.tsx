@@ -32,9 +32,11 @@ export function NewsletterForm({
   className = "",
 }: NewsletterFormProps) {
   const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
   const inputId = useId();
+  const consentId = useId();
 
   const isDark = theme === "dark";
 
@@ -47,6 +49,11 @@ export function NewsletterForm({
       setMessage("נראה שזו לא כתובת אימייל תקינה — בדוק שוב?");
       return;
     }
+    if (!consent) {
+      setStatus("error");
+      setMessage("כדי להצטרף לרשימה צריך לסמן הסכמה לקבלת דיוור.");
+      return;
+    }
 
     setStatus("loading");
     setMessage("");
@@ -55,7 +62,7 @@ export function NewsletterForm({
       const res = await fetch("/api/lead/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: value, slug: "newsletter" }),
+        body: JSON.stringify({ email: value, slug: "newsletter", consent }),
       });
 
       if (!res.ok) {
@@ -67,6 +74,7 @@ export function NewsletterForm({
       setStatus("success");
       setMessage("נרשמת בהצלחה — שלחתי לך מייל קצר לאישור.");
       setEmail("");
+      setConsent(false);
     } catch {
       setStatus("error");
       setMessage("אין חיבור כרגע. בדוק את האינטרנט ונסה שוב.");
@@ -102,7 +110,7 @@ export function NewsletterForm({
     <div className={layout === "stack" ? "w-full" : "w-full md:w-auto"}>
       <form
         onSubmit={handleSubmit}
-        className={`flex ${layout === "stack" ? "flex-col sm:flex-row" : ""} gap-3 ${
+        className={`flex flex-wrap ${layout === "stack" ? "flex-col sm:flex-row" : ""} gap-3 ${
           layout === "stack" ? "max-w-md mx-auto" : "w-full md:w-auto"
         } ${className}`}
         aria-label={ariaLabel}
@@ -131,6 +139,26 @@ export function NewsletterForm({
         <button type="submit" disabled={status === "loading"} className={buttonClass}>
           {status === "loading" ? "רושם..." : buttonLabel}
         </button>
+        <label
+          htmlFor={consentId}
+          className={`basis-full flex items-start gap-2 text-xs leading-relaxed ${
+            isDark ? "text-background/70" : "text-muted-foreground"
+          }`}
+        >
+          <input
+            id={consentId}
+            type="checkbox"
+            checked={consent}
+            onChange={(event) => {
+              setConsent(event.target.checked);
+              if (status === "error") setStatus("idle");
+            }}
+            required
+            disabled={status === "loading"}
+            className="mt-0.5 size-4 shrink-0 accent-primary"
+          />
+          <span>אני מסכים/ה לקבל מאומנות הקשר כלים ועדכונים במייל. אפשר להסיר את ההסכמה בכל עת.</span>
+        </label>
       </form>
       {status === "error" && (
         <p

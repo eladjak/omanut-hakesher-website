@@ -11,7 +11,7 @@ import { testimonials, emailQuotes, whatsappShots, videos } from "@/lib/testimon
 export const metadata: Metadata = {
   title: "סיפורי הצלחה אמיתיים | אומנות הקשר",
   description:
-    "עדויות אמיתיות מתלמידים שעברו תהליך עם אלעד יעקובוביץ׳ — לחץ על כל עדות לסיפור המלא. 461 זוגות ועולה.",
+    "עדויות מתלמידים שעברו תהליך עם אלעד יעקובוביץ׳ — לחץ על כל עדות כדי לקרוא את הסיפור וההקשר שלה.",
   alternates: { canonical: "/sipurim" },
   openGraph: {
     title: "סיפורי הצלחה | אומנות הקשר",
@@ -42,16 +42,16 @@ export default function SipurimPage() {
 
         <div className="container mx-auto px-4 relative z-10 text-center max-w-4xl">
           <Badge className="mb-6 bg-accent text-accent-foreground border-0 px-4 py-1.5 text-sm">
-            <span className="tabular-nums">461</span> זוגות ועולה
+            עדויות מהשטח
           </Badge>
           <h1 className="text-balance text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            הם כבר <span className="text-accent-light">מצאו</span>.
+            אנשים שעברו תהליך <span className="text-accent-light">מספרים</span>.
             <br />
-            הסיפור הבא יכול להיות שלך.
+            הסיפור וההקשר כאן.
           </h1>
           <p className="text-pretty text-lg md:text-xl text-white/85 max-w-2xl mx-auto leading-relaxed">
             לחץ על כל עדות לסיפור המלא — תמונה, ציטוט, ולפעמים גם וידאו.
-            בלי עריכה, בלי פילטרים.
+            כל עדות מוצגת יחד עם ההקשר הזמין בארכיון.
           </p>
         </div>
       </section>
@@ -61,10 +61,10 @@ export default function SipurimPage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
             {[
-              { number: "461", label: "זוגות שנוצרו" },
-              { number: "15+", label: "שנות ניסיון" },
-              { number: "3", label: "חודשים ממוצע" },
-              { number: "95%", label: "ממליצים" },
+              { number: "אישי", label: "סיפורים בגוף ראשון" },
+              { number: "כתוב", label: "עדויות וציטוטים" },
+              { number: "מצולם", label: "תמונות וסרטונים" },
+              { number: "הקשר", label: "מידע לצד כל עדות" },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
                 <div className="text-4xl md:text-5xl font-bold text-primary mb-1 tabular-nums">
@@ -274,13 +274,13 @@ export default function SipurimPage() {
             <span className="text-accent-light">יכול להיות שלך</span>.
           </h2>
           <p className="text-pretty text-lg md:text-xl opacity-90 mb-10 leading-relaxed">
-            שיחת היכרות בת 30+ דקות, חינם, בלי התחייבות.
+            שיחת היכרות לבירור הצורך וההתאמה, בתיאום מראש.
           </p>
           <Link
             href="/coaching"
             className="inline-flex items-center px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted hover:scale-[1.02] transition-all shadow-lg focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-4"
           >
-            לשיחת היכרות חינם
+            לתיאום שיחת היכרות
           </Link>
         </div>
       </section>

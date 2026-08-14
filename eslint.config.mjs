@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Claude keeps independent Git worktrees (including their own build
+    // artifacts) under this repository. They are not part of this worktree's
+    // lint boundary and can otherwise make a root lint traverse several
+    // complete applications.
+    ".claude/**",
   ]),
 ]);
 

@@ -1,11 +1,13 @@
+import { CANONICAL_SITE_URL } from "@/lib/site-url";
+
 export function OrganizationJsonLd() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     name: "אומנות הקשר",
     description:
-      "ליווי מקצועי לרווקים ורווקות בדרך לזוגיות מאושרת. 461 זוגות כבר מצאו אהבה עם אלעד יעקובוביץ׳.",
-    url: "https://omanut-hakesher.co.il",
+      "תוכנית, ספר וליווי מעשי לרווקים ולרווקות שרוצים לפתח יכולת ליצור ולבנות קשר.",
+    url: CANONICAL_SITE_URL,
     telephone: "+972512518025",
     email: "omanut-hakesher@eladjak.com",
     areaServed: {
@@ -36,7 +38,7 @@ export function OrganizationJsonLd() {
     founder: {
       "@type": "Person",
       name: "אלעד יעקובוביץ׳",
-      url: "https://omanut-hakesher.co.il/about",
+      url: `${CANONICAL_SITE_URL}/about`,
     },
     sameAs: [
       "https://ohlove.co.il",
@@ -60,20 +62,20 @@ export function WebSiteJsonLd() {
     "@type": "WebSite",
     name: "אומנות הקשר",
     alternateName: "אומנות הקשר - בית הספר למציאת זוגיות",
-    url: "https://omanut-hakesher.co.il",
+    url: CANONICAL_SITE_URL,
     inLanguage: "he-IL",
     description:
       "בית הספר למציאת זוגיות מאושרת עם אלעד יעקובוביץ׳. תוכנית ״הדרך״, ליווי אישי, הספר ״אומנות הקשר״ וקהילה תומכת.",
     publisher: {
       "@type": "Organization",
       name: "אומנות הקשר",
-      url: "https://omanut-hakesher.co.il",
+      url: CANONICAL_SITE_URL,
     },
     potentialAction: {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: "https://omanut-hakesher.co.il/blog?q={search_term_string}",
+        urlTemplate: `${CANONICAL_SITE_URL}/blog?q={search_term_string}`,
       },
       "query-input": "required name=search_term_string",
     },
@@ -92,10 +94,10 @@ export function PersonJsonLd() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "אלעד יעקובוביץ׳",
-    url: "https://omanut-hakesher.co.il/about",
+    url: `${CANONICAL_SITE_URL}/about`,
     jobTitle: "מנחה ומלווה אישי לזוגיות",
     description:
-      "מייסד אומנות הקשר, מנחה ומלווה אישי בדרך לזוגיות. מוסמך NLP ו-CBT, קואצ׳ יהודי, עם רקע של כ-20 שנה בתחום הבמה כשחקן, מוזיקאי ובובנאי.",
+      "מייסד אומנות הקשר, מנחה ומלווה אישי בתהליכי היכרות, תקשורת ובניית קשר.",
     knowsAbout: [
       "מציאת זוגיות",
       "תקשורת מקרבת",
@@ -106,7 +108,7 @@ export function PersonJsonLd() {
     worksFor: {
       "@type": "Organization",
       name: "אומנות הקשר",
-      url: "https://omanut-hakesher.co.il",
+      url: CANONICAL_SITE_URL,
     },
     sameAs: [
       "https://www.facebook.com/groups/mateemlizugiut",
@@ -148,7 +150,7 @@ export function WebPageJsonLd({
     isPartOf: {
       "@type": "WebSite",
       name: "אומנות הקשר",
-      url: "https://omanut-hakesher.co.il",
+      url: CANONICAL_SITE_URL,
     },
     about: {
       "@type": "Thing",
@@ -212,12 +214,12 @@ export function ArticleJsonLd({
     author: {
       "@type": "Person",
       name: "אומנות הקשר",
-      url: "https://omanut-hakesher.co.il/about",
+      url: `${CANONICAL_SITE_URL}/about`,
     },
     publisher: {
       "@type": "Organization",
       name: "אומנות הקשר",
-      url: "https://omanut-hakesher.co.il",
+      url: CANONICAL_SITE_URL,
     },
     mainEntityOfPage: {
       "@type": "WebPage",
@@ -241,8 +243,8 @@ export function LocalBusinessJsonLd() {
     "@type": "LocalBusiness",
     name: "אומנות הקשר",
     description:
-      "ליווי מקצועי לרווקים ורווקות בדרך לזוגיות מאושרת. 461 זוגות כבר מצאו אהבה עם אלעד יעקובוביץ׳.",
-    url: "https://omanut-hakesher.co.il",
+      "תוכנית, ספר וליווי מעשי לרווקים ולרווקות שרוצים לפתח יכולת ליצור ולבנות קשר.",
+    url: CANONICAL_SITE_URL,
     telephone: "+972512518025",
     email: "omanut-hakesher@eladjak.com",
     address: {
@@ -290,7 +292,7 @@ const FAQ_ITEMS: { question: string; answer: string }[] = [
   {
     question: "מהי הגישה של אומנות הקשר?",
     answer:
-      "הגישה משלבת מספר שיטות מבוססות מחקר: תקשורת לא אלימה (NVC), טיפול ממוקד רגש (EFT) וגישה קוגניטיבית-התנהגותית (CBT), יחד עם רקע של כ-20 שנה בתחום הבמה. השילוב יוצר ליווי זוגי מעשי שמחבר בין כלים יישומיים להבנה רגשית עמוקה.",
+      "הגישה מחברת תרגול של הקשבה, צרכים, גבולות, היכרות ודייטים עם כלים מעולמות התקשורת וההתבוננות העצמית. היא מיועדת ללמידה ולתרגול ואינה תחליף לטיפול נפשי או רפואי.",
   },
   {
     question: "כמה זמן נמשך תהליך הליווי הזוגי?",
@@ -310,7 +312,7 @@ const FAQ_ITEMS: { question: string; answer: string }[] = [
   {
     question: "מה ההבדל בין תוכנית ״הדרך״ לליווי האישי?",
     answer:
-      "תוכנית ״הדרך״ היא תוכנית מובנית של 90 יום עם סרטון יומי קצר, תרגילים, ליווי ממנטור וקהילה תומכת. הליווי האישי הוא תהליך פרטני ומותאם, עם מפגשים אישיים, תמיכה בווטסאפ ומשוב בזמן אמת והתחייבות לתוצאה.",
+      "תוכנית ״הדרך״ היא מסלול מובנה של 12 שבועות עם שיעורים קצרים, תרגילים וקהילה. הליווי האישי הוא תהליך פרטני ומותאם עם מפגשים, תרגול ומשוב. אף מסלול אינו יכול להבטיח מועד שבו יתחיל קשר.",
   },
   {
     question: "האם המפגשים אונליין יעילים כמו מפגשים פרונטליים?",
@@ -370,7 +372,7 @@ export function CourseJsonLd({
     provider: {
       "@type": "Organization",
       name: "אומנות הקשר",
-      url: "https://omanut-hakesher.co.il",
+      url: CANONICAL_SITE_URL,
     },
     educationalLevel: course.level,
     numberOfLessons: course.lessons,

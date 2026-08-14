@@ -8,11 +8,11 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 export const metadata: Metadata = {
   title: "ליווי אישי VIP | אומנות הקשר",
   description:
-    "ליווי אישי 6-12 חודשים עם התחייבות לתוצאה. מוגבל ל-10 לקוחות פעילים בכל רגע. שיחת היכרות חינם של 30+ דקות.",
+    "ליווי אישי VIP עם תוכנית עבודה מותאמת, פגישות, ערוץ פרטי ומשוב לפי מסגרת הליווי.",
   alternates: { canonical: "/coaching/vip" },
   openGraph: {
     title: "ליווי אישי VIP | אומנות הקשר",
-    description: "ליווי אישי עד החופה — מוגבל ל-10 לקוחות. שיחת היכרות חינם.",
+    description: "ליווי אישי מותאם עם תוכנית עבודה, פגישות ומשוב.",
     url: "/coaching/vip",
     type: "website",
   },
@@ -20,16 +20,16 @@ export const metadata: Metadata = {
 
 const whatVipMeans = [
   {
-    title: "ליווי יומיומי שלי באופן אישי",
-    desc: "לא צוות. לא מנטור-מתחת. אני אישית עונה לך — בצ׳אט פרטי — על כל שאלה, מצב, התלבטות. בתוך 24 שעות.",
+    title: "ערוץ פרטי איתי",
+    desc: "שאלות, מצבים והתלבטויות מקבלים מקום בערוץ פרטי, בהתאם לזמני המענה ולגבולות הליווי שייקבעו מראש.",
   },
   {
-    title: "אחריות לתוצאה תוך 6-12 חודשים",
-    desc: "המטרה היא חופה, או בנייה יציבה של זוגיות. לא ׳נראה איך הולך׳. יש מטרה ויש דדליין.",
+    title: "מסגרת עבודה מוגדרת",
+    desc: "מגדירים יחד מטרות לתהליך, אבני דרך וצעדים לביצוע. בודקים את ההתקדמות ומעדכנים את התוכנית לפי הצורך.",
   },
   {
-    title: "אחריות יישומית",
-    desc: "אם נתקעת — אנחנו עוצרים, חוזרים אחורה, מתחילים שוב מהשלב הקריטי. בלי תוספת תשלום.",
+    title: "מעקב יישומי",
+    desc: "אם נתקעת, בודקים מה לא עובד, חוזרים לצעד הרלוונטי ומעדכנים את תוכנית העבודה במסגרת שסוכמה.",
   },
   {
     title: "ייעוץ אסטרטגי",
@@ -60,7 +60,7 @@ const pricingTiers = [
   {
     label: "Premium",
     range: "₪12,000–18,000",
-    desc: "12 חודשים, ליווי יומיומי, אחריות יישומית מורחבת, כל הבונוסים של תוכנית הדרך כלולים.",
+    desc: "12 חודשים, פגישות ומשוב בתדירות שתוגדר, לצד משאבים מתוכנית הדרך לפי ההצעה המאושרת.",
   },
   {
     label: "Concierge",
@@ -91,20 +91,20 @@ export default function VipCoachingPage() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <Badge variant="outline" className="mb-5 text-white border-white/30 text-sm px-4 py-1.5">
-              מוגבל ל-10 לקוחות פעילים בכל רגע
+              ליווי מותאם אישית
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight text-balance">
               ליווי אישי <span className="text-accent-light">VIP</span>
             </h1>
             <p className="text-xl text-white/90 max-w-2xl mx-auto leading-relaxed text-pretty">
-              ליווי שלי באופן אישי — 6 עד 12 חודשים — עם אחריות לתוצאה. לא לכולם. בודקים התאמה בשיחת היכרות.
+              ליווי שלי באופן אישי — עם תוכנית עבודה, פגישות ומשוב שוטף. לא לכולם. בודקים התאמה בשיחת היכרות.
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/coaching/book"
                 className="inline-flex px-10 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark transition-colors shadow-lg"
               >
-                שיחת היכרות חינם — 30+ דקות
+                לתיאום בדיקת התאמה
               </Link>
             </div>
           </div>
@@ -211,7 +211,7 @@ export default function VipCoachingPage() {
             הצעד הבא — שיחת היכרות
           </h2>
           <p className="text-xl opacity-90 mb-8 max-w-xl mx-auto leading-relaxed text-pretty">
-            30+ דקות. בלי עלות. בלי מחויבות. נחליט שנינו אם זה מתאים.
+            נברר את הצורך, צורת העבודה וההתאמה ההדדית לפני הצעה או התחייבות.
           </p>
           <div className="flex flex-wrap justify-center items-center gap-4">
             <Link
@@ -229,7 +229,7 @@ export default function VipCoachingPage() {
               או ישירות בוואטסאפ
             </Link>
           </div>
-          <p className="mt-4 text-white/80 text-sm">מענה תוך 24 שעות, ימים א׳-ה׳.</p>
+          <p className="mt-4 text-white/80 text-sm">זמני המענה וערוצי הקשר מוגדרים מראש כחלק מההצעה.</p>
         </div>
       </section>
     </>

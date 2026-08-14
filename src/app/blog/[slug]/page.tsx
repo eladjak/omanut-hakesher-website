@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { BreadcrumbJsonLd, ArticleJsonLd } from "@/components/JsonLd";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { CANONICAL_SITE_URL } from "@/lib/site-url";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -65,15 +66,15 @@ export default async function BlogPostPage({ params }: Props) {
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: "בית", url: "https://omanut-hakesher.co.il" },
-          { name: "בלוג", url: "https://omanut-hakesher.co.il/blog" },
-          { name: post.title, url: `https://omanut-hakesher.co.il/blog/${slug}` },
+          { name: "בית", url: CANONICAL_SITE_URL },
+          { name: "בלוג", url: `${CANONICAL_SITE_URL}/blog` },
+          { name: post.title, url: `${CANONICAL_SITE_URL}/blog/${slug}` },
         ]}
       />
       <ArticleJsonLd
         title={post.title}
         description={post.excerpt}
-        url={`https://omanut-hakesher.co.il/blog/${slug}`}
+        url={`${CANONICAL_SITE_URL}/blog/${slug}`}
         datePublished={post.date}
         category={post.category}
       />
@@ -153,7 +154,7 @@ export default async function BlogPostPage({ params }: Props) {
             <div className="text-center sm:text-right flex-1">
               <p className="font-bold text-lg">אלעד יעקובוביץ&apos;</p>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                מאמן זוגיות עם 20 שנות ניסיון. 461 זוגות כבר מצאו אהבה עם הגישה שלי.
+                מפתח שיטת אומנות הקשר ומלווה תהליכים מעשיים למציאת זוגיות ולבניית קשר.
               </p>
             </div>
             <Link

@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { WebPageJsonLd } from "@/components/JsonLd";
 import { ELAD_WORLD } from "@/lib/elad-world";
+import { CANONICAL_SITE_URL } from "@/lib/site-url";
 
 export const metadata: Metadata = {
   title: "ברוכים הבאים | אומנות הקשר",
@@ -28,14 +29,14 @@ const nextSteps = [
   {
     title: "הספר ״אומנות הקשר״",
     description:
-      "13 פרקים, כל מה שלמדתי מ-15 שנות ליווי. הספר בשלבי סיום, וכבר עכשיו יש באתר פרק-פרק עם כלים אינטראקטיביים.",
+      "13 פרקים בחמישה חלקים ו־54 תרגילים ממוספרים. הספר בשלבי סיום, וכבר עכשיו יש באתר כלים אינטראקטיביים מלווים.",
     cta: "לעמוד הספר",
     href: "/book",
   },
   {
     title: "תוכנית ״הדרך״",
     description:
-      "התוכנית המלאה שלי: 90 יום, צעד אחר צעד, מהסיפור שמעכב אתכם ועד קשר אמיתי.",
+      "התוכנית המלאה שלי: 12 שבועות, צעד אחר צעד, מהסיפור שמעכב אתכם דרך תקשורת, היכרויות ותרגול.",
     cta: "לפרטים על התוכנית",
     href: "/programs/the-way",
   },
@@ -43,7 +44,7 @@ const nextSteps = [
     title: "ליווי אישי",
     description:
       "עבודה אחד-על-אחד איתי. למי שרוצה מישהו לצידו לאורך כל הדרך.",
-    cta: "לשיחת היכרות חינם",
+    cta: "לתיאום שיחת היכרות",
     href: "/coaching",
   },
 ];
@@ -54,7 +55,7 @@ export default function WelcomePage() {
       <WebPageJsonLd
         name="ברוכים הבאים | אומנות הקשר"
         description="נקודת הכניסה למי שהגיע מהפוסט של אלעד: קהילת ״העולם של אלעד״, הספר, תוכנית ״הדרך״ וליווי אישי."
-        url="https://omanut-hakesher.co.il/welcome"
+        url={`${CANONICAL_SITE_URL}/welcome`}
         datePublished="2026-07-05"
       />
 

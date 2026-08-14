@@ -7,16 +7,16 @@ import { CoachingFAQ } from "./CoachingFAQ";
 import { testimonials as allTestimonials } from "@/lib/testimonials";
 
 export const metadata: Metadata = {
-  title: "ליווי אישי למציאת זוגיות | שיחת היכרות חינם",
+  title: "ליווי אישי למציאת זוגיות | שיחת היכרות",
   description:
-    "ליווי אישי עם אלעד יעקובוביץ׳ למציאת זוגיות מאושרת תוך 3 חודשים. 461 זוגות כבר מצאו אהבה. שיחת היכרות של 30+ דקות בחינם.",
+    "ליווי אישי עם אלעד יעקובוביץ׳: מיפוי דפוסים, תוכנית עבודה מותאמת, פגישות ומשוב בין המפגשים. אפשר לתאם שיחת היכרות לבדיקת התאמה.",
   alternates: {
     canonical: "/coaching",
   },
   openGraph: {
     title: "ליווי אישי למציאת זוגיות | אומנות הקשר",
     description:
-      "ליווי אישי עם אלעד יעקובוביץ׳ למציאת זוגיות מאושרת תוך 3 חודשים. 461 זוגות כבר מצאו אהבה.",
+      "ליווי אישי עם אלעד יעקובוביץ׳: תוכנית עבודה מותאמת, פגישות ומשוב מעשי לאורך הדרך.",
     url: "/coaching",
     type: "website",
   },
@@ -60,19 +60,19 @@ const painPoints = [
 const failedApproaches = [
   {
     approach: "אפליקציות היכרויות",
-    problem: "מספקות הזדמנויות - אבל בלי כלים ליצור חיבור אמיתי, עוד 50 דייטים לא ישנו שום דבר.",
+    problem: "מספקות הזדמנויות, אבל לא תמיד כוללות כלים לתקשורת, לבחירה ולהיכרות מעמיקה. ריבוי דייטים לבדו לא בהכרח משנה דפוסים.",
   },
   {
     approach: "אתרי היכרויות",
-    problem: "נותנים שמות וטלפונים - אבל לא מלמדים איך להיות פנוי לקשר, איך לתקשר, איך ליצור כימיה.",
+    problem: "עשויים להציע התאמות ופרטי קשר, אך בדרך כלל אינם מסגרת לתרגול תקשורת, בירור צרכים ועיבוד חוויות מדייטים.",
   },
   {
     approach: "פסיכולוגים ומטפלים",
-    problem: "עוזרים להבין למה - אבל לא מלווים בשטח. לא יושבים איתך אחרי הדייט ומנתחים מה קרה.",
+    problem: "טיפול עשוי לסייע בהבנה ובעבודה רגשית. לא כל מסגרת טיפולית כוללת תרגול ממוקד בדייטינג או משוב סמוך לאירוע.",
   },
   {
     approach: "ספרי עזרה עצמית",
-    problem: "נותנים השראה לרגע - אבל בלי מישהו שילווה, מותאם אישית, עם אחריות לתוצאה.",
+    problem: "יכולים להציע רעיונות שימושיים, אך בלי התאמה אישית ומשוב שוטף עלול להיות קשה לתרגם אותם לתרגול עקבי.",
   },
 ];
 
@@ -168,8 +168,8 @@ const included = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
       </svg>
     ),
-    title: "ערבות לתוצאה",
-    description: "זוגיות תוך 3 חודשים - או המשך ליווי חינם עד שתמצא. זו לא הבטחה ריקה. זה ביטחון בשיטה.",
+    title: "בדיקה והתאמה לאורך הדרך",
+    description: "מגדירים יעדים לתהליך, בודקים התקדמות ומשנים את תוכנית העבודה כשמשהו לא משרת אותך.",
   },
 ];
 
@@ -182,11 +182,11 @@ const testimonials = allTestimonials
   .slice(0, 3);
 
 const credentials = [
-  "NLP מוסמך",
-  "CBT",
-  "קואצ׳ יהודי",
+  "כלים מעולם ה-NLP",
+  "כלים מעולם ה-CBT",
+  "אימון מבוסס ערכים",
   "דמיון מודרך",
-  "~20 שנות במה",
+  "רקע באמנויות הבמה",
 ];
 
 export default function CoachingPage() {
@@ -218,12 +218,12 @@ export default function CoachingPage() {
                 <span className="text-accent-light">למציאת זוגיות</span>
               </h1>
               <p className="text-xl md:text-2xl text-white/90 font-medium mt-3">
-                זוגיות תוך 3 חודשים - או המשך ליווי חינם.
+                ליווי אישי עם תוכנית עבודה שמתעדכנת יחד איתך.
               </p>
               <p className="mt-6 text-lg md:text-xl text-white/80 max-w-xl leading-relaxed">
-                תהליך מותאם אישית שכבר עזר ל-
-                <strong className="text-white">461 זוגות</strong> למצוא אהבה אמיתית.
-                לא טיפים מפוזרים - ליווי צמוד, עם אחריות לתוצאה.
+                מתחילים במיפוי של המקום שבו אתה נמצא, מגדירים מטרות ובונים צעדים
+                <strong className="text-white"> שאפשר לתרגל ולבדוק</strong> לאורך הדרך.
+                לא טיפים מפוזרים - ליווי צמוד ומשוב מעשי.
               </p>
 
               <div className="mt-10 flex flex-wrap gap-4">
@@ -231,7 +231,7 @@ export default function CoachingPage() {
                   href={BOOKING_URL}
                   className="px-8 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
                 >
-                  לשיחת היכרות חינם
+                  לתיאום שיחת היכרות
                 </Link>
                 <a
                   href="#how-it-works"
@@ -244,20 +244,20 @@ export default function CoachingPage() {
               {/* Trust indicators */}
               <div className="mt-12 flex flex-wrap gap-8">
                 <div className="text-center">
-                  <div className="text-2xl md:text-3xl font-bold text-accent-light">461</div>
-                  <div className="text-sm text-white/70 mt-1">זוגות שנוצרו</div>
+                  <div className="text-2xl md:text-3xl font-bold text-accent-light">1:1</div>
+                  <div className="text-sm text-white/70 mt-1">ליווי מותאם אישית</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl md:text-3xl font-bold text-accent-light">3</div>
-                  <div className="text-sm text-white/70 mt-1">חודשים ממוצע</div>
+                  <div className="text-2xl md:text-3xl font-bold text-accent-light">שבועי</div>
+                  <div className="text-sm text-white/70 mt-1">פגישות עבודה</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl md:text-3xl font-bold text-accent-light">15+</div>
-                  <div className="text-sm text-white/70 mt-1">שנות ניסיון</div>
+                  <div className="text-2xl md:text-3xl font-bold text-accent-light">שוטף</div>
+                  <div className="text-sm text-white/70 mt-1">משוב בין המפגשים</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl md:text-3xl font-bold text-accent-light">30+</div>
-                  <div className="text-sm text-white/70 mt-1">דקות שיחה חינם</div>
+                  <div className="text-2xl md:text-3xl font-bold text-accent-light">1:1</div>
+                  <div className="text-sm text-white/70 mt-1">בדיקת התאמה אישית</div>
                 </div>
               </div>
             </div>
@@ -348,7 +348,7 @@ export default function CoachingPage() {
             <div className="mt-10 p-6 rounded-xl bg-primary/5 border border-primary/20">
               <p className="text-lg text-foreground leading-relaxed">
                 <strong className="text-primary">הליווי של אומנות הקשר שונה</strong> - כי הוא מחבר בין
-                עבודה פנימית, מיומנויות מעשיות, ליווי צמוד בשטח, ואחריות אישית לתוצאה.
+                עבודה פנימית, מיומנויות מעשיות, ליווי צמוד בשטח, ואחריות אישית ליישום.
                 לא רק מבינים - <strong>עושים</strong>.
               </p>
             </div>
@@ -373,16 +373,16 @@ export default function CoachingPage() {
             </h2>
             <p className="text-xl opacity-90 leading-relaxed mb-6">
               יש הבדל בין <strong>לרצות</strong> זוגיות לבין <strong>להיות פנוי</strong> לזוגיות.
-              רוב האנשים שאומרים ״אני מחפש זוגיות״ בעצם לא באמת פנויים -
-              לא בגלל שהם משקרים, אלא בגלל שמשהו חוסם אותם.
+              לפעמים יש פער בין הרצון בזוגיות לבין היכולת להיות פנויים לקשר -
+              למשל בגלל פחד, דפוס חוזר או צורך שעדיין לא קיבל מקום.
             </p>
             <p className="text-lg opacity-80 leading-relaxed mb-4">
               אולי זה פחד מדחייה. אולי זה דפוס של בריחה מקרבה.
               אולי זה סיפור מגביל שנבנה בילדות.
             </p>
             <p className="text-lg opacity-90 leading-relaxed font-medium">
-              הליווי שלי מזהה את החסם הייחודי שלך ומפתח את הכלים
-              לעבור ממצב של ״לא פנוי״ ל״פנוי לקשר״.
+              הליווי נועד לעזור לזהות מה מקשה עליך ולפתח כלים
+              לתקשורת, לבחירה ולנוכחות בקשר.
             </p>
           </div>
         </div>
@@ -439,7 +439,7 @@ export default function CoachingPage() {
               href={BOOKING_URL}
               className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
             >
-              רוצה להתחיל? שיחת היכרות חינם
+              רוצה להתחיל? שיחת היכרות
               <span>&larr;</span>
             </Link>
           </div>
@@ -487,7 +487,7 @@ export default function CoachingPage() {
             </div>
           </div>
 
-          {/* Guarantee callout */}
+          {/* Process commitment callout */}
           <div className="mt-12 max-w-2xl mx-auto">
             <div className="p-6 md:p-8 rounded-2xl bg-gradient-to-br from-primary/10 via-background to-secondary/10 border border-primary/20 text-center">
               <div className="inline-flex p-3 rounded-full bg-primary/10 mb-4">
@@ -495,10 +495,10 @@ export default function CoachingPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-2">ערבות לתוצאה</h3>
+              <h3 className="text-xl font-bold mb-2">מחויבות לתהליך</h3>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                <strong className="text-foreground">זוגיות תוך 3 חודשים - או המשך ליווי חינם</strong> עד שתמצא.
-                זו לא הבטחה שיווקית. זה ביטחון של מי שעשה את זה 461 פעמים.
+                <strong className="text-foreground">מגדירים יעדים, מתרגלים ובודקים מה קורה בפועל.</strong>{" "}
+                אם נתקעים, חוזרים למיפוי ומעדכנים את הצעדים במקום להמשיך על אוטומט.
               </p>
             </div>
           </div>
@@ -544,7 +544,7 @@ export default function CoachingPage() {
                 </p>
                 <p className="text-foreground font-medium">
                   היום אני נשוי באושר, ועוזר לאחרים לעשות את אותו המסע.
-                  עם רקע של <strong className="text-primary">~20 שנה בתחום הבמה</strong> כשחקן,
+                  עם <strong className="text-primary">רקע באמנויות הבמה</strong> כשחקן,
                   מוזיקאי ובובנאי - אני מביא לליווי דרך ייחודית שמחברת בין אמנות ליחסים.
                 </p>
               </div>
@@ -561,8 +561,8 @@ export default function CoachingPage() {
               {/* Key stat */}
               <div className="mt-8 p-4 rounded-xl bg-primary/5 border border-primary/20 inline-block">
                 <p className="text-foreground">
-                  <strong className="text-primary text-2xl">461</strong>
-                  <span className="mr-2 text-muted-foreground"> זוגות שמצאו אהבה דרך התהליך</span>
+                  <strong className="text-primary text-2xl">אישי</strong>
+                  <span className="mr-2 text-muted-foreground"> מיפוי, תרגול ומשוב שמותאמים לאדם</span>
                 </p>
               </div>
             </div>
@@ -681,7 +681,7 @@ export default function CoachingPage() {
               href={BOOKING_URL}
               className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all"
             >
-              קבע שיחת היכרות חינם
+              לתיאום שיחת היכרות
               <span>&larr;</span>
             </Link>
           </div>
@@ -701,7 +701,7 @@ export default function CoachingPage() {
             <span className="text-accent-light">אבל אם תצא לדרך - היא מחכה לך.</span>
           </h2>
           <p className="text-xl opacity-90 max-w-2xl mx-auto mb-4 leading-relaxed">
-            שיחת היכרות של 30+ דקות, בחינם, בלי התחייבות.
+            שיחת היכרות לבירור הצורך, צורת העבודה וההתאמה.
           </p>
           <p className="text-lg opacity-80 max-w-xl mx-auto mb-10 leading-relaxed">
             אין פה מכירה בלחץ. אין טריקים. רק שיחה כנה, שבה נבין ביחד
@@ -712,7 +712,7 @@ export default function CoachingPage() {
               href={BOOKING_URL}
               className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
             >
-              לשיחת היכרות חינם
+              לתיאום שיחת היכרות
             </Link>
             <a
               href="tel:+972512518025"

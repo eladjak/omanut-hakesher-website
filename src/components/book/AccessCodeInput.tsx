@@ -15,7 +15,7 @@ function formatCode(raw: string): string {
   const clean = raw.replace(/[^A-Z0-9]/gi, "").toUpperCase();
 
   // Split into blocks of 4 (prefix is 3 chars: AHK)
-  // Pattern: [3]-[4]-[4]  → "AHK-2026-BOOK"
+  // Pattern: [3]-[4]-[4]  → "AHK-XXXX-XXXX"
   const parts: string[] = [];
   if (clean.length > 0) parts.push(clean.slice(0, 3));
   if (clean.length > 3) parts.push(clean.slice(3, 7));

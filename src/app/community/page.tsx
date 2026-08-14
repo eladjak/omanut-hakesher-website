@@ -209,7 +209,7 @@ export default function CommunityPage() {
                 number: "2",
                 title: "תוכנית הדרך",
                 description:
-                  "רכישת תוכנית הדרך כוללת גישה לקהילה. 90 יום של תוכנית + קהילה תומכת.",
+                  "רכישת תוכנית הדרך כוללת גישה לקהילת התלמידים לאורך מסלול 12 השבועות, לפי תנאי ההצטרפות.",
                 cta: "לפרטים על תוכנית הדרך",
                 href: "/programs/the-way",
                 highlight: false,
@@ -291,7 +291,7 @@ export default function CommunityPage() {
             href="/coaching"
             className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
           >
-            לשיחת היכרות חינם
+            לתיאום שיחת היכרות
           </Link>
         </div>
       </section>

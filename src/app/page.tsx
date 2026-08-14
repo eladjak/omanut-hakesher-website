@@ -8,6 +8,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { GenderedText } from "@/components/GenderedText";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { WebPageJsonLd } from "@/components/JsonLd";
+import { CANONICAL_SITE_URL } from "@/lib/site-url";
+import { PRODUCT_FACTS } from "@/lib/product-facts";
 
 // Real research sources behind the method — credibility + AI-citation signal.
 const researchSources = [
@@ -55,10 +57,10 @@ const FreeWorkshopBanner = dynamic(
 );
 
 const stats = [
-  { number: "461", label: "זוגות שנוצרו" },
-  { number: "15+", label: "שנות ניסיון" },
-  { number: "90", label: "ימי תוכנית" },
-  { number: "20+", label: "שנים על הבמה" },
+  { number: String(PRODUCT_FACTS.course.weeks), label: "שבועות בתוכנית" },
+  { number: String(PRODUCT_FACTS.book.chapters), label: "פרקים בספר" },
+  { number: String(PRODUCT_FACTS.book.numberedExercises), label: "תרגילים ממוספרים" },
+  { number: String(PRODUCT_FACTS.course.lmsMappedLessons), label: "שיעורים ב־LMS" },
 ];
 
 type Product = {
@@ -79,7 +81,7 @@ const products: Product[] = [
       </svg>
     ),
     title: "תוכנית ״הדרך״",
-    description: "תוכנית 90 יום מובנית שמובילה אותך צעד אחר צעד מהעבודה הפנימית ועד למציאת הזוגיות. סרטון יומי קצר, ליווי ממנטור וקהילה תומכת.",
+    description: `תוכנית מובנית של ${PRODUCT_FACTS.course.weeks} שבועות שמחברת עבודה פנימית, תקשורת, היכרויות ותרגול. שיעורים קצרים, ליווי וקהילה תומכת.`,
     href: "/programs/the-way",
     color: "bg-primary/10 text-primary",
     cta: "לפרטים על הדרך",
@@ -91,10 +93,10 @@ const products: Product[] = [
       </svg>
     ),
     title: "ליווי אישי פרימיום",
-    description: "תהליך מותאם אישית עם מפגשים פרטניים, תמיכה בווטסאפ, משוב על דייטים בזמן אמת והתחייבות לתוצאה. זוגיות תוך 3 חודשים או המשך ליווי חינם.",
+    description: "תהליך מותאם אישית עם מפגשים פרטניים, תרגול ומשוב על מה שקורה בפועל בדייטים ובקשרים.",
     href: "/coaching",
     color: "bg-secondary/10 text-secondary",
-    cta: "לשיחת היכרות חינם",
+    cta: "לתיאום שיחת היכרות",
   },
   {
     icon: (
@@ -103,7 +105,7 @@ const products: Product[] = [
       </svg>
     ),
     title: "הספר ״אומנות הקשר״",
-    description: "10 פרקים, 32 תרגילים מעשיים ועשרות סיפורים מהשטח. לא עוד ספר טיפים - דרך שלמה ומובנית למציאת הזוגיות שמגיעה לך. עם כלים אינטראקטיביים לכל פרק.",
+    description: `${PRODUCT_FACTS.book.chapters} פרקים בחמישה חלקים ו־${PRODUCT_FACTS.book.numberedExercises} תרגילים ממוספרים. דרך מובנית מהסיפור שמנהל אותך ועד היכולת לבחור ולבנות קשר.`,
     href: "/book",
     color: "bg-accent/10 text-accent-dark",
     cta: "לסקשן הספר",
@@ -115,7 +117,7 @@ const products: Product[] = [
       </svg>
     ),
     title: "הקהילה",
-    description: "מועדון חברים עם תוכן איכותי, קהילה תומכת, אירועים ומפגשים. נכנסים בחינם לאחר רכישת תוכנית הדרך ונהנים ממשאבים בלתי מוגבלים.",
+    description: "מרחב קהילתי לתרגול, מפגשים ושיח עם אנשים שנמצאים בתהליך דומה. תנאי הגישה מפורטים בכל מסלול.",
     href: "/community",
     color: "bg-primary-light/20 text-primary-dark",
     cta: "לפרטים על הקהילה",
@@ -170,7 +172,7 @@ export default function HomePage() {
       <WebPageJsonLd
         name="אומנות הקשר | מצא את הזוגיות שמגיעה לך"
         description="בית הספר למציאת זוגיות מאושרת. תוכנית ״הדרך״, ליווי אישי, הספר ״אומנות הקשר״ וקהילה תומכת — עם אלעד יעקובוביץ׳."
-        url="https://omanut-hakesher.co.il/"
+        url={`${CANONICAL_SITE_URL}/`}
       />
       {/* Hero Section */}
       <section className="relative min-h-[92dvh] flex items-center overflow-hidden">
@@ -197,14 +199,13 @@ export default function HomePage() {
               <span className="text-primary">שמגיעה לך</span>
             </h1>
             <p className="text-xl md:text-2xl text-white/90 font-medium mt-3">
-              תוך 3 חודשים. בליווי אישי. בהתחייבות לתוצאה.
+              דרך ברורה. תרגול מעשי. ליווי אנושי.
             </p>
             <p className="mt-6 text-lg md:text-xl text-white/80 max-w-2xl leading-relaxed">
-              לא עוד טיפים מפוזרים ולא עוד דייטים לשווא.
+              לא עוד טיפים מפוזרים ולא עוד ניסיון לנחש לבד.
               {" "}
-              <strong className="text-white">אומנות הקשר</strong> היא דרך מובנית שכבר הובילה
-              {" "}
-              <strong className="text-accent-on-dark">461 זוגות</strong> לזוגיות מאושרת.
+              <strong className="text-white">אומנות הקשר</strong> היא דרך מובנית להבנת דפוסים,
+              תרגול חיבור וקבלת החלטות מתוך יותר בהירות ובחירה.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
@@ -212,7 +213,7 @@ export default function HomePage() {
                 data-wow-lift
                 className="px-8 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark shadow-lg shadow-primary/20"
               >
-                לשיחת היכרות חינם
+                לתיאום שיחת היכרות
               </Link>
               {/* Legibility fix 25.7: this button was border-secondary /
                   text-secondary — navy #1E3A5F — on the DARK hero scrim, which
@@ -323,19 +324,19 @@ export default function HomePage() {
               {/* Real Credentials */}
               <div className="mt-8 flex flex-wrap gap-3">
                 <Badge variant="secondary" className="bg-secondary/10 text-secondary border-secondary/20 px-3 py-1">
-                  NLP מוסמך
+                  תוכן מעשי
                 </Badge>
                 <Badge variant="secondary" className="bg-secondary/10 text-secondary border-secondary/20 px-3 py-1">
-                  CBT
+                  תרגול מובנה
                 </Badge>
                 <Badge variant="secondary" className="bg-secondary/10 text-secondary border-secondary/20 px-3 py-1">
-                  קואצ׳ יהודי
+                  הנחיה ומשוב
                 </Badge>
                 <Badge variant="secondary" className="bg-secondary/10 text-secondary border-secondary/20 px-3 py-1">
-                  דמיון מודרך
+                  כלים אינטראקטיביים
                 </Badge>
                 <Badge variant="secondary" className="bg-secondary/10 text-secondary border-secondary/20 px-3 py-1">
-                  ~20 שנות במה
+                  הרצאות וסדנאות
                 </Badge>
               </div>
 
@@ -447,7 +448,7 @@ export default function HomePage() {
               הדרך <span className="text-primary">שלך</span> לזוגיות
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              <GenderedText id="products.choose" /> כל אחת מהן כבר הוכיחה את עצמה.
+              <GenderedText id="products.choose" /> לפי סוג המסגרת, התרגול והליווי שמתאימים לך.
             </p>
           </div>
 

@@ -78,7 +78,8 @@ export function Header() {
 
   // Close menu on route change
   useEffect(() => {
-    setIsMenuOpen(false);
+    const frame = window.requestAnimationFrame(() => setIsMenuOpen(false));
+    return () => window.cancelAnimationFrame(frame);
   }, [pathname]);
 
   // Prevent body scroll when mobile menu is open
@@ -189,7 +190,7 @@ export function Header() {
 
             {/* CTA Button */}
             <Button asChild className="rounded-full bg-primary hover:bg-primary-dark text-white shadow-md shadow-primary/20">
-              <Link href="/coaching/book">שיחת היכרות חינם</Link>
+              <Link href="/coaching/book">לתיאום שיחת היכרות</Link>
             </Button>
           </div>
 
@@ -288,7 +289,7 @@ export function Header() {
             <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-border/50">
               <Button asChild className="rounded-full bg-primary hover:bg-primary-dark text-white">
                 <Link href="/coaching/book" onClick={closeMenu}>
-                  שיחת היכרות חינם
+                  לתיאום שיחת היכרות
                 </Link>
               </Button>
             </div>

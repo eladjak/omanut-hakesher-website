@@ -199,13 +199,13 @@ export default function ThanksPage() {
             הסיפור ממשיך - ואתה יכול להיות חלק ממנו
           </h2>
           <p className="text-xl opacity-90 mb-10 max-w-xl mx-auto leading-relaxed">
-            שיחת היכרות חינם - הצעד הראשון בדרך שלך
+            שיחת היכרות יכולה לעזור לברר את הצעד הבא
           </p>
           <Link
             href="/coaching"
             className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
           >
-            לשיחת היכרות חינם
+            לתיאום שיחת היכרות
           </Link>
         </div>
       </section>

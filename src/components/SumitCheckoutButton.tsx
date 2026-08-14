@@ -17,6 +17,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { PRODUCT_FACTS } from '@/lib/product-facts';
 
 interface SumitCheckoutButtonProps {
   productSlug: string;
@@ -32,7 +33,26 @@ interface SumitCheckoutButtonProps {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export function SumitCheckoutButton({
+export function SumitCheckoutButton(props: SumitCheckoutButtonProps) {
+  const { className = '' } = props;
+  if (!PRODUCT_FACTS.commerce.onlineCheckoutAvailable) {
+    return (
+      <Link
+        href="/contact"
+        className={
+          className ||
+          'inline-flex px-8 py-3.5 border border-border bg-background rounded-full font-semibold hover:bg-muted transition-colors'
+        }
+      >
+        הרכישה המקוונת אינה זמינה — לבירור
+      </Link>
+    );
+  }
+
+  return <EnabledSumitCheckoutButton {...props} />;
+}
+
+function EnabledSumitCheckoutButton({
   productSlug,
   label,
   className = '',

@@ -12,11 +12,11 @@ const product = getProduct("the-way")!;
 export const metadata: Metadata = {
   title: `${product.nameHe} | ${formatILS(product.price.amount)} | אומנות הקשר`,
   description:
-    "תוכנית הדרך — 90 ימים למציאת זוגיות מאושרת. 6 שלבי השיטה, ליווי יומיומי ממנטור, קהילה תומכת. 461 זוגות כבר מצאו אהבה.",
+    "תוכנית הדרך — מסגרת תוכן, תרגול וליווי בת 12 שבועות ובחמישה שלבים.",
   alternates: { canonical: product.path },
   openGraph: {
     title: `${product.nameHe} | אומנות הקשר`,
-    description: "תוכנית הדרך — 90 ימים למציאת זוגיות מאושרת, בליווי אישי.",
+    description: "תוכנית הדרך — 12 שבועות של תוכן, תרגול וליווי בתהליך אישי.",
     url: product.path,
     type: "website",
   },
@@ -25,47 +25,41 @@ export const metadata: Metadata = {
 const stages = [
   {
     num: "01",
-    weeks: "שבועות 1-2",
+    weeks: "שבועות 1-3",
     title: "גישה",
-    desc: "בניית גישה בריאה לזוגיות, איתור אמונות מגבילות, יצירת חזון אישי ברור — בלי הרשימות הבלתי-אפשריות.",
+    desc: "פתיחת המסע, מיפוי סיפורים ואמונות, עבודה עם פחדים ויצירת בסיס אישי לתהליך.",
   },
   {
     num: "02",
-    weeks: "שבועות 3-5",
+    weeks: "שבועות 4-5",
     title: "תקשורת",
-    desc: "יצירת הזדמנויות להיכרות, הבנת ההבדלים בתקשורת בין גברים ונשים, שפת גוף, תקשורת אונליין.",
+    desc: "הכרת עצמי, צרכים ורגשות, תקשורת מקרבת, קונפליקטים ושפות אהבה.",
   },
   {
     num: "03",
-    weeks: "שבועות 6-8",
-    title: "משיכה",
-    desc: "פלירטוט אמיתי, יזימה ללא לחץ, ניהול דייטים שמובילים למשהו — לא עוד 'היה נחמד נשמור על קשר'.",
+    weeks: "שבועות 6-9",
+    title: "מעבר ומשיכה",
+    desc: "המעבר מעבודה פנימית לפעולה, רושם ראשוני, אומץ, היכרות אונליין ותרגול דייטים.",
   },
   {
     num: "04",
-    weeks: "שבועות 9-11",
+    weeks: "שבועות 10-11",
     title: "חיבור וכימיה",
-    desc: "העמקת קשר, תקשורת מתקדמת, יצירת שפה זוגית משותפת, אינטימיות רגשית.",
+    desc: "בחינת כימיה, הקשבה פעילה, אינטימיות, פגיעות ותקשורת בטוחה ומכבדת.",
   },
   {
     num: "05",
-    weeks: "חלק משלב 4",
-    title: "אינטימיות רגשית",
-    desc: "הבנת מהו חיבור רגשי אמיתי, הרחבת המכנה המשותף, בניית אמון.",
-  },
-  {
-    num: "06",
-    weeks: "שבועות 12-13",
+    weeks: "שבוע 12",
     title: "מחויבות",
-    desc: "ייצוב הזוגיות, קבלת החלטות מתוך בהירות, יסודות לחיים משותפים.",
+    desc: "בחינת מוכנות, קבלת החלטות מתוך בהירות, שיחה על הקשר וסיכום המסע.",
   },
 ];
 
 const includes = [
-  { title: "השיטה", value: 1500, desc: "90 ימי תוכן עם סרטון קצר יומי. 5-10 דקות ביום." },
-  { title: "ליווי יומי", value: 2970, desc: "ליווי מנטור מוסמך דרך צ׳אט פרטי. תשובה לכל שאלה." },
-  { title: "הקהילה", value: 670, desc: "פורום סגור, קבוצת פייסבוק, קבוצת וואטסאפ פעילה." },
-  { title: "התרגולים", value: 800, desc: "בונוסים מתוך תוכנית הליווי האישי — חומר ב-VIP בלבד." },
+  { title: "תוכן הקורס", desc: "שיעורים המסודרים ב-12 שבועות ובחמישה שלבים." },
+  { title: "תרגול", desc: "משימות וכלים ליישום הדרגתי של התוכן בחיי היומיום." },
+  { title: "ליווי ומשוב", desc: "משוב לפי מסגרת המחזור והערוצים שיוגדרו לפני ההצטרפות." },
+  { title: "קהילה", desc: "מרחב לשיתוף ולמידה עם משתתפים נוספים, בהתאם למתכונת המחזור." },
 ];
 
 const objections = [
@@ -74,12 +68,12 @@ const objections = [
     a: "לרווקים ורווקות בגילאי 25-55 שמחפשים זוגיות רצינית ומוכנים לעשות עבודה אמיתית. לא משנה אם אתה אחרי פרידה, אחרי גירושין, או פשוט מרגיש תקוע — אם אתה מוכן לשינוי, התוכנית בשבילך.",
   },
   {
-    q: "ואם אין לי זמן ל-90 יום שלמים?",
-    a: "השיטה בנויה ל-5-10 דקות ביום. בערך כמו צפייה בריל. אם אין לך 10 דקות ביום לעצמך, נדבר על זה לפני שאתה משקיע — ייתכן שעכשיו לא הזמן הנכון.",
+    q: "ואם אין לי זמן למסלול של 12 שבועות?",
+    a: "העומס משתנה בין שיעור לתרגיל. לפני ההצטרפות כדאי לבדוק את מתכונת המחזור ואת הזמן שנדרש בפועל, ולוודא שהיא מתאימה לשגרה שלך.",
   },
   {
     q: "אני כבר ניסיתי הכל. למה זה יעבוד דווקא?",
-    a: "כי 461 לפניך כבר עברו את זה. השיטה לא ׳עוד טיפ׳ — היא תהליך מובנה של 6 שלבים. כל שלב נבנה על קודמו. כשמוותרים על שלב, הבא לא עובד.",
+    a: "אי אפשר להבטיח תוצאה אישית מראש. התוכנית מציעה מסגרת מובנית של חמישה שלבים, שבה התוכן, התרגול והמשוב נבנים בהדרגה. כך אפשר לבדוק מה מיושם ומה דורש התאמה.",
   },
   {
     q: "מתאים לדתי/חרדי?",
@@ -87,11 +81,11 @@ const objections = [
   },
   {
     q: "האם התוכנית מתאימה גם לנשים?",
-    a: "בהחלט. התוכנית נכתבה בשפה מכלילה ומתאימה לגברים ולנשים כאחד. העקרונות אוניברסליים — הבנת עצמך, תקשורת, פגיעות ומחויבות רלוונטיים לכולם.",
+    a: "כן. התוכנית נכתבה בשפה מכלילה ומתאימה לאנשים מכל המגדרים. הצרכים, התרגול והדוגמאות נבחנים לפי האדם והקשר, לא לפי הנחות על גברים או נשים.",
   },
   {
     q: "יש החזר כספי?",
-    a: "לא. אני בטוח באיכות מספיק בשביל לא להציע ערבות החזר — אבל יש לי אחריות יישומית של חצי שנה. אם נתקעת, אנחנו עוצרים, מחזירים אחורה, מתחילים מחדש. בלי תוספת.",
+    a: "תנאי הביטול וההחזר יוצגו במפורש לפני רכישה. כל עוד הרכישה המקוונת אינה פעילה, אין להסתמך על נוסח קודם או על הבטחה שלא נכללה בתנאים מאושרים.",
   },
 ];
 
@@ -100,23 +94,23 @@ const objections = [
 const comparison = [
   {
     approach: "אפליקציות דייטינג",
-    description: "נותנות הזדמנויות, אבל בלי כלים. זה כמו לתת למישהו מפתח בלי ללמד אותו לנהוג.",
-    verdict: "הזדמנויות ללא כלים",
+    description: "נותנות הזדמנויות להיכרות, אך לא תמיד כוללות מסגרת לתרגול תקשורת, בחירה ועיבוד חוויות מדייטים.",
+    verdict: "הזדמנויות ללא מסגרת תרגול",
   },
   {
     approach: "אתרי היכרויות",
-    description: "מספקים התאמות, אבל לא מטפלים בסיבה שדייטים קודמים נכשלו.",
-    verdict: "התאמות ללא עבודה פנימית",
+    description: "עשויים לספק התאמות ופרטי קשר, אך אינם בהכרח כוללים עבודה אישית על צרכים ודפוסים.",
+    verdict: "התאמות ללא תהליך אישי מובנה",
   },
   {
     approach: "טיפול פסיכולוגי",
-    description: "עוזר להבין את עצמך, אבל לרוב לא מלווה אותך בשטח ולא נותן כלים מעשיים לדייטינג.",
-    verdict: "הבנה ללא ליווי בשטח",
+    description: "עשוי לסייע בהבנה ובעבודה רגשית. לא כל מסגרת טיפולית כוללת תרגול ממוקד בדייטינג או משוב סמוך לאירוע.",
+    verdict: "מטרה ומבנה שונים",
   },
   {
     approach: "ספרי עזרה עצמית",
-    description: "טיפים מעניינים, אבל קוראים, מתלהבים, ואחרי שבוע חוזרים לאותם דפוסים.",
-    verdict: "השראה ללא מסגרת",
+    description: "יכולים לספק רעיונות וכלים, אך אינם כוללים התאמה אישית, תרגול מודרך או משוב על היישום.",
+    verdict: "למידה עצמאית ללא משוב אישי",
   },
 ];
 
@@ -137,7 +131,7 @@ export default function TheWayProgramPage() {
         <div className="absolute inset-0">
           <Image
             src="/images/generated/hadrech-hero.jpg"
-            alt="תוכנית הדרך — מציאת זוגיות מאושרת"
+            alt="תוכנית הדרך — מסלול תוכן, תרגול וליווי"
             fill
             className="object-cover"
             priority
@@ -148,14 +142,14 @@ export default function TheWayProgramPage() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <Badge variant="outline" className="mb-5 text-white border-white/30 text-sm px-4 py-1.5">
-              תוכנית 90 יום · מחזור פתוח להרשמה
+              תוכנית 12 שבועות · פרטי המחזור בעמוד
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight text-balance">
-              90 ימים למציאת זוגיות מאושרת —{" "}
-              <span className="text-accent-light">בליווי ובהתחייבות</span>
+              12 שבועות של עבודה על זוגיות —{" "}
+              <span className="text-accent-light">עם תוכן, תרגול וליווי</span>
             </h1>
             <p className="text-xl text-white/90 max-w-2xl mx-auto leading-relaxed text-pretty">
-              לא עוד ׳טיפ׳, לא עוד סדנה של שבועיים. תהליך מובנה של 6 שלבים, עם ליווי יומיומי, שעבד עבור 461 זוגות.
+              מסלול מובנה בחמישה שלבים, עם תוכן, תרגול וליווי לפי מתכונת המחזור.
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <a
@@ -168,25 +162,26 @@ export default function TheWayProgramPage() {
                 href="/coaching"
                 className="inline-flex px-8 py-4 border border-white/40 text-white rounded-full font-medium text-base hover:bg-white/10 transition-colors"
               >
-                לא בטוח/ה? שיחת היכרות חינם
+                לא בטוח/ה? בדיקת התאמה
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* The 6 stages */}
+      {/* The 5 canonical course stages */}
       <section className="py-20 md:py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-14 max-w-2xl mx-auto">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30">
-              השיטה — 6 שלבים
+              מבנה הקורס — 5 שלבים
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">
               לא עוד ׳טיפים׳ — תהליך מובנה
             </h2>
             <p className="text-lg text-muted-foreground text-pretty">
-              כל שלב נבנה על קודמו. אי-אפשר לדלג. אי-אפשר לקצר. ולכן זה עובד.
+              כל שלב נבנה על קודמו ומוסיף תוכן, תרגול ומשוב. המבנה נועד לעזור
+              ליישם את החומר בהדרגה ולבדוק מה דורש התאמה.
             </p>
           </div>
 
@@ -216,10 +211,10 @@ export default function TheWayProgramPage() {
                 למה דווקא הדרך?
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">
-                מה <span className="text-primary">באמת</span> עובד?
+                מה כולל תהליך מובנה?
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-                כבר ניסית דברים אחרים. הנה למה הם לא עבדו — ולמה הדרך שונה.
+                מסגרות שונות משרתות מטרות שונות. הנה מה התוכנית מוסיפה לתהליך הלמידה והתרגול.
               </p>
             </div>
 
@@ -251,9 +246,9 @@ export default function TheWayProgramPage() {
                   עבודה פנימית + מיומנויות + ליווי + קהילה
                 </h3>
                 <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto text-pretty">
-                  הדרך משלבת את מה שחסר בכל גישה אחרת: עבודה עמוקה על עצמך, כלים מעשיים
-                  לדייטינג, ליווי יומיומי שמחזיק אותך, וקהילה של אנשים שעוברים את אותו
-                  מסע. זו לא עוד גישה — זו <strong className="text-foreground">הדרך השלמה</strong>.
+                  הדרך משלבת עבודה אישית, כלים מעשיים להיכרויות, תרגול, משוב וקהילה.
+                  היא אינה מחליפה טיפול או מבטיחה תוצאה; זו מסגרת לימודית ויישומית
+                  שאפשר לבחון מול הצרכים והמצב האישי שלך.
                 </p>
               </CardContent>
             </Card>
@@ -277,13 +272,13 @@ export default function TheWayProgramPage() {
             </h2>
             <p className="text-xl opacity-90 leading-relaxed mb-6 text-pretty">
               יש הבדל בין <strong>לרצות</strong> זוגיות לבין <strong>להיות פנוי</strong>{" "}
-              לזוגיות. רוב האנשים שאומרים ״אני מחפש זוגיות״ בעצם לא באמת פנויים — לא
-              בגלל שהם משקרים, אלא בגלל שמשהו חוסם אותם.
+              לזוגיות. לפעמים יש פער בין הרצון בקשר לבין היכולת להיות פנויים אליו —
+              למשל בגלל פחד, דפוס חוזר או צורך שעדיין לא קיבל מקום.
             </p>
             <p className="text-lg opacity-80 leading-relaxed text-pretty">
-              תוכנית הדרך מזהה את החסם ומפתחת את הכלים לעבור ממצב של ״לא פנוי״
-              ל״פנוי לקשר״. הזוגיות שמגיעה לך לא תדפוק בדלת — אבל אם תצא לדרך,
-              היא מחכה לך.
+              התוכנית מציעה מסגרת למיפוי הקושי, לתרגול תקשורת ולבחינת בחירות ודפוסים.
+              היא אינה מבטיחה מועד או תוצאה זוגית, אלא תהליך מובנה שאפשר ליישם
+              במהלך התוכנית ואחריה.
             </p>
           </div>
         </div>
@@ -298,7 +293,7 @@ export default function TheWayProgramPage() {
                 מה כלול בתוכנית
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">
-                4 רכיבים שעובדים יחד
+                4 רכיבים שמשתלבים בתוכנית
               </h2>
             </div>
 
@@ -306,12 +301,7 @@ export default function TheWayProgramPage() {
               {includes.map((item) => (
                 <Card key={item.title} className="border-border/50">
                   <CardContent className="p-6">
-                    <div className="flex items-start justify-between gap-3 mb-2">
-                      <h3 className="text-lg font-bold">{item.title}</h3>
-                      <span className="text-sm font-semibold text-muted-foreground tabular-nums">
-                        שווי {formatILS(item.value)}
-                      </span>
-                    </div>
+                    <h3 className="text-lg font-bold mb-2">{item.title}</h3>
                     <p className="text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
                   </CardContent>
                 </Card>
@@ -319,13 +309,10 @@ export default function TheWayProgramPage() {
             </div>
 
             <div className="bg-primary/5 border border-primary/15 rounded-2xl p-6 md:p-8 text-center">
-              <p className="text-sm text-muted-foreground mb-1">שווי כולל של הרכיבים</p>
-              <p className="text-3xl font-bold text-primary tabular-nums">{formatILS(5940)}</p>
-              <p className="text-base text-muted-foreground mt-3">
-                המחיר שלך:{" "}
-                <span className="text-2xl font-bold text-foreground tabular-nums">
-                  {formatILS(product.price.amount)}
-                </span>
+              <p className="text-lg font-bold mb-2">תכולת המחזור מאושרת לפני ההצטרפות</p>
+              <p className="text-sm text-muted-foreground">
+                ערוצי הליווי, מועדי המפגשים, הגישה לקהילה ותנאי הרכישה יוצגו יחד
+                במסמך תנאים אחד — בלי ערכי ״שווי״ או בונוסים שלא אומתו.
               </p>
             </div>
           </div>
@@ -340,7 +327,7 @@ export default function TheWayProgramPage() {
               <CardContent className="p-8 md:p-10">
                 <div className="text-center mb-7">
                   <Badge variant="outline" className="mb-3 text-primary border-primary/30">
-                    הרשמה — מחזור פתוח
+                    בדיקת זמינות
                   </Badge>
                   <h2 className="text-2xl md:text-3xl font-bold mb-2 text-balance">{product.nameHe}</h2>
                   <p className="text-muted-foreground text-pretty">{product.taglineHe}</p>
@@ -398,7 +385,7 @@ export default function TheWayProgramPage() {
             רוצה לשמוע ממי שכבר עבר את הדרך?
           </h2>
           <p className="text-muted-foreground mb-6 text-pretty">
-            עדויות אמיתיות — שמות מלאים, תמונות, צילומי וואטסאפ ווידאו.
+            חוויות אישיות כפי שהן מוצגות בעמוד העדויות. הן אינן הבטחה לתוצאה דומה.
           </p>
           <Link
             href="/sipurim"
@@ -416,16 +403,16 @@ export default function TheWayProgramPage() {
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" aria-hidden />
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">
-            עוד 90 יום עוברים בכל מקרה
+            12 השבועות הקרובים יעברו בכל מקרה
           </h2>
           <p className="text-xl opacity-90 mb-8 max-w-xl mx-auto leading-relaxed text-pretty">
-            השאלה היא איפה תהיה בסופם — באותו מקום, או בזוגיות.
+            אפשר לנצל אותם ללמידה, לתרגול ולבדיקה כנה של הצעד הבא שמתאים לך.
           </p>
           <a
             href="#checkout"
             className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
           >
-            להרשמה עכשיו — {formatILS(product.price.amount)}
+            לבדיקת זמינות המסלול
           </a>
         </div>
       </section>

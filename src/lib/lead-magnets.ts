@@ -27,6 +27,8 @@ export interface LeadMagnetConfig {
   assetUrl: string
   /** Welcome email subject (optional — Resend send) */
   welcomeSubject: string
+  /** False until the promised asset route has been verified end to end. */
+  deliverable: boolean
 }
 
 /** Master list for omanut-hakesher (Rav-Messer account 1001688). */
@@ -40,6 +42,7 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
     tags: ['lead-magnet', 'lead:23-reasons', 'source:website'],
     assetUrl: '/lead/23-reasons/download',
     welcomeSubject: 'המדריך שלך מוכן: 23 הסיבות שאתה עדיין רווק/ה',
+    deliverable: false,
   },
   '7-principles': {
     slug: '7-principles',
@@ -48,6 +51,7 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
     tags: ['lead-magnet', 'lead:7-principles', 'source:website'],
     assetUrl: '/lead/7-principles/download',
     welcomeSubject: 'המדריך שלך מוכן: 7 עקרונות הזהב למציאת זוגיות',
+    deliverable: false,
   },
   '36-questions': {
     slug: '36-questions',
@@ -56,6 +60,7 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
     tags: ['lead-magnet', 'lead:36-questions', 'source:website'],
     assetUrl: '/lead/36-questions/download',
     welcomeSubject: 'המדריך שלך מוכן: 36 השאלות שיכולות ליצור אהבה',
+    deliverable: false,
   },
   // --- Salvaged 2026-07-09 from worktrees bold-leavitt-80e5cc + hardcore-hoover-5e3797 ---
   courage: {
@@ -65,6 +70,7 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
     tags: ['lead-magnet', 'lead:courage', 'source:website'],
     assetUrl: '/lead/courage/download',
     welcomeSubject: 'המדריך שלך מוכן: 8 דרכים לחיים של אומץ',
+    deliverable: true,
   },
   vision: {
     slug: 'vision',
@@ -73,6 +79,7 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
     tags: ['lead-magnet', 'lead:vision', 'source:website'],
     assetUrl: '/lead/vision/download',
     welcomeSubject: 'המדריך שלך מוכן: חזון אישי לזוגיות',
+    deliverable: true,
   },
   'dating-talks': {
     slug: 'dating-talks',
@@ -81,15 +88,18 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
     tags: ['lead-magnet', 'lead:dating-talks', 'source:website'],
     assetUrl: '/lead/dating-talks/download',
     welcomeSubject: 'המדריך שלך מוכן: 10 כללים לשיחות דייט מנצחות',
+    deliverable: true,
   },
   'love-event-rsvp': {
     slug: 'love-event-rsvp',
     titleHe: 'אירוע אהבה — הרשמה',
     listId: OMANUT_HAKESHER_LIST_ID,
     tags: ['event:love-event', 'source:website'],
-    // Confirmation/details page — Resend email links here.
-    assetUrl: '/events/love-event/confirmed',
-    welcomeSubject: 'נרשמת בהצלחה לאירוע אהבה — פרטי החיבור בפנים',
+    // Event date, registration terms and delivery flow are not yet approved.
+    // Keep direct API calls fail-closed until a real event instance exists.
+    assetUrl: '/events/love-event',
+    welcomeSubject: 'אירוע אהבה — פרטי המועד יפורסמו לאחר אישור',
+    deliverable: false,
   },
   // General newsletter signup (footer / homepage / blog). No downloadable
   // asset — just joins the list. name is optional for this magnet.
@@ -100,6 +110,7 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
     tags: ['newsletter', 'source:website'],
     assetUrl: '/',
     welcomeSubject: 'נרשמת לרשימת אומנות הקשר',
+    deliverable: true,
   },
 }
 
