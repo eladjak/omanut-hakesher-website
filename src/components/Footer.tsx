@@ -1,34 +1,25 @@
-"use client";
-
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
-import { NewsletterForm } from "@/components/NewsletterForm";
-import { ELAD_WORLD } from "@/lib/elad-world";
+import { OpenResourcesLinks } from "@/components/OpenResourcesLinks";
 
 const footerLinks = {
   navigation: [
     { href: "/", label: "בית" },
+    { href: "/resources", label: "תוכן פתוח" },
+    { href: "/book", label: "הספר" },
+    { href: "/programs", label: "תוכניות" },
+    { href: "/products", label: "מוצרים וכלים" },
+    { href: "/services", label: "שירותים וליווי" },
     { href: "/about", label: "אודות אלעד" },
-    { href: "/programs/the-way", label: "תוכנית הדרך" },
-    { href: "/coaching", label: "ליווי אישי" },
-    { href: "/sipurim", label: "סיפורי הצלחה" },
-    { href: "/blog", label: "בלוג" },
-    { href: "/podcast", label: "פודקאסט" },
     { href: "/contact", label: "צור קשר" },
-    { href: "/thanks", label: "תודות" },
-    { href: "/cv-elad-yaakobovitch-he.pdf", label: "קורות חיים — אלעד יעקובוביץ" },
   ],
   services: [
-    { href: "/coaching", label: "ליווי אישי פרימיום" },
-    { href: "/programs/the-way", label: "תוכנית ״הדרך״" },
-    { href: "/book", label: "הספר ״אומנות הקשר״ + כלים" },
-    { href: "/community", label: "קהילת אומנות הקשר" },
-    {
-      href: ELAD_WORLD.community.href,
-      label: "״העולם של אלעד״ בוואטסאפ — חינם",
-      external: true,
-    },
-    { href: "/podcast", label: "פודקאסט" },
+    { href: "/blog", label: "מאמרים" },
+    { href: "/podcast", label: "הפודקאסט" },
+    { href: "/book", label: "הספר ״אומנות הקשר״" },
+    { href: "/programs/the-way", label: "תוכנית הדרך" },
+    { href: "/products/dating-card", label: "שירות ניסוח פרופיל" },
+    { href: "/coaching", label: "ליווי אישי" },
   ] as { href: string; label: string; external?: boolean }[],
 };
 
@@ -37,24 +28,22 @@ export function Footer() {
 
   return (
     <footer className="bg-foreground text-background/90">
-      {/* Newsletter Section */}
+      {/* Immediate-value section while marketing signup remains unapproved. */}
       <div className="border-b border-background/10">
         <div className="container mx-auto px-4 py-12">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
               <h3 className="text-xl font-bold text-background mb-1">
-                הישארו מעודכנים
+                מתחילים ממשהו שאפשר לפתוח עכשיו
               </h3>
               <p className="text-background/60 text-sm">
-                קבלו טיפים ותוכן בלעדי ישירות למייל
+                מדריכים, מאמרים ופודקאסט — בלי טופס ובלי הרשמה
               </p>
             </div>
 
-            <NewsletterForm
+            <OpenResourcesLinks
               theme="dark"
               layout="row"
-              placeholder="האימייל שלכם"
-              ariaLabel="הרשמה לניוזלטר"
             />
           </div>
         </div>
@@ -72,8 +61,8 @@ export function Footer() {
               אומנות הקשר
             </Link>
             <p className="mt-4 text-background/60 max-w-md leading-relaxed">
-              דרך מעשית לרווקים ולרווקות שרוצים להבין מה מעכב אותם, לתרגל
-              חיבור ולבנות קשר מתוך בהירות, בחירה וכבוד.
+              תוכן, ספר, תוכנית וליווי לתרגול תקשורת, היכרות ובחירה בקשר —
+              מתוך בהירות, הדדיות וכבוד.
             </p>
 
             {/* Social Links */}
@@ -102,14 +91,10 @@ export function Footer() {
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                 </svg>
               </a>
-              {/* YouTube */}
-              <a href="https://youtube.com/c/אומנותהקשר" target="_blank" rel="noopener noreferrer"
-                className="p-2.5 rounded-xl bg-background/10 hover:bg-primary/80 transition-colors"
-                aria-label="יוטיוב">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/>
-                </svg>
-              </a>
+              {/* YouTube icon removed 21.8.2026: youtube.com/c/אומנותהקשר returns 404,
+                  with and without a browser user-agent, and no @handle for this
+                  channel resolves either. A social icon that leads nowhere is worse
+                  than one fewer icon. Restore this when a real channel URL exists. */}
               {/* Spotify */}
               <a href="https://open.spotify.com/show/2mXzv3AS0rZw7eTCVjEbyZ" target="_blank" rel="noopener noreferrer"
                 className="p-2.5 rounded-xl bg-background/10 hover:bg-primary/80 transition-colors"
@@ -140,7 +125,7 @@ export function Footer() {
 
           {/* Services Links */}
           <div>
-            <h3 className="font-bold text-lg mb-4 text-background">שירותים</h3>
+            <h3 className="font-bold text-lg mb-4 text-background">דרכי העמקה</h3>
             <ul className="space-y-2.5">
               {footerLinks.services.map((link) => (
                 <li key={link.href}>
@@ -184,18 +169,18 @@ export function Footer() {
         <Separator className="my-8 bg-background/10" />
 
         {/* Bottom Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-background/40 text-sm">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-background/70 text-sm">
           <p>&copy; {currentYear} אומנות הקשר. כל הזכויות שמורות.</p>
           <div className="flex items-center gap-4">
-            <Link href="/privacy" className="text-background/30 hover:text-primary-light transition-colors text-xs">
+            <Link href="/privacy" className="text-background/70 hover:text-primary-light transition-colors text-xs">
               מדיניות פרטיות
             </Link>
             <span className="text-background/20 text-xs">|</span>
-            <Link href="/terms" className="text-background/30 hover:text-primary-light transition-colors text-xs">
+            <Link href="/terms" className="text-background/70 hover:text-primary-light transition-colors text-xs">
               תנאי שימוש
             </Link>
             <span className="text-background/20 text-xs">|</span>
-            <Link href="/accessibility" className="text-background/30 hover:text-primary-light transition-colors text-xs">
+            <Link href="/accessibility" className="text-background/70 hover:text-primary-light transition-colors text-xs">
               נגישות
             </Link>
           </div>
