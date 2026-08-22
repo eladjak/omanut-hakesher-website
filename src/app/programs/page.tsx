@@ -1,236 +1,139 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { OfferJourney } from "@/components/OfferJourney";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { getProduct, formatILS } from "@/lib/products";
+import { PRODUCT_FACTS } from "@/lib/product-facts";
 
 export const metadata: Metadata = {
-  title: "תוכניות אומנות הקשר — בחר/י את המסלול שלך",
+  title: "תוכניות ומסלולי למידה | אומנות הקשר",
   description:
-    "מסלולים ושירותים של אומנות הקשר: אירועי הדרכה, קהילה, כתיבת פרופיל, תוכנית הדרך וליווי אישי. פרטי הזמינות והתנאים מוצגים בכל עמוד.",
+    "השוואה בין תוכן פתוח, הספר, תוכנית הדרך וליווי — כולל מבנה התוכנית והשאלות שכדאי לברר לפני שבוחרים.",
   alternates: { canonical: "/programs" },
   openGraph: {
-    title: "תוכניות אומנות הקשר | כל המסלולים",
-    description: "מהמפגש החינמי הראשון ועד ליווי VIP — בחר/י את הנקודה הנכונה בשבילך.",
+    title: "תוכניות ומסלולי למידה | אומנות הקשר",
+    description: "מפת בחירה לפי עומק, קצב ורמת התמיכה הרצויה.",
     url: "/programs",
     locale: "he_IL",
     type: "website",
   },
 };
 
-const theWay = getProduct("the-way")!;
-const theWayPlus = getProduct("the-way-plus")!;
-const club = getProduct("club-90d")!;
-const datingCard = getProduct("dating-card")!;
+const canonicalPhases = [
+  { number: "01", title: "גישה", focus: "מיפוי נקודת הפתיחה, סיפורים, אמונות ופחדים." },
+  { number: "02", title: "תקשורת", focus: "צרכים, רגשות, גבולות ושיחה הדדית." },
+  { number: "03", title: "משיכה ותנועה", focus: "מעבר הדרגתי מהתבוננות לפעולה בעולם ההיכרויות." },
+  { number: "04", title: "חיבור", focus: "הקשבה, סקרנות והבחנה בין חיבור, משיכה והתאמה." },
+  { number: "05", title: "אינטימיות", focus: "קרבה הדרגתית עם פרטיות, הסכמה ואפשרות לעצור." },
+  { number: "06", title: "מחויבות", focus: "שיחות והחלטות על הקשר מתוך בהירות והדדיות." },
+] as const;
 
-interface ProgramCard {
-  slug: string;
-  href: string;
-  badge: string;
-  badgeTone: "primary" | "accent" | "secondary";
-  title: string;
-  tagline: string;
-  price: string;
-  priceDetail: string;
-  features: string[];
-  audience: string;
-  cta: string;
-  highlight?: boolean;
-}
-
-const programs: ProgramCard[] = [
+const decisionCards = [
   {
-    slug: "love-event",
-    href: "/events/love-event",
-    badge: "אירוע הדרכה · פרטים בעמוד",
-    badgeTone: "accent",
-    title: "אירוע אהבה",
-    tagline: "מפגש אונליין להדרכה, שאלות והיכרות עם הגישה",
-    price: "בדיקת זמינות",
-    priceDetail: "המועד והתנאים מתעדכנים בעמוד האירוע",
-    features: [
-      "הדרכה חיה ממני",
-      "מפגש עם משתתפים נוספים",
-      "שאלות ותשובות בלייב",
-      "פרטי הפורמט מוצגים לפני הרשמה",
+    title: "עדיף להתחיל מתוכן פתוח כש...",
+    items: [
+      "יש שאלה אחת שמעסיקה אותך עכשיו.",
+      "עוד לא ברור אם סגנון העבודה מתאים.",
+      "אין כרגע זמן לרצף שבועי.",
     ],
-    audience: "למי שמכיר אותנו פעם ראשונה",
-    cta: "לבדיקת המועד",
+    href: "/resources",
+    cta: "לתוכן הפתוח",
   },
   {
-    slug: club.slug,
-    href: club.path,
-    badge: "קהילה ותרגול",
-    badgeTone: "secondary",
-    title: club.nameHe,
-    tagline: "מסגרת קהילתית לתרגול, שיתוף ומפגשים",
-    price: "פרטים בעמוד",
-    priceDetail: "תנאי ההצטרפות והחידוש יאושרו לפני הפעלה",
-    features: [
-      "מפגשי תרגול אונליין",
-      "ערוץ קהילתי לשיתוף",
-      "חומרי תרגול נלווים",
-      "פרטי הפעילות מוצגים לפני הצטרפות",
+    title: "הספר יכול להתאים כש...",
+    items: [
+      "רוצים תמונה רחבה ולא רק מאמר נקודתי.",
+      "נוח יותר לקרוא ולתרגל בקצב אישי.",
+      "לא צריך כרגע משוב או מסגרת שבועית.",
     ],
-    audience: "למי שרוצה תמיכה שוטפת בלי להתחייב",
-    cta: "להצטרפות למועדון",
+    href: "/book",
+    cta: "להכיר את הספר",
   },
   {
-    slug: datingCard.slug,
-    href: datingCard.path,
-    badge: `${formatILS(datingCard.price.amount)} · חד-פעמי`,
-    badgeTone: "accent",
-    title: datingCard.nameHe,
-    tagline: "אלעד והצוות כותבים לך פרופיל מקצועי",
-    price: formatILS(datingCard.price.amount),
-    priceDetail: "שירות חד-פעמי · מועד המסירה מאושר לפני הזמנה",
-    features: [
-      "שאלון אישי + ניסוח מקצועי",
-      "מדריך לצילום פרופיל",
-      "מדריך סטיילינג אישי",
-      "משאב נלווה לתרגול הפרופיל",
+    title: "התוכנית יכולה להתאים כש...",
+    items: [
+      "רוצים רצף מובנה לאורך זמן.",
+      "תרגול מצטבר יעזור יותר מצריכת תוכן מזדמנת.",
+      "אפשר לפנות מקום למסגרת של 12 שבועות.",
     ],
-    audience: "למי שכבר באפליקציות ולא מקבל פניות",
-    cta: "להזמנת הכרטיס",
+    href: "/programs/the-way",
+    cta: "למבנה המלא",
   },
-  {
-    slug: theWay.slug,
-    href: theWay.path,
-    badge: "תוכנית 12 שבועות",
-    badgeTone: "primary",
-    title: theWay.nameHe,
-    tagline: "12 שבועות של תוכן, תרגול וליווי בתהליך אישי",
-    price: formatILS(theWay.price.amount),
-    priceDetail: "המחיר ותנאי התשלום יאושרו לפני פתיחת הרכישה",
-    features: [
-      "תוכן ותרגול לאורך 12 שבועות",
-      "5 שלבים — גישה, תקשורת, מעבר, חיבור ומחויבות",
-      "משוב וליווי לפי מסגרת התוכנית",
-      "קהילה תומכת",
-    ],
-    audience: "למי שרוצה תהליך מובנה עם ליווי",
-    cta: "לפרטים מלאים",
-  },
-  {
-    slug: theWayPlus.slug,
-    href: theWayPlus.path,
-    badge: "מסלול משולב",
-    badgeTone: "primary",
-    title: theWayPlus.nameHe,
-    tagline: "תוכנית הדרך + 12 מפגשי תרגול מעשי אונליין",
-    price: formatILS(theWayPlus.price.amount),
-    priceDetail: "המחיר ותנאי התשלום יאושרו לפני פתיחת הרכישה",
-    features: [
-      "כל מה שבתוכנית הדרך",
-      "12 מפגשי תרגול מעשי",
-      "ליווי ומשוב במסגרת המסלול",
-      "משאבים נלווים לתרגול",
-    ],
-    audience: "למי שרוצה את החבילה המלאה בלי VIP",
-    cta: "למסלול המלא",
-    highlight: true,
-  },
-  {
-    slug: "vip-coaching",
-    href: "/coaching/vip",
-    badge: "VIP · מותאם אישית",
-    badgeTone: "primary",
-    title: "ליווי אישי VIP",
-    tagline: "1-על-1 איתי. תוכנית מותאמת ומשוב שוטף.",
-    price: "מותאם",
-    priceDetail: "המחיר נחשף בשיחת ההתאמה",
-    features: [
-      "צ׳אט פרטי איתי באופן אישי",
-      "משוב לפי מסגרת הליווי",
-      "מסגרת עבודה מוגדרת · מעקב יישומי",
-      "תוכנית מותאמת אישית",
-    ],
-    audience: "למי שמוכן/ה להשקיע ברצינות בעצמו",
-    cta: "לבדיקת התאמה",
-  },
-];
-
-const tones = {
-  primary: "bg-primary/10 text-primary border-primary/30",
-  accent: "bg-accent/10 text-accent-dark border-accent/30",
-  secondary: "bg-secondary/10 text-secondary-dark border-secondary/30",
-};
+] as const;
 
 export default function ProgramsIndexPage() {
   return (
     <>
-      <div className="bg-muted/50 border-b border-border/30">
+      <div className="border-b border-border/30 bg-muted/50">
         <Breadcrumbs items={[{ label: "תוכניות" }]} />
       </div>
 
       <section className="py-20 md:py-24">
+        <div className="container mx-auto px-4 text-center">
+          <Badge variant="outline" className="mb-4 border-primary/30 text-primary">
+            לבחור לפי הצורך הנוכחי
+          </Badge>
+          <h1 className="mx-auto mb-5 max-w-3xl text-4xl font-bold text-balance md:text-5xl">
+            מסלול טוב מתחיל בהחלטה מה באמת צריך
+          </h1>
+          <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-muted-foreground text-pretty">
+            אפשר להכיר רעיון אחד, לעבוד עצמאית עם הספר, להצטרף לתהליך מובנה או
+            לבדוק ליווי. רמת מחויבות גבוהה יותר אינה בהכרח בחירה טובה יותר — היא פשוט מסגרת אחרת.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <a
+              href="#decision-guide"
+              className="inline-flex min-h-11 items-center rounded-full bg-primary px-7 py-3 font-semibold text-primary-foreground transition-colors hover:bg-primary-dark"
+            >
+              לעזרת הבחירה
+            </a>
+            <Link
+              href="/programs/the-way"
+              className="inline-flex min-h-11 items-center rounded-full border border-border px-7 py-3 font-semibold transition-colors hover:bg-muted"
+            >
+              ישר למבנה התוכנית
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <div className="bg-muted/30">
+        <OfferJourney current="program" />
+      </div>
+
+      <section id="decision-guide" className="scroll-mt-24 py-20" aria-labelledby="decision-heading">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-14 max-w-2xl mx-auto">
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30">
-              כל המסלולים
+          <div className="mx-auto mb-12 max-w-2xl text-center">
+            <Badge variant="outline" className="mb-4 border-accent/40 text-accent-dark">
+              עזרת החלטה
             </Badge>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-balance">
-              לבחור את הדרך שמתאימה לך
-            </h1>
-            <p className="text-lg text-muted-foreground text-pretty">
-              מהמפגש החינמי הראשון ועד ליווי VIP — כל מסלול הוא נקודת התחלה אמיתית,
-              בכל רמת השקעה.
+            <h2 id="decision-heading" className="mb-4 text-3xl font-bold text-balance md:text-4xl">
+              שלוש שאלות פשוטות במקום לנחש
+            </h2>
+            <p className="text-muted-foreground">
+              כדאי לבחור לפי סוג התמיכה שאפשר להשתמש בה בפועל — לא רק לפי כמות התוכן.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-6 max-w-7xl mx-auto">
-            {programs.map((p) => (
-              <Card
-                key={p.slug}
-                className={`border-border/50 flex flex-col ${
-                  p.highlight ? "ring-2 ring-primary shadow-xl shadow-primary/10" : ""
-                }`}
-              >
-                <CardContent className="p-7 flex flex-col flex-1">
-                  <div className="mb-5">
-                    <span
-                      className={`inline-block px-3 py-1 rounded-full text-xs font-medium border ${tones[p.badgeTone]}`}
-                    >
-                      {p.badge}
-                    </span>
-                  </div>
-                  <h2 className="text-2xl font-bold mb-2 text-balance">{p.title}</h2>
-                  <p className="text-sm text-muted-foreground mb-5 leading-relaxed text-pretty">
-                    {p.tagline}
-                  </p>
-
-                  <div className="mb-5 pb-5 border-b border-border/50">
-                    <div className="text-3xl font-bold tabular-nums">{p.price}</div>
-                    <div className="text-xs text-muted-foreground mt-1">{p.priceDetail}</div>
-                  </div>
-
-                  <ul className="space-y-2.5 mb-6 flex-1">
-                    {p.features.map((f) => (
-                      <li key={f} className="flex gap-2.5 text-sm items-start">
-                        <span className="shrink-0 mt-0.5 text-primary">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                        </span>
-                        <span className="leading-relaxed">{f}</span>
+          <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-3">
+            {decisionCards.map((card) => (
+              <Card key={card.title} className="border-border/60">
+                <CardContent className="flex h-full flex-col p-7">
+                  <h3 className="mb-5 text-xl font-bold text-balance">{card.title}</h3>
+                  <ul className="mb-7 space-y-3 text-sm text-muted-foreground">
+                    {card.items.map((item) => (
+                      <li key={item} className="flex items-start gap-2">
+                        <span aria-hidden="true" className="mt-0.5 text-primary">•</span>
+                        <span className="leading-relaxed">{item}</span>
                       </li>
                     ))}
                   </ul>
-
-                  <div className="text-xs text-muted-foreground mb-5 leading-relaxed">
-                    {p.audience}
-                  </div>
-
                   <Link
-                    href={p.href}
-                    className={`block w-full text-center rounded-full py-3 font-semibold transition-colors ${
-                      p.highlight
-                        ? "bg-primary text-white hover:bg-primary-dark"
-                        : "bg-foreground/5 hover:bg-foreground/10 text-foreground"
-                    }`}
+                    href={card.href}
+                    className="mt-auto inline-flex min-h-11 items-center justify-center rounded-full border border-border px-6 py-3 text-center font-semibold transition-colors hover:bg-muted"
                   >
-                    {p.cta}
+                    {card.cta}
                   </Link>
                 </CardContent>
               </Card>
@@ -239,32 +142,49 @@ export default function ProgramsIndexPage() {
         </div>
       </section>
 
-      <section className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4 max-w-3xl text-center">
-          <Badge variant="outline" className="mb-4 text-primary border-primary/30">
-            לא בטוח/ה?
-          </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">
-            בדיקת התאמה
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8 text-pretty">
-            שיחת היכרות לבירור הצורך והמסלול הרלוונטי. ייתכן שהמסקנה תהיה שאין
-            כרגע מסלול מתאים — וגם זו תשובה לגיטימית.
-          </p>
-          <div className="flex flex-wrap justify-center items-center gap-4">
+      <section className="bg-muted/30 py-20" aria-labelledby="program-at-a-glance-heading">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <Badge variant="outline" className="mb-4 border-primary/30 text-primary">
+              תוכנית הדרך במבט אחד
+            </Badge>
+            <h2 id="program-at-a-glance-heading" className="mb-4 text-3xl font-bold text-balance md:text-4xl">
+              {PRODUCT_FACTS.course.weeks} שבועות, {PRODUCT_FACTS.course.phases} שלבי למידה ורצף אחד
+            </h2>
+            <p className="text-lg leading-relaxed text-muted-foreground text-pretty">
+              התוכנית הפעילה ממפה {PRODUCT_FACTS.course.lmsMappedLessons} שיעורים ומצרפת {PRODUCT_FACTS.course.practicePdfs} דפי תרגול.
+              כל שלב מוסיף שפה ותרגול לשלב שקדם לו.
+            </p>
+          </div>
+
+          <ol className="mx-auto grid max-w-6xl gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {canonicalPhases.map((phase) => (
+              <li key={phase.number}>
+                <Card className="h-full border-border/60">
+                  <CardContent className="p-6">
+                    <span className="mb-3 block text-3xl font-bold tabular-nums text-primary/35">
+                      {phase.number}
+                    </span>
+                    <h3 className="mb-2 text-xl font-bold">{phase.title}</h3>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{phase.focus}</p>
+                  </CardContent>
+                </Card>
+              </li>
+            ))}
+          </ol>
+
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
             <Link
-              href="/coaching/book"
-              className="inline-flex px-8 py-4 bg-primary text-white rounded-full font-semibold hover:bg-primary-dark transition-colors shadow-lg"
+              href="/programs/the-way"
+              className="inline-flex min-h-11 items-center rounded-full bg-primary px-8 py-3 font-semibold text-primary-foreground transition-colors hover:bg-primary-dark"
             >
-              לתיאום שיחת היכרות
+              לראות איך נראה שבוע בתוכנית
             </Link>
             <Link
-              href="https://wa.me/972512518025?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%90%D7%9C%D7%A2%D7%93%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%9C%D7%91%D7%98%2F%D7%AA%20%D7%91%D7%99%D7%9F%20%D7%94%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%95%D7%AA"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex px-8 py-4 border border-border rounded-full font-medium text-foreground hover:bg-muted transition-colors"
+              href="/products"
+              className="inline-flex min-h-11 items-center rounded-full border border-border px-8 py-3 font-semibold transition-colors hover:bg-background"
             >
-              או בוואטסאפ
+              להשוואה מול מוצרים אחרים
             </Link>
           </div>
         </div>

@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { CheckoutForm } from "@/components/CheckoutForm";
 import { getProduct } from "@/lib/products";
 
 const product = getProduct("club-90d")!;
@@ -25,15 +24,15 @@ export const metadata: Metadata = {
 const benefits = [
   {
     title: "מפגשי תרגול אונליין",
-    desc: "מפגשים קבוצתיים לתרגול, שאלות ושיתוף, לפי לוח הפעילות המאושר.",
+    desc: "תרגול קבוצתי, שאלות ושיתוף סביב מצבים מהדרך — כשהפעילות פתוחה ובהתאם למתכונת שתפורסם.",
   },
   {
     title: "ערוץ קהילתי",
-    desc: "מרחב לשיתוף וללמידה בין המשתתפים, עם כללי פרטיות והתנהלות שיימסרו מראש.",
+    desc: "מרחב ללמידה בין משתתפים, בכפוף לכללי פרטיות, הסכמה והתנהלות שיוצגו לפני הצטרפות.",
   },
   {
-    title: "קהילה פעילה",
-    desc: "פורום, פייסבוק, וואטסאפ — אנשים בתהליך שלך, איתך. בלי לחפש לבד תמיכה.",
+    title: "למידת עמיתים",
+    desc: "אפשרות לשמוע נקודות מבט נוספות וללמוד מניסיון של אחרים, בלי להפוך עצה ללחץ או לכלל מחייב.",
   },
   {
     title: "חומרי תרגול",
@@ -41,8 +40,21 @@ const benefits = [
   },
   {
     title: "עדכוני פעילות",
-    desc: "מידע על מפגשים ואירועים רלוונטיים; כל מחיר או הטבה יאושרו לפני הרשמה.",
+    desc: "לוח פעילות מסודר אמור להבהיר מראש מה מתקיים, באיזה ערוץ ואילו הכנות נדרשות.",
   },
+];
+
+const fitSignals = [
+  "נוח לך ללמוד בקבוצה ולשמוע גם נקודות מבט של אחרים",
+  "יש לך בסיס של ידע, והצורך המרכזי כרגע הוא תרגול ועקביות",
+  "מתאים לך לשמור על פרטיות המשתתפים ולכבד זכות לדלג או לא לשתף",
+];
+
+const questionsBeforeJoining = [
+  "מהו לוח המפגשים ומה קורה אם מחמיצים מפגש?",
+  "אילו ערוצים פעילים, מי מנחה ומהם זמני המענה?",
+  "מה כללי הפרטיות, השיתוף והצילום במפגשים?",
+  "מה המחיר, משך החברות, החידוש ואופן הביטול?",
 ];
 
 // Folded 2026-07-09 from the hoover-variant club page — the questions every
@@ -100,10 +112,10 @@ export default function ClubPage() {
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <a
-                href="#join"
-                className="inline-flex px-10 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark transition-colors shadow-lg"
+                href="#decide"
+                className="inline-flex min-h-11 items-center px-10 py-4 bg-primary text-primary-foreground rounded-full font-semibold text-lg hover:bg-primary-dark transition-colors shadow-lg"
               >
-                לבדיקת זמינות
+                לבדוק אם המסגרת מתאימה
               </a>
             </div>
           </div>
@@ -115,9 +127,9 @@ export default function ClubPage() {
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-12">
             <Badge variant="outline" className="mb-4 text-primary border-primary/30">
-              5 רכיבי המועדון
+              הכיוון של המועדון
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-balance">מה כלול בחברות</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-balance">מה המסגרת נועדה לאפשר</h2>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {benefits.map((b) => (
@@ -132,39 +144,46 @@ export default function ClubPage() {
         </div>
       </section>
 
-      {/* Pricing + Join */}
-      <section id="join" className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4 max-w-2xl">
-          <Card className="border-border/50 shadow-xl shadow-primary/5">
-            <CardContent className="p-8 md:p-10">
-              <div className="text-center mb-7">
-                <Badge variant="outline" className="mb-3 text-primary border-primary/30">
-                  פרטי ההצטרפות
-                </Badge>
-                <h2 className="text-2xl md:text-3xl font-bold mb-2 text-balance">{product.nameHe}</h2>
-                <p className="text-sm text-muted-foreground mt-3">
-                  המחיר, תדירות החיוב ותנאי הביטול יאושרו לפני פתיחת הרכישה.
-                </p>
-              </div>
-
-              <CheckoutForm product={product} compact />
-
-              <p className="mt-5 text-xs text-muted-foreground text-center leading-relaxed">
-                אין כרגע רכישה, חיוב או חידוש אוטומטי דרך העמוד. נעדכן את התנאים
-                ואת אופן ההצטרפות לאחר השלמת בדיקות התשלום והמסירה.
-              </p>
-
-              <div className="mt-7 pt-7 border-t border-border/50 text-center">
-                <p className="text-sm text-muted-foreground mb-3">שאלות לפני שמצטרפים?</p>
-                <Link
-                  href="https://wa.me/972512518025"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-secondary-dark hover:opacity-80 transition-opacity"
-                >
-                  כתבו לי בוואטסאפ
-                </Link>
-              </div>
+      {/* Decision support + availability */}
+      <section id="decide" className="py-20 bg-muted/30 scroll-mt-24">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <div className="text-center mb-12">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30">לפני שמצטרפים</Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">בדיקת התאמה בשתי דקות</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto text-pretty">
+              המועדון עדיין אינו פתוח לרכישה באתר. אפשר להשתמש ברשימות הבאות כדי להבין אם שווה לברר עליו כשייפתח.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            <Card className="border-secondary/30 bg-secondary/5">
+              <CardContent className="p-7">
+                <h3 className="text-xl font-bold mb-5">המסגרת עשויה להתאים אם</h3>
+                <ul className="space-y-3">
+                  {fitSignals.map((item) => <li key={item} className="flex items-start gap-3 text-sm leading-relaxed"><span className="text-secondary-dark" aria-hidden>✓</span><span>{item}</span></li>)}
+                </ul>
+              </CardContent>
+            </Card>
+            <Card className="border-border/60">
+              <CardContent className="p-7">
+                <h3 className="text-xl font-bold mb-5">ארבע שאלות שחייבות לקבל תשובה</h3>
+                <ol className="space-y-3">
+                  {questionsBeforeJoining.map((item, index) => <li key={item} className="flex items-start gap-3 text-sm leading-relaxed"><span className="font-bold text-primary tabular-nums">{index + 1}.</span><span>{item}</span></li>)}
+                </ol>
+              </CardContent>
+            </Card>
+          </div>
+          <Card className="mt-6 border-primary/20 bg-background shadow-lg shadow-primary/5">
+            <CardContent className="p-7 md:p-8 text-center">
+              <h3 className="text-2xl font-bold mb-3">רוצה לדעת אם נפתחה פעילות?</h3>
+              <p className="text-muted-foreground mb-6 text-pretty">אפשר לשלוח הודעה קצרה. בירור זמינות אינו הרשמה ואינו יוצר חיוב.</p>
+              <Link
+                href="https://wa.me/972512518025?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%90%D7%9C%D7%A2%D7%93%2C%20%D7%94%D7%90%D7%9D%20%D7%99%D7%A9%20%D7%9B%D7%A8%D7%92%D7%A2%20%D7%A4%D7%A2%D7%99%D7%9C%D7%95%D7%AA%20%D7%9E%D7%90%D7%95%D7%A9%D7%A8%D7%AA%20%D7%9C%D7%9E%D7%95%D7%A2%D7%93%D7%95%D7%9F%20%D7%94%D7%93%D7%A8%D7%9A%3F"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center px-7 py-3 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary-dark transition-colors"
+              >
+                לבירור זמינות בוואטסאפ
+              </Link>
             </CardContent>
           </Card>
         </div>
@@ -178,7 +197,7 @@ export default function ClubPage() {
               שאלות נפוצות
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-balance">
-              מה שכל חבר/ה חדש/ה שואל/ת
+              מה כדאי לברר לפני החלטה
             </h2>
           </div>
           <div className="space-y-4">
@@ -192,7 +211,7 @@ export default function ClubPage() {
             ))}
           </div>
           <div className="mt-10 text-center">
-            <p className="text-muted-foreground mb-4">רוצה משהו יותר אינטנסיבי?</p>
+            <p className="text-muted-foreground mb-4">מחפש/ת מסלול לימוד מובנה במקום מסגרת קהילה שוטפת?</p>
             <Link
               href="/programs/the-way"
               className="inline-flex items-center gap-2 text-primary font-semibold underline-offset-4 hover:underline"

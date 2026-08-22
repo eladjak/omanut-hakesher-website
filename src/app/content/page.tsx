@@ -7,7 +7,7 @@
  */
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 
 type DraftCard = {
@@ -41,18 +41,23 @@ const STATUS_COLORS: Record<string, string> = {
   planned: "bg-zinc-700/40 text-zinc-300 border-zinc-700/60",
 };
 
-function getKey(): string {
+function getAuthKeySnapshot(): string {
   if (typeof window === "undefined") return "";
   try {
     const fromUrl = new URLSearchParams(window.location.search).get("key");
-    if (fromUrl) {
-      window.localStorage.setItem("content-review-key", fromUrl);
-      return fromUrl;
-    }
+    if (fromUrl) return fromUrl;
     return window.localStorage.getItem("content-review-key") || "";
   } catch {
     return "";
   }
+}
+
+function getServerAuthKeySnapshot() {
+  return "";
+}
+
+function subscribeToAuthKey() {
+  return () => {};
 }
 
 export default function ContentIndex() {
@@ -60,17 +65,28 @@ export default function ContentIndex() {
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState<string | null>(null);
   const [filter, setFilter] = useState("all");
-  const [authKey, setAuthKey] = useState("");
+  const authKey = useSyncExternalStore(
+    subscribeToAuthKey,
+    getAuthKeySnapshot,
+    getServerAuthKeySnapshot,
+  );
 
   useEffect(() => {
-    const k = getKey();
-    setAuthKey(k);
-    if (!k) {
-      setErr("חסר מפתח אימות — הוסף ?key=… לכתובת.");
-      setLoading(false);
-      return;
+    if (!authKey) return;
+
+    try {
+      const fromUrl = new URLSearchParams(window.location.search).get("key");
+      if (fromUrl === authKey) {
+        window.localStorage.setItem("content-review-key", authKey);
+      }
+    } catch {
+      // Storage is a convenience only; the URL key still works without it.
     }
-    fetch(`/api/content?key=${encodeURIComponent(k)}`)
+
+    const controller = new AbortController();
+    fetch(`/api/content?key=${encodeURIComponent(authKey)}`, {
+      signal: controller.signal,
+    })
       .then((r) => r.json())
       .then((d) => {
         if (!d.ok) {
@@ -81,51 +97,85 @@ export default function ContentIndex() {
         setLoading(false);
       })
       .catch((e) => {
+        if (e instanceof DOMException && e.name === "AbortError") return;
         setErr(String(e));
         setLoading(false);
       });
-  }, []);
+
+    return () => controller.abort();
+  }, [authKey]);
 
   const filtered = useMemo(() => {
     if (filter === "all") return drafts;
     return drafts.filter((d) => d.outputs.includes(filter));
   }, [drafts, filter]);
 
+  const isMissingKey = !authKey;
+  const isLoading = Boolean(authKey) && loading;
+  const isReady = Boolean(authKey) && !loading && !err;
+
   return (
     <div className="px-4 pb-24 pt-6 max-w-3xl mx-auto">
       <header className="mb-6">
         <h1 className="text-2xl font-bold text-balance">סקירת תכנים</h1>
         <p className="text-sm text-zinc-400 mt-1 text-pretty">
-          {loading ? "טוען…" : `${filtered.length} טיוטות ממתינות${filter === "all" ? "" : ` בפילטר ${PLATFORM_LABELS[filter] || filter}`}`}
+          {isMissingKey
+            ? "כלי פנימי לצוות התוכן"
+            : isLoading
+              ? "טוען את הטיוטות…"
+              : err
+                ? "לא ניתן להציג את התור כרגע"
+                : `${filtered.length} טיוטות${filter === "all" ? " בתצוגה" : ` בפילטר ${PLATFORM_LABELS[filter] || filter}`}`}
         </p>
       </header>
 
       {/* Platform filter chips */}
-      <div className="flex gap-2 overflow-x-auto pb-3 mb-4 -mx-1 px-1 scrollbar-none">
-        {PLATFORM_FILTERS.map((p) => (
-          <button
-            key={p}
-            type="button"
-            onClick={() => setFilter(p)}
-            aria-pressed={filter === p}
-            className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
-              filter === p
-                ? "bg-rose-700 text-white border-rose-700"
-                : "bg-zinc-900 text-zinc-300 border-zinc-800 hover:bg-zinc-800"
-            }`}
-          >
-            {p === "all" ? "הכל" : PLATFORM_LABELS[p] || p}
-          </button>
-        ))}
-      </div>
-
-      {err && (
-        <div className="bg-red-950 border border-red-900 rounded-lg p-3 mb-4 text-red-200 text-sm">
-          {err}
+      {!isMissingKey && (
+        <div className="flex gap-2 overflow-x-auto pb-3 mb-4 -mx-1 px-1 scrollbar-none">
+          {PLATFORM_FILTERS.map((p) => (
+            <button
+              key={p}
+              type="button"
+              onClick={() => setFilter(p)}
+              aria-pressed={filter === p}
+              className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                filter === p
+                  ? "bg-rose-700 text-white border-rose-700"
+                  : "bg-zinc-900 text-zinc-300 border-zinc-800 hover:bg-zinc-800"
+              }`}
+            >
+              {p === "all" ? "הכל" : PLATFORM_LABELS[p] || p}
+            </button>
+          ))}
         </div>
       )}
 
-      {loading ? (
+      {isMissingKey && (
+        <section className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-5" aria-labelledby="content-sign-in-heading">
+          <h2 id="content-sign-in-heading" className="mb-2 text-lg font-bold text-zinc-100">
+            כניסה לצוות התוכן
+          </h2>
+          <p className="mb-4 text-sm leading-6 text-zinc-300">
+            זהו מרחב עבודה פרטי לסקירה ולאישור טיוטות. כדי להיכנס, יש לפתוח את
+            קישור ההזמנה המלא שנמסר לצוות; אין להזין או לשלוח את המפתח בהודעה פתוחה.
+          </p>
+          <div className="rounded-lg border border-amber-900/70 bg-amber-950/40 p-3 text-sm text-amber-100">
+            אם הקישור המלא כבר פתוח ועדיין מופיע המסך הזה, יש לבדוק שהכתובת כוללת
+            את הפרמטר <code dir="ltr" className="rounded bg-black/25 px-1.5 py-0.5">?key=…</code> ולרענן.
+          </div>
+        </section>
+      )}
+
+      {err && (
+        <div className="mb-4 rounded-lg border border-red-900 bg-red-950 p-4 text-sm text-red-200" role="alert">
+          <p className="font-semibold">לא הצלחנו לטעון את תור הטיוטות.</p>
+          <p className="mt-1 text-red-200/80">
+            כדאי לבדוק שהקישור עדיין תקף ואת החיבור לרשת, ואז לנסות לרענן את העמוד.
+          </p>
+        </div>
+      )}
+
+      {isLoading ? (
         <div className="space-y-3" aria-busy="true">
           {[1, 2, 3].map((i) => (
             <div
@@ -134,7 +184,7 @@ export default function ContentIndex() {
             />
           ))}
         </div>
-      ) : (
+      ) : isReady ? (
         <ul className="space-y-3">
           {filtered.map((d) => (
             <li key={d.slug}>
@@ -179,13 +229,29 @@ export default function ContentIndex() {
               </Link>
             </li>
           ))}
-          {filtered.length === 0 && !err && (
-            <li className="text-center text-zinc-500 py-12 text-sm">
-              אין טיוטות תואמות לפילטר.
+          {filtered.length === 0 && (
+            <li className="rounded-xl border border-zinc-800 bg-zinc-900/40 px-5 py-10 text-center">
+              <h2 className="mb-2 font-semibold text-zinc-200">
+                {filter === "all" ? "אין כרגע טיוטות בתור" : "אין טיוטות בפילטר הזה"}
+              </h2>
+              <p className="mb-4 text-sm text-zinc-500">
+                {filter === "all"
+                  ? "כשתיכנס טיוטה חדשה היא תופיע כאן עם הפלטפורמות ומצב הבדיקה שלה."
+                  : "אפשר לחזור לתצוגת הכול או לבחור פלטפורמה אחרת."}
+              </p>
+              {filter !== "all" && (
+                <button
+                  type="button"
+                  onClick={() => setFilter("all")}
+                  className="min-h-11 rounded-full border border-zinc-700 px-5 py-2.5 text-sm font-medium text-zinc-200 hover:bg-zinc-800"
+                >
+                  הצגת כל הטיוטות
+                </button>
+              )}
             </li>
           )}
         </ul>
-      )}
+      ) : null}
     </div>
   );
 }

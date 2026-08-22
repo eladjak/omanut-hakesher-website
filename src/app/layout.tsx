@@ -9,7 +9,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { SkipToContent } from "@/components/SkipToContent";
-import { OrganizationJsonLd, FaqJsonLd, WebSiteJsonLd, PersonJsonLd } from "@/components/JsonLd";
+import { OrganizationJsonLd, WebSiteJsonLd, PersonJsonLd } from "@/components/JsonLd";
 import { GenderProvider } from "@/components/GenderProvider";
 import { WelcomeModal } from "@/components/WelcomeModal";
 import { WowMotion } from "@/components/animations/WowMotion";
@@ -24,7 +24,7 @@ const heebo = Heebo({
 
 export const metadata: Metadata = {
   title: {
-    default: "אומנות הקשר | מצא את הזוגיות שמגיעה לך - עם אלעד יעקובוביץ׳",
+    default: "אומנות הקשר | ללמוד ליצור קשר בבהירות ובבחירה",
     template: "%s | אומנות הקשר",
   },
   description:
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "אומנות הקשר | מצא את הזוגיות שמגיעה לך - אלעד יעקובוביץ׳",
+    title: "אומנות הקשר | ללמוד ליצור קשר בבהירות ובבחירה",
     description:
       "תוכנית ״הדרך״, הספר וליווי אישי: מסגרת מעשית ללמידה, תרגול ומשוב בדרך לקשר.",
     locale: "he_IL",
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "אומנות הקשר | מצא את הזוגיות שמגיעה לך",
+    title: "אומנות הקשר | ללמוד ליצור קשר בבהירות ובבחירה",
     description:
       "כלים מעשיים, תוכנית מובנית וליווי אישי בדרך לקשר.",
     images: ["/opengraph-image"],
@@ -110,7 +110,6 @@ export default function RootLayout({
         <WebSiteJsonLd />
         <OrganizationJsonLd />
         <PersonJsonLd />
-        <FaqJsonLd />
       </head>
       <body className={`${heebo.variable} font-sans antialiased`}>
         <ThemeProvider>
@@ -120,7 +119,7 @@ export default function RootLayout({
                 <SkipToContent />
                 <GoogleAnalytics />
                 <Header />
-                <main id="main-content">{children}</main>
+                <main id="main-content" tabIndex={-1}>{children}</main>
                 <Footer />
                 <WelcomeModal />
                 <WhatsAppButton />

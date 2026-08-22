@@ -6,42 +6,38 @@ import dynamic from "next/dynamic";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { GenderedText } from "@/components/GenderedText";
-import { NewsletterForm } from "@/components/NewsletterForm";
+import { OpenResourcesLinks } from "@/components/OpenResourcesLinks";
 import { WebPageJsonLd } from "@/components/JsonLd";
 import { CANONICAL_SITE_URL } from "@/lib/site-url";
 import { PRODUCT_FACTS } from "@/lib/product-facts";
 
-// Real research sources behind the method — credibility + AI-citation signal.
+// Selected sources and professional frameworks that influenced parts of the
+// curriculum. They do not validate every exercise or turn the program into
+// therapy; each card states the narrower relationship honestly.
 const researchSources = [
   {
-    title: "36 השאלות להתאהבות",
-    detail: "מחקרו של ד״ר ארתור ארון על קרבה הדדית מואצת — בסיס לתרגיל האינטימיות.",
-    href: "https://en.wikipedia.org/wiki/36_questions_that_lead_to_love",
-    source: "Arthur Aron, 1997",
+    title: "הליך ניסויי ליצירת קרבה בין־אישית",
+    detail: "המחקר של Aron ועמיתיו בדק משימות חשיפה הדרגתיות בתנאי ניסוי. הוא לא הוכיח שהשאלות גורמות להתאהבות או להתאמה.",
+    href: "https://doi.org/10.1177/0146167297234003",
+    source: "Aron et al., 1997",
   },
   {
     title: "תקשורת מקרבת (NVC)",
-    detail: "שיטת התקשורת של מרשל רוזנברג — לדבר על רגשות וצרכים בלי האשמה.",
+    detail: "מסגרת להתבוננות, רגשות, צרכים ובקשות. בקורס היא מוצגת כאפשרות לתרגול, לא כנוסחה שמבטיחה פתרון.",
     href: "https://www.cnvc.org/learn-nvc/what-is-nvc",
     source: "Marshall Rosenberg",
   },
   {
     title: "טיפול ממוקד רגש (EFT)",
-    detail: "עבודתה של ד״ר סו ג׳ונסון על דפוסי התקשרות בזוגיות.",
+    detail: "מסגרת טיפולית של אנשי מקצוע שהשפיעה על השפה סביב קשר ורגש. התוכנית עצמה אינה טיפול EFT.",
     href: "https://iceeft.com/what-is-eft/",
     source: "Sue Johnson, ICEEFT",
   },
   {
-    title: "מחקר הזוגיות של גוטמן",
-    detail: "ארבעים שנות מחקר על מה שמחזיק קשר לאורך זמן.",
+    title: "מחקרי תצפית על זוגות",
+    detail: "עבודת מכון גוטמן היא מקור לרעיונות על תקשורת וקונפליקט. היא אינה מאפשרת לאבחן קשר או לנבא את עתידו כאן.",
     href: "https://www.gottman.com/about/research/",
     source: "The Gottman Institute",
-  },
-  {
-    title: "תורת ההתקשרות",
-    detail: "סגנונות ההתקשרות שמעצבים את הדרך שבה אנחנו נקשרים.",
-    href: "https://en.wikipedia.org/wiki/Attachment_theory",
-    source: "Bowlby & Ainsworth",
   },
 ];
 
@@ -81,7 +77,7 @@ const products: Product[] = [
       </svg>
     ),
     title: "תוכנית ״הדרך״",
-    description: `תוכנית מובנית של ${PRODUCT_FACTS.course.weeks} שבועות שמחברת עבודה פנימית, תקשורת, היכרויות ותרגול. שיעורים קצרים, ליווי וקהילה תומכת.`,
+    description: `תוכנית מובנית של ${PRODUCT_FACTS.course.weeks} שבועות ו־${PRODUCT_FACTS.course.phases} שלבים שמחברת עבודה פנימית, תקשורת, היכרויות ותרגול. תנאי הגישה והליווי מפורטים בעמוד התוכנית.`,
     href: "/programs/the-way",
     color: "bg-primary/10 text-primary",
     cta: "לפרטים על הדרך",
@@ -108,7 +104,7 @@ const products: Product[] = [
     description: `${PRODUCT_FACTS.book.chapters} פרקים בחמישה חלקים ו־${PRODUCT_FACTS.book.numberedExercises} תרגילים ממוספרים. דרך מובנית מהסיפור שמנהל אותך ועד היכולת לבחור ולבנות קשר.`,
     href: "/book",
     color: "bg-accent/10 text-accent-dark",
-    cta: "לסקשן הספר",
+    cta: "להכיר את הספר",
   },
   {
     icon: (
@@ -126,43 +122,55 @@ const products: Product[] = [
 
 const painPoints = [
   {
-    title: "נמאס מדייטים שלא מובילים לשום מקום?",
-    description: "כבר ניסית באמפר, בהינג׳, בטינדר. מעולה. עכשיו בוא ננסה משהו שבאמת עובד.",
+    title: "היכרויות מתחילות להרגיש כמו אותה שיחה שוב ושוב?",
+    description: "אפליקציות מייצרות הזדמנויות, אבל לא תמיד בהירות. אפשר לתרגל שיחה, גבולות וקבלת החלטות בלי להבטיח לאן מפגש יוביל.",
   },
   {
-    title: "מרגיש שאתה בסדר, אבל משהו לא עובד?",
-    description: "קריירה מצוינת, חברים טובים, הכל מושלם - חוץ מהדבר הזה. הזוגיות.",
+    title: "יש לך חיים מלאים — ובקשרים עדיין יש סימני שאלה?",
+    description: "זה לא אומר שמשהו בך מקולקל. לפעמים צריך שפה ומבנה שיעזרו לזהות דפוסים ולבחור מה לנסות אחרת.",
   },
   {
-    title: "כבר ניסית ליווי ולא עבד?",
-    description: "אתרי היכרויות נותנים הזדמנויות. פסיכולוגים עוזרים להבין. אנחנו עושים את הדבר עם ליווי זוגי בשטח.",
+    title: "כבר צברת תובנות, אבל חסר לך תרגול מסודר?",
+    description: "אומנות הקשר מחברת למידה קצרה, תרגילים ורפלקציה. היא אינה טיפול ואינה תחליף לעזרה מקצועית כשזו נדרשת.",
   },
 ];
 
 const method = [
   {
     step: "01",
-    title: "מבפנים החוצה",
-    description: "הכרת עצמך, שבירת סיפורים מגבילים, הבנת הפחדים שחוסמים אותך מזוגיות",
+    title: "גישה",
+    description: "לזהות סיפורים, פחדים והרגלים — בלי להפוך אותם לאבחנה ובלי להאשים את עצמך.",
     color: "from-secondary to-secondary-light",
   },
   {
     step: "02",
-    title: "שפת החיבור",
-    description: "תקשורת רגשית, גבולות בריאים, אינטימיות ופגיעות - המיומנויות שלא לימדו אותך",
+    title: "תקשורת",
+    description: "לתרגל רגשות, צרכים, הקשבה וגבולות, תוך שמירה על הזכות לומר לא או לעצור.",
     color: "from-primary to-primary-light",
   },
   {
     step: "03",
-    title: "המפגש",
-    description: "כלים מעשיים לדייטינג, יצירת כימיה אמיתית, היכרויות שמובילות ליותר",
+    title: "משיכה ותנועה",
+    description: "ליצור הזדמנויות להיכרות ולתרגל נוכחות ואומץ, בלי לקרוא שפת גוף כהסכמה.",
     color: "from-accent-dark to-accent",
   },
   {
     step: "04",
-    title: "בניית קשר אמיתי",
-    description: "מחויבות כהחלטה, שמירה על הקשר, בניית זוגיות שנמשכת לאורך זמן",
+    title: "חיבור",
+    description: "לשאול, להקשיב ולבדוק סקרנות הדדית — בלי להפוך כימיה למדד להתאמה או לבטיחות.",
     color: "from-primary-dark to-secondary",
+  },
+  {
+    step: "05",
+    title: "אינטימיות",
+    description: "לבנות קרבה בהדרגה, עם פרטיות, הסכמה ואפשרות לדלג על כל שאלה או תרגיל.",
+    color: "from-secondary-light to-primary",
+  },
+  {
+    step: "06",
+    title: "מחויבות",
+    description: "לקבל החלטות הדדיות בקצב שמתאים לשני הצדדים, עם מקום להאט, לשנות כיוון או לצאת.",
+    color: "from-accent to-secondary",
   },
 ];
 
@@ -170,8 +178,8 @@ export default function HomePage() {
   return (
     <>
       <WebPageJsonLd
-        name="אומנות הקשר | מצא את הזוגיות שמגיעה לך"
-        description="בית הספר למציאת זוגיות מאושרת. תוכנית ״הדרך״, ליווי אישי, הספר ״אומנות הקשר״ וקהילה תומכת — עם אלעד יעקובוביץ׳."
+        name="אומנות הקשר | ללמוד ליצור קשר בבהירות ובבחירה"
+        description="ספר, תוכנית למידה וליווי לתרגול תקשורת, גבולות, היכרות וקבלת החלטות בקשרים — בלי הבטחת תוצאה ובלי נוסחאות קסם."
         url={`${CANONICAL_SITE_URL}/`}
       />
       {/* Hero Section */}
@@ -180,7 +188,7 @@ export default function HomePage() {
         <div className="absolute inset-0">
           <Image
             src="/images/generated/hero-homepage.jpg"
-            alt="אומנות הקשר - בית הספר למציאת זוגיות"
+            alt="אומנות הקשר — למידה ותרגול של תקשורת, היכרות וקשר"
             fill
             className="object-cover"
             priority
@@ -191,29 +199,28 @@ export default function HomePage() {
         <div className="container mx-auto px-4 py-20 relative z-10">
           <div className="max-w-3xl">
             <Badge variant="secondary" className="mb-6 text-sm px-4 py-1.5 bg-white/10 text-white border-white/20 hover:bg-white/10">
-              בית הספר למציאת זוגיות - עם אלעד יעקובוביץ׳
+              בית ללמידה ותרגול של תקשורת, היכרות וקשר
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight text-white">
               <GenderedText id="hero.title-main" />
               <br />
-              <span className="text-primary">שמגיעה לך</span>
+              <span className="text-primary">בלי לאבד את עצמך</span>
             </h1>
             <p className="text-xl md:text-2xl text-white/90 font-medium mt-3">
-              דרך ברורה. תרגול מעשי. ליווי אנושי.
+              להבין דפוסים. לתרגל תקשורת וגבולות. לבחור את הצעד הבא.
             </p>
             <p className="mt-6 text-lg md:text-xl text-white/80 max-w-2xl leading-relaxed">
-              לא עוד טיפים מפוזרים ולא עוד ניסיון לנחש לבד.
-              {" "}
-              <strong className="text-white">אומנות הקשר</strong> היא דרך מובנית להבנת דפוסים,
-              תרגול חיבור וקבלת החלטות מתוך יותר בהירות ובחירה.
+              <strong className="text-white">אומנות הקשר</strong> מחברת ספר, תוכנית למידה
+              וליווי אנושי למסע מעשי של התבוננות, תרגול ורפלקציה. אין כאן הבטחה
+              לזוגיות — יש דרך מסודרת לפתח מיומנויות ולבחור מתוך יותר בהירות.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
-                href="/coaching"
+                href="/programs/the-way"
                 data-wow-lift
-                className="px-8 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark shadow-lg shadow-primary/20"
+                className="px-8 py-4 bg-primary text-primary-foreground rounded-full font-semibold text-lg hover:bg-primary-dark shadow-lg shadow-primary/20"
               >
-                לתיאום שיחת היכרות
+                להכיר את תוכנית ״הדרך״
               </Link>
               {/* Legibility fix 25.7: this button was border-secondary /
                   text-secondary — navy #1E3A5F — on the DARK hero scrim, which
@@ -230,11 +237,11 @@ export default function HomePage() {
                   avoided repo-wide on lifted elements: it animates
                   border-color. */}
               <Link
-                href="/programs/the-way"
+                href="/book"
                 data-wow-lift
                 className="px-8 py-4 border-2 border-white/80 text-white rounded-full font-semibold text-lg hover:bg-white hover:text-secondary"
               >
-                על תוכנית ״הדרך״
+                להכיר את הספר
               </Link>
             </div>
 
@@ -306,18 +313,19 @@ export default function HomePage() {
               </h2>
               <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
                 <p>
-                  אני לא פסיכולוג. לא מטפל זוגי עם תואר שלישי. לא חוקר אקדמי.
-                  ואם אני ממש כנה - גם אני עשיתי את כל הטעויות שאני מלמד להימנע מהן.
+                  הגעתי לעבודה הזאת מתוך מסע אישי ומתוך שנים בעולם הבמה — כשחקן,
+                  מוזיקאי ובובנאי. שם למדתי הרבה על נוכחות, הקשבה, תרגול ועל הפער
+                  בין מה שאנחנו רוצים לבטא לבין מה שהאדם מולנו באמת פוגש.
                 </p>
                 <p>
-                  לפני שנים, הייתי רווק תקוע. בשיא הקריירה, חברים טובים, הכל מושלם על
-                  הנייר - חוץ מהזוגיות. אחרי שנים של עבודה על עצמי, הבנתי שהבעיה לא הייתה
-                  מה שעשיתי, אלא מה שלא הבנתי על עצמי.
+                  בחיים האישיים גיליתי שתובנה לבדה לא תמיד משנה דפוס. לפעמים צריך
+                  לעצור, לפרק מיומנות לצעדים קטנים, לנסות, לקבל משוב ולבחור מחדש.
+                  החיבור הזה בין תוכן לתרגול הפך לבסיס של אומנות הקשר.
                 </p>
                 <p className="text-foreground font-medium">
-                  היום אני נשוי באושר, ועוזר לאחרים לעשות את אותו המסע.
-                  עם רקע של <strong className="text-primary">~20 שנה בתחום הבמה</strong> כשחקן,
-                  מוזיקאי ובובנאי - אני מביא לליווי דרך ייחודית שמחברת בין אמנות ליחסים.
+                  אני לא פסיכולוג ולא מטפל זוגי, והתוכנית אינה טיפול. אני מביא הנחיה,
+                  תוכן ותרגול מתוך נקודת המבט שלי — ומבהיר מתי נכון לפנות לאיש או אשת
+                  מקצוע מתאימים.
                 </p>
               </div>
 
@@ -352,7 +360,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Method - The 4 Steps */}
+      {/* Canonical curriculum path — six phases */}
       <section className="py-24 bg-muted/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -360,14 +368,15 @@ export default function HomePage() {
               הגישה שלי
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              ארבעת <span className="text-primary">השלבים</span> בדרך לזוגיות
+              ששת <span className="text-primary">שלבי הלמידה</span> בתוכנית
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              לא טיפים מפוזרים - דרך שלמה ומובנית. מסע שמתחיל מבפנים ויוצא החוצה.
+              רצף שמתחיל בהיכרות עצמית, עובר דרך תקשורת והיכרות, ומגיע לקרבה
+              ולמחויבות מתוך בחירה — לא מתוך לחץ לעמוד בקצב אחיד.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {method.map((item, index) => (
               <Card key={index} className="relative overflow-hidden border-border/50 hover:shadow-lg transition-all duration-200 group motion-safe:hover:-translate-y-1">
                 <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-l ${item.color}`} />
@@ -387,7 +396,7 @@ export default function HomePage() {
           <div className="text-center mt-12">
             <Link
               href="/programs/the-way"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-secondary text-white rounded-full font-semibold text-lg hover:bg-secondary-dark transition-colors shadow-lg shadow-secondary/20"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-secondary text-secondary-foreground rounded-full font-semibold text-lg hover:bg-secondary-dark transition-colors shadow-lg shadow-secondary/20"
             >
               גלה את תוכנית הדרך
               <span>&larr;</span>
@@ -396,19 +405,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Research Foundation Section — credibility + citation signal */}
+      {/* Sources and influences — scoped claims, not blanket validation */}
       <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-14 max-w-2xl mx-auto">
             <Badge variant="outline" className="mb-4 text-secondary border-secondary/30">
-              על מה זה מבוסס
+              מקורות והשפעות
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">
-              לא אינטואיציה. <span className="text-primary">מחקר.</span>
+              מסגרות מקצועיות — <span className="text-primary">עם גבולות ברורים</span>
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed text-pretty">
-              הכלים של אומנות הקשר נשענים על עשורים של מחקר בזוגיות, תקשורת והתקשרות -
-              מעובדים לשפה פשוטה ולתרגילים שאפשר ליישם כבר היום.
+              חלק מהתוכן הושפע ממחקר וממסגרות מקצועיות, וחלקו הוא פרשנות ותרגול
+              פדגוגי של אומנות הקשר. מקור אינו מוכיח שכל תרגיל “עובד”, ולכן אנחנו
+              מציינים כאן גם את ההקשר וגם את המגבלה.
             </p>
           </div>
 
@@ -492,70 +502,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
+      {/* Inspectable evidence while no testimonial has publication approval. */}
       <HomeTestimonials />
 
-      {/* Video Testimonials Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-14">
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30">
-              הם מספרים
-            </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              סיפורי <span className="text-primary">הצלחה</span> אמיתיים
-            </h2>
-          </div>
-
-          {/* Testimonial thumbnails */}
-          <div className="grid grid-cols-2 gap-4 mb-10 max-w-4xl mx-auto">
-            <div className="relative w-full h-48 rounded-2xl overflow-hidden shadow-md">
-              <Image
-                src="/assets/media/youtube-testimonial-1.jpg"
-                alt="סיפור הצלחה - לקוחות של אומנות הקשר"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="relative w-full h-48 rounded-2xl overflow-hidden shadow-md">
-              <Image
-                src="/assets/media/youtube-testimonial-2.jpg"
-                alt="סיפור הצלחה - לקוחות של אומנות הקשר"
-                fill
-                className="object-cover"
-              />
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="aspect-video rounded-2xl overflow-hidden shadow-lg">
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/Kbd7BRJ25TM"
-                title="סיפור הצלחה - אומנות הקשר"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-              />
-            </div>
-            <div className="aspect-video rounded-2xl overflow-hidden shadow-lg">
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/chvsmJzcihE"
-                title="סיפור הצלחה - אומנות הקשר"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Core Concept - "פנוי לקשר" */}
-      <section className="py-24 bg-secondary text-white relative overflow-hidden">
+      {/* Core Concept - "פנוי לקשר" as reflection, not diagnosis */}
+      <section className="py-24 bg-secondary text-secondary-foreground relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
 
@@ -565,22 +516,21 @@ export default function HomePage() {
               הקונספט המרכזי
             </Badge>
             <h2 className="text-3xl md:text-5xl font-bold mb-8">
-              ״פנוי לקשר״ - זה לא מצב. זו <span className="text-accent">מיומנות</span>.
+              ״פנוי לקשר״ הוא לא ציון. זו <span className="text-accent">שאלה חוזרת</span>.
             </h2>
             <p className="text-xl opacity-90 leading-relaxed mb-6">
-              יש הבדל בין <strong>לרצות</strong> זוגיות לבין <strong>להיות פנוי</strong> לזוגיות.
-              רוב האנשים שאומרים ״אני מחפש זוגיות״ בעצם לא באמת פנויים -
-              לא בגלל שהם משקרים, אלא בגלל שמשהו חוסם אותם.
+              אפשר לרצות קשר ובאותו זמן להזדקק לעוד מרחב, ביטחון, תרגול או בהירות.
+              זה לא הופך אותך ל״לא פנוי/ה״ ולא אומר שיש חסם נסתר שצריך לאבחן.
             </p>
             <p className="text-lg opacity-80 leading-relaxed mb-10">
-              הליווי של אומנות הקשר מזהה את החסם ומפתח את הכלים לעבור
-              ממצב של ״לא פנוי״ ל״פנוי לקשר״.
+              התוכנית מציעה שאלות וכלים לבדוק מה מתאים עכשיו: איזה גבול נחוץ, איזו
+              מיומנות כדאי לתרגל, ומהו צעד קטן שאפשר לבחור — כולל הבחירה להאט או לעצור.
             </p>
             <Link
-              href="/coaching"
+              href="/programs/the-way"
               className="inline-flex px-10 py-4 bg-white text-secondary rounded-full font-semibold text-lg hover:bg-accent hover:text-secondary-dark transition-colors shadow-lg"
             >
-              <GenderedText id="final-cta.free-call" />
+              להכיר את ששת שלבי התוכנית
             </Link>
           </div>
         </div>
@@ -589,7 +539,7 @@ export default function HomePage() {
       {/* Free Workshop CTA Banner */}
       <FreeWorkshopBanner />
 
-      {/* Newsletter Section */}
+      {/* Immediate-value section: no signup is offered until a list is approved. */}
       <section className="py-20">
         <div className="container mx-auto px-4">
           <Card className="max-w-2xl mx-auto border-primary/20 bg-gradient-to-br from-primary/5 via-background to-secondary/5">
@@ -599,50 +549,45 @@ export default function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold mb-3">
-                <GenderedText id="newsletter.want-free-tools" />
-              </h2>
+              <h2 className="text-2xl font-bold mb-3">רוצה כלי שאפשר לפתוח עכשיו?</h2>
               <p className="text-muted-foreground mb-8">
-                <GenderedText id="newsletter.join-cta" /> בלי ספאם, רק ערך אמיתי.
+                שלושה מדריכים מלאים, מאמרים ופודקאסט זמינים בלי טופס, בלי הרשמה ובלי לחכות למייל.
               </p>
-              <NewsletterForm
-                layout="stack"
-                buttonLabel="שלח לי!"
-                ariaLabel="הרשמה לרשימת תפוצה"
-              />
+              <OpenResourcesLinks layout="stack" className="justify-center" />
             </CardContent>
           </Card>
         </div>
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-24 bg-primary text-white relative overflow-hidden">
+      <section className="py-24 bg-primary text-primary-foreground relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
 
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            הזוגיות שמגיעה לך לא תדפוק בדלת.
+            לא צריך להחליט על כל הדרך היום.
             <br />
-            <span className="text-accent-on-dark">אבל אם תצא לדרך - היא מחכה לך.</span>
+            <span className="text-accent-on-dark">אפשר להתחיל מצעד אחד שמתאים לך.</span>
           </h2>
           <p className="text-xl opacity-90 max-w-2xl mx-auto mb-10 leading-relaxed">
-            <GenderedText id="final-cta.body" />
+            להכיר את התוכנית, להתחיל מהספר, או פשוט לקרוא עוד. אין מסלול אחד נכון,
+            ואין צורך להתחייב לתוצאה כדי להתחיל ללמוד ולתרגל.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              href="/coaching"
+              href="/programs/the-way"
               data-wow-lift
               className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
             >
-              <GenderedText id="cta.free-call" />
+              להכיר את תוכנית ״הדרך״
             </Link>
             <Link
-              href="/about"
+              href="/book"
               data-wow-lift
               className="inline-flex px-10 py-4 border-2 border-white/50 text-white rounded-full font-semibold text-lg hover:bg-white/10 transition-colors"
             >
-              <GenderedText id="final-cta.read-more" />
+              להכיר את הספר
             </Link>
           </div>
         </div>

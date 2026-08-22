@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { NewsletterForm } from "@/components/NewsletterForm";
+import { OpenResourcesLinks } from "@/components/OpenResourcesLinks";
 import { WebPageJsonLd } from "@/components/JsonLd";
 import { ELAD_WORLD } from "@/lib/elad-world";
 import { CANONICAL_SITE_URL } from "@/lib/site-url";
@@ -176,22 +176,17 @@ export default function WelcomePage() {
         </div>
       </section>
 
-      {/* Newsletter */}
+      {/* Immediate value while newsletter signup is not approved. */}
       <section className="py-20">
         <div className="container mx-auto px-4 max-w-2xl text-center">
           <h2 className="text-3xl font-bold mb-4">
-            רוצים שאשלח לכם כשיש חדש?
+            רוצים לקחת משהו שימושי כבר עכשיו?
           </h2>
           <p className="text-muted-foreground mb-8 leading-relaxed">
-            בלי ספאם. כשהספר יוצא, כשיש תוכן חדש, כשקורה משהו ששווה לדעת עליו.
+            המדריכים והתוכן הפתוח זמינים מיד — בלי להשאיר פרטים ובלי להצטרף לרשימה.
           </p>
           <div className="flex justify-center">
-            <NewsletterForm
-              theme="light"
-              layout="row"
-              placeholder="האימייל שלכם"
-              ariaLabel="הרשמה לעדכונים"
-            />
+            <OpenResourcesLinks theme="light" layout="row" />
           </div>
         </div>
       </section>

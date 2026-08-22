@@ -40,6 +40,7 @@ export function OptimizedImage({
   blurPlaceholder = true,
   blurDataURL: customBlurDataURL,
   loading = "lazy",
+  alt,
   ...props
 }: OptimizedImageProps) {
   const width = typeof props.width === "number" ? props.width : 800;
@@ -54,6 +55,7 @@ export function OptimizedImage({
 
   return (
     <Image
+      alt={alt}
       loading={loading}
       sizes={props.sizes ?? "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
       {...placeholderProps}

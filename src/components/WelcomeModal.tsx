@@ -88,9 +88,9 @@ export function WelcomeModal() {
           ברוכים הבאים לאומנות הקשר
         </h2>
         <p className="text-muted-foreground mb-8 text-base leading-relaxed">
-          כדי שנוכל להתאים לך את החוויה הטובה ביותר,
+          איך נוח לך שהאתר יפנה אליך?
           <br />
-          בחר/י את החוויה המותאמת לך
+          הבחירה משנה רק את לשון הפנייה ואפשר להחליף אותה בהמשך.
         </p>
 
         <div className="flex gap-4 justify-center mb-6">
@@ -101,10 +101,10 @@ export function WelcomeModal() {
           >
             <HeartIcon className="w-12 h-12 mx-auto mb-3 text-[#E85D75] group-hover:scale-110 transition-transform" />
             <span className="font-semibold block text-foreground">
-              אני אישה
+              לשון נקבה
             </span>
             <span className="text-sm text-muted-foreground mt-1 block">
-              מחפשת זוגיות
+              למשל: מוכנה, בוחרת, מתרגלת
             </span>
           </button>
 
@@ -115,10 +115,10 @@ export function WelcomeModal() {
           >
             <HeartIcon className="w-12 h-12 mx-auto mb-3 text-[#1E3A5F] group-hover:scale-110 transition-transform" />
             <span className="font-semibold block text-foreground">
-              אני גבר
+              לשון זכר
             </span>
             <span className="text-sm text-muted-foreground mt-1 block">
-              מחפש זוגיות
+              למשל: מוכן, בוחר, מתרגל
             </span>
           </button>
         </div>
@@ -127,7 +127,7 @@ export function WelcomeModal() {
           onClick={() => handleChoice("neutral")}
           className="text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4"
         >
-          המשך בלי לציין
+          ניסוח ניטרלי
         </button>
       </div>
 

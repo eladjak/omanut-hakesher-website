@@ -38,35 +38,24 @@ const whatVipMeans = [
 ];
 
 const whoFits = [
-  "אתה מעל גיל 30, ברור לך שזה הזמן, ואין לך אנרגיה לעוד שנה של 'אולי'",
-  "ניסית קורסים, אפליקציות, שדכנים, אולי גם פסיכולוג — ועדיין תקוע באותו מקום",
-  "יש לך משאבים — כלכליים, רגשיים, זמן — להשקיע ברצינות בתהליך",
-  "אתה מוכן/ה לעבוד קשה, לקבל פידבק ישיר, ולא לחפש פינות לקצר את הדרך",
+  "יש צורך בהתאמה אישית ובמשוב תכוף יותר ממסלול לימוד עצמאי",
+  "אפשר להקדיש זמן קבוע לפגישות, לתרגול ולבדיקה בין המפגשים",
+  "נוח לקבל משוב ישיר, לשאול שאלות ולעדכן את התוכנית כשמשהו לא עובד",
+  "אפשר לבחון הצעה מלאה — כולל עלות, גבולות וזמני מענה — בלי לחץ להחליט במקום",
 ];
 
 const whoDoesntFit = [
-  "אתה רוצה ׳טיפ׳ או טריק קצר — לא תהליך עומק של חודשים",
-  "אתה לא בטוח אם אתה רוצה זוגיות בכלל",
-  "אתה תחת מצוקה כלכלית קשה — קודם נסדר את זה, אחר כך נדבר",
-  "אתה מצפה שאני אעשה את העבודה בשבילך",
+  "הצורך כרגע הוא בכלי נקודתי שאפשר לפתור במשאב או בפגישה בודדת",
+  "אין כרגע זמן או מרחב רגשי לתרגול עקבי בין פגישות",
+  "ההשקעה עלולה ליצור לחץ כלכלי; במקרה כזה עדיף לבחון משאבים או מסלול קבוצתי",
+  "נדרש טיפול נפשי, רפואי או מענה חירום — הליווי אינו תחליף לאלה",
 ];
 
-const pricingTiers = [
-  {
-    label: "Standard",
-    range: "₪6,000–9,000",
-    desc: "ליווי 6 חודשים, מטרה ברורה, פגישות שבועיות, צ׳אט פתוח.",
-  },
-  {
-    label: "Premium",
-    range: "₪12,000–18,000",
-    desc: "12 חודשים, פגישות ומשוב בתדירות שתוגדר, לצד משאבים מתוכנית הדרך לפי ההצעה המאושרת.",
-  },
-  {
-    label: "Concierge",
-    range: "₪24,000–50,000",
-    desc: "מותאם אישית — אסטרטגיה, חיבורים, מקרים מורכבים. כל מקרה מתומחר לפי הנסיבות.",
-  },
+const proposalChecklist = [
+  "מטרת התהליך ומה ייחשב להתקדמות שאפשר לבדוק",
+  "משך המסגרת, תדירות הפגישות ודרך שינוי או סיום",
+  "ערוץ הקשר, זמני המענה ומה לא כלול בזמינות",
+  "מחיר מלא, מועדי תשלום ותנאי ביטול — לפני התחייבות",
 ];
 
 export default function VipCoachingPage() {
@@ -80,8 +69,8 @@ export default function VipCoachingPage() {
       <section className="relative py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/images/generated/coaching-transformation.jpg"
-            alt="ליווי אישי VIP — אומנות הקשר"
+            src="/images/generated/coaching-program.jpg"
+            alt="איור מסלול עבודה עם נקודות בחירה ותרגול"
             fill
             className="object-cover"
             priority
@@ -97,12 +86,12 @@ export default function VipCoachingPage() {
               ליווי אישי <span className="text-accent-light">VIP</span>
             </h1>
             <p className="text-xl text-white/90 max-w-2xl mx-auto leading-relaxed text-pretty">
-              ליווי שלי באופן אישי — עם תוכנית עבודה, פגישות ומשוב שוטף. לא לכולם. בודקים התאמה בשיחת היכרות.
+              מסגרת אישית עם תוכנית עבודה, פגישות ומשוב בין המפגשים. ההיקף והגבולות נקבעים רק בהצעה כתובה אחרי שיחת היכרות.
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/coaching/book"
-                className="inline-flex px-10 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark transition-colors shadow-lg"
+                className="inline-flex min-h-11 items-center px-10 py-4 bg-primary text-primary-foreground rounded-full font-semibold text-lg hover:bg-primary-dark transition-colors shadow-lg"
               >
                 לתיאום בדיקת התאמה
               </Link>
@@ -118,7 +107,7 @@ export default function VipCoachingPage() {
             <Badge variant="outline" className="mb-4 text-primary border-primary/30">
               מה זה אומר VIP בפועל
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-balance">לא ניסוח — תהליך אמיתי</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-balance">מה אמור להיות מוגדר בתהליך</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-5">
             {whatVipMeans.map((item) => (
@@ -139,7 +128,7 @@ export default function VipCoachingPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">בדיקת התאמה</h2>
             <p className="text-lg text-muted-foreground">
-              לפני שאני לוקח לקוח חדש, חשוב לי שנדע שנינו שזה נכון.
+              המטרה היא לבחור את רמת התמיכה שמתאימה לצורך ולמשאבים — לא את המסלול היקר ביותר.
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -149,7 +138,7 @@ export default function VipCoachingPage() {
                   <svg className="w-6 h-6 text-secondary-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <h3 className="text-lg font-bold">VIP מתאים לך אם —</h3>
+                  <h3 className="text-lg font-bold">מסגרת אינטנסיבית עשויה להתאים אם</h3>
                 </div>
                 <ul className="space-y-3">
                   {whoFits.map((item, i) => (
@@ -158,13 +147,13 @@ export default function VipCoachingPage() {
                 </ul>
               </CardContent>
             </Card>
-            <Card className="border-destructive/20 bg-destructive/5">
+            <Card className="border-accent/30 bg-accent/5">
               <CardContent className="p-7">
                 <div className="flex items-center gap-2 mb-4">
-                  <svg className="w-6 h-6 text-destructive" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <svg className="w-6 h-6 text-accent-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v3.75m0 3.75h.008v.008H12V16.5z" />
                   </svg>
-                  <h3 className="text-lg font-bold">VIP לא מתאים לך אם —</h3>
+                  <h3 className="text-lg font-bold">עדיף לבחור כרגע חלופה אחרת אם</h3>
                 </div>
                 <ul className="space-y-3">
                   {whoDoesntFit.map((item, i) => (
@@ -177,34 +166,38 @@ export default function VipCoachingPage() {
         </div>
       </section>
 
-      {/* Pricing tiers — transparent */}
+      {/* Proposal checklist */}
       <section className="py-20">
-        <div className="container mx-auto px-4 max-w-5xl">
+        <div className="container mx-auto px-4 max-w-3xl">
           <div className="text-center mb-12">
             <Badge variant="outline" className="mb-4 text-accent-dark border-accent/40">
-              שקיפות בתמחור
+              לפני התחייבות
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-3 text-balance">3 רמות — מותאם למקרה</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-3 text-balance">ארבעה דברים שצריכים להופיע בהצעה</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto text-pretty">
-              ההצעה הסופית מתבססת על שיחת היכרות. הטווחים כאן כדי שלא תהיו מופתעים בפגישה.
+              אין מחיר או מסלול מאושר בעמוד הזה. אם תהיה התאמה, בקשו לראות את כל התנאים יחד לפני החלטה.
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-5">
-            {pricingTiers.map((tier) => (
-              <Card key={tier.label} className="border-border/50">
-                <CardContent className="p-7">
-                  <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">{tier.label}</p>
-                  <p className="text-2xl font-bold mb-3 tabular-nums" dir="ltr">{tier.range}</p>
-                  <p className="text-muted-foreground text-sm leading-relaxed text-pretty">{tier.desc}</p>
-                </CardContent>
-              </Card>
-            ))}
+          <Card className="border-primary/20 bg-primary/5">
+            <CardContent className="p-7 md:p-8">
+              <ol className="space-y-4">
+                {proposalChecklist.map((item, index) => (
+                  <li key={item} className="flex items-start gap-4 leading-relaxed">
+                    <span className="grid size-8 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground text-sm font-bold tabular-nums">{index + 1}</span>
+                    <span className="pt-1">{item}</span>
+                  </li>
+                ))}
+              </ol>
+            </CardContent>
+          </Card>
+          <div className="mt-6 text-center">
+            <Link href="/coaching" className="font-semibold text-primary underline underline-offset-4">להשוואה לליווי האישי הרגיל</Link>
           </div>
         </div>
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 bg-primary text-white relative overflow-hidden">
+      <section className="py-20 bg-primary text-primary-foreground relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" aria-hidden />
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">
@@ -218,7 +211,7 @@ export default function VipCoachingPage() {
               href="/coaching/book"
               className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
             >
-              לתיאום שיחה — עכשיו
+              לתיאום שיחת היכרות
             </Link>
             <Link
               href="https://wa.me/972512518025?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%90%D7%9C%D7%A2%D7%93%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%9C%D7%99%D7%95%D7%95%D7%99%20VIP%20-%20%D7%90%D7%A4%D7%A9%D7%A8%20%D7%9C%D7%AA%D7%90%D7%9D%20%D7%A9%D7%99%D7%97%D7%AA%20%D7%94%D7%9B%D7%A8%D7%95%D7%AA%3F"

@@ -106,8 +106,9 @@ export default function GlobalError({
               >
                 נסו שוב
               </button>
-              <a
-                href="/"
+              <button
+                type="button"
+                onClick={() => window.location.assign(window.location.origin)}
                 style={{
                   padding: "0.75rem 2rem",
                   border: "2px solid #c06c48",
@@ -120,7 +121,7 @@ export default function GlobalError({
                 }}
               >
                 חזרה לדף הבית
-              </a>
+              </button>
             </div>
           </div>
         </section>

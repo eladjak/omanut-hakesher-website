@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -50,6 +50,12 @@ export function ContactForm() {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const formRef = useRef<HTMLFormElement>(null);
+  const successRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (status === "success") successRef.current?.focus();
+  }, [status]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -81,6 +87,13 @@ export function ContactForm() {
         }
       }
       setFieldErrors(errors);
+      const firstInvalidField = Object.keys(errors)[0];
+      window.requestAnimationFrame(() => {
+        const field = firstInvalidField
+          ? formRef.current?.elements.namedItem(firstInvalidField)
+          : null;
+        if (field instanceof HTMLElement) field.focus();
+      });
       return false;
     }
     setFieldErrors({});
@@ -132,9 +145,16 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="p-10 bg-secondary/10 rounded-2xl text-center animate-in fade-in zoom-in-95 duration-200">
+      <div
+        ref={successRef}
+        role="status"
+        aria-live="polite"
+        tabIndex={-1}
+        className="p-10 bg-secondary/10 rounded-2xl text-center animate-in fade-in zoom-in-95 duration-200"
+      >
         <div className="inline-flex p-3 rounded-full bg-secondary/20 mb-4">
           <svg
+            aria-hidden="true"
             className="w-8 h-8 text-secondary-dark"
             fill="none"
             stroke="currentColor"
@@ -164,7 +184,13 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit}
+      className="space-y-6"
+      aria-busy={status === "submitting"}
+      noValidate
+    >
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
           <label
@@ -177,6 +203,8 @@ export function ContactForm() {
             type="text"
             id="firstName"
             name="firstName"
+            autoComplete="given-name"
+            required
             value={formData.firstName}
             onChange={handleChange}
             className={`rounded-xl ${fieldErrors.firstName ? "border-destructive focus-visible:ring-destructive" : ""}`}
@@ -203,6 +231,8 @@ export function ContactForm() {
             type="text"
             id="lastName"
             name="lastName"
+            autoComplete="family-name"
+            required
             value={formData.lastName}
             onChange={handleChange}
             className={`rounded-xl ${fieldErrors.lastName ? "border-destructive focus-visible:ring-destructive" : ""}`}
@@ -232,6 +262,8 @@ export function ContactForm() {
             type="email"
             id="email"
             name="email"
+            autoComplete="email"
+            required
             value={formData.email}
             onChange={handleChange}
             dir="ltr"
@@ -257,6 +289,8 @@ export function ContactForm() {
             type="tel"
             id="phone"
             name="phone"
+            autoComplete="tel"
+            required
             value={formData.phone}
             onChange={handleChange}
             dir="ltr"
@@ -323,10 +357,14 @@ export function ContactForm() {
       </div>
 
       {status === "error" && (
-        <div className="p-4 bg-destructive/10 rounded-xl animate-in fade-in duration-200">
+        <div
+          role="alert"
+          className="p-4 bg-destructive/10 rounded-xl animate-in fade-in duration-200"
+        >
           <div className="flex items-center gap-3">
             <div className="shrink-0">
               <svg
+                aria-hidden="true"
                 className="w-5 h-5 text-destructive"
                 fill="none"
                 stroke="currentColor"
@@ -361,11 +399,12 @@ export function ContactForm() {
       <Button
         type="submit"
         disabled={status === "submitting"}
-        className="w-full rounded-full bg-primary hover:bg-primary-dark text-white text-lg py-6"
+        className="w-full rounded-full bg-primary hover:bg-primary-dark text-primary-foreground text-lg py-6"
       >
         {status === "submitting" ? (
           <span className="flex items-center gap-2">
             <svg
+              aria-hidden="true"
               className="w-5 h-5 animate-spin"
               fill="none"
               viewBox="0 0 24 24"

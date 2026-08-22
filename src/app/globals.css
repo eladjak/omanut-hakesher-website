@@ -14,10 +14,10 @@
   --foreground: #1a1a2e;
 
   /* Primary - warm pink-red (from logo hearts) */
-  --primary: #E85D75;
+  --primary: #C24059;
   --primary-foreground: #ffffff;
   --primary-light: #F08C9E;
-  --primary-dark: #C94A62;
+  --primary-dark: #A9364E;
 
   /* Secondary - deep blue (from logo heart) */
   --secondary: #1E3A5F;
@@ -40,7 +40,7 @@
   --muted-foreground: #5a5a6e;
   --border: #E8DDD5;
   --input: #E8DDD5;
-  --ring: #E85D75;
+  --ring: #C24059;
   --destructive: #e74c3c;
 
   /* Chart colors */
@@ -70,7 +70,7 @@
   --primary-light: #E85D75;
   --primary-dark: #F5B0BD;
 
-  --secondary: #4A7AB5;
+  --secondary: #5688C3;
   --secondary-foreground: #0F1729;
   --secondary-light: #2C5280;
   --secondary-dark: #7BA3D0;
@@ -115,17 +115,17 @@
 
 /* Female: explicit class, same as default (enables future female-specific tweaks) */
 .gender-female {
-  --primary: #E85D75;
+  --primary: #C24059;
   --primary-foreground: #ffffff;
   --primary-light: #F08C9E;
-  --primary-dark: #C94A62;
+  --primary-dark: #A9364E;
 
   --secondary: #1E3A5F;
   --secondary-foreground: #ffffff;
   --secondary-light: #2C5280;
   --secondary-dark: #152B47;
 
-  --ring: #E85D75;
+  --ring: #C24059;
 
   /* Warm background tint */
   --background: #FFFAF7;
@@ -161,7 +161,7 @@
 
 /* Male + Dark Mode composition */
 .gender-male.dark {
-  --primary: #4A7AB5;
+  --primary: #5688C3;
   --primary-foreground: #0F1729;
   --primary-light: #2C5280;
   --primary-dark: #7BA3D0;
@@ -171,7 +171,7 @@
   --secondary-light: #E85D75;
   --secondary-dark: #F5B0BD;
 
-  --ring: #4A7AB5;
+  --ring: #5688C3;
 }
 
 /* Female + Dark Mode (explicit, same as current .dark) */
@@ -181,7 +181,7 @@
   --primary-light: #E85D75;
   --primary-dark: #F5B0BD;
 
-  --secondary: #4A7AB5;
+  --secondary: #5688C3;
   --secondary-foreground: #0F1729;
   --secondary-light: #2C5280;
   --secondary-dark: #7BA3D0;
@@ -371,7 +371,7 @@ p {
 }
 
 :focus-visible {
-  outline: 2px solid var(--primary);
+  outline: 3px solid var(--primary);
   outline-offset: 2px;
 }
 

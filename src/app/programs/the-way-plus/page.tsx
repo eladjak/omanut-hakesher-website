@@ -4,13 +4,12 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { CheckoutForm } from "@/components/CheckoutForm";
-import { getProduct, formatILS } from "@/lib/products";
+import { getProduct } from "@/lib/products";
 
 const product = getProduct("the-way-plus")!;
 
 export const metadata: Metadata = {
-  title: `${product.nameHe} | ${formatILS(product.price.amount)} | אומנות הקשר`,
+  title: `${product.nameHe} | אומנות הקשר`,
   description:
     "תוכנית הדרך לצד 12 מפגשי תרגול אונליין, קהילה ומשוב מעשי.",
   alternates: { canonical: product.path },
@@ -47,7 +46,7 @@ const faqs = [
   },
   {
     q: "מתאים גם לדתיים / חרדים?",
-    a: "מתאים. אני עצמי שומר תורה ומצוות, ויש בקהילה גם דתיים, חרדים וחילונים.",
+    a: "ההתאמה תלויה בתוכן, בשעות, בערוצי הקהילה ובגבולות האישיים שלך. לפני הצטרפות אפשר לבקש את מתכונת המחזור ולברר נקודות שחשובות לך.",
   },
   {
     q: "מה ההבדל בין זה לבין הליווי האישי?",
@@ -93,8 +92,8 @@ export default function TheWayPlusPage() {
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <a
-                href="#checkout"
-                className="inline-flex px-10 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark transition-colors shadow-lg"
+                href="#choose"
+                className="inline-flex min-h-11 items-center px-10 py-4 bg-primary text-primary-foreground rounded-full font-semibold text-lg hover:bg-primary-dark transition-colors shadow-lg"
               >
                 לבדיקת זמינות המסלול
               </a>
@@ -105,6 +104,47 @@ export default function TheWayPlusPage() {
                 רוצה רק את התוכנית הבסיסית?
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Choice support */}
+      <section id="choose" className="py-20 bg-muted/30 scroll-mt-24">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <div className="text-center mb-12">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30">איזה מסלול מתאים</Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">התוכנית הבסיסית או המסלול המשולב?</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto text-pretty">ההבדל המרכזי הוא לא “יותר טוב”, אלא כמה תרגול חי, משוב וקבוצה מתאימים לך כרגע.</p>
+          </div>
+          <div className="overflow-x-auto rounded-2xl border border-border/60 bg-background">
+            <table className="w-full min-w-[640px] text-right">
+              <caption className="sr-only">השוואה בין תוכנית הדרך לבין תוכנית הדרך פלוס</caption>
+              <thead className="bg-muted/60">
+                <tr>
+                  <th scope="col" className="p-4 font-semibold">מה חשוב לך</th>
+                  <th scope="col" className="p-4 font-semibold">תוכנית הדרך</th>
+                  <th scope="col" className="p-4 font-semibold">הדרך + תרגול קבוצתי</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border/50">
+                {[
+                  ["קצב", "מסלול מובנה שאפשר ללמוד בו באופן עצמאי", "מסלול מובנה לצד מועדי תרגול"],
+                  ["משוב", "לפי מנגנוני התמיכה של התוכנית", "משוב גם במסגרת התרגול והערוצים שיאושרו"],
+                  ["למידה חברתית", "לא נדרשת כדי להתקדם בתוכן", "חלק מרכזי יותר מהחוויה"],
+                  ["מה צריך לבדוק", "גישה לתוכן, עומס ותמיכה", "בנוסף: שעות, נוכחות, פרטיות וכללי הקבוצה"],
+                ].map(([label, base, plus]) => (
+                  <tr key={label}>
+                    <th scope="row" className="p-4 font-semibold align-top">{label}</th>
+                    <td className="p-4 text-sm text-muted-foreground leading-relaxed align-top">{base}</td>
+                    <td className="p-4 text-sm text-muted-foreground leading-relaxed align-top">{plus}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-3 text-xs text-muted-foreground text-center md:hidden">אפשר להחליק לצדדים כדי לראות את כל ההשוואה.</p>
+          <div className="mt-6 text-center">
+            <Link href="/programs/the-way" className="inline-flex min-h-11 items-center font-semibold text-primary underline underline-offset-4">לפרטים המלאים על תוכנית הדרך</Link>
           </div>
         </div>
       </section>
@@ -152,36 +192,34 @@ export default function TheWayPlusPage() {
         </div>
       </section>
 
-      {/* Pricing summary */}
-      <section className="py-16 bg-muted/30">
-        <div className="container mx-auto px-4 max-w-2xl">
-          <Card className="border-primary/30 shadow-xl">
-            <CardContent className="p-8 text-center">
-              <p className="text-sm text-muted-foreground mb-1">מחיר המסלול המוצג כעת</p>
-              <p className="text-5xl font-bold text-primary tabular-nums mb-3">
-                {formatILS(product.price.amount)}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                הרכישה המקוונת אינה פעילה; המחיר והתנאים יאושרו לפני פתיחת הרשמה.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Checkout */}
+      {/* Availability — checkout remains off */}
       <section id="checkout" className="py-20">
         <div className="container mx-auto px-4 max-w-2xl">
           <Card className="border-border/50 shadow-xl shadow-primary/5">
             <CardContent className="p-8 md:p-10">
               <div className="text-center mb-7">
                 <Badge variant="outline" className="mb-3 text-primary border-primary/30">
-                  בדיקת זמינות
+                  לפני החלטה
                 </Badge>
                 <h2 className="text-2xl md:text-3xl font-bold mb-2 text-balance">{product.nameHe}</h2>
-                <p className="text-muted-foreground text-pretty">{product.taglineHe}</p>
+                <p className="text-muted-foreground text-pretty">ההרשמה המקוונת אינה פעילה כרגע. כשייפתח מחזור, יש לאשר לפני תשלום את מועדי המפגשים, ערוצי התמיכה, כללי הקהילה, המחיר ותנאי הביטול.</p>
               </div>
-              <CheckoutForm product={product} />
+              <div className="grid sm:grid-cols-2 gap-3 mb-7">
+                {["מועדים ונוכחות", "עומס שבועי", "פרטיות בקבוצה", "מחיר וביטול"].map((item) => (
+                  <div key={item} className="rounded-xl border border-border/60 bg-muted/30 p-4 text-sm font-medium text-center">{item}</div>
+                ))}
+              </div>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Link
+                  href="https://wa.me/972512518025?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%90%D7%9C%D7%A2%D7%93%2C%20%D7%A8%D7%A6%D7%99%D7%AA%D7%99%20%D7%9C%D7%91%D7%93%D7%95%D7%A7%20%D7%90%D7%9D%20%D7%99%D7%A9%20%D7%9E%D7%97%D7%96%D7%95%D7%A8%20%D7%9E%D7%90%D7%95%D7%A9%D7%A8%20%D7%9C%D7%93%D7%A8%D7%9A%20%D7%A4%D7%9C%D7%95%D7%A1%20%D7%95%D7%9C%D7%A7%D7%91%D7%9C%20%D7%90%D7%AA%20%D7%94%D7%9E%D7%AA%D7%9B%D7%95%D7%A0%D7%AA%20%D7%94%D7%9E%D7%9C%D7%90%D7%94."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center px-7 py-3 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary-dark transition-colors"
+                >
+                  לבירור מחזור מאושר
+                </Link>
+                <Link href="/programs/the-way" className="inline-flex min-h-11 items-center px-7 py-3 border border-border rounded-full font-semibold hover:bg-muted transition-colors">למסלול הבסיסי</Link>
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -194,7 +232,7 @@ export default function TheWayPlusPage() {
             <Badge variant="outline" className="mb-4 text-primary border-primary/30">
               שאלות נפוצות
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-balance">לפני שאתה מתחיל</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-balance">לפני שמתחילים</h2>
           </div>
           <div className="space-y-4">
             {faqs.map((f) => (

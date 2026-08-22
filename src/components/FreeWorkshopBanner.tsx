@@ -12,18 +12,19 @@ export function FreeWorkshopBanner() {
             אירועי הדרכה
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold mb-3">
-            המועד הבא יפורסם לאחר אישור
+            סדנאות חיות לתרגול שיחה, גבולות וקבלת החלטות
           </h2>
           <p className="text-lg md:text-xl opacity-90 mb-8 max-w-2xl mx-auto leading-relaxed">
-            לפני הרשמה נציג תאריך, שעה, מחיר, מתכונת, מדיניות הקלטה ופרטי
-            מסירה מאושרים — בלי ספירה לאחור או מחסור מלאכותי.
+            המועד הבא עדיין לא נקבע. כשייפתח אירוע נציג מראש מה מתרגלים, למי הוא
+            מתאים, תאריך, שעה, מחיר, מתכונת, מדיניות הקלטה ותנאי ביטול — כדי
+            שאפשר יהיה לבחור בלי לחץ.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/events/love-event"
               className="inline-flex px-8 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
             >
-              לפרטי המתכונת
+              מה מתרגלים בסדנה
             </Link>
             <Link
               href="/contact"

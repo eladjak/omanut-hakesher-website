@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { NewsletterForm } from "@/components/NewsletterForm";
+import { OpenResourcesLinks } from "@/components/OpenResourcesLinks";
 
 export const metadata: Metadata = {
   title: "בלוג",
@@ -177,7 +177,7 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* Newsletter CTA */}
+      {/* Continue with content that is available now. */}
       <section className="py-20 bg-muted/50">
         <div className="container mx-auto px-4">
           <Card className="max-w-2xl mx-auto border-primary/20 bg-gradient-to-br from-primary/5 via-background to-secondary/5">
@@ -187,11 +187,11 @@ export default function BlogPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold mb-3">קבלו מאמרים ישירות למייל</h2>
+              <h2 className="text-2xl font-bold mb-3">רוצים לעבור מקריאה לתרגול קטן?</h2>
               <p className="text-muted-foreground mb-8">
-                הירשמו לניוזלטר וקבלו טיפים, תובנות ותוכן בלעדי שיעזרו לכם בדרך לזוגיות
+                המדריכים הפתוחים מרכזים שאלות ותרגילים שאפשר לקחת לשבוע הקרוב — בלי הרשמה ובלי לחכות למייל.
               </p>
-              <NewsletterForm layout="stack" ariaLabel="הרשמה לניוזלטר" />
+              <OpenResourcesLinks layout="stack" className="justify-center" />
             </CardContent>
           </Card>
         </div>

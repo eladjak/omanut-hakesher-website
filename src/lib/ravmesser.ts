@@ -5,8 +5,6 @@
  *   - subscribe(email, name, listId, tags) → adds to a list, returns subscriber
  *   - getAccessToken() → cached OAuth token
  *
- * Account: 1001688 (eladjak Pro plan, ~2153 subscribers, 120K msg/mo).
- *
  * Env vars required (names match content-studio for shared Vercel reuse):
  *   RAV_MESSER_CLIENT_ID
  *   RAV_MESSER_CLIENT_SECRET

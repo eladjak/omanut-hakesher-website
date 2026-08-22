@@ -147,16 +147,14 @@ export default function ContactPage() {
                 <CardContent className="p-6">
                   <h3 className="font-bold text-lg mb-4">שעות פעילות</h3>
                   <ul className="space-y-3">
-                    <li className="flex justify-between text-sm">
+                    <li className="flex justify-between text-sm pb-3 border-b border-border">
                       <span className="text-muted-foreground">ראשון - חמישי</span>
                       <span className="font-medium">9:00 - 20:00</span>
                     </li>
-                    <Separator />
-                    <li className="flex justify-between text-sm">
+                    <li className="flex justify-between text-sm pb-3 border-b border-border">
                       <span className="text-muted-foreground">שישי</span>
                       <span className="font-medium">9:00 - 13:00</span>
                     </li>
-                    <Separator />
                     <li className="flex justify-between text-sm">
                       <span className="text-muted-foreground">שבת</span>
                       <span className="font-medium text-muted-foreground">סגור</span>
@@ -181,7 +179,7 @@ export default function ContactPage() {
                     href="https://wa.me/972512518025?text=%D7%94%D7%99%D7%99%20%D7%90%D7%9C%D7%A2%D7%93%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%9C%20%D7%94%D7%9C%D7%99%D7%95%D7%95%D7%99"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-2.5 bg-primary text-white rounded-full font-medium text-sm hover:bg-primary-dark transition-colors"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 bg-primary text-primary-foreground rounded-full font-medium text-sm hover:bg-primary-dark transition-colors"
                   >
                     שלח הודעה בוואטסאפ
                   </a>

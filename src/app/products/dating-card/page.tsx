@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { CheckoutForm } from "@/components/CheckoutForm";
-import { getProduct, formatILS } from "@/lib/products";
+import { getProduct } from "@/lib/products";
 
 const product = getProduct("dating-card")!;
 
 export const metadata: Metadata = {
-  title: `${product.nameHe} | ${formatILS(product.price.amount)} | אומנות הקשר`,
+  title: `${product.nameHe} | אומנות הקשר`,
   description:
     "כתיבה אישית של כרטיס היכרויות: שאלון, ניסוח מותאם על ידי הצוות ושליחה למייל.",
   alternates: { canonical: product.path },
@@ -89,7 +89,7 @@ export default function DatingCardPage() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <Badge variant="outline" className="mb-5 text-white border-white/30 text-sm px-4 py-1.5">
-              שירות חד-פעמי · {formatILS(product.price.amount)}
+              שירות כתיבה אישי · בכפוף לזמינות
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight text-balance">
               כרטיס היכרויות שמספר{" "}
@@ -101,12 +101,47 @@ export default function DatingCardPage() {
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <a
                 href="#checkout"
-                className="inline-flex px-10 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark transition-colors shadow-lg"
+                className="inline-flex min-h-11 items-center px-10 py-4 bg-primary text-primary-foreground rounded-full font-semibold text-lg hover:bg-primary-dark transition-colors shadow-lg"
               >
                 לבדיקת זמינות
               </a>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* A useful self-check before ordering */}
+      <section className="py-20 border-y border-border/40">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <div className="text-center mb-12">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30">לפני כתיבה</Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">שלושה דברים שכדאי לדייק קודם</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto text-pretty">
+              כרטיס טוב לא צריך להישמע מרשים; הוא צריך לתת לאדם אחר משהו אמיתי וספציפי להתחיל ממנו שיחה.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-5">
+            {[
+              { title: "רגע מהחיים", desc: "פעילות, מקום או הרגל שבועי שממחישים איך נראה היומיום שלך." },
+              { title: "סוג החיבור", desc: "מה חשוב לך בדרך שבה מדברים, מבלים ומקבלים החלטות — בלי רשימת דרישות אינסופית." },
+              { title: "פתח לשיחה", desc: "שאלה או פרט שקל להגיב אליו, במקום משפט כללי כמו 'אוהב/ת ליהנות מהחיים'." },
+            ].map((item) => (
+              <Card key={item.title} className="border-border/60">
+                <CardContent className="p-6">
+                  <h3 className="font-bold text-lg mb-2">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed text-pretty">{item.desc}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <Card className="mt-6 border-secondary/30 bg-secondary/5">
+            <CardContent className="p-6 md:p-8">
+              <p className="text-sm font-semibold text-secondary-dark mb-2">תרגיל של דקה</p>
+              <p className="text-lg leading-relaxed text-pretty">
+                השלימו: “בשבוע טוב אפשר למצוא אותי ___; אשמח להכיר אדם ש___; אפשר לפתוח איתי שיחה על ___”. אחר כך מחקו כל מילה שלא הייתם אומרים בקול.
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
@@ -178,8 +213,8 @@ export default function DatingCardPage() {
         </div>
       </section>
 
-      {/* Checkout */}
-      <section id="checkout" className="py-20 bg-muted/30">
+      {/* Availability — checkout remains off */}
+      <section id="checkout" className="py-20 bg-muted/30 scroll-mt-24">
         <div className="container mx-auto px-4 max-w-2xl">
           <Card className="border-border/50 shadow-xl shadow-primary/5">
             <CardContent className="p-8 md:p-10">
@@ -188,9 +223,31 @@ export default function DatingCardPage() {
                   בדיקת זמינות
                 </Badge>
                 <h2 className="text-2xl md:text-3xl font-bold mb-2 text-balance">{product.nameHe}</h2>
-                <p className="text-muted-foreground text-pretty">{product.taglineHe}</p>
+                <p className="text-muted-foreground text-pretty">
+                  הרכישה המקוונת אינה פעילה כרגע. לפני הזמנה יאושרו בכתב המחיר, התכולה, מספר סבבי התיקון ומועד המסירה.
+                </p>
               </div>
-              <CheckoutForm product={product} />
+              <div className="rounded-2xl bg-muted/50 border border-border/60 p-5 mb-6">
+                <h3 className="font-bold mb-3">מה אפשר לשלוח בבירור הראשון</h3>
+                <ul className="space-y-2 text-sm text-muted-foreground leading-relaxed">
+                  <li>• הפלטפורמה שבה הכרטיס מיועד להופיע</li>
+                  <li>• האם צריך ניסוח חדש או עריכה לטקסט קיים</li>
+                  <li>• מועד רצוי — בלי לשלוח בשלב הזה מידע אישי או רגיש שאינו נחוץ</li>
+                </ul>
+              </div>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Link
+                  href="https://wa.me/972512518025?text=%D7%A9%D7%9C%D7%95%D7%9D%20%D7%90%D7%9C%D7%A2%D7%93%2C%20%D7%A8%D7%A6%D7%99%D7%AA%D7%99%20%D7%9C%D7%91%D7%93%D7%95%D7%A7%20%D7%96%D7%9E%D7%99%D7%A0%D7%95%D7%AA%20%D7%9C%D7%A9%D7%99%D7%A8%D7%95%D7%AA%20%D7%9B%D7%A8%D7%98%D7%99%D7%A1%20%D7%94%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%99%D7%95%D7%AA."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center px-7 py-3 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary-dark transition-colors"
+                >
+                  לבדוק זמינות בוואטסאפ
+                </Link>
+                <Link href="/resources" className="inline-flex min-h-11 items-center px-7 py-3 border border-border rounded-full font-semibold hover:bg-muted transition-colors">
+                  להמשיך לתרגול עצמי
+                </Link>
+              </div>
             </CardContent>
           </Card>
         </div>

@@ -11,14 +11,12 @@ import { Button } from "@/components/ui/button";
 
 const navLinks = [
   { href: "/", label: "בית" },
-  { href: "/about", label: "אודות" },
-  { href: "/programs/the-way", label: "תוכנית הדרך" },
-  { href: "/coaching/vip", label: "ליווי VIP" },
-  { href: "/club", label: "מועדון" },
+  { href: "/resources", label: "תוכן פתוח" },
   { href: "/book", label: "הספר" },
-  { href: "/sipurim", label: "סיפורי הצלחה" },
-  { href: "/podcast", label: "פודקאסט" },
-  { href: "/blog", label: "בלוג" },
+  { href: "/programs", label: "תוכניות" },
+  { href: "/products", label: "מוצרים" },
+  { href: "/services", label: "שירותים וליווי" },
+  { href: "/about", label: "אודות" },
   { href: "/contact", label: "צור קשר" },
 ];
 
@@ -75,6 +73,16 @@ export function Header() {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isMenuOpen, closeMenu]);
+
+  // Keep the collapsed disclosure out of the tab order and move focus into
+  // the navigation when a keyboard user opens it.
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const frame = window.requestAnimationFrame(() => {
+      menuRef.current?.querySelector<HTMLAnchorElement>("a[href]")?.focus();
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [isMenuOpen]);
 
   // Close menu on route change
   useEffect(() => {
@@ -189,8 +197,8 @@ export function Header() {
             </button>
 
             {/* CTA Button */}
-            <Button asChild className="rounded-full bg-primary hover:bg-primary-dark text-white shadow-md shadow-primary/20">
-              <Link href="/coaching/book">לתיאום שיחת היכרות</Link>
+            <Button asChild className="rounded-full bg-primary hover:bg-primary-dark text-primary-foreground shadow-md shadow-primary/20">
+              <Link href="/resources">מאיפה מתחילים?</Link>
             </Button>
           </div>
 
@@ -262,6 +270,8 @@ export function Header() {
           id="mobile-menu"
           role="navigation"
           aria-label="תפריט מובייל"
+          aria-hidden={!isMenuOpen}
+          inert={!isMenuOpen}
           className={`xl:hidden overflow-hidden transition-all duration-200 ease-out ${
             isMenuOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
           }`}
@@ -287,9 +297,9 @@ export function Header() {
             </ul>
 
             <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-border/50">
-              <Button asChild className="rounded-full bg-primary hover:bg-primary-dark text-white">
-                <Link href="/coaching/book" onClick={closeMenu}>
-                  לתיאום שיחת היכרות
+              <Button asChild className="rounded-full bg-primary hover:bg-primary-dark text-primary-foreground">
+                <Link href="/resources" onClick={closeMenu}>
+                  מאיפה מתחילים?
                 </Link>
               </Button>
             </div>
