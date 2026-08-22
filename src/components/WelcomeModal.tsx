@@ -34,6 +34,32 @@ export function WelcomeModal() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         handleChoice("neutral");
+        return;
+      }
+      // Keep Tab inside the dialog. Without this, aria-modal="true" is a promise
+      // the markup does not keep: a keyboard user can tab straight out of the
+      // dialog and onto the page it is covering, which they cannot see or click.
+      if (e.key !== "Tab") return;
+      const dialog = dialogRef.current;
+      if (!dialog) return;
+      const stops = [
+        ...dialog.querySelectorAll<HTMLElement>(
+          'a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])'
+        ),
+      ].filter((el) => {
+        const r = el.getBoundingClientRect();
+        return r.width > 0 && r.height > 0;
+      });
+      if (stops.length === 0) return;
+      const first = stops[0];
+      const last = stops[stops.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && (active === first || active === dialog)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
       }
     };
 
@@ -57,6 +83,27 @@ export function WelcomeModal() {
   function handleChoice(choice: "male" | "female" | "neutral") {
     setGender(choice);
     dismissWelcome();
+    // Put the keyboard back at the top of the page.
+    //
+    // This dialog is the first thing a first-time visitor meets, and the button
+    // that closes it sits near the END of the document. When it unmounts, Chrome
+    // leaves the sequential-focus starting point where that button was, so the
+    // next Tab skips the entire site and lands on the two fixed controls at the
+    // bottom of the DOM before leaving the document altogether. Measured on the
+    // live build: 2 tab stops reached out of 63 focusable elements. Moving focus
+    // to the skip link restores the full order — measured 60 stops afterwards.
+    requestAnimationFrame(() => {
+      const skip = document.querySelector<HTMLElement>('a[href="#main-content"]');
+      if (skip) {
+        skip.focus();
+        return;
+      }
+      const main = document.getElementById("main-content");
+      if (main) {
+        main.setAttribute("tabindex", "-1");
+        main.focus();
+      }
+    });
   }
 
   if (!isFirstVisit || suppressed) return null;

@@ -381,7 +381,12 @@ export default function HomePage() {
               <Card key={index} className="relative overflow-hidden border-border/50 hover:shadow-lg transition-all duration-200 group motion-safe:hover:-translate-y-1">
                 <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-l ${item.color}`} />
                 <CardContent className="p-6 pt-8">
-                  <div className="text-5xl font-bold text-muted/30 mb-4 group-hover:text-primary/20 transition-colors">
+                  {/* Step numerals carry the order of the method, so they are content,
+                      not decoration. At text-muted/30 they measured 1.04:1 on the white
+                      card (hover state 1.33:1); 48px bold needs 3.0. /70 and /80 of these
+                      tokens measure 3.34 and 3.61 and keep the numerals visibly quieter
+                      than the heading beneath them. */}
+                  <div className="text-5xl font-bold text-muted-foreground/70 mb-4 group-hover:text-primary/80 transition-colors">
                     {item.step}
                   </div>
                   <h3 className="text-xl font-semibold mb-3">{item.title}</h3>

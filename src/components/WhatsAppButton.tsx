@@ -20,13 +20,17 @@ export function WhatsAppButton() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // WhatsApp's #25D366 with white on it measures 1.98:1 — the label needs 4.5 and
+  // the glyph needs 3.0, so both failed. Darkening the fill to #0B7A3E brings white
+  // to 5.43:1 and fixes the label and the logo in one change, which keeping #25D366
+  // and darkening the text would not have done.
   return (
     <a
       href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="שלחו לנו הודעה בוואטסאפ"
-      className={`fixed bottom-6 start-6 z-50 flex items-center gap-3 rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/30 hover:shadow-xl hover:shadow-[#25D366]/40 transition-all duration-200 group ${
+      className={`fixed bottom-6 start-6 z-50 flex items-center gap-3 rounded-full bg-[#0B7A3E] text-white shadow-lg shadow-[#0B7A3E]/30 hover:shadow-xl hover:shadow-[#0B7A3E]/40 transition-all duration-200 group ${
         visible
           ? "translate-y-0 opacity-100"
           : "translate-y-4 opacity-0 pointer-events-none"

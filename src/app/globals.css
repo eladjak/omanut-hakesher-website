@@ -29,7 +29,12 @@
   --accent: #D4A853;
   --accent-foreground: #1a1a2e;
   --accent-light: #E8C97D;
-  --accent-dark: #B08A3A;
+  /* Gold used as TEXT on the light surfaces (29 usages, mostly `text-accent-dark`
+     badges). #B08A3A measured 2.93:1 on bg-muted/50 — a 12px badge needs 4.5.
+     #7D6126 measures 5.32:1 there and 5.82:1 on white card. The .dark override
+     below (#F0D89A) is the gold-on-dark counterpart and is deliberately left
+     alone: it sits on #0F1729, where a darker gold would be the wrong direction. */
+  --accent-dark: #7D6126;
 
   /* UI tokens */
   --card: #ffffff;
@@ -388,3 +393,4 @@ p {
     @apply bg-background text-foreground;
   }
 }
+

@@ -175,11 +175,11 @@ export function Footer() {
             <Link href="/privacy" className="text-background/70 hover:text-primary-light transition-colors text-xs">
               מדיניות פרטיות
             </Link>
-            <span className="text-background/20 text-xs">|</span>
+            <span className="text-background/50 text-xs">|</span>
             <Link href="/terms" className="text-background/70 hover:text-primary-light transition-colors text-xs">
               תנאי שימוש
             </Link>
-            <span className="text-background/20 text-xs">|</span>
+            <span className="text-background/50 text-xs">|</span>
             <Link href="/accessibility" className="text-background/70 hover:text-primary-light transition-colors text-xs">
               נגישות
             </Link>

@@ -136,7 +136,7 @@ export function Header() {
                   href={link.href}
                   className={`relative px-3 py-2 rounded-lg font-medium text-sm transition-colors ${
                     isActive(link.href)
-                      ? "text-primary bg-primary/10"
+                      ? "text-primary-dark bg-primary/10"
                       : "text-foreground/70 hover:text-primary hover:bg-primary/5"
                   }`}
                   aria-current={isActive(link.href) ? "page" : undefined}
@@ -284,7 +284,7 @@ export function Header() {
                     href={link.href}
                     className={`block px-4 py-3 rounded-xl font-medium transition-colors ${
                       isActive(link.href)
-                        ? "text-primary bg-primary/10"
+                        ? "text-primary-dark bg-primary/10"
                         : "text-foreground/70 hover:text-primary hover:bg-primary/5"
                     }`}
                     aria-current={isActive(link.href) ? "page" : undefined}
