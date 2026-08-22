@@ -2,7 +2,7 @@
 //
 // Adapted (reuse-first) from the proven pdf-empire-il pipeline
 // (~/projects/pdf-empire-il/src/pdf-design/{template,build,fonts}.ts):
-// HTML → puppeteer → A4 PDF, Hebrew RTL, Heebo embedded as base64 so the
+// HTML → headless Chromium → A4 PDF, Hebrew RTL, Heebo embedded as base64 so the
 // render never depends on the network (the "gibberish trap").
 //
 // Restyled to THIS site's brand (src/app/globals.css): cream #FFFAF7,
@@ -11,9 +11,10 @@
 // Usage:  node scripts/lead-pdfs/render.mjs [slug ...]
 // Output: public/downloads/<slug>.pdf  (+ debug HTML in scripts/lead-pdfs/out/)
 //
-// puppeteer + the Heebo variable TTF are resolved from the sibling
-// pdf-empire-il project so this repo stays dependency-light. Override with
-// env PDF_EMPIRE_DIR if the sibling lives elsewhere.
+// The Heebo TTF is resolved from the sibling pdf-empire-il project. The browser
+// runtime prefers that project's Puppeteer when installed, then falls back to
+// the Playwright runtime already bundled with haderech-next. Override the two
+// sibling roots with PDF_EMPIRE_DIR / PLAYWRIGHT_RUNTIME_DIR when needed.
 
 import { createRequire } from "node:module";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -27,13 +28,18 @@ import datingTalks from "./content/dating-talks.mjs";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(HERE, "..", "..");
 const PDF_EMPIRE = process.env.PDF_EMPIRE_DIR ?? resolve(REPO, "..", "pdf-empire-il");
+const PLAYWRIGHT_RUNTIME =
+  process.env.PLAYWRIGHT_RUNTIME_DIR ?? resolve(REPO, "..", "haderech-next");
+const SITE_ORIGIN = (
+  process.env.LEAD_PDF_SITE_ORIGIN ?? "https://omanut-hakesher-website.vercel.app"
+).replace(/\/$/, "");
 
 const BRAND = {
   name: "אומנות הקשר",
   author: "אלעד יעקובוביץ׳",
-  authorTitle: "מאמן זוגיות ותקשורת · מייסד אומנות הקשר",
-  site: "omanut-hakesher.co.il",
-  ctaUrl: "https://omanut-hakesher.co.il/coaching",
+  authorTitle: "יוצר אומנות הקשר · מנחה ומלווה בתהליכי קשר",
+  site: SITE_ORIGIN.replace(/^https?:\/\//, ""),
+  ctaUrl: `${SITE_ORIGIN}/resources`,
   palette: {
     background: "#FFFAF7",
     text: "#1a1a2e",
@@ -68,6 +74,7 @@ function fontCss() {
 
 function css(p) {
   return `
+  @page { size: A4; margin: 0; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
     direction: rtl;
@@ -93,6 +100,7 @@ function css(p) {
 
   .page {
     page-break-after: always;
+    break-after: page;
     width: 210mm;
     min-height: 297mm;
     padding: 20mm 20mm 28mm;
@@ -193,9 +201,9 @@ function renderGuideHtml(guide) {
       const isClosing = c === guide.closing;
       const cta = isClosing
         ? `<div class="cta-box">
-             <h3>רוצה ללכת על זה ברצינות?</h3>
-             <p>ליווי אישי למציאת זוגיות, צעד אחר צעד. שיחת ההיכרות הראשונה, בחינם וללא התחייבות.</p>
-             <a href="${BRAND.ctaUrl}">לתיאום שיחת היכרות</a>
+             <h3>רוצים להמשיך לתרגל?</h3>
+             <p>במרכז המשאבים מחכים מאמרים, מדריכים וכלים נוספים שאפשר לבחור מהם לפי הצורך והקצב שלכם.</p>
+             <a href="${BRAND.ctaUrl}">למרכז המשאבים</a>
              <span class="url">${BRAND.ctaUrl}</span>
            </div>`
         : "";
@@ -238,22 +246,81 @@ function renderGuideHtml(guide) {
 </html>`;
 }
 
+function loadBrowserEngine() {
+  try {
+    const requireFromEmpire = createRequire(join(PDF_EMPIRE, "package.json"));
+    const puppeteer = requireFromEmpire("puppeteer");
+    return {
+      name: "puppeteer",
+      waitUntil: "networkidle0",
+      launch: () =>
+        puppeteer.launch({
+          headless: true,
+          args: ["--no-sandbox", "--disable-setuid-sandbox", "--lang=he-IL"],
+        }),
+      writePdf: (page, pdfPath) =>
+        page.pdf({
+          path: pdfPath,
+          format: "A4",
+          printBackground: true,
+          preferCSSPageSize: true,
+          tagged: true,
+          outline: true,
+          margin: { top: 0, bottom: 0, left: 0, right: 0 },
+        }),
+    };
+  } catch (error) {
+    if (error?.code !== "MODULE_NOT_FOUND") throw error;
+  }
+
+  const runtimePackage = join(PLAYWRIGHT_RUNTIME, "package.json");
+  if (!existsSync(runtimePackage)) {
+    throw new Error(
+      `No browser runtime found. Missing Puppeteer in ${PDF_EMPIRE} and ${runtimePackage}.`,
+    );
+  }
+  const requireFromRuntime = createRequire(runtimePackage);
+  const { chromium } = requireFromRuntime("playwright");
+  return {
+    name: "playwright",
+    waitUntil: "networkidle",
+    launch: () => chromium.launch({ headless: true }),
+    writePdf: async (page, pdfPath) => {
+      const session = await page.context().newCDPSession(page);
+      try {
+        const { data } = await session.send("Page.printToPDF", {
+          printBackground: true,
+          preferCSSPageSize: true,
+          generateTaggedPDF: true,
+          generateDocumentOutline: true,
+          paperWidth: 210 / 25.4,
+          paperHeight: 297 / 25.4,
+          marginTop: 0,
+          marginBottom: 0,
+          marginLeft: 0,
+          marginRight: 0,
+        });
+        writeFileSync(pdfPath, Buffer.from(data, "base64"));
+      } finally {
+        await session.detach();
+      }
+    },
+  };
+}
+
 async function main() {
   const requested = process.argv.slice(2);
   const slugs = requested.length > 0 ? requested : Object.keys(GUIDES);
 
-  const requireFromEmpire = createRequire(join(PDF_EMPIRE, "package.json"));
-  const puppeteer = requireFromEmpire("puppeteer");
+  const engine = loadBrowserEngine();
 
   const outDir = join(REPO, "public", "downloads");
   const debugDir = join(HERE, "out");
   mkdirSync(outDir, { recursive: true });
   mkdirSync(debugDir, { recursive: true });
 
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox", "--lang=he-IL"],
-  });
+  const browser = await engine.launch();
+  console.log(`Renderer: ${engine.name}`);
   try {
     for (const slug of slugs) {
       const guide = GUIDES[slug];
@@ -268,17 +335,28 @@ async function main() {
       writeFileSync(htmlPath, html);
 
       const page = await browser.newPage();
-      await page.setContent(html, { waitUntil: "networkidle0", timeout: 60_000 });
-      await page.evaluateHandle("document.fonts.ready");
-      await page.pdf({
-        path: pdfPath,
-        format: "A4",
-        printBackground: true,
-        preferCSSPageSize: true,
-        margin: { top: 0, bottom: 0, left: 0, right: 0 },
-      });
+      await page.setContent(html, { waitUntil: engine.waitUntil, timeout: 60_000 });
+      await page.evaluate(() => document.fonts.ready);
+      const layout = await page.$$eval(".page", (nodes) =>
+        nodes.map((node, index) => ({
+          index: index + 1,
+          height: node.getBoundingClientRect().height,
+        })),
+      );
+      const a4HeightPx = (297 / 25.4) * 96;
+      const overflowing = layout.filter(({ height }) => height > a4HeightPx + 2);
+      if (overflowing.length > 0) {
+        throw new Error(
+          `${slug}: content overflow on logical pages ${overflowing
+            .map(({ index, height }) => `${index} (${height.toFixed(1)}px)`)
+            .join(", ")}`,
+        );
+      }
+      await engine.writePdf(page, pdfPath);
       await page.close();
-      console.log(`OK ${slug}: ${pdfPath} (${guide.sections.length + 4} pages)`);
+      console.log(
+        `OK ${slug}: ${pdfPath} (${guide.sections.length + 4} pages; layout within A4)`,
+      );
     }
   } finally {
     await browser.close();

@@ -1,16 +1,10 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { getLeadMagnet } from "@/lib/lead-magnets";
-
-type FormStatus = "idle" | "submitting" | "success" | "error";
 
 export interface TeaserItem {
   num: number;
@@ -31,7 +25,8 @@ export interface LeadMagnetTemplateProps {
   teaserTitle: string;
   teaserSubtitle: string;
   teasers: TeaserItem[];
-  blurTeaser: { num: number; title: string; desc: string };
+  contextNote?: { title: string; text: string };
+  practicePrompt: { title: string; desc: string; questions: string[] };
   ctaText: string;
   formIntro: string;
 }
@@ -50,53 +45,15 @@ export function LeadMagnetTemplate(props: LeadMagnetTemplateProps) {
     teaserTitle,
     teaserSubtitle,
     teasers,
-    blurTeaser,
+    contextNote,
+    practicePrompt,
     ctaText,
     formIntro,
   } = props;
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<FormStatus>("idle");
-  const [marketingConsent, setMarketingConsent] = useState(false);
-  const [errors, setErrors] = useState<{ name?: string; email?: string; submit?: string }>({});
-  const isDeliverable = getLeadMagnet(slug)?.deliverable === true;
-
-  const validate = () => {
-    const newErrors: { name?: string; email?: string } = {};
-    if (!name.trim() || name.trim().length < 2) newErrors.name = "נא להזין שם (לפחות 2 תווים)";
-    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) newErrors.email = "נא להזין כתובת אימייל תקינה";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validate()) return;
-    setStatus("submitting");
-    try {
-      const res = await fetch("/api/lead/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: email.trim(),
-          name: name.trim(),
-          slug,
-          consent: marketingConsent,
-        }),
-      });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        setErrors({ submit: data.error === "invalid-email" ? "כתובת אימייל לא תקינה" : "משהו השתבש. נסה/י שוב בעוד רגע." });
-        setStatus("error");
-        return;
-      }
-      setStatus("success");
-    } catch {
-      setErrors({ submit: "אין חיבור לרשת. בדוק/י את החיבור ונסה/י שוב." });
-      setStatus("error");
-    }
-  };
+  const magnet = getLeadMagnet(slug);
+  const assetUrl = magnet?.deliverable === true ? magnet.assetUrl : null;
+  const isDeliverable = assetUrl !== null;
 
   return (
     <>
@@ -150,135 +107,84 @@ export function LeadMagnetTemplate(props: LeadMagnetTemplateProps) {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-xl font-bold text-primary">כלים מתוך עבודה מעשית</p>
-                    <p className="text-muted-foreground text-sm">ניסיון שהפך לצעדים שאפשר לתרגל</p>
+                    <p className="text-xl font-bold text-primary">מדריך שעובדים איתו</p>
+                    <p className="text-muted-foreground text-sm">לבחור רעיון אחד, לנסות, ואז לבדוק מה קרה</p>
                   </div>
                 </div>
               </div>
+
+              {contextNote && (
+                <aside className="mt-6 p-5 rounded-2xl bg-background border border-border/60" aria-label={contextNote.title}>
+                  <p className="font-semibold mb-2">{contextNote.title}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed text-pretty">{contextNote.text}</p>
+                </aside>
+              )}
             </div>
 
             <div>
               <Card className="border-border/50 shadow-xl shadow-primary/5">
                 <CardContent className="p-8">
-                  {status === "success" ? (
-                    <div className="text-center py-8">
-                      <div className="inline-flex p-4 rounded-full bg-secondary/15 mb-5">
-                        <svg className="w-10 h-10 text-secondary-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <h3 className="text-2xl font-bold mb-3">תודה — המדריך בדרך</h3>
-                      <p className="text-muted-foreground leading-relaxed">
-                        שלחנו לך אותו עכשיו לאימייל. בדוק/י את תיבת הדואר תוך כמה דקות — לפעמים זה נוחת בספאם.
-                      </p>
-                      <p className="text-sm text-muted-foreground mt-4">
-                        לא הגיע? <Link href="/contact" className="text-primary underline-offset-4 hover:underline">כתוב/כתבי לי</Link> ואשלח לך ידנית.
-                      </p>
-                    </div>
-                  ) : !isDeliverable ? (
+                  {!isDeliverable ? (
                     <div className="py-8 text-center">
                       <h2 className="text-xl font-bold mb-3">המדריך בהכנה</h2>
                       <p className="text-muted-foreground leading-relaxed">
-                        הקובץ עדיין לא מוכן למסירה, ולכן הטופס הושבת זמנית. אפשר לחזור לעמוד המדריכים ולבחור כלי שכבר זמין.
+                        הקובץ עדיין לא מוכן למסירה. אפשר לחזור לעמוד המדריכים ולבחור כלי שכבר זמין.
                       </p>
                       <Button asChild className="mt-6 rounded-full">
                         <Link href="/lead">לכל המדריכים</Link>
                       </Button>
                     </div>
                   ) : (
-                    <>
-                      <h2 className="text-xl font-bold mb-2">קבל/י את המדריך עכשיו — חינם</h2>
-                      <p className="text-muted-foreground text-sm mb-7">{formIntro}</p>
-                      <form onSubmit={handleSubmit} className="space-y-5" noValidate>
-                        {errors.submit && (
-                          <div className="rounded-xl bg-destructive/10 border border-destructive/30 px-4 py-3 text-sm text-destructive" role="alert">
-                            {errors.submit}
-                          </div>
-                        )}
-                        <div>
-                          <label htmlFor={`name-${slug}`} className="block text-sm font-medium mb-2">
-                            שם <span className="text-destructive">*</span>
-                          </label>
-                          <Input
-                            id={`name-${slug}`}
-                            type="text"
-                            value={name}
-                            onChange={(e) => { setName(e.target.value); setErrors((p) => ({ ...p, name: undefined })); }}
-                            placeholder="השם שלך"
-                            className={`rounded-xl ${errors.name ? "border-destructive" : ""}`}
-                            aria-invalid={!!errors.name}
-                          />
-                          {errors.name && <p className="text-destructive text-sm mt-1.5" role="alert">{errors.name}</p>}
-                        </div>
-
-                        <div>
-                          <label htmlFor={`email-${slug}`} className="block text-sm font-medium mb-2">
-                            אימייל <span className="text-destructive">*</span>
-                          </label>
-                          <Input
-                            id={`email-${slug}`}
-                            type="email"
-                            value={email}
-                            onChange={(e) => { setEmail(e.target.value); setErrors((p) => ({ ...p, email: undefined })); }}
-                            placeholder="your@email.com"
-                            dir="ltr"
-                            className={`rounded-xl ${errors.email ? "border-destructive" : ""}`}
-                            aria-invalid={!!errors.email}
-                          />
-                          {errors.email && <p className="text-destructive text-sm mt-1.5" role="alert">{errors.email}</p>}
-                        </div>
-
-                        <Button
-                          type="submit"
-                          disabled={status === "submitting"}
-                          className="w-full rounded-full bg-primary hover:bg-primary-dark text-white text-lg py-6 font-semibold"
-                        >
-                          {status === "submitting" ? (
-                            <span className="flex items-center gap-2 justify-center">
-                              <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden>
-                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                              </svg>
-                              שולח...
-                            </span>
-                          ) : (
-                            "שלחו לי את המדריך"
-                          )}
-                        </Button>
-
-                        <label className="flex items-start gap-3 text-xs text-muted-foreground leading-relaxed">
-                          <input
-                            type="checkbox"
-                            checked={marketingConsent}
-                            onChange={(event) => setMarketingConsent(event.target.checked)}
-                            className="mt-0.5 size-4 shrink-0 accent-primary"
-                          />
-                          <span>
-                            בנוסף לשליחת המדריך, אני מסכים/ה לקבל מאומנות הקשר כלים ועדכונים במייל. ההסכמה אינה תנאי לקבלת המדריך, ואפשר להסיר אותה בכל עת.
-                          </span>
-                        </label>
-                      </form>
-
-                      <div className="mt-6 pt-6 border-t border-border/50 text-center">
-                        <p className="text-sm text-muted-foreground mb-3">מעדיפים וואטסאפ?</p>
-                        <Link
-                          href="https://wa.me/972512518025"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-sm font-medium text-secondary-dark hover:opacity-80 transition-opacity"
-                        >
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                          </svg>
-                          שלח/י לי הודעה בוואטסאפ
-                        </Link>
+                    <div className="py-4 text-center">
+                      <div className="mb-5 inline-flex rounded-full bg-secondary/15 p-4">
+                        <svg className="h-10 w-10 text-secondary-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" />
+                        </svg>
                       </div>
-                    </>
+                      <h2 className="mb-3 text-2xl font-bold">המדריך פתוח עכשיו</h2>
+                      <p className="mb-6 text-sm leading-relaxed text-muted-foreground">
+                        {formIntro} אין צורך להשאיר אימייל או להצטרף לרשימת דיוור.
+                      </p>
+                      <a
+                        href={assetUrl}
+                        className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-primary px-6 py-3 text-lg font-semibold text-primary-foreground transition-colors hover:bg-primary-dark"
+                      >
+                        לפתיחת ה־PDF
+                      </a>
+                      <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+                        הקישור פותח את הקובץ המלא בדפדפן. אפשר לשמור או להדפיס משם.
+                      </p>
+                    </div>
                   )}
                 </CardContent>
               </Card>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="py-16 border-y border-border/40">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <div className="text-center mb-10">
+            <Badge variant="outline" className="mb-4 text-secondary-dark border-secondary/30">איך להשתמש</Badge>
+            <h2 className="text-balance text-3xl md:text-4xl font-bold mb-4">שלושה צעדים שהופכים קריאה לתרגול</h2>
+            <p className="text-pretty text-muted-foreground max-w-2xl mx-auto">
+              אין צורך ליישם הכול בבת אחת. עדיף סבב קטן שאפשר ללמוד ממנו.
+            </p>
+          </div>
+          <ol className="grid md:grid-cols-3 gap-5">
+            {[
+              { num: "01", title: "לבחור", desc: "מסמנים רעיון אחד שרלוונטי למצב אמיתי מהשבוע הקרוב." },
+              { num: "02", title: "לנסות", desc: "מגדירים פעולה קטנה ובטוחה שאפשר לבצע בלי לשחק תפקיד." },
+              { num: "03", title: "לבדוק", desc: "אחרי ההתנסות כותבים מה הרגיש טבעי, מה היה קשה ומה כדאי לשנות." },
+            ].map((step) => (
+              <li key={step.num} className="rounded-2xl border border-border/60 bg-card p-6 list-none">
+                <span className="text-sm font-bold text-primary tabular-nums">{step.num}</span>
+                <h3 className="font-bold text-lg mt-2 mb-2">{step.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed text-pretty">{step.desc}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
@@ -308,48 +214,59 @@ export function LeadMagnetTemplate(props: LeadMagnetTemplateProps) {
             ))}
           </div>
 
-          <div className="mt-5 relative">
-            <Card className="border-border/50 opacity-40 select-none">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <span className="text-3xl font-bold text-primary/20 shrink-0 tabular-nums">{blurTeaser.num}</span>
-                  <div className="blur-sm">
-                    <h3 className="font-semibold text-base mb-1.5">{blurTeaser.title}</h3>
-                    <p className="text-sm text-muted-foreground">{blurTeaser.desc}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <button
-                type="button"
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-full font-semibold text-sm hover:bg-primary-dark transition-colors shadow-lg"
+          <div className="mt-8 rounded-3xl border border-primary/20 bg-primary/5 p-6 md:p-8">
+            <Badge variant="outline" className="mb-4 text-primary border-primary/30">תרגיל שאפשר לנסות עכשיו</Badge>
+            <h3 className="text-2xl font-bold mb-3 text-balance">{practicePrompt.title}</h3>
+            <p className="text-muted-foreground leading-relaxed text-pretty mb-5">{practicePrompt.desc}</p>
+            <ul className="grid sm:grid-cols-2 gap-3 mb-6">
+              {practicePrompt.questions.map((question) => (
+                <li key={question} className="rounded-xl bg-background border border-border/60 p-4 text-sm leading-relaxed">
+                  {question}
+                </li>
+              ))}
+            </ul>
+            {isDeliverable ? (
+              <a
+                href={assetUrl}
+                className="inline-flex items-center justify-center min-h-11 px-6 py-3 bg-primary text-primary-foreground rounded-full font-semibold text-sm hover:bg-primary-dark transition-colors shadow-lg"
               >
                 {ctaText}
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                </svg>
-              </button>
-            </div>
+              </a>
+            ) : (
+              <Button asChild className="rounded-full min-h-11">
+                <Link href="/lead">לבחירת מדריך שזמין עכשיו</Link>
+              </Button>
+            )}
           </div>
         </div>
       </section>
 
-      <section className="py-20 bg-primary text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">רוצה ליווי אישי?</h2>
-          <p className="text-pretty text-xl opacity-90 mb-8 max-w-xl mx-auto leading-relaxed">
-            המדריך הוא ההתחלה. אם תרצה/י ללכת עמוק יותר, אפשר לתאם שיחת היכרות.
-          </p>
-          <Link
-            href="/coaching/vip"
-            className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
-          >
-            לתיאום שיחת היכרות
-          </Link>
+      <section className="py-20 bg-primary text-primary-foreground relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" aria-hidden />
+        <div className="container mx-auto px-4 relative z-10 max-w-5xl">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">מה מתאים אחרי המדריך?</h2>
+            <p className="text-pretty text-lg text-primary-foreground/85 max-w-2xl mx-auto leading-relaxed">
+              אפשר להישאר בתרגול עצמי, לבחור מסלול לימוד מובנה או לבדוק התאמה לליווי אישי.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-4">
+            {[
+              { title: "להמשיך לבד", desc: "עוד כלים חינמיים לתרגול בקצב שלך.", href: "/resources", label: "למשאבים" },
+              { title: "ללמוד בדרך מובנית", desc: "להכיר את תוכנית הדרך ואת מבנה 12 השבועות.", href: "/programs/the-way", label: "לתוכנית הדרך" },
+              { title: "לקבל התאמה אישית", desc: "לברר בשיחה אם ליווי אישי מתאים לצורך הנוכחי.", href: "/coaching", label: "להכיר את הליווי" },
+            ].map((option) => (
+              <Card key={option.title} className="border-white/20 bg-white/10 text-primary-foreground">
+                <CardContent className="p-6">
+                  <h3 className="font-bold text-lg mb-2">{option.title}</h3>
+                  <p className="text-sm text-primary-foreground/80 leading-relaxed mb-5">{option.desc}</p>
+                  <Link href={option.href} className="inline-flex min-h-11 items-center text-sm font-semibold underline underline-offset-4">
+                    {option.label}
+                  </Link>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
     </>

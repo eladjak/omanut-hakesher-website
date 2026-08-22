@@ -1,22 +1,15 @@
 /**
  * Lead-magnet → Rav-Messer mapping.
- * Single source of truth for: which list each magnet feeds, what asset URL to
- * deliver, what tags to apply for downstream sequence triggering.
- *
- * Strategy: ALL lead-magnet subscribers go to the main 'omanut-hakesher' list
- * (22958) so a single newsletter send reaches everyone. Per-magnet segmentation
- * is via tags, not separate lists. This keeps unsubscribe semantics clean.
- *
- * The Rav-Messer list IDs come from the content-studio brand-list mapping
- * (account 1001688). If those IDs change, update both projects.
+ * Single source of truth for asset delivery labels, paths and segmentation tags.
+ * Marketing-list selection deliberately lives in marketing-list-policy.ts: a
+ * requested guide can be delivered without silently opting the recipient into
+ * a historical list.
  */
 
 export interface LeadMagnetConfig {
   slug: string
   /** Hebrew label, used in welcome email subjects + admin ops */
   titleHe: string
-  /** Rav-Messer list to subscribe to */
-  listId: number
   /** Tags applied on subscription — drives segmentation + automation */
   tags: string[]
   /**
@@ -31,51 +24,43 @@ export interface LeadMagnetConfig {
   deliverable: boolean
 }
 
-/** Master list for omanut-hakesher (Rav-Messer account 1001688). */
-const OMANUT_HAKESHER_LIST_ID = 22958
-
 export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
   '23-reasons': {
     slug: '23-reasons',
-    titleHe: '23 הסיבות שאתה עדיין רווק/ה',
-    listId: OMANUT_HAKESHER_LIST_ID,
+    titleHe: '23 נקודות לבדיקה כשקשר לא מתקדם',
     tags: ['lead-magnet', 'lead:23-reasons', 'source:website'],
     assetUrl: '/lead/23-reasons/download',
-    welcomeSubject: 'המדריך שלך מוכן: 23 הסיבות שאתה עדיין רווק/ה',
+    welcomeSubject: 'המדריך שלך מוכן: 23 נקודות לבדיקה כשקשר לא מתקדם',
     deliverable: false,
   },
   '7-principles': {
     slug: '7-principles',
-    titleHe: '7 עקרונות הזהב למציאת זוגיות',
-    listId: OMANUT_HAKESHER_LIST_ID,
+    titleHe: '7 עקרונות לתרגול קשר',
     tags: ['lead-magnet', 'lead:7-principles', 'source:website'],
     assetUrl: '/lead/7-principles/download',
-    welcomeSubject: 'המדריך שלך מוכן: 7 עקרונות הזהב למציאת זוגיות',
+    welcomeSubject: 'המדריך שלך מוכן: 7 עקרונות לתרגול קשר',
     deliverable: false,
   },
   '36-questions': {
     slug: '36-questions',
-    titleHe: '36 השאלות שיכולות ליצור אהבה',
-    listId: OMANUT_HAKESHER_LIST_ID,
+    titleHe: '36 שאלות לשיחה שמעמיקה היכרות',
     tags: ['lead-magnet', 'lead:36-questions', 'source:website'],
     assetUrl: '/lead/36-questions/download',
-    welcomeSubject: 'המדריך שלך מוכן: 36 השאלות שיכולות ליצור אהבה',
+    welcomeSubject: 'המדריך שלך מוכן: 36 שאלות לשיחה שמעמיקה היכרות',
     deliverable: false,
   },
   // --- Salvaged 2026-07-09 from worktrees bold-leavitt-80e5cc + hardcore-hoover-5e3797 ---
   courage: {
     slug: 'courage',
-    titleHe: '8 דרכים לחיים של אומץ',
-    listId: OMANUT_HAKESHER_LIST_ID,
+    titleHe: '8 דרכים לתרגל אומץ',
     tags: ['lead-magnet', 'lead:courage', 'source:website'],
     assetUrl: '/lead/courage/download',
-    welcomeSubject: 'המדריך שלך מוכן: 8 דרכים לחיים של אומץ',
+    welcomeSubject: 'המדריך שלך מוכן: 8 דרכים לתרגל אומץ',
     deliverable: true,
   },
   vision: {
     slug: 'vision',
     titleHe: 'איך לכתוב חזון אישי לזוגיות',
-    listId: OMANUT_HAKESHER_LIST_ID,
     tags: ['lead-magnet', 'lead:vision', 'source:website'],
     assetUrl: '/lead/vision/download',
     welcomeSubject: 'המדריך שלך מוכן: חזון אישי לזוגיות',
@@ -83,17 +68,15 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
   },
   'dating-talks': {
     slug: 'dating-talks',
-    titleHe: '10 כללים לשיחות דייט מנצחות',
-    listId: OMANUT_HAKESHER_LIST_ID,
+    titleHe: '10 עקרונות לשיחה טובה בדייט',
     tags: ['lead-magnet', 'lead:dating-talks', 'source:website'],
     assetUrl: '/lead/dating-talks/download',
-    welcomeSubject: 'המדריך שלך מוכן: 10 כללים לשיחות דייט מנצחות',
+    welcomeSubject: 'המדריך שלך מוכן: 10 עקרונות לשיחה טובה בדייט',
     deliverable: true,
   },
   'love-event-rsvp': {
     slug: 'love-event-rsvp',
     titleHe: 'אירוע אהבה — הרשמה',
-    listId: OMANUT_HAKESHER_LIST_ID,
     tags: ['event:love-event', 'source:website'],
     // Event date, registration terms and delivery flow are not yet approved.
     // Keep direct API calls fail-closed until a real event instance exists.
@@ -106,7 +89,6 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
   newsletter: {
     slug: 'newsletter',
     titleHe: 'רשימת התפוצה של אומנות הקשר',
-    listId: OMANUT_HAKESHER_LIST_ID,
     tags: ['newsletter', 'source:website'],
     assetUrl: '/',
     welcomeSubject: 'נרשמת לרשימת אומנות הקשר',
