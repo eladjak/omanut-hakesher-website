@@ -249,10 +249,6 @@ function getLoveLanguageLabel(value: string): string {
   return LOVE_LANGUAGES.find((o) => o.value === value)?.label ?? value;
 }
 
-function getAttachmentLabel(value: string): string {
-  return ATTACHMENT_STYLES.find((o) => o.value === value)?.label ?? value;
-}
-
 function getFearLabel(value: string): string {
   return RELATIONSHIP_FEARS.find((o) => o.value === value)?.label ?? value;
 }

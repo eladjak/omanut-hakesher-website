@@ -1,8 +1,13 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  removeBookStorageItem,
+  useBookStorageItem,
+  writeBookStorageItem,
+} from "@/components/book/book-local-storage";
 
 /* ── Types ─────────────────────────────────────────────────────────────────── */
 interface Question {
@@ -90,18 +95,30 @@ const ROUND_BREAK_MESSAGES = {
 };
 
 /* ── Helpers ───────────────────────────────────────────────────────────────── */
-function loadProgress(): SavedProgress | null {
-  if (typeof window === "undefined") return null;
+function parseProgress(raw: string | null): SavedProgress | null {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as SavedProgress) : null;
+    const parsed: unknown = raw ? JSON.parse(raw) : null;
+    if (
+      typeof parsed !== "object" ||
+      parsed === null ||
+      !("currentCard" in parsed) ||
+      !("savedAt" in parsed) ||
+      typeof parsed.currentCard !== "number" ||
+      !Number.isInteger(parsed.currentCard) ||
+      parsed.currentCard < 0 ||
+      parsed.currentCard >= ALL_QUESTIONS.length ||
+      typeof parsed.savedAt !== "string"
+    ) {
+      return null;
+    }
+    return parsed as SavedProgress;
   } catch {
     return null;
   }
 }
 
 function saveProgress(data: SavedProgress) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  writeBookStorageItem(STORAGE_KEY, JSON.stringify(data));
 }
 
 function formatTime(seconds: number): string {
@@ -112,24 +129,24 @@ function formatTime(seconds: number): string {
 
 /* ── Component ─────────────────────────────────────────────────────────────── */
 export function ThirtySixQuestionsClient() {
+  const storedProgress = useBookStorageItem(STORAGE_KEY);
+  const savedProgress = useMemo(
+    () => parseProgress(storedProgress),
+    [storedProgress],
+  );
   // currentCard: 0-35 (index into ALL_QUESTIONS)
-  const [currentCard, setCurrentCard] = useState(0);
-  const [phase, setPhase] = useState<"intro" | "playing" | "break" | "done">("intro");
+  const [currentCardOverride, setCurrentCard] = useState<number | null>(null);
+  const currentCard = currentCardOverride ?? savedProgress?.currentCard ?? 0;
+  const [phaseOverride, setPhase] = useState<
+    "intro" | "playing" | "break" | "done" | null
+  >(null);
+  const phase = phaseOverride ?? (savedProgress ? "playing" : "intro");
   const [breakRound, setBreakRound] = useState<2 | 3 | null>(null);
   const [timerEnabled, setTimerEnabled] = useState(false);
   const [timerSeconds, setTimerSeconds] = useState(TIMER_DURATION);
   const [timerRunning, setTimerRunning] = useState(false);
   const [flipping, setFlipping] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  // Load progress on mount
-  useEffect(() => {
-    const saved = loadProgress();
-    if (saved) {
-      setCurrentCard(saved.currentCard);
-      setPhase("playing");
-    }
-  }, []);
 
   // Timer logic
   useEffect(() => {
@@ -183,7 +200,7 @@ export function ThirtySixQuestionsClient() {
 
     if (nextIdx >= ALL_QUESTIONS.length) {
       setPhase("done");
-      localStorage.removeItem(STORAGE_KEY);
+      removeBookStorageItem(STORAGE_KEY);
       return;
     }
 
@@ -221,7 +238,7 @@ export function ThirtySixQuestionsClient() {
   }, [currentCard]);
 
   const handleReset = useCallback(() => {
-    localStorage.removeItem(STORAGE_KEY);
+    removeBookStorageItem(STORAGE_KEY);
     setCurrentCard(0);
     setPhase("intro");
     setBreakRound(null);

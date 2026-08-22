@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useMemo, useState } from "react";
+import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { QuizForm } from "../QuizForm";
@@ -8,27 +9,42 @@ import { ComparisonChart } from "../ComparisonChart";
 import {
   readinessRetestConfig,
   saveReadinessScores,
-  getReadinessScores,
 } from "@/data/book/quizzes/readiness-retest";
 import { readinessQuizConfig } from "@/data/book/quizzes/readiness-quiz";
+import { useBookStorageItem } from "@/components/book/book-local-storage";
+
+const READINESS_STORAGE_KEY = "omanut-readiness-scores";
+
+function parseBeforeScores(raw: string | null): Record<string, number> | null {
+  if (!raw) return null;
+
+  try {
+    const saved = JSON.parse(raw) as {
+      before?: { scores?: Record<string, number> };
+    };
+    const scores = saved.before?.scores;
+    if (!scores || typeof scores !== "object" || Array.isArray(scores)) {
+      return null;
+    }
+    return Object.values(scores).every((score) => typeof score === "number")
+      ? scores
+      : null;
+  } catch {
+    return null;
+  }
+}
 
 export function ReadinessRetestClient() {
-  const [beforeScores, setBeforeScores] = useState<Record<
-    string,
-    number
-  > | null>(null);
+  const storedScores = useBookStorageItem(READINESS_STORAGE_KEY);
+  const beforeScores = useMemo(
+    () => parseBeforeScores(storedScores),
+    [storedScores],
+  );
   const [afterScores, setAfterScores] = useState<Record<
     string,
     number
   > | null>(null);
   const [showComparison, setShowComparison] = useState(false);
-
-  useEffect(() => {
-    const saved = getReadinessScores();
-    if (saved.before?.scores) {
-      setBeforeScores(saved.before.scores);
-    }
-  }, []);
 
   const handleComplete = ({
     scores,
@@ -101,7 +117,7 @@ export function ReadinessRetestClient() {
             נסה שוב
           </Button>
           <Button variant="ghost" asChild className="rounded-full px-6">
-            <a href="/book/closing">חזרה לסיכום</a>
+            <Link href="/book/closing">חזרה לסיכום</Link>
           </Button>
         </div>
       </div>
@@ -117,12 +133,12 @@ export function ReadinessRetestClient() {
               <span className="font-medium">שים לב:</span> לא נמצאו תוצאות
               קודמות מהשאלון בהקדמה. תוכל לעשות את השאלון בכל מקרה, אבל ההשוואה
               לפני/אחרי לא תהיה זמינה.{" "}
-              <a
+              <Link
                 href="/book/intro/readiness-quiz"
                 className="text-primary hover:underline"
               >
                 עשה קודם את שאלון המוכנות בהקדמה
-              </a>
+              </Link>
             </p>
           </CardContent>
         </Card>

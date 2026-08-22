@@ -1,25 +1,20 @@
 import type { Metadata } from "next";
-import { PRODUCT_FACTS } from "@/lib/product-facts";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { OfferJourney } from "@/components/OfferJourney";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-
-import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { SumitCheckoutButton } from "@/components/SumitCheckoutButton";
 import { chapters as chapterData } from "@/data/book/chapters";
+import { PRODUCT_FACTS } from "@/lib/product-facts";
 
 export const metadata: Metadata = {
-  title: "הספר ״אומנות הקשר״ - הדרך לזוגיות שאתה ראוי לה",
-  description:
-    `הספר שמלמד את מה שלא לימדו אותך על זוגיות. ${PRODUCT_FACTS.book.chapters} פרקים בחמישה חלקים, ${PRODUCT_FACTS.book.numberedExercises} תרגילים ממוספרים וסיפורים מהשטח. מאת אלעד יעקובוביץ׳.`,
-  alternates: {
-    canonical: "/book",
-  },
+  title: "הספר ״אומנות הקשר״ | קריאה ותרגול בקצב אישי",
+  description: `היכרות עם מבנה הספר ״אומנות הקשר״: ${PRODUCT_FACTS.book.parts} חלקים, ${PRODUCT_FACTS.book.chapters} פרקים ו־${PRODUCT_FACTS.book.numberedExercises} תרגילים ממוספרים לקריאה ולעבודה עצמאית.`,
+  alternates: { canonical: "/book" },
   openGraph: {
-    title: "הספר ״אומנות הקשר״ | הדרך לזוגיות שאתה ראוי לה",
-    description:
-      `${PRODUCT_FACTS.book.chapters} פרקים בחמישה חלקים ו־${PRODUCT_FACTS.book.numberedExercises} תרגילים ממוספרים. דרך מעשית להבין דפוסים, לתרגל חיבור ולבנות קשר.`,
+    title: "הספר ״אומנות הקשר״ | קריאה ותרגול בקצב אישי",
+    description: `מסלול קריאה בן ${PRODUCT_FACTS.book.parts} חלקים ו־${PRODUCT_FACTS.book.chapters} פרקים, עם שאלות ותרגול עצמי.`,
     url: "/book",
     locale: "he_IL",
     type: "website",
@@ -27,290 +22,176 @@ export const metadata: Metadata = {
 };
 
 const bookStats = [
-  { number: "13", label: "פרקים" },
-  { number: "32+", label: "תרגילים מעשיים" },
-  { number: "300+", label: "עמודים" },
-  { number: "10+", label: "סיפורי חיים אמיתיים" },
-];
+  { number: PRODUCT_FACTS.book.parts, label: "חלקים" },
+  { number: PRODUCT_FACTS.book.chapters, label: "פרקים" },
+  { number: PRODUCT_FACTS.book.numberedExercises, label: "תרגילים ממוספרים" },
+  { number: PRODUCT_FACTS.book.coreExercises, label: "תרגילי ליבה" },
+] as const;
+
+const readingModes = [
+  {
+    title: "קריאה רציפה",
+    description:
+      "להתקדם לפי הסדר כדי לבנות שפה משותפת בין התבוננות אישית, תקשורת, היכרות וקשר.",
+  },
+  {
+    title: "עבודה לפי נושא",
+    description:
+      "לבחור פרק שנוגע בשאלה נוכחית, לקרוא אותו ולסמן תרגיל אחד ששווה לנסות.",
+  },
+  {
+    title: "קריאה חוזרת",
+    description:
+      "לחזור לאותו פרק אחרי התנסות ולבדוק מה נראה אחרת כשהוא פוגש אירוע אמיתי.",
+  },
+] as const;
+
+const readerUses = [
+  {
+    title: "למפות",
+    description:
+      "לתת שמות לדפוסים, לצרכים ולבחירות — בלי להפוך אותם לאבחנה או לתווית קבועה.",
+  },
+  {
+    title: "לתרגל",
+    description:
+      "להפוך רעיון לפעולה קטנה: כתיבה, שאלה, שיחה או החלטה שאפשר לבדוק במציאות.",
+  },
+  {
+    title: "לבחור",
+    description:
+      "לבדוק מה מתאים עכשיו, על מה לדלג ולאיזה נושא כדאי לחזור בהמשך.",
+  },
+] as const;
 
 export default function BookPage() {
+  const numberedChapters = chapterData.filter((chapter) => chapter.number !== null);
+
   return (
     <>
-      {/* Breadcrumbs */}
-      <div className="bg-muted/50 border-b border-border/30">
+      <div className="border-b border-border/30 bg-muted/50">
         <Breadcrumbs items={[{ label: "הספר" }]} />
       </div>
 
-      {/* Hero */}
-      <section className="relative py-24 overflow-hidden">
+      <section className="relative overflow-hidden py-20 md:py-24">
         <div className="absolute inset-0">
           <Image
             src="/images/generated/book-hero.jpg"
-            alt='הספר "אומנות הקשר"'
+            alt=""
             fill
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-foreground/70" />
+          <div className="absolute inset-0 bg-foreground/75" />
         </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
+
+        <div className="container relative z-10 mx-auto px-4">
+          <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1fr_360px]">
             <div>
-              <Badge variant="outline" className="mb-4 text-white border-white/30">
-                הספר החדש
+              <Badge variant="outline" className="mb-4 border-white/35 text-white">
+                למידה עצמאית ותרגול
               </Badge>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight text-white">
+              <h1 className="mb-4 text-4xl font-bold leading-tight text-white text-balance md:text-6xl">
                 אומנות הקשר
               </h1>
-              <p className="text-2xl text-accent-light font-medium mb-6">
-                הדרך לזוגיות שאתה ראוי לה
+              <p className="mb-6 max-w-2xl text-2xl font-medium text-accent-light text-pretty">
+                ספר עבודה שמחבר קריאה, שאלות וצעדים מעשיים
               </p>
-              <p className="text-lg text-white/80 leading-relaxed mb-8">
-                הספר שמלמד את מה שלא לימדו אותך על זוגיות. לא עוד ״תהיה עצמך״
-                ו-״זה יגיע כשתפסיק לחפש״. אלא דרך מובנית, מעשית, שעובדת -
-                מבוססת על עבודה עם מאות אנשים שעברו את התהליך ומצאו.
+              <p className="mb-8 max-w-2xl text-lg leading-relaxed text-white/85 text-pretty">
+                הספר בנוי כמסלול שאפשר לקרוא מתחילתו ועד סופו, או לפתוח לפי נושא.
+                המטרה היא לא לספק נוסחה לזוגיות, אלא לעזור להתבונן, לתרגל ולקבל החלטות בבהירות רבה יותר.
               </p>
 
-              <div className="flex flex-wrap gap-4 mb-8">
-                <span className="text-sm bg-white/20 text-white px-3 py-1.5 rounded-full">
+              <div className="mb-8 flex flex-wrap gap-2" aria-label="נתונים על מבנה הספר">
+                <span className="rounded-full bg-white/15 px-3 py-1.5 text-sm text-white">
+                  {PRODUCT_FACTS.book.parts} חלקים
+                </span>
+                <span className="rounded-full bg-white/15 px-3 py-1.5 text-sm text-white">
                   {PRODUCT_FACTS.book.chapters} פרקים
                 </span>
-                <span className="text-sm bg-white/20 text-white px-3 py-1.5 rounded-full">
-                  {PRODUCT_FACTS.book.numberedExercises} תרגילים
-                </span>
-                <span className="text-sm bg-white/20 text-white px-3 py-1.5 rounded-full">
-                  9 סיפורים אמיתיים
+                <span className="rounded-full bg-white/15 px-3 py-1.5 text-sm text-white">
+                  {PRODUCT_FACTS.book.numberedExercises} תרגילים ממוספרים
                 </span>
               </div>
 
-              <blockquote className="border-r-4 border-white/40 pr-4 text-white/80 italic mb-8">
-                &ldquo;אני לא הולך לספר לך מה שנעים לשמוע. אני הולך לספר לך מה שצריך לשמוע.
-                ישירות, בלי בולשיט.&rdquo;
-                <cite className="block not-italic text-sm mt-2 text-white font-medium">
-                  - אלעד יעקובוביץ׳
-                </cite>
-              </blockquote>
-
-              <div className="flex flex-wrap gap-4">
-                <SumitCheckoutButton
-                  productSlug="book-preorder"
-                  label="לרכישה מוקדמת"
-                  productTitle='הספר "אומנות הקשר" — מכירה מוקדמת'
-                  displayPrice="₪89"
-                  className="inline-flex px-8 py-3.5 bg-primary text-white rounded-full font-semibold hover:bg-primary-dark transition-colors shadow-md shadow-primary/20"
-                />
-                <Link
-                  href="/programs/the-way"
-                  className="inline-flex px-8 py-3.5 border-2 border-white/50 text-white rounded-full font-semibold hover:bg-white/10 transition-colors"
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href="#book-contents"
+                  className="inline-flex min-h-11 items-center rounded-full bg-primary px-8 py-3.5 font-semibold text-primary-foreground transition-colors hover:bg-primary-dark"
                 >
-                  בינתיים - תוכנית הדרך
+                  לראות מה יש בספר
+                </a>
+                <Link
+                  href="/resources"
+                  className="inline-flex min-h-11 items-center rounded-full border border-white/45 px-8 py-3.5 font-semibold text-white transition-colors hover:bg-white/10"
+                >
+                  להתחיל מתוכן פתוח
                 </Link>
               </div>
             </div>
 
-            {/* Book Cover */}
-            <div className="flex justify-center">
-              <div className="relative">
-                <div className="w-72 h-[430px] rounded-2xl shadow-2xl overflow-hidden">
-                  <Image
-                    src="/assets/book/cover.jpg"
-                    alt='כריכת הספר "אומנות הקשר - הדרך לזוגיות שאתה ראוי לה"'
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-                <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-accent/20 rounded-full blur-xl" />
-                <div className="absolute -top-4 -right-4 w-16 h-16 bg-primary/20 rounded-full blur-xl" />
+            <div className="flex justify-center lg:justify-end">
+              <div className="relative h-[430px] w-72 overflow-hidden rounded-2xl shadow-2xl">
+                <Image
+                  src="/assets/book/cover.jpg"
+                  alt="כריכת הספר אומנות הקשר"
+                  fill
+                  className="object-cover"
+                  priority
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="py-16 border-b border-border/30">
+      {!PRODUCT_FACTS.commerce.onlineCheckoutAvailable && (
+        <section className="border-b border-border/40 bg-accent/10" aria-label="מצב זמינות הספר">
+          <div className="container mx-auto px-4 py-5 text-center">
+            <p className="text-sm leading-relaxed text-foreground/85">
+              <strong>הרכישה המקוונת אינה זמינה כרגע.</strong>{" "}
+              העמוד מאפשר להכיר את המבנה ואת דרך העבודה; מחיר, מסירה ותנאים יוצגו רק כשערוץ רכישה מאומת יהיה זמין.
+            </p>
+          </div>
+        </section>
+      )}
+
+      <section className="border-b border-border/30 py-14" aria-label="מבנה הספר במספרים">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
-            {bookStats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl font-bold text-primary mb-1">{stat.number}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
+          <dl className="mx-auto grid max-w-4xl grid-cols-2 gap-6 md:grid-cols-4">
+            {bookStats.map((stat) => (
+              <div key={stat.label} className="text-center">
+                <dt className="text-sm text-muted-foreground">{stat.label}</dt>
+                <dd className="mb-1 text-4xl font-bold tabular-nums text-primary">{stat.number}</dd>
               </div>
             ))}
-          </div>
+          </dl>
         </div>
       </section>
 
-      {/* Book Reading Image */}
-      <section className="py-12">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="relative w-full h-64 rounded-2xl overflow-hidden">
-            <Image
-              src="/images/generated/book-reading.jpg"
-              alt="קוראים את הספר אומנות הקשר"
-              fill
-              className="object-cover"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Who is this for */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="text-center mb-14">
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30">
-              למי הספר מיועד
+      <section className="py-20" aria-labelledby="reader-use-heading">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto mb-12 max-w-2xl text-center">
+            <Badge variant="outline" className="mb-4 border-primary/30 text-primary">
+              מה עושים עם הספר
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              הספר הזה <span className="text-primary">בשבילך</span> אם...
+            <h2 id="reader-use-heading" className="mb-4 text-3xl font-bold text-balance md:text-4xl">
+              לא רק לקרוא — למפות, לתרגל ולבחור
             </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              "כבר שנים שאתה יוצא לדייטים ושום דבר לא מתקדם",
-              "הכל בחיים מסתדר - חוץ מהזוגיות",
-              "עברת פרידה קשה ולא בטוח איך להתחיל מחדש",
-              "מרגיש שמשהו חוסם אותך אבל לא יודע מה",
-              "קראת כבר ספרים וטיפים - אבל שום דבר לא עבד",
-              "רוצה דרך מעשית, לא רק ״תהיה עצמך״",
-            ].map((item, index) => (
-              <Card key={index} className="border-border/50">
-                <CardContent className="p-5 flex items-start gap-3">
-                  <svg className="w-5 h-5 text-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-sm leading-relaxed">{item}</span>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Chapters */}
-      <section className="py-20 bg-muted/50">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <div className="text-center mb-14">
-            <Badge variant="outline" className="mb-4 text-accent-dark border-accent/30">
-              תוכן עניינים
-            </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              13 פרקים. דרך <span className="text-primary">שלמה</span>.
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              כל פרק כולל תרגילים מעשיים וסיפור אמיתי של מישהו שעבר את הדרך
+            <p className="text-muted-foreground text-pretty">
+              התרגילים הם הצעות לעבודה עצמאית. אפשר להתאים אותם, לדלג עליהם או לעצור כשמשהו אינו מתאים.
             </p>
           </div>
 
-          <div className="space-y-4">
-            {chapterData
-              .filter((ch) => ch.number !== null)
-              .map((chapter) => (
-              <Link key={chapter.slug} href={`/book/${chapter.slug}`}>
-                <Card className="border-border/50 hover:border-primary/20 hover:shadow-md transition-all group">
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-5">
-                      <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-                        <span className="text-primary font-bold text-lg">{chapter.number}</span>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 mb-1">
-                          <h3 className="text-lg font-bold group-hover:text-primary transition-colors">{chapter.title}</h3>
-                          <span className="text-sm text-muted-foreground">- {chapter.subtitle}</span>
-                        </div>
-                        <p className="text-sm text-muted-foreground leading-relaxed mb-2">
-                          {chapter.description}
-                        </p>
-                        {chapter.story && (
-                          <p className="text-xs text-primary/70 italic">
-                            הסיפור של {chapter.story}
-                          </p>
-                        )}
-                        {chapter.tools.length > 0 && (
-                          <div className="flex gap-2 mt-2">
-                            {chapter.tools.map((tool) => (
-                              <span key={tool.slug} className="text-xs bg-muted px-2 py-0.5 rounded-full text-muted-foreground">
-                                {tool.icon} {tool.title}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                      <svg
-                        className="w-5 h-5 text-muted-foreground/30 group-hover:text-primary transition-colors shrink-0 rotate-180 mt-3"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 3 Promises */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="text-center mb-14">
-            <Badge variant="outline" className="mb-4 text-primary border-primary/30">
-              ההתחייבות שלי
-            </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              שלוש הבטחות <span className="text-primary">לקורא</span>
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: (
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                ),
-                title: "אמת",
-                description:
-                  "אני לא הולך לספר לך מה שנעים לשמוע. אני הולך לספר לך מה שצריך לשמוע. ישירות, בלי בולשיט.",
-              },
-              {
-                icon: (
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                ),
-                title: "כלים",
-                description:
-                  "כל פרק כולל צעדים שאפשר לתרגל. 54 התרגילים הממוספרים הופכים רעיונות לעבודה מעשית.",
-              },
-              {
-                icon: (
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                  </svg>
-                ),
-                title: "כבוד",
-                description:
-                  "אני לא הולך להטיף לך. הגעת לכאן כי אתה רוצה לשנות משהו - וזה לבד כבר אומר על הערך שלך.",
-              },
-            ].map((promise, index) => (
-              <Card key={index} className="border-primary/20 bg-gradient-to-b from-primary/5 to-transparent">
-                <CardContent className="p-8 text-center">
-                  <div className="inline-flex p-3 rounded-xl bg-primary/10 text-primary mb-4">
-                    {promise.icon}
-                  </div>
-                  <h3 className="text-xl font-bold mb-3">{promise.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {promise.description}
-                  </p>
+          <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-3">
+            {readerUses.map((item, index) => (
+              <Card key={item.title} className="border-border/60">
+                <CardContent className="p-7">
+                  <span className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 font-bold tabular-nums text-primary">
+                    {index + 1}
+                  </span>
+                  <h3 className="mb-3 text-xl font-bold">{item.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{item.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -318,74 +199,88 @@ export default function BookPage() {
         </div>
       </section>
 
-      {/* Excerpt */}
-      <section className="py-20 bg-muted/50">
-        <div className="container mx-auto px-4 max-w-3xl">
-          <div className="text-center mb-10">
-            <Badge variant="outline" className="mb-4 text-accent-dark border-accent/30">
-              טעימה מהספר
+      <section id="book-contents" className="scroll-mt-24 bg-muted/40 py-20" aria-labelledby="contents-heading">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <Badge variant="outline" className="mb-4 border-accent/40 text-accent-dark">
+              תוכן העניינים
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold">
-              מתוך <span className="text-primary">ההקדמה</span>
+            <h2 id="contents-heading" className="mb-4 text-3xl font-bold text-balance md:text-4xl">
+              {PRODUCT_FACTS.book.chapters} פרקים בתוך מסלול קריאה אחד
             </h2>
+            <p className="text-muted-foreground text-pretty">
+              הרשימה מציגה את המבנה ואת מוקד כל פרק. הגישה לתוכן המלא נמסרת רק דרך ערוץ גישה מאושר.
+            </p>
           </div>
 
-          <Card className="border-border/50">
-            <CardContent className="p-8 md:p-12">
-              <div className="text-5xl text-primary/20 font-serif leading-none mb-4">&ldquo;</div>
-              <div className="space-y-4 text-muted-foreground leading-relaxed">
-                <p>
-                  אני לא פסיכולוג. לא מטפל זוגי עם תואר שלישי. לא חוקר אקדמי שפרסם מאמרים
-                  בכתבי עת. ואם אני ממש כנה - גם אני עשיתי את כל הטעויות שהספר שלי מלמד
-                  להימנע מהן.
-                </p>
-                <p>
-                  לפני שנים, ישבתי לבד בדירה שכורה בתל אביב, אחרי עוד פרידה, עוד דייט כושל,
-                  עוד תקופה של &ldquo;אולי עכשיו זה יקרה&rdquo;. הייתי בשיא הקריירה. חברים טובים,
-                  תחביבים, כושר גופני - על הנייר, הכל היה מושלם. חוץ מהדבר הזה. הזוגיות.
-                </p>
-                <p>
-                  ואז הבנתי משהו שנשמע ברור כמו אור יום: הבעיה הייתה לא מה שעשיתי -
-                  אלא מה שלא הבנתי על עצמי.
-                </p>
-              </div>
-              <div className="text-left mt-6">
-                <cite className="not-italic text-sm font-medium text-foreground">
-                  - אלעד יעקובוביץ׳, מתוך ההקדמה
-                </cite>
-              </div>
-            </CardContent>
-          </Card>
+          <ol className="mx-auto grid max-w-6xl gap-4 md:grid-cols-2">
+            {numberedChapters.map((chapter) => (
+              <li key={chapter.slug}>
+                <Card className="h-full border-border/60">
+                  <CardContent className="flex h-full items-start gap-4 p-6">
+                    <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 font-bold tabular-nums text-primary">
+                      {chapter.number}
+                    </span>
+                    <div>
+                      <h3 className="mb-1 text-lg font-bold">{chapter.title}</h3>
+                      <p className="mb-2 text-sm font-medium text-foreground/75">{chapter.subtitle}</p>
+                      <p className="text-sm leading-relaxed text-muted-foreground">{chapter.description}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 bg-primary text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+      <section className="py-20" aria-labelledby="reading-mode-heading">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto mb-12 max-w-2xl text-center">
+            <h2 id="reading-mode-heading" className="mb-4 text-3xl font-bold text-balance md:text-4xl">
+              שלוש דרכים להשתמש בספר
+            </h2>
+            <p className="text-muted-foreground">
+              אין קצב חובה. הבחירה תלויה בזמן, בשאלה ובמידת העומק שמתאימה עכשיו.
+            </p>
+          </div>
+          <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-3">
+            {readingModes.map((mode) => (
+              <Card key={mode.title} className="border-border/60">
+                <CardContent className="p-6">
+                  <h3 className="mb-2 text-xl font-bold">{mode.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{mode.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
-            הספר בדרך אליך.
-            <br />
-            <span className="text-accent-light">בינתיים - יש דרך להתחיל כבר עכשיו.</span>
+      <div className="bg-muted/30">
+        <OfferJourney current="book" compact />
+      </div>
+
+      <section className="bg-primary py-16 text-primary-foreground">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="mx-auto mb-4 max-w-2xl text-3xl font-bold text-balance md:text-4xl">
+            רוצים להכיר את הגישה לפני שבוחרים מסלול?
           </h2>
-          <p className="text-xl opacity-90 mb-10 max-w-2xl mx-auto leading-relaxed">
-            שיחת היכרות לבירור הצורך והצעד הבא, בתיאום מראש.
-            נבין ביחד איפה אתה עומד ומה הצעד הבא בשבילך.
+          <p className="mx-auto mb-8 max-w-2xl leading-relaxed text-primary-foreground/85">
+            אפשר להתחיל ממאמר או מפודקאסט. אם כבר ברור שנחוצה מסגרת שבועית, אפשר להכיר את מבנה תוכנית הדרך.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-3">
             <Link
-              href="/coaching"
-              className="inline-flex px-10 py-4 bg-white text-primary rounded-full font-semibold text-lg hover:bg-muted transition-colors shadow-lg"
+              href="/resources"
+              className="inline-flex min-h-11 items-center rounded-full bg-background px-8 py-3 font-semibold text-foreground transition-colors hover:bg-muted"
             >
-              לתיאום שיחת היכרות
+              לתוכן הפתוח
             </Link>
             <Link
               href="/programs/the-way"
-              className="inline-flex px-10 py-4 border-2 border-white/50 text-white rounded-full font-semibold text-lg hover:bg-white/10 transition-colors"
+              className="inline-flex min-h-11 items-center rounded-full border border-primary-foreground/45 px-8 py-3 font-semibold text-primary-foreground transition-colors hover:bg-primary-foreground/10"
             >
-              גלה את תוכנית הדרך
+              למבנה התוכנית
             </Link>
           </div>
         </div>

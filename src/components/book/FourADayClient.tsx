@@ -1,8 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  useBookStorageItem,
+  writeBookStorageItem,
+} from "@/components/book/book-local-storage";
 
 /* ── Types ─────────────────────────────────────────────────────────────────── */
 
@@ -15,6 +19,7 @@ interface DayEntry {
 /* ── Constants ──────────────────────────────────────────────────────────────── */
 
 const STORAGE_KEY = "omanut-four-a-day";
+const EMPTY_DRAFTS: [string, string, string, string] = ["", "", "", ""];
 
 const FIELD_PROMPTS: [string, string, string, string] = [
   "משפט חדש על עצמי:",
@@ -51,18 +56,27 @@ function getTodayDate(): string {
   return new Date().toISOString().split("T")[0];
 }
 
-function loadEntries(): DayEntry[] {
-  if (typeof window === "undefined") return [];
+function parseEntries(raw: string | null): DayEntry[] {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as DayEntry[]) : [];
+    const parsed: unknown = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(
+      (entry): entry is DayEntry =>
+        typeof entry === "object" &&
+        entry !== null &&
+        typeof entry.date === "string" &&
+        typeof entry.savedAt === "string" &&
+        Array.isArray(entry.sentences) &&
+        entry.sentences.length === 4 &&
+        entry.sentences.every((sentence: unknown) => typeof sentence === "string"),
+    );
   } catch {
     return [];
   }
 }
 
-function saveEntries(entries: DayEntry[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+function saveEntries(entries: DayEntry[]): boolean {
+  return writeBookStorageItem(STORAGE_KEY, JSON.stringify(entries));
 }
 
 function formatDate(isoDate: string): string {
@@ -175,24 +189,27 @@ function CalendarDot({ date, completed, isToday }: CalendarDotProps) {
 /* ── Main Component ──────────────────────────────────────────────────────────── */
 
 export function FourADayClient() {
-  const [entries, setEntries] = useState<DayEntry[]>([]);
-  const [todayEntry, setTodayEntry] = useState<DayEntry | null>(null);
-  const [drafts, setDrafts] = useState<[string, string, string, string]>(["", "", "", ""]);
+  const storedEntries = useBookStorageItem(STORAGE_KEY);
+  const entries = useMemo(() => parseEntries(storedEntries), [storedEntries]);
+  const [draftOverride, setDraftOverride] = useState<
+    [string, string, string, string] | null
+  >(null);
+  const [isEditing, setIsEditing] = useState(false);
   const [showInspiration, setShowInspiration] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [saved, setSaved] = useState(false);
 
   const today = getTodayDate();
-
-  useEffect(() => {
-    const all = loadEntries();
-    setEntries(all);
-    const todayData = all.find((e) => e.date === today) ?? null;
-    setTodayEntry(todayData);
-    if (todayData) {
-      setDrafts([...todayData.sentences] as [string, string, string, string]);
-    }
-  }, [today]);
+  const storedTodayEntry = entries.find((entry) => entry.date === today) ?? null;
+  const todayEntry = isEditing ? null : storedTodayEntry;
+  const drafts = useMemo(
+    () =>
+      draftOverride ??
+      (storedTodayEntry
+        ? ([...storedTodayEntry.sentences] as [string, string, string, string])
+        : EMPTY_DRAFTS),
+    [draftOverride, storedTodayEntry],
+  );
 
   const allFilled = drafts.every((s) => s.trim().length > 0);
 
@@ -207,15 +224,15 @@ export function FourADayClient() {
     const updated = [entry, ...without].sort((a, b) =>
       b.date.localeCompare(a.date)
     );
-    saveEntries(updated);
-    setEntries(updated);
-    setTodayEntry(entry);
+    if (!saveEntries(updated)) return;
+    setDraftOverride(null);
+    setIsEditing(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   }, [drafts, allFilled, entries, today]);
 
   const handleEdit = useCallback(() => {
-    setTodayEntry(null);
+    setIsEditing(true);
   }, []);
 
   const streak = calculateStreak(entries);
@@ -374,7 +391,7 @@ export function FourADayClient() {
                   onChange={(e) => {
                     const next = [...drafts] as [string, string, string, string];
                     next[i] = e.target.value;
-                    setDrafts(next);
+                    setDraftOverride(next);
                   }}
                   placeholder={FIELD_PLACEHOLDERS[i]}
                   className="w-full px-4 py-3 rounded-xl border border-border/50 bg-background text-base focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 placeholder:text-muted-foreground/50"
@@ -404,7 +421,7 @@ export function FourADayClient() {
                       if (emptyIndex !== -1) {
                         const next = [...drafts] as [string, string, string, string];
                         next[emptyIndex] = sentence;
-                        setDrafts(next);
+                        setDraftOverride(next);
                       }
                     }}
                     className="text-right text-sm px-4 py-2.5 rounded-xl bg-muted/50 hover:bg-primary/10 hover:text-primary transition-colors border border-border/30 hover:border-primary/30"

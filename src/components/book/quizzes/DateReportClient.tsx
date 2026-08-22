@@ -1,8 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  readBookStorageItem,
+  useBookStorageItem,
+  writeBookStorageItem,
+} from "@/components/book/book-local-storage";
 import { QuizForm } from "../QuizForm";
 import { dateReportConfig } from "@/data/book/quizzes/date-report";
 import type { QuizResultRange } from "@/lib/quiz-types";
@@ -16,10 +21,10 @@ interface DateReportEntry {
   result: QuizResultRange;
 }
 
-function getDateReports(): DateReportEntry[] {
-  if (typeof window === "undefined") return [];
+function parseDateReports(raw: string | null): DateReportEntry[] {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    const parsed: unknown = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? (parsed as DateReportEntry[]) : [];
   } catch {
     return [];
   }
@@ -28,10 +33,9 @@ function getDateReports(): DateReportEntry[] {
 function saveDateReport(
   scores: Record<string, number>,
   result: QuizResultRange,
-): number {
-  if (typeof window === "undefined") return 1;
+): number | null {
   try {
-    const existing = getDateReports();
+    const existing = parseDateReports(readBookStorageItem(STORAGE_KEY));
     const reportNumber = existing.length + 1;
     const entry: DateReportEntry = {
       reportNumber,
@@ -40,23 +44,24 @@ function saveDateReport(
       result,
     };
     existing.push(entry);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
-    return reportNumber;
+    return writeBookStorageItem(STORAGE_KEY, JSON.stringify(existing))
+      ? reportNumber
+      : null;
   } catch {
-    return 1;
+    return null;
   }
 }
 
 export function DateReportClient() {
-  const [reportNumber, setReportNumber] = useState<number>(1);
+  const storedReports = useBookStorageItem(STORAGE_KEY);
+  const reports = useMemo(
+    () => parseDateReports(storedReports),
+    [storedReports],
+  );
+  const reportNumber = reports.length + 1;
   const [savedReportNumber, setSavedReportNumber] = useState<number | null>(
     null,
   );
-
-  useEffect(() => {
-    const reports = getDateReports();
-    setReportNumber(reports.length + 1);
-  }, []);
 
   const handleComplete = ({
     scores,
@@ -67,7 +72,7 @@ export function DateReportClient() {
     result: QuizResultRange;
   }) => {
     const savedNum = saveDateReport(scores, result);
-    setSavedReportNumber(savedNum);
+    if (savedNum !== null) setSavedReportNumber(savedNum);
   };
 
   return (

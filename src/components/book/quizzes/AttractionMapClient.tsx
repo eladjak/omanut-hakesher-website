@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -249,7 +250,7 @@ function AttractionMapResults({ scores }: { scores: Record<string, number> }) {
           שתף בוואטסאפ
         </Button>
         <Button variant="ghost" asChild className="rounded-full px-6">
-          <a href="/book/8">חזרה לפרק 8</a>
+          <Link href="/book/8">חזרה לפרק 8</Link>
         </Button>
       </div>
     </div>

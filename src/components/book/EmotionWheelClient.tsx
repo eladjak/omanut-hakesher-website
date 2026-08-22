@@ -1,9 +1,14 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { FUNCTIONAL_BASE_URL } from "@/lib/site-url";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  readBookStorageItem,
+  useBookStorageItem,
+  writeBookStorageItem,
+} from "@/components/book/book-local-storage";
 
 /* ── Types ─────────────────────────────────────────────────────────────────── */
 
@@ -176,20 +181,19 @@ const EMOTIONS: Emotion[] = [
 
 /* ── Helpers ─────────────────────────────────────────────────────────────────── */
 
-function loadLog(): EmotionEntry[] {
-  if (typeof window === "undefined") return [];
+function parseLog(raw: string | null): EmotionEntry[] {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as EmotionEntry[]) : [];
+    const parsed: unknown = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? (parsed as EmotionEntry[]) : [];
   } catch {
     return [];
   }
 }
 
-function saveEntry(entry: EmotionEntry) {
-  const log = loadLog();
+function saveEntry(entry: EmotionEntry): boolean {
+  const log = parseLog(readBookStorageItem(STORAGE_KEY));
   const updated = [entry, ...log].slice(0, 20); // keep last 20 entries
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+  return writeBookStorageItem(STORAGE_KEY, JSON.stringify(updated));
 }
 
 function formatTimestamp(iso: string): string {
@@ -249,12 +253,9 @@ export function EmotionWheelClient() {
   );
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
   const [selectedSub, setSelectedSub] = useState<SubEmotion | null>(null);
-  const [history, setHistory] = useState<EmotionEntry[]>([]);
+  const storedHistory = useBookStorageItem(STORAGE_KEY);
+  const history = useMemo(() => parseLog(storedHistory), [storedHistory]);
   const [showHistory, setShowHistory] = useState(false);
-
-  useEffect(() => {
-    setHistory(loadLog());
-  }, []);
 
   const handleEmotionSelect = useCallback((emotion: Emotion) => {
     setSelectedEmotion(emotion);
@@ -273,8 +274,7 @@ export function EmotionWheelClient() {
         level: sub.level,
         timestamp: new Date().toISOString(),
       };
-      saveEntry(entry);
-      setHistory(loadLog());
+      if (!saveEntry(entry)) return;
       setPhase("result");
     },
     [selectedEmotion]
@@ -528,7 +528,7 @@ export function EmotionWheelClient() {
             onClick={handleReset}
             className="px-6 py-2.5 bg-primary text-white rounded-full font-medium text-sm hover:bg-primary/90 transition-colors shadow-md shadow-primary/20"
           >
-            צ'ק-אין חדש
+            צ&apos;ק-אין חדש
           </button>
           <button
             onClick={() => setShowHistory(true)}
@@ -552,7 +552,7 @@ export function EmotionWheelClient() {
         {showHistory && history.length > 0 && (
           <Card className="border-border/30">
             <CardContent className="p-5 space-y-3">
-              <h3 className="font-semibold text-sm">היסטוריית הצ'ק-אינים שלך</h3>
+              <h3 className="font-semibold text-sm">היסטוריית הצ&apos;ק-אינים שלך</h3>
               <div className="space-y-2">
                 {history.slice(0, 6).map((entry, i) => (
                   <div

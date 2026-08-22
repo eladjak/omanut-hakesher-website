@@ -1,8 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  useBookStorageItem,
+  writeBookStorageItem,
+} from "@/components/book/book-local-storage";
 
 /* ── Types ─────────────────────────────────────────────────────────────────── */
 
@@ -59,18 +63,17 @@ function getTodayDate(): string {
   return new Date().toISOString().split("T")[0];
 }
 
-function loadEntries(): CourageEntry[] {
-  if (typeof window === "undefined") return [];
+function parseEntries(raw: string | null): CourageEntry[] {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as CourageEntry[]) : [];
+    const parsed: unknown = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? (parsed as CourageEntry[]) : [];
   } catch {
     return [];
   }
 }
 
-function saveEntries(entries: CourageEntry[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+function saveEntries(entries: CourageEntry[]): boolean {
+  return writeBookStorageItem(STORAGE_KEY, JSON.stringify(entries));
 }
 
 function formatDate(isoDate: string): string {
@@ -203,16 +206,13 @@ function LevelButton({ level, selected, onClick }: LevelButtonProps) {
 
 export function CourageTrackerClient() {
   const [phase, setPhase] = useState<"log" | "celebrate" | "history">("log");
-  const [entries, setEntries] = useState<CourageEntry[]>([]);
+  const storedEntries = useBookStorageItem(STORAGE_KEY);
+  const entries = useMemo(() => parseEntries(storedEntries), [storedEntries]);
   const [text, setText] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<CourageCategory | null>(null);
   const [selectedLevel, setSelectedLevel] = useState<CourageLevel | null>(null);
   const [lastEntry, setLastEntry] = useState<CourageEntry | null>(null);
   const [quote] = useState(getRandomQuote);
-
-  useEffect(() => {
-    setEntries(loadEntries());
-  }, []);
 
   const canSubmit = text.trim().length > 0 && selectedCategory !== null && selectedLevel !== null;
 
@@ -227,8 +227,7 @@ export function CourageTrackerClient() {
       level: selectedLevel,
     };
     const updated = [entry, ...entries];
-    saveEntries(updated);
-    setEntries(updated);
+    if (!saveEntries(updated)) return;
     setLastEntry(entry);
     setPhase("celebrate");
   }, [text, selectedCategory, selectedLevel, entries]);

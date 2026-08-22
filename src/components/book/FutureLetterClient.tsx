@@ -1,9 +1,14 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { FUNCTIONAL_BASE_URL } from "@/lib/site-url";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  removeBookStorageItem,
+  useBookStorageItem,
+  writeBookStorageItem,
+} from "@/components/book/book-local-storage";
 
 /* ── Types ─────────────────────────────────────────────────────────────────── */
 interface LetterData {
@@ -24,26 +29,33 @@ const PROMPTS = [
 ] as const;
 
 /* ── Helpers ───────────────────────────────────────────────────────────────── */
-function loadLetter(): LetterData | null {
-  if (typeof window === "undefined") return null;
+function parseLetter(raw: string | null): LetterData | null {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as LetterData) : null;
+    const parsed: unknown = raw ? JSON.parse(raw) : null;
+    if (
+      typeof parsed !== "object" ||
+      parsed === null ||
+      !("date" in parsed) ||
+      !("answers" in parsed) ||
+      !("name" in parsed) ||
+      !("savedAt" in parsed) ||
+      typeof parsed.date !== "string" ||
+      !Array.isArray(parsed.answers) ||
+      parsed.answers.length !== PROMPTS.length ||
+      !parsed.answers.every((answer: unknown) => typeof answer === "string") ||
+      typeof parsed.name !== "string" ||
+      typeof parsed.savedAt !== "string"
+    ) {
+      return null;
+    }
+    return parsed as LetterData;
   } catch {
     return null;
   }
 }
 
-function saveLetter(data: LetterData) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
-
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("he-IL", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+function saveLetter(data: LetterData): boolean {
+  return writeBookStorageItem(STORAGE_KEY, JSON.stringify(data));
 }
 
 function getOneYearFromNow(): Date {
@@ -93,21 +105,16 @@ ${name}`;
 
 /* ── Component ─────────────────────────────────────────────────────────────── */
 export function FutureLetterClient() {
-  const [phase, setPhase] = useState<"intro" | "writing" | "done">("intro");
+  const storedLetter = useBookStorageItem(STORAGE_KEY);
+  const savedLetter = useMemo(() => parseLetter(storedLetter), [storedLetter]);
+  const [phaseOverride, setPhase] = useState<
+    "intro" | "writing" | "done" | null
+  >(null);
+  const phase = phaseOverride ?? (savedLetter ? "done" : "intro");
   const [answers, setAnswers] = useState<string[]>(Array(5).fill(""));
   const [name, setName] = useState("");
   const [currentStep, setCurrentStep] = useState(0);
-  const [savedLetter, setSavedLetter] = useState<LetterData | null>(null);
   const [calendarOpened, setCalendarOpened] = useState(false);
-
-  // Load existing letter on mount
-  useEffect(() => {
-    const existing = loadLetter();
-    if (existing) {
-      setSavedLetter(existing);
-      setPhase("done");
-    }
-  }, []);
 
   const handleAnswer = useCallback(
     (idx: number, value: string) => {
@@ -130,14 +137,12 @@ export function FutureLetterClient() {
       name: name || "אני",
       savedAt: new Date().toISOString(),
     };
-    saveLetter(data);
-    setSavedLetter(data);
+    if (!saveLetter(data)) return;
     setPhase("done");
   }, [answers, name]);
 
   const handleReset = useCallback(() => {
-    localStorage.removeItem(STORAGE_KEY);
-    setSavedLetter(null);
+    removeBookStorageItem(STORAGE_KEY);
     setAnswers(Array(5).fill(""));
     setName("");
     setCurrentStep(0);

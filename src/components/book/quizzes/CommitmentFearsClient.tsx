@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -171,7 +172,7 @@ function CommitmentFearsResults({ scores }: CommitmentFearsResult) {
           שתף בוואטסאפ
         </Button>
         <Button variant="ghost" asChild className="rounded-full px-6">
-          <a href="/book/13">חזרה לפרק 13</a>
+          <Link href="/book/13">חזרה לפרק 13</Link>
         </Button>
       </div>
     </div>

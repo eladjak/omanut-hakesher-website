@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import Link from "next/link";
 import { FUNCTIONAL_BASE_URL } from "@/lib/site-url";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -245,12 +246,12 @@ function UserManualResult({
       </div>
 
       <div className="text-center">
-        <a
+        <Link
           href="/book/5"
           className="text-sm text-primary hover:underline"
         >
           ← חזרה לפרק 5
-        </a>
+        </Link>
       </div>
     </div>
   );

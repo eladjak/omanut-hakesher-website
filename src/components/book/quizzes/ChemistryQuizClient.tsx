@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { FUNCTIONAL_BASE_URL } from "@/lib/site-url";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -208,9 +209,9 @@ function ChemistryResult({ scores, result, onRetry }: ChemistryResultProps) {
       </div>
 
       <div className="text-center">
-        <a href="/book/11" className="text-sm text-primary hover:underline">
+        <Link href="/book/11" className="text-sm text-primary hover:underline">
           ← חזרה לפרק 11
-        </a>
+        </Link>
       </div>
     </div>
   );

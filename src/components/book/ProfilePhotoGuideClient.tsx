@@ -1,8 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  useBookStorageItem,
+  writeBookStorageItem,
+} from "@/components/book/book-local-storage";
 
 /* ── Types ─────────────────────────────────────────────────────────────────── */
 
@@ -108,13 +112,21 @@ const CATEGORIES: PhotoCategory[] = [
   },
 ];
 
-function loadState(): string[] {
-  if (typeof window === "undefined") return [];
+function parseState(raw: string | null): string[] {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
-    const parsed = JSON.parse(raw) as SavedState;
-    return parsed.checked ?? [];
+    const parsed: unknown = JSON.parse(raw);
+    if (
+      typeof parsed !== "object" ||
+      parsed === null ||
+      !("checked" in parsed) ||
+      !Array.isArray(parsed.checked)
+    ) {
+      return [];
+    }
+    return parsed.checked.filter(
+      (itemId: unknown): itemId is string => typeof itemId === "string",
+    );
   } catch {
     return [];
   }
@@ -122,7 +134,7 @@ function loadState(): string[] {
 
 function saveState(checked: string[]) {
   const state: SavedState = { checked, savedAt: new Date().toISOString() };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  writeBookStorageItem(STORAGE_KEY, JSON.stringify(state));
 }
 
 function calcScore(checked: string[]): number {
@@ -248,22 +260,17 @@ function CategoryCard({ category, checked, onToggle }: CategoryCardProps) {
 /* ── Main Component ──────────────────────────────────────────────────────────── */
 
 export function ProfilePhotoGuideClient() {
-  const [checked, setChecked] = useState<string[]>([]);
-
-  useEffect(() => {
-    setChecked(loadState());
-  }, []);
+  const storedState = useBookStorageItem(STORAGE_KEY);
+  const checked = useMemo(() => parseState(storedState), [storedState]);
 
   const handleToggle = useCallback((id: string) => {
-    setChecked((prev) => {
-      const next = prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id];
-      saveState(next);
-      return next;
-    });
-  }, []);
+    const next = checked.includes(id)
+      ? checked.filter((itemId) => itemId !== id)
+      : [...checked, id];
+    saveState(next);
+  }, [checked]);
 
   const handleReset = useCallback(() => {
-    setChecked([]);
     saveState([]);
   }, []);
 
