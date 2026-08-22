@@ -1,46 +1,52 @@
 # Omanut HaKesher Website
 
-A professional website for Omanut HaKesher (The Art of Connection) -- a couples communication and relationship coaching service. Features a modern Hebrew RTL design with Sanity CMS for content management.
+The Hebrew, RTL-first public website for the Omanut HaKesher ecosystem: free resources, the book, the 12-week program, and individual guidance.
 
-## Features
+## Current product surface
 
-- Hebrew RTL website for relationship coaching services
-- Sanity CMS integration for dynamic content management
-- Service pages, testimonials, and workshop listings
-- Smooth animations with Framer Motion
-- Accessible UI with Radix components
-- Mobile-first responsive design
+- Public learning and decision-support pages for visitors who want to explore before choosing an offer.
+- Resource and lead-guide delivery with explicit separation between receiving a guide and joining a marketing list.
+- Marketing pages for the book, program, coaching, events, podcast, and related resources.
+- Mobile-first Hebrew UI built with reusable accessible components.
+- Fail-closed publication controls for testimonials, protected book content, checkout, and provider-dependent flows.
 
-## Tech Stack
+The local source contains routes and contracts that are intentionally unavailable until their entitlement, payment, proof, or provider requirements are implemented and approved. A successful local build is not evidence of a production deployment.
+
+## Technology
 
 | Technology | Purpose |
-|-----------|---------|
-| [Next.js 16](https://nextjs.org/) | React framework |
-| [React 19](https://react.dev/) | UI library |
-| [TypeScript](https://www.typescriptlang.org/) | Type safety |
-| [Sanity](https://www.sanity.io/) | Headless CMS |
-| [Tailwind CSS 4](https://tailwindcss.com/) | Styling |
-| [Framer Motion](https://www.framer.com/motion/) | Animations |
+|---|---|
+| [Next.js 16](https://nextjs.org/) | App Router and server rendering |
+| [React 19](https://react.dev/) | UI runtime |
+| [TypeScript](https://www.typescriptlang.org/) | Static type checking |
+| [Tailwind CSS 4](https://tailwindcss.com/) | Styling and responsive layout |
+| [Framer Motion](https://www.framer.com/motion/) | Deliberate interface motion |
 | [Radix UI](https://www.radix-ui.com/) | Accessible UI primitives |
-| [Lucide React](https://lucide.dev/) | Icons |
+| [Lucide React](https://lucide.dev/) | Interface icons |
 
-## Getting Started
+## Local development
+
+Prerequisites: a supported Node.js release and npm.
 
 ```bash
-git clone https://github.com/eladjak/omanut-hakesher-website.git
-cd omanut-hakesher-website
-bun install
-bun dev
+npm install
+npm run dev
 ```
 
-Open [http://localhost:3333](http://localhost:3333) in your browser.
+The development server listens on [http://localhost:3333](http://localhost:3333).
+
+## Local quality gates
+
+```bash
+npm run lint
+npx tsc --noEmit
+npm run build
+```
+
+Provider, payment, DNS, email, authentication, and production-data checks require isolated staging or sandbox credentials. Do not infer production readiness from the local commands above.
 
 ## License
 
-MIT
-
----
-
-⭐ If you find this useful, please star the repo!
+This project and its content are not distributed under an open-source license. All rights are reserved unless explicit written permission is granted.
 
 *[README בעברית](README.he.md)*

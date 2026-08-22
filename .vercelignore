@@ -12,3 +12,7 @@ nul
 .claude/research/
 .claude/scraped-content/
 .claude/recovered-content/
+
+# Historical customer proof media is retained locally for provenance review,
+# but must never be uploaded as part of a Vercel build or deployment bundle.
+data/testimonial-proof-archive/
