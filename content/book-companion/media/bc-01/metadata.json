@@ -1,0 +1,16 @@
+{
+  "id": "BC-01",
+  "register": "PUBLIC",
+  "status": "draft-not-approved",
+  "title": "ברוכים הבאים לאומנות הקשר",
+  "summary": "אלעד מקבל את פני הקוראים ומציע להשתמש בספר ובליווי בקצב ובדרך שמתאימים להם.",
+  "sourceReferences": ["book/chapters/introduction.md", "website/data/book-companion-links.json#BC-01"],
+  "sourceHash": "PLACEHOLDER_OWNER_APPROVAL_REQUIRED",
+  "spokenLanguage": "he-IL",
+  "targetDurationSeconds": { "minimum": 90, "maximum": 150 },
+  "shortCutDurationSeconds": { "minimum": 30, "maximum": 45 },
+  "thumbnailAltDraft": "אלעד יושב מול המצלמה ומקבל את פני קוראי הספר",
+  "mediaFile": null,
+  "publicUrl": null,
+  "ownerApproval": false
+}

@@ -1,0 +1,16 @@
+{
+  "id": "BC-08",
+  "register": "PUBLIC",
+  "status": "draft-not-approved",
+  "title": "הספר נגמר. אפשר להיפרד כאן או להמשיך",
+  "summary": "אלעד מסכם את הקריאה ומציג קהילה, קורס וליווי כאפשרויות שאפשר לבדוק ללא חובה או סדר קבוע.",
+  "sourceReferences": ["book/chapters/chapter-closing.md", "website/data/book-companion-links.json#BC-08"],
+  "sourceHash": "PLACEHOLDER_OWNER_APPROVAL_REQUIRED",
+  "spokenLanguage": "he-IL",
+  "targetDurationSeconds": { "minimum": 90, "maximum": 150 },
+  "shortCutDurationSeconds": { "minimum": 30, "maximum": 45 },
+  "thumbnailAltDraft": "אלעד יושב מול המצלמה ומסכם את הקריאה בספר",
+  "mediaFile": null,
+  "publicUrl": null,
+  "ownerApproval": false
+}
