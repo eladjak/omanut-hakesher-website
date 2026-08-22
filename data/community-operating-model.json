@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "productDecision": "one-community-across-ecosystem",
+  "launchState": "contained-until-operations-ready",
+  "serves": ["book-readers", "course-learners", "guidance-participants"],
+  "spaceModel": {
+    "sharedTownSquare": true,
+    "entitlementBasedRooms": true,
+    "privateMessagesAtMvp": false,
+    "publicPosting": false,
+    "guidanceMaterialSharedByDefault": false
+  },
+  "roles": [
+    { "id": "accountable-owner", "humanRequired": true, "accountabilities": ["mission", "budget", "final-policy", "high-risk-escalation"] },
+    { "id": "community-lead", "humanRequired": true, "accountabilities": ["weekly-programming", "moderator-support", "member-feedback"] },
+    { "id": "moderator", "humanRequired": true, "accountabilities": ["queue", "boundaries", "reports", "member-communication"] },
+    { "id": "safety-responder", "humanRequired": true, "accountabilities": ["urgent-triage", "safety-escalation", "incident-record"] },
+    { "id": "technical-admin", "humanRequired": true, "accountabilities": ["access", "audit-log", "export", "deletion"] },
+    { "id": "model-assistant", "humanRequired": false, "accountabilities": ["drafting", "summarization", "duplicate-detection", "queue-prioritization"] }
+  ],
+  "aiBoundary": {
+    "mayDraft": true,
+    "mayPrioritizeForHumanReview": true,
+    "mayIssueFinalSanction": false,
+    "mayHandleAppealAlone": false,
+    "mayPromiseSafetyResponse": false,
+    "humanReviewsSensitiveCases": true
+  },
+  "cadence": {
+    "moderationQueueChecksPerCoveredDay": 2,
+    "weeklyAnchor": "תרגול אחד, שאלה אחת ושיחת סיכום אחת",
+    "monthlyMemberListening": true,
+    "monthlyModeratorReview": true,
+    "quarterlyPolicyReview": true
+  },
+  "responseTargets": {
+    "urgentSafetyCoveredHours": 2,
+    "harassmentCoveredHours": 12,
+    "ordinaryBusinessHours": 48,
+    "appealBusinessDays": 5,
+    "coverageSchedulePublished": false,
+    "roundTheClockClaim": false
+  },
+  "privacy": {
+    "minimumAge": 18,
+    "directMessagesEnabled": false,
+    "profileDiscoveryOutsideCommunity": false,
+    "screenshotsWithoutConsent": false,
+    "sensitiveIntakeRequired": false,
+    "deletedContentOperationalDays": 30,
+    "backupDeletionMaximumDays": 90,
+    "moderationEvidenceMaximumDays": 180,
+    "automatedTrainingOnMemberContent": false,
+    "memberExportAndDeletionRequired": true
+  },
+  "escalation": {
+    "peerSupportIsTreatment": false,
+    "emergencyService": false,
+    "reportPathRequired": true,
+    "blockPathRequired": true,
+    "appealPathRequired": true,
+    "immediateDangerRedirectRequired": true,
+    "credibleThreatEscalatesToHuman": true
+  },
+  "launchGates": {
+    "namedStaffingAndBackup": false,
+    "publishedCoverageHours": false,
+    "rulesAndConsentAccepted": false,
+    "reportBlockAppealTested": false,
+    "exportDeletionTested": false,
+    "incidentTabletopCompleted": false,
+    "entitlementIsolationTested": false,
+    "privacyNoticeApproved": false
+  }
+}

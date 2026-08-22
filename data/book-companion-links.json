@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "productDecision": "full-book-companion-with-qr",
+  "canonicalSurface": "brand-website",
+  "launchState": "design-approved-build-pending",
+  "printPolicy": {
+    "minimumQrSizeMm": 30,
+    "humanReadableAddressRequired": true,
+    "editableRedirectRequired": true,
+    "fallbackRequired": true,
+    "healthCheckRequired": true,
+    "ownerApprovalRequired": true
+  },
+  "links": [
+    {
+      "id": "BC-01",
+      "bookPlacement": "opening",
+      "purpose": "ברוכים הבאים והיכרות אישית עם אלעד",
+      "experience": "video",
+      "access": "public",
+      "lifecycle": "planned",
+      "shortPath": null,
+      "destinationPath": null,
+      "fallbackPath": null,
+      "media": { "source": "owner-recording", "captions": "required", "transcript": "required", "audioOnlyAlternative": "required" },
+      "health": "not-tested",
+      "printApproval": "blocked"
+    },
+    {
+      "id": "BC-02",
+      "bookPlacement": "chapter-1",
+      "purpose": "תרגיל עובדה, פרשנות וחלופה",
+      "experience": "interactive-local-first",
+      "access": "book-reader",
+      "lifecycle": "planned",
+      "shortPath": null,
+      "destinationPath": null,
+      "fallbackPath": null,
+      "health": "not-tested",
+      "printApproval": "blocked"
+    },
+    {
+      "id": "BC-03",
+      "bookPlacement": "chapter-6",
+      "purpose": "ניסוח שיחה בגישה אנושית ובהירה",
+      "experience": "interactive-local-first",
+      "access": "book-reader",
+      "lifecycle": "planned",
+      "shortPath": null,
+      "destinationPath": null,
+      "fallbackPath": null,
+      "health": "not-tested",
+      "printApproval": "blocked"
+    },
+    {
+      "id": "BC-04",
+      "bookPlacement": "chapter-8",
+      "purpose": "תרגול אומץ מדורג ובחירה הפיכה",
+      "experience": "guide",
+      "access": "public",
+      "lifecycle": "planned",
+      "shortPath": null,
+      "destinationPath": null,
+      "fallbackPath": null,
+      "health": "not-tested",
+      "printApproval": "blocked"
+    },
+    {
+      "id": "BC-05",
+      "bookPlacement": "chapter-9",
+      "purpose": "מעבדת פרופיל ושיחה עם שמירה על פרטיות",
+      "experience": "interactive-local-first",
+      "access": "book-reader",
+      "lifecycle": "planned",
+      "shortPath": null,
+      "destinationPath": null,
+      "fallbackPath": null,
+      "health": "not-tested",
+      "printApproval": "blocked"
+    },
+    {
+      "id": "BC-06",
+      "bookPlacement": "chapter-10",
+      "purpose": "רפלקציה קצרה אחרי דייט",
+      "experience": "interactive-local-first",
+      "access": "book-reader",
+      "lifecycle": "planned",
+      "shortPath": null,
+      "destinationPath": null,
+      "fallbackPath": null,
+      "health": "not-tested",
+      "printApproval": "blocked"
+    },
+    {
+      "id": "BC-07",
+      "bookPlacement": "chapter-11",
+      "purpose": "מפת חיבור וכימיה ללא ציון",
+      "experience": "interactive-local-first",
+      "access": "book-reader",
+      "lifecycle": "planned",
+      "shortPath": null,
+      "destinationPath": null,
+      "fallbackPath": null,
+      "health": "not-tested",
+      "printApproval": "blocked"
+    },
+    {
+      "id": "BC-08",
+      "bookPlacement": "closing",
+      "purpose": "סיכום אישי, הצטרפות לקהילה והמשך לקורס או לליווי",
+      "experience": "journey-hub",
+      "access": "public",
+      "lifecycle": "planned",
+      "shortPath": null,
+      "destinationPath": null,
+      "fallbackPath": null,
+      "health": "not-tested",
+      "printApproval": "blocked"
+    }
+  ]
+}
