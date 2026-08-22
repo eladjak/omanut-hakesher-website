@@ -5,6 +5,8 @@ import { OfferJourney } from "@/components/OfferJourney";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { blogPosts } from "@/lib/blog-posts";
+import { getCompanionProduct } from "@/lib/companion-products";
+import type { CompanionProduct } from "@/lib/companion-product-registry-validator";
 
 export const metadata: Metadata = {
   title: "תוכן פתוח ומשאבים | אומנות הקשר",
@@ -45,8 +47,19 @@ const topicPaths = [
   },
 ] as const;
 
+function publicCompanion(id: string): CompanionProduct & { routes: [string, ...string[]] } {
+  const item = getCompanionProduct(id);
+  if (!item || item.status !== "available" || item.access !== "public" || !item.routes?.[0]) {
+    throw new Error(`Public companion ${id} is not available`);
+  }
+  return item as CompanionProduct & { routes: [string, ...string[]] };
+}
+
 export default function ResourcesPage() {
   const featuredPosts = blogPosts.slice(0, 3);
+  const openGuides = publicCompanion("CP-02");
+  const communityGuide = publicCompanion("CP-22");
+  const podcast = publicCompanion("CP-24");
 
   return (
     <>
@@ -97,7 +110,7 @@ export default function ResourcesPage() {
             </p>
           </div>
 
-          <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2 xl:grid-cols-4">
             <Card className="border-border/60">
               <CardContent className="flex h-full flex-col p-7">
                 <span className="mb-3 text-sm font-semibold text-primary">קריאה</span>
@@ -121,16 +134,15 @@ export default function ResourcesPage() {
             <Card className="border-border/60">
               <CardContent className="flex h-full flex-col p-7">
                 <span className="mb-3 text-sm font-semibold text-primary">האזנה</span>
-                <h3 className="mb-3 text-2xl font-bold">הפודקאסט ״מוצאים אהבה״</h3>
+                <h3 className="mb-3 text-2xl font-bold">{podcast.title}</h3>
                 <p className="mb-6 leading-relaxed text-muted-foreground">
-                  שיחות על היכרות, תקשורת וקשר בפורמט שאפשר לקחת לדרך. בעמוד
-                  הפודקאסט אפשר לבחור את פלטפורמת ההאזנה המתאימה.
+                  {podcast.summary}
                 </p>
                 <p className="mb-6 text-sm text-muted-foreground">
                   מתאים כשרוצים להכיר רעיון דרך שיחה ולא דרך טקסט ארוך.
                 </p>
                 <Link
-                  href="/podcast"
+                  href={podcast.routes[0]}
                   className="mt-auto inline-flex min-h-11 items-center justify-center rounded-full border border-border px-6 py-3 font-semibold transition-colors hover:bg-muted"
                 >
                   לעמוד הפודקאסט
@@ -141,19 +153,37 @@ export default function ResourcesPage() {
             <Card className="border-border/60">
               <CardContent className="flex h-full flex-col p-7">
                 <span className="mb-3 text-sm font-semibold text-primary">תרגול</span>
-                <h3 className="mb-3 text-2xl font-bold">מדריכים פתוחים</h3>
+                <h3 className="mb-3 text-2xl font-bold">{openGuides.title}</h3>
                 <p className="mb-6 leading-relaxed text-muted-foreground">
-                  שלושה מדריכי PDF מלאים סביב אומץ מדורג, חזון אישי ושיחה טובה
-                  בדייט. אפשר לפתוח אותם ישירות, בלי טופס ובלי הרשמה.
+                  {openGuides.summary} אפשר לפתוח אותם ישירות, בלי טופס ובלי הרשמה.
                 </p>
                 <p className="mb-6 text-sm text-muted-foreground">
                   מתאים כשרוצים לצאת מהעמוד עם תרגיל כתוב שאפשר לנסות בקצב שלך.
                 </p>
                 <Link
-                  href="/lead"
+                  href={openGuides.routes[0]}
                   className="mt-auto inline-flex min-h-11 items-center justify-center rounded-full border border-primary/30 px-6 py-3 font-semibold text-primary transition-colors hover:bg-primary/5"
                 >
                   למדריכים הפתוחים
+                </Link>
+              </CardContent>
+            </Card>
+
+            <Card className="border-border/60">
+              <CardContent className="flex h-full flex-col p-7">
+                <span className="mb-3 text-sm font-semibold text-primary">בדיקת התאמה</span>
+                <h3 className="mb-3 text-2xl font-bold">{communityGuide.title}</h3>
+                <p className="mb-6 leading-relaxed text-muted-foreground">
+                  {communityGuide.summary}
+                </p>
+                <p className="mb-6 text-sm text-muted-foreground">
+                  מתאים כשרוצים לברר מראש מה חשוב לשאול על פרטיות, גבולות וניהול אנושי.
+                </p>
+                <Link
+                  href={communityGuide.routes[0]}
+                  className="mt-auto inline-flex min-h-11 items-center justify-center rounded-full border border-border px-6 py-3 font-semibold transition-colors hover:bg-muted"
+                >
+                  למדריך בדיקת הקהילה
                 </Link>
               </CardContent>
             </Card>

@@ -5,6 +5,10 @@ import { validateCompanionProductRegistry } from "../src/lib/companion-product-r
 const registry = JSON.parse(
   await readFile(new URL("../data/companion-products.json", import.meta.url), "utf8"),
 );
+const resourcesPage = await readFile(
+  new URL("../src/app/resources/page.tsx", import.meta.url),
+  "utf8",
+);
 
 function cloneRegistry() {
   return structuredClone(registry);
@@ -15,6 +19,17 @@ function codes(input) {
 }
 
 assert.deepEqual(validateCompanionProductRegistry(registry), []);
+
+for (const id of ["CP-02", "CP-22", "CP-24"]) {
+  const item = registry.find((entry) => entry.id === id);
+  assert.equal(item?.status, "available", `${id} must be available`);
+  assert.equal(item?.access, "public", `${id} must be public`);
+  assert.equal(item?.entitlement, "none", `${id} must not require entitlement`);
+  assert.ok(item?.routes?.length > 0, `${id} must have a public route`);
+  assert.ok(resourcesPage.includes(`publicCompanion("${id}")`), `${id} must be consumed by /resources`);
+}
+assert.ok(!resourcesPage.includes("listCompanionProducts("), "resources must not render the full inventory");
+assert.ok(!resourcesPage.includes("COMPANION_PRODUCTS.map"), "resources must not map protected inventory");
 
 const negativeControls = [
   {
