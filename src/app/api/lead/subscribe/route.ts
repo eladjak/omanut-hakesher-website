@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { subscribeToList, isConfigured as isRavMesserConfigured } from '@/lib/ravmesser'
 import { getLeadMagnet } from '@/lib/lead-magnets'
+import { getApprovedMarketingList } from '@/lib/marketing-list-policy'
 import { absoluteFunctionalUrl } from '@/lib/site-url'
 
 export const runtime = 'nodejs'
@@ -160,33 +161,85 @@ export async function POST(request: Request) {
     if (!delivered) {
       return NextResponse.json({ error: 'asset-delivery-failed' }, { status: 502 })
     }
-    return NextResponse.json({ ok: true, mode: 'asset-only', alreadySubscribed: false })
+    return NextResponse.json({
+      ok: true,
+      mode: 'asset-only',
+      alreadySubscribed: false,
+      marketingSubscribed: false,
+    })
   }
 
-  // If Rav-Messer is not configured (dev / preview), don't fail the user —
-  // log and still send the welcome email so the asset is delivered.
-  if (!isRavMesserConfigured()) {
-    console.warn('[lead/subscribe] Rav-Messer not configured, skipping list subscription', {
-      slug,
-    })
+  const marketingList = getApprovedMarketingList()
+  if (marketingList.status !== 'approved') {
+    if (isNewsletter) {
+      return NextResponse.json(
+        {
+          error: 'marketing-list-not-approved',
+          reason: marketingList.status,
+          message: 'ההרשמה לעדכונים עדיין אינה זמינה. כתובת האימייל לא נוספה לרשימה.',
+        },
+        { status: 503 },
+      )
+    }
+
     const delivered = await sendWelcomeEmail({
       email,
       firstName,
       subject: magnet.welcomeSubject,
       assetUrl: magnet.assetUrl,
-      variant: isNewsletter ? 'newsletter' : 'guide',
+      variant: 'guide',
+    })
+    if (!delivered) {
+      return NextResponse.json({ error: 'asset-delivery-failed' }, { status: 502 })
+    }
+    return NextResponse.json({
+      ok: true,
+      mode: 'asset-only',
+      alreadySubscribed: false,
+      marketingSubscribed: false,
+      marketingReason: marketingList.status,
+    })
+  }
+
+  // Guide delivery can still succeed when the marketing provider is absent.
+  // A newsletter-only request cannot: reporting success would be misleading.
+  if (!isRavMesserConfigured()) {
+    console.warn('[lead/subscribe] Rav-Messer not configured, skipping list subscription', {
+      slug,
+    })
+    if (isNewsletter) {
+      return NextResponse.json(
+        {
+          error: 'marketing-provider-not-configured',
+          message: 'ההרשמה לעדכונים עדיין אינה זמינה. כתובת האימייל לא נוספה לרשימה.',
+        },
+        { status: 503 },
+      )
+    }
+    const delivered = await sendWelcomeEmail({
+      email,
+      firstName,
+      subject: magnet.welcomeSubject,
+      assetUrl: magnet.assetUrl,
+      variant: 'guide',
     })
     if (!delivered) {
       return NextResponse.json({ error: 'email-delivery-not-configured' }, { status: 503 })
     }
-    return NextResponse.json({ ok: true, mode: 'email-only', alreadySubscribed: false })
+    return NextResponse.json({
+      ok: true,
+      mode: 'asset-only',
+      alreadySubscribed: false,
+      marketingSubscribed: false,
+      marketingReason: 'provider-not-configured',
+    })
   }
 
   const result = await subscribeToList({
     email,
     firstName,
     lastName: lastName || undefined,
-    listId: magnet.listId,
+    listId: marketingList.listId,
     tags: magnet.tags,
     customFields: {
       lead_magnet: magnet.slug,
@@ -198,21 +251,33 @@ export async function POST(request: Request) {
   })
 
   if (!result.ok) {
-    // Subscriber path failed — still try to deliver asset by email so the user
-    // gets value. Surface the failure mode to the dashboard via console.
+    // Subscriber path failed. A requested guide still gets delivered; a pure
+    // newsletter request must not pretend that a subscription was created.
     console.error('[lead/subscribe] Rav-Messer subscribe failed', { slug, reason: result.reason })
+    if (isNewsletter) {
+      return NextResponse.json(
+        { error: 'marketing-subscription-failed' },
+        { status: 502 },
+      )
+    }
     const delivered = await sendWelcomeEmail({
       email,
       firstName,
       subject: magnet.welcomeSubject,
       assetUrl: magnet.assetUrl,
-      variant: isNewsletter ? 'newsletter' : 'guide',
+      variant: 'guide',
     })
     if (!delivered) {
       return NextResponse.json({ error: 'asset-delivery-failed' }, { status: 502 })
     }
     return NextResponse.json(
-      { ok: true, mode: 'email-fallback', alreadySubscribed: false, ravMesserReason: result.reason },
+      {
+        ok: true,
+        mode: 'asset-only',
+        alreadySubscribed: false,
+        marketingSubscribed: false,
+        marketingReason: 'provider-error',
+      },
       { status: 200 },
     )
   }
@@ -238,5 +303,6 @@ export async function POST(request: Request) {
     ok: true,
     mode: 'subscribed',
     alreadySubscribed: result.alreadyExists,
+    marketingSubscribed: true,
   })
 }

@@ -17,11 +17,11 @@
  */
 import crypto from 'node:crypto';
 import { createSumitClient } from '@/lib/sumit-client-inline';
+import { verifySumitWebhookHmac } from '@/lib/sumit-webhook-contract';
 
 export interface SumitConfig {
   companyId: string;
   apiKey: string;
-  webhookSecret?: string;
 }
 
 function readConfig(): SumitConfig | null {
@@ -31,7 +31,6 @@ function readConfig(): SumitConfig | null {
   return {
     companyId,
     apiKey,
-    webhookSecret: process.env.SUMIT_WEBHOOK_SECRET,
   };
 }
 
@@ -39,18 +38,36 @@ export function isConfigured(): boolean {
   return readConfig() !== null;
 }
 
+function readWebhookSecret(): string | null {
+  const secret = process.env.SUMIT_WEBHOOK_SECRET;
+  return secret && secret.trim() ? secret : null;
+}
+
+export function isWebhookConfigured(): boolean {
+  return readWebhookSecret() !== null;
+}
+
 // Deliberately compile-time false until the repository contains a durable
 // pending-order/idempotency/amount-validation/fulfillment implementation.
 // This prevents a single environment-variable change from accepting a charge
 // that the current webhook is intentionally unable to fulfill.
 const PAYMENT_FULFILLMENT_IMPLEMENTED = false;
+const DURABLE_PAYMENT_STORE_IMPLEMENTED = false;
+
+export function hasDurablePaymentStore(): boolean {
+  return DURABLE_PAYMENT_STORE_IMPLEMENTED;
+}
 
 /**
  * Explicit launch gate. Credentials or an environment flag alone must never
  * turn payments on: implementation and owner approval are both required.
  */
 export function isPaymentsEnabled(): boolean {
-  return PAYMENT_FULFILLMENT_IMPLEMENTED && process.env.PAYMENTS_ENABLED === 'true';
+  return (
+    PAYMENT_FULFILLMENT_IMPLEMENTED &&
+    DURABLE_PAYMENT_STORE_IMPLEMENTED &&
+    process.env.PAYMENTS_ENABLED === 'true'
+  );
 }
 
 function getClient() {
@@ -220,19 +237,5 @@ export async function verifyCreditGuyTransaction(ref: {
  * Missing secret is a configuration failure and therefore rejects every event.
  */
 export function verifyWebhookSignature(rawBody: string, signature: string | null): boolean {
-  const cfg = readConfig();
-  if (!cfg?.webhookSecret) {
-    console.error('[sumit] SUMIT_WEBHOOK_SECRET not set — rejecting webhook');
-    return false;
-  }
-  if (!signature) return false;
-
-  const expected = crypto.createHmac('sha256', cfg.webhookSecret).update(rawBody).digest('hex');
-  try {
-    const a = Buffer.from(signature, 'utf8');
-    const b = Buffer.from(expected, 'utf8');
-    return a.length === b.length && crypto.timingSafeEqual(a, b);
-  } catch {
-    return false;
-  }
+  return verifySumitWebhookHmac(rawBody, signature, readWebhookSecret());
 }

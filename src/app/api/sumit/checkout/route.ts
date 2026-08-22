@@ -14,8 +14,11 @@ import {
   isConfigured as isSumitConfigured,
   isPaymentsEnabled,
 } from '@/lib/sumit';
+import {
+  getCanonicalCheckoutProduct,
+  isCommerceCatalogValid,
+} from '@/lib/commerce-catalog';
 import { FUNCTIONAL_BASE_URL } from '@/lib/site-url';
-import { getSumitProduct } from '@/lib/sumit-products';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -30,6 +33,22 @@ interface CheckoutBody {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(request: Request) {
+  // This is deliberately the first request-dependent decision. While commerce
+  // is disabled, do not parse customer data or reveal catalog/SKU validity.
+  if (!isPaymentsEnabled()) {
+    return NextResponse.json(
+      { error: 'payments-disabled', message: 'הרכישה המקוונת אינה זמינה כרגע.' },
+      { status: 503, headers: { 'Cache-Control': 'private, no-store, max-age=0' } },
+    );
+  }
+
+  if (!isCommerceCatalogValid()) {
+    return NextResponse.json(
+      { error: 'commerce-catalog-invalid' },
+      { status: 503, headers: { 'Cache-Control': 'private, no-store, max-age=0' } },
+    );
+  }
+
   let body: CheckoutBody;
   try {
     body = (await request.json()) as CheckoutBody;
@@ -45,7 +64,7 @@ export async function POST(request: Request) {
   if (!productSlug) {
     return NextResponse.json({ error: 'missing-product' }, { status: 400 });
   }
-  const product = getSumitProduct(productSlug);
+  const product = getCanonicalCheckoutProduct(productSlug);
   if (!product) {
     return NextResponse.json({ error: 'unknown-product', productSlug }, { status: 400 });
   }
@@ -54,13 +73,6 @@ export async function POST(request: Request) {
   }
   if (!email || !EMAIL_RE.test(email)) {
     return NextResponse.json({ error: 'invalid-email' }, { status: 400 });
-  }
-
-  if (!isPaymentsEnabled()) {
-    return NextResponse.json(
-      { error: 'payments-disabled', message: 'הרכישה המקוונת אינה זמינה כרגע.' },
-      { status: 503 },
-    );
   }
 
   if (!isSumitConfigured()) {
@@ -77,7 +89,10 @@ export async function POST(request: Request) {
   // is NXDOMAIN). Centralized in src/lib/site-url.ts (env-overridable).
   const baseUrl = FUNCTIONAL_BASE_URL;
 
-  const successUrl = `${baseUrl}${product.successPath}`;
+  // A redirect query string is not proof of payment. Keep the provider return
+  // on the neutral status page until a server-verified order session exists;
+  // never point checkout at the legacy `/thanks/purchase` success claim.
+  const successUrl = `${baseUrl}/checkout/success`;
 
   const result = await createCheckout({
     productSku: product.sku,
@@ -101,10 +116,13 @@ export async function POST(request: Request) {
         { status: 503 },
       );
     }
-    console.error('[sumit/checkout] failed', { productSlug, detail: result.detail });
+    console.error('[sumit/checkout] provider request failed', {
+      productSlug,
+      reason: result.reason,
+    });
     return NextResponse.json(
-      { error: 'checkout-failed', detail: result.detail ?? 'unknown' },
-      { status: 502 },
+      { error: 'checkout-failed' },
+      { status: 502, headers: { 'Cache-Control': 'private, no-store, max-age=0' } },
     );
   }
 

@@ -2,48 +2,36 @@
  * POST /api/sumit/webhook
  *
  * Receives Sumit payment events. We:
- *   1. Verify HMAC signature (if SUMIT_WEBHOOK_SECRET set)
- *   2. Ignore non-success notifications safely.
- *   3. Reject fulfillment until a durable event/order store is connected.
+ *   1. Require configured HMAC verification against the exact raw body.
+ *   2. Reject malformed, incomplete and unsupported event contracts.
+ *   3. Reject every lifecycle event until a durable event/order store exists.
  *
  * Sumit posts JSON like:
- *   { EventType: 'payment.succeeded', PaymentID, DocumentID, SKU,
- *     ExternalIdentifier, Customer: { EmailAddress, Name }, Amount, ... }
+ *   { EventID, EventType: 'payment.succeeded', PaymentID, SKU,
+ *     ExternalIdentifier, Amount, Currency, ... }
  *
  * IMPORTANT: an in-memory Set is not idempotency in a serverless deployment.
  * Until a durable event/order store validates amount + SKU and records the
  * transition transactionally, success events fail closed with 503.
  */
 import { NextResponse } from 'next/server';
-import { isPaymentsEnabled, verifyWebhookSignature } from '@/lib/sumit';
+import {
+  hasDurablePaymentStore,
+  isPaymentsEnabled,
+  isWebhookConfigured,
+  verifyWebhookSignature,
+} from '@/lib/sumit';
+import { parseSumitWebhookEvent } from '@/lib/sumit-webhook-contract';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-interface SumitWebhookEvent {
-  EventType?: string;
-  Type?: string;
-  PaymentID?: string;
-  payment_id?: string;
-  DocumentID?: string;
-  document_id?: string;
-  SKU?: string;
-  sku?: string;
-  ExternalIdentifier?: string;
-  external_identifier?: string;
-  Amount?: number;
-  amount?: number;
-  Customer?: {
-    EmailAddress?: string;
-    email?: string;
-    Name?: string;
-    name?: string;
-  };
-}
-
 export async function POST(request: Request) {
-  if (!isPaymentsEnabled()) {
-    return NextResponse.json({ error: 'payments-disabled' }, { status: 503 });
+  if (!isWebhookConfigured()) {
+    return NextResponse.json(
+      { error: 'webhook-not-configured', retryable: true },
+      { status: 503, headers: { 'Cache-Control': 'private, no-store, max-age=0' } },
+    );
   }
 
   const rawBody = await request.text();
@@ -53,36 +41,50 @@ export async function POST(request: Request) {
     null;
 
   if (!verifyWebhookSignature(rawBody, signature)) {
-    return NextResponse.json({ error: 'invalid-signature' }, { status: 401 });
+    return NextResponse.json(
+      { error: 'invalid-signature' },
+      { status: 401, headers: { 'Cache-Control': 'private, no-store, max-age=0' } },
+    );
   }
 
-  let event: SumitWebhookEvent;
+  let payload: unknown;
   try {
-    event = JSON.parse(rawBody) as SumitWebhookEvent;
+    payload = JSON.parse(rawBody) as unknown;
   } catch {
-    return NextResponse.json({ error: 'invalid-json' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'invalid-json' },
+      { status: 400, headers: { 'Cache-Control': 'private, no-store, max-age=0' } },
+    );
   }
 
-  const eventType = event.EventType ?? event.Type ?? 'unknown';
-  const paymentId = event.PaymentID ?? event.payment_id;
-
-  // Only act on success events
-  const isSuccess =
-    eventType === 'payment.succeeded' ||
-    eventType === 'payment_succeeded' ||
-    eventType === 'recurring.charged' ||
-    eventType === 'document.created';
-
-  if (!isSuccess) {
-    console.log('[sumit/webhook] non-success event, logging only', { eventType, paymentId });
-    return NextResponse.json({ ok: true, ignored: true, eventType });
+  const parsed = parseSumitWebhookEvent(payload);
+  if (!parsed.ok) {
+    return NextResponse.json(
+      { error: 'invalid-event', reason: parsed.reason },
+      { status: 422, headers: { 'Cache-Control': 'private, no-store, max-age=0' } },
+    );
   }
 
-  // A signed event alone is not proof that it matches a server-created pending
-  // order. Do not tag, fulfill or acknowledge success until durable idempotency
-  // and amount/SKU/order validation are implemented.
+  if (!hasDurablePaymentStore()) {
+    return NextResponse.json(
+      { error: 'payment-store-not-configured', retryable: true },
+      { status: 503, headers: { 'Cache-Control': 'private, no-store, max-age=0' } },
+    );
+  }
+
+  if (!isPaymentsEnabled()) {
+    return NextResponse.json(
+      { error: 'payments-disabled', retryable: true },
+      { status: 503, headers: { 'Cache-Control': 'private, no-store, max-age=0' } },
+    );
+  }
+
+  // This branch is deliberately unreachable while the durable-store guard is
+  // false. A future implementation must atomically load the pending order,
+  // compare identifier/SKU/amount/currency, claim eventId, transition state and
+  // only then run fulfillment.
   return NextResponse.json(
     { error: 'fulfillment-not-configured', retryable: true },
-    { status: 503 },
+    { status: 503, headers: { 'Cache-Control': 'private, no-store, max-age=0' } },
   );
 }

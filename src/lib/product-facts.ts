@@ -16,9 +16,11 @@ export const PRODUCT_FACTS = {
   },
   course: {
     weeks: 12,
+    phases: 6,
     contentLessons: 76,
     safetyLessons: 1,
     lmsMappedLessons: 75,
+    practicePdfs: 8,
   },
   commerce: {
     // Keep the public UI fail-closed until payment verification, durable

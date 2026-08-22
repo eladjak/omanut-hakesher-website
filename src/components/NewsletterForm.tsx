@@ -1,8 +1,9 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 
 type Status = "idle" | "loading" | "success" | "error";
+type ErrorField = "email" | "consent" | "submit" | null;
 
 interface NewsletterFormProps {
   /** Visual variant — controls colors so it fits both light sections and the dark footer. */
@@ -19,9 +20,10 @@ interface NewsletterFormProps {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
- * Real newsletter signup, wired to the existing /api/lead/subscribe pipeline
- * with the dedicated `newsletter` magnet (Rav-Messer list 22958 + Resend
- * welcome). Handles loading / success / error states — no fake setTimeout.
+ * Dormant newsletter implementation. No public surface renders this component
+ * while the approval ledger has no destination. The server still requires a
+ * dedicated approved list and never falls back to a historical event list.
+ * Reintroducing this UI requires an owner-approved list and end-to-end proof.
  */
 export function NewsletterForm({
   theme = "light",
@@ -35,27 +37,39 @@ export function NewsletterForm({
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
+  const [errorField, setErrorField] = useState<ErrorField>(null);
   const inputId = useId();
   const consentId = useId();
+  const emailRef = useRef<HTMLInputElement>(null);
+  const consentRef = useRef<HTMLInputElement>(null);
 
   const isDark = theme === "dark";
+
+  function reportError(field: Exclude<ErrorField, null>, nextMessage: string) {
+    setStatus("error");
+    setErrorField(field);
+    setMessage(nextMessage);
+    window.requestAnimationFrame(() => {
+      if (field === "email") emailRef.current?.focus();
+      if (field === "consent") consentRef.current?.focus();
+    });
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const value = email.trim().toLowerCase();
 
     if (!EMAIL_RE.test(value)) {
-      setStatus("error");
-      setMessage("נראה שזו לא כתובת אימייל תקינה — בדוק שוב?");
+      reportError("email", "נראה שזו לא כתובת אימייל תקינה — בדוק שוב?");
       return;
     }
     if (!consent) {
-      setStatus("error");
-      setMessage("כדי להצטרף לרשימה צריך לסמן הסכמה לקבלת דיוור.");
+      reportError("consent", "כדי להצטרף לרשימה צריך לסמן הסכמה לקבלת דיוור.");
       return;
     }
 
     setStatus("loading");
+    setErrorField(null);
     setMessage("");
 
     try {
@@ -65,19 +79,27 @@ export function NewsletterForm({
         body: JSON.stringify({ email: value, slug: "newsletter", consent }),
       });
 
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
       if (!res.ok) {
-        setStatus("error");
-        setMessage("משהו השתבש. נסה שוב בעוד רגע.");
+        const unavailable =
+          data.error === "marketing-list-not-approved" ||
+          data.error === "marketing-provider-not-configured";
+        reportError(
+          "submit",
+          unavailable
+            ? "ההרשמה לעדכונים עדיין אינה זמינה, ולא שמרנו את הכתובת. אפשר לנסות שוב בהמשך."
+            : "משהו השתבש. נסה שוב בעוד רגע.",
+        );
         return;
       }
 
       setStatus("success");
+      setErrorField(null);
       setMessage("נרשמת בהצלחה — שלחתי לך מייל קצר לאישור.");
       setEmail("");
       setConsent(false);
     } catch {
-      setStatus("error");
-      setMessage("אין חיבור כרגע. בדוק את האינטרנט ונסה שוב.");
+      reportError("submit", "אין חיבור כרגע. בדוק את האינטרנט ונסה שוב.");
     }
   }
 
@@ -103,8 +125,8 @@ export function NewsletterForm({
     : "flex-1 px-5 py-3 border border-border rounded-full bg-background focus:outline-none focus:ring-2 focus:ring-primary text-sm disabled:opacity-60";
 
   const buttonClass = isDark
-    ? "px-6 py-2.5 bg-primary-light text-foreground rounded-full text-sm font-medium hover:bg-primary transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-    : "px-6 py-3 bg-primary text-white rounded-full font-medium hover:bg-primary-dark transition-colors text-sm disabled:opacity-60 disabled:cursor-not-allowed";
+    ? "px-6 py-2.5 bg-primary-light text-[#0F1729] rounded-full text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+    : "px-6 py-3 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary-dark transition-colors text-sm disabled:opacity-60 disabled:cursor-not-allowed";
 
   return (
     <div className={layout === "stack" ? "w-full" : "w-full md:w-auto"}>
@@ -114,26 +136,32 @@ export function NewsletterForm({
           layout === "stack" ? "max-w-md mx-auto" : "w-full md:w-auto"
         } ${className}`}
         aria-label={ariaLabel}
+        aria-busy={status === "loading"}
         noValidate
       >
         <label htmlFor={inputId} className="sr-only">
           כתובת אימייל
         </label>
         <input
+          ref={emailRef}
           type="email"
           id={inputId}
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
-            if (status === "error") setStatus("idle");
+            if (errorField === "email") {
+              setStatus("idle");
+              setErrorField(null);
+              setMessage("");
+            }
           }}
           placeholder={placeholder}
           dir="ltr"
           autoComplete="email"
           required
           disabled={status === "loading"}
-          aria-invalid={status === "error"}
-          aria-describedby={status === "error" ? `${inputId}-err` : undefined}
+          aria-invalid={errorField === "email"}
+          aria-describedby={errorField === "email" ? `${inputId}-err` : undefined}
           className={inputClass}
         />
         <button type="submit" disabled={status === "loading"} className={buttonClass}>
@@ -146,14 +174,21 @@ export function NewsletterForm({
           }`}
         >
           <input
+            ref={consentRef}
             id={consentId}
             type="checkbox"
             checked={consent}
             onChange={(event) => {
               setConsent(event.target.checked);
-              if (status === "error") setStatus("idle");
+              if (errorField === "consent") {
+                setStatus("idle");
+                setErrorField(null);
+                setMessage("");
+              }
             }}
             required
+            aria-invalid={errorField === "consent"}
+            aria-describedby={errorField === "consent" ? `${inputId}-err` : undefined}
             disabled={status === "loading"}
             className="mt-0.5 size-4 shrink-0 accent-primary"
           />

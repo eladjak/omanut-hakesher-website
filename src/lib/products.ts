@@ -1,16 +1,15 @@
 /**
- * Product catalog — single source of truth for everything the site sells.
+ * Legacy display/marketing catalog for product pages. It is not a payment
+ * source of truth; the former endpoint that consumed it is retired.
  *
  * Each entry maps a public URL slug to: display info (page content),
  * pricing, and Sumit checkout configuration.
  *
- * Adding a product:
- *   1. Add it here.
- *   2. Create the landing page at `src/app/programs/<slug>/page.tsx` (or other
- *      route — match the `path` field).
- *   3. The landing page imports `getProduct(slug)` and renders a CheckoutButton.
- *   4. `POST /api/checkout { slug, name, email, phone? }` reads this catalog,
- *      calls Sumit, returns the hosted-checkout URL.
+ * Adding or editing an entry here changes display metadata only. It must not
+ * create a payment button, publish a draft price or post to `/api/checkout`.
+ * The former endpoint is retired with 410. Any future purchase surface needs
+ * a separately owner-approved canonical catalog plus the complete fulfillment
+ * contract before it may connect to `/api/sumit/checkout`.
  */
 
 export type ProductType = "one-time" | "recurring-monthly" | "booking-required";
