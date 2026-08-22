@@ -1,0 +1,275 @@
+{
+  "schemaVersion": 1,
+  "decisionId": "offer-ladder-balanced-b",
+  "contractState": "staging-proposal-only",
+  "currency": "ILS",
+  "humanApproval": null,
+  "activation": {
+    "publicCatalog": false,
+    "publicPricing": false,
+    "checkout": false,
+    "providerSync": false,
+    "fulfillmentWriters": false,
+    "deploy": false
+  },
+  "pricePolicy": {
+    "amountsAreUnapprovedHypotheses": true,
+    "consumerTotalPriceRequired": true,
+    "mandatoryChargesMustNotBeHidden": true,
+    "comparisonPriceAllowed": false,
+    "discountClaimAllowed": false,
+    "guaranteeClaimAllowed": false
+  },
+  "offers": [
+    {
+      "sku": "OH-BOOK-PRINT-01",
+      "productType": "physical-book-with-digital-companion",
+      "publicName": "הספר אומנות הקשר",
+      "proposedConsumerPriceIls": 129,
+      "billing": "one-time",
+      "activationState": "blocked",
+      "humanApproval": null,
+      "contents": [
+        "printed-book",
+        "edition-matched-book-companion",
+        "approved-accessible-companion-alternatives"
+      ],
+      "exclusions": [
+        "automatic-community-access",
+        "course-access",
+        "guidance",
+        "outcome-guarantee"
+      ],
+      "entitlements": [
+        {
+          "id": "book-purchase",
+          "scope": "purchased-edition-companion",
+          "duration": "edition-supported",
+          "source": "durable-verified-order"
+        }
+      ],
+      "fulfillment": {
+        "state": "blocked-until-staging",
+        "steps": [
+          "durable-order",
+          "verified-payment",
+          "receipt",
+          "shipping-or-pickup",
+          "book-entitlement"
+        ],
+        "requiresBuyerIsolation": true,
+        "requiresEditionBinding": true
+      },
+      "refundBoundary": {
+        "policyApproved": false,
+        "publicPromiseAllowed": false,
+        "revokesFutureProtectedAccessWhenContractRequires": true,
+        "contentDeletionIsSeparateProcess": true
+      }
+    },
+    {
+      "sku": "OH-DATING-CARD-SVC-01",
+      "productType": "bounded-personal-writing-service",
+      "publicName": "כרטיס היכרות אישי",
+      "proposedConsumerPriceIls": 349,
+      "billing": "one-time",
+      "activationState": "blocked",
+      "humanApproval": null,
+      "contents": [
+        "private-intake",
+        "one-draft",
+        "one-revision-round",
+        "final-use-file"
+      ],
+      "exclusions": [
+        "photography",
+        "dating-app-management",
+        "matchmaking-database",
+        "unlimited-revisions",
+        "automatic-community-access"
+      ],
+      "entitlements": [],
+      "fulfillment": {
+        "state": "blocked-until-staging",
+        "steps": [
+          "durable-order",
+          "verified-payment",
+          "private-intake",
+          "assigned-delivery",
+          "one-revision",
+          "private-final-file",
+          "retention-disposition"
+        ],
+        "requiresBuyerIsolation": true,
+        "intakeReuseAllowed": false
+      },
+      "refundBoundary": {
+        "policyApproved": false,
+        "publicPromiseAllowed": false,
+        "serviceStageRulesRequired": true,
+        "contentDeletionIsSeparateProcess": true
+      }
+    },
+    {
+      "sku": "OH-WAY-COURSE-01",
+      "productType": "time-bounded-digital-course",
+      "publicName": "הדרך",
+      "proposedConsumerPriceIls": 1490,
+      "billing": "one-time",
+      "activationState": "blocked",
+      "humanApproval": null,
+      "contents": [
+        "twelve-week-course-source",
+        "seventy-five-lessons",
+        "eight-protected-practice-documents",
+        "approved-lms-tools",
+        "course-access-P12M",
+        "simulator-access-cost-gated",
+        "community-access-P6M"
+      ],
+      "exclusions": [
+        "personal-guidance",
+        "unlimited-ai",
+        "lifetime-access",
+        "unscheduled-live-groups",
+        "voice-or-video-simulator-promise",
+        "outcome-guarantee"
+      ],
+      "entitlements": [
+        {
+          "id": "course-access",
+          "scope": "OH-WAY-COURSE-01",
+          "duration": "P12M",
+          "source": "durable-verified-order"
+        },
+        {
+          "id": "simulator-access",
+          "scope": "cost-gated-fair-use",
+          "duration": "while-course-access-active",
+          "source": "derived-from-course-access"
+        },
+        {
+          "id": "community-access",
+          "scope": "course-learner",
+          "duration": "P6M",
+          "source": "derived-from-course-access"
+        }
+      ],
+      "fulfillment": {
+        "state": "blocked-until-staging",
+        "steps": [
+          "durable-order",
+          "verified-payment",
+          "receipt",
+          "course-entitlement",
+          "simulator-entitlement",
+          "community-entitlement"
+        ],
+        "requiresBuyerIsolation": true,
+        "requiresProductSpecificSimulatorEntitlement": true
+      },
+      "refundBoundary": {
+        "policyApproved": false,
+        "publicPromiseAllowed": false,
+        "revokesFutureProtectedAccessWhenContractRequires": true,
+        "contentDeletionIsSeparateProcess": true
+      }
+    },
+    {
+      "sku": "OH-GUIDANCE-3-01",
+      "productType": "bounded-human-guidance-service",
+      "publicName": "חבילת ליווי אישי",
+      "proposedConsumerPriceIls": 1650,
+      "billing": "one-time",
+      "activationState": "blocked",
+      "humanApproval": null,
+      "contents": [
+        "three-sixty-minute-sessions",
+        "agreed-working-goal",
+        "short-post-session-summary",
+        "P90D-redemption-window",
+        "community-during-guidance-plus-P3M"
+      ],
+      "exclusions": [
+        "therapy",
+        "emergency-availability",
+        "unlimited-messaging",
+        "outcome-guarantee",
+        "automatic-course-access"
+      ],
+      "entitlements": [
+        {
+          "id": "guidance-fulfillment",
+          "scope": "three-sessions",
+          "duration": "P90D",
+          "source": "durable-verified-order"
+        },
+        {
+          "id": "community-access",
+          "scope": "guidance-participant",
+          "duration": "active-guidance-plus-P3M",
+          "source": "derived-from-guidance-fulfillment"
+        }
+      ],
+      "fulfillment": {
+        "state": "blocked-until-staging",
+        "steps": [
+          "durable-order",
+          "verified-payment",
+          "fit-and-intake",
+          "three-scheduled-sessions",
+          "attendance-ledger",
+          "completion-or-approved-refund-disposition"
+        ],
+        "requiresBuyerIsolation": true,
+        "requiresCapacityReservation": true
+      },
+      "refundBoundary": {
+        "policyApproved": false,
+        "publicPromiseAllowed": false,
+        "serviceStageAndNoShowRulesRequired": true,
+        "contentDeletionIsSeparateProcess": true
+      }
+    }
+  ],
+  "nonSkuDecisions": {
+    "bookCompanion": {
+      "standaloneSku": false,
+      "includedWithBook": true,
+      "publicPreviewMayRemainOpen": true,
+      "protectedContentRequiresBookEntitlement": true
+    },
+    "simulator": {
+      "standaloneSku": false,
+      "independentCheckout": false,
+      "freeTrialDeliveredReplies": 5,
+      "providerFailureConsumesTrial": false,
+      "postTrialAccess": "product-specific-course-entitlement",
+      "unlimitedUsageClaimAllowed": false,
+      "costEvidenceRequiredBeforePublicTerms": true
+    },
+    "community": {
+      "standaloneSku": false,
+      "publicMembershipSale": false,
+      "oneCommunityAcrossBookCourseGuidance": true,
+      "courseGrant": "P6M",
+      "guidanceGrant": "active-guidance-plus-P3M",
+      "bookGrant": "invite-only-expiring-pilot",
+      "bookPurchaseAutomaticallyGrantsAccess": false,
+      "operationsGateRequired": true
+    }
+  },
+  "launchGates": {
+    "ownerApprovedCatalog": false,
+    "consumerTermsApproved": false,
+    "costModelMeasured": false,
+    "providerSandboxPassed": false,
+    "durableOrderStatePassed": false,
+    "receiptPassed": false,
+    "refundRevokePassed": false,
+    "buyerIsolationPassed": false,
+    "fulfillmentPassed": false,
+    "communityOperationsPassed": false,
+    "simulatorCostGatePassed": false
+  }
+}
