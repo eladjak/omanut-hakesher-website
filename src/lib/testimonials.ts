@@ -1,67 +1,98 @@
-import data from "@/data/testimonials.json";
+import "server-only";
 
-export type TestimonialCategory = "text" | "graphic" | "couple";
+import { createHash } from "node:crypto";
+import data from "@/generated/public-testimonials.json";
+import {
+  isApprovedForPublication,
+  type ProofPublicationSurface,
+} from "@/lib/testimonial-publication-policy";
+import type {
+  EmailQuote,
+  TestimonialItem,
+  TestimonialVideo,
+  WhatsAppShot,
+} from "@/lib/testimonial-types";
 
-export interface TestimonialItem {
-  slug: string;
-  name: string;
-  title: string;
-  category: TestimonialCategory;
-  image: string;
-  aspect: "square" | "portrait";
-  short_quote: string;
-  full_text?: string;
-  context: string;
-  cta_target: string;
-  source: string;
-  featured: boolean;
+export type {
+  EmailQuote,
+  TestimonialCategory,
+  TestimonialItem,
+  TestimonialVideo,
+  WhatsAppShot,
+} from "@/lib/testimonial-types";
+
+// This module imports only a generated public DTO. The historical archive is
+// outside `src/`, excluded from deployment, and must never be imported by app
+// code. A future approval pipeline may add a fingerprinted record to this DTO
+// only after the item-level publication ledger is complete.
+const testimonialArchive = data.items as TestimonialItem[];
+const emailQuoteArchive = data.quotes as EmailQuote[];
+const whatsappArchive = data.whatsapp_screenshots as WhatsAppShot[];
+const videoArchive = data.videos as TestimonialVideo[];
+
+function contentSha256(value: unknown): string {
+  return createHash("sha256").update(JSON.stringify(value), "utf8").digest("hex");
 }
 
-export interface WhatsAppShot {
-  id: string;
-  image: string;
+export function getPublishedTestimonials(
+  surface: ProofPublicationSurface,
+): TestimonialItem[] {
+  return testimonialArchive.filter((item) =>
+    isApprovedForPublication(
+      "testimonial",
+      item.slug,
+      surface,
+      contentSha256(item),
+      item.assetSha256,
+    ),
+  );
 }
 
-/**
- * Image-less authentic quotes salvaged from Elad's email sequences
- * (folded 2026-07-09 from the legacy /testimonials page — the only
- * quotes there with a verified source; see content-library §5).
- */
-export interface EmailQuote {
-  id: string;
-  author: string;
-  age?: number;
-  occupation?: string;
-  context: string;
-  quote: string;
-  source: string;
+export function getPublishedEmailQuotes(
+  surface: ProofPublicationSurface,
+): EmailQuote[] {
+  return emailQuoteArchive.filter((item) =>
+    isApprovedForPublication(
+      "email-quote",
+      item.id,
+      surface,
+      contentSha256(item),
+    ),
+  );
 }
 
-export interface TestimonialVideo {
-  id: string;
-  title: string;
-  embed: string;
+export function getPublishedWhatsAppShots(
+  surface: ProofPublicationSurface,
+): WhatsAppShot[] {
+  return whatsappArchive.filter((item) =>
+    isApprovedForPublication(
+      "whatsapp-screenshot",
+      item.id,
+      surface,
+      contentSha256(item),
+      item.assetSha256,
+    ),
+  );
 }
 
-export const testimonials = data.items as TestimonialItem[];
-export const emailQuotes = data.quotes as EmailQuote[];
-export const whatsappShots = data.whatsapp_screenshots as WhatsAppShot[];
-export const videos = data.videos as TestimonialVideo[];
+export function getPublishedVideos(
+  surface: ProofPublicationSurface,
+): TestimonialVideo[] {
+  return videoArchive.filter((item) =>
+    isApprovedForPublication(
+      "video",
+      item.id,
+      surface,
+      contentSha256(item),
+      item.assetSha256,
+    ),
+  );
+}
 
 export function getTestimonial(slug: string): TestimonialItem | undefined {
-  return testimonials.find((t) => t.slug === slug);
+  return getPublishedTestimonials("story-detail").find((item) => item.slug === slug);
 }
 
 export function getAllSlugs(): string[] {
-  return testimonials.map((t) => t.slug);
-}
-
-const categoryLabels: Record<TestimonialCategory, string> = {
-  text: "עדות תלמיד",
-  graphic: "עדות מצולמת",
-  couple: "זוג שמצא",
-};
-
-export function categoryLabel(c: TestimonialCategory): string {
-  return categoryLabels[c];
+  return getPublishedTestimonials("story-detail").map((item) => item.slug);
 }

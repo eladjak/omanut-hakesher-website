@@ -1,85 +1,80 @@
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { TestimonialCard } from "@/components/TestimonialCard";
-import { testimonials } from "@/lib/testimonials";
+import { Card, CardContent } from "@/components/ui/card";
 
-/**
- * Real testimonials only.
- *
- * This section used to render six invented-looking persona quotes (named
- * people with ages and occupations, no image and no verifiable source).
- * It now surfaces the genuine testimonials from `src/data/testimonials.json`
- * — the same items already published on /sipurim, rendered with the shared
- * TestimonialCard so the homepage and the stories page stay consistent.
- *
- * The `couple` category is deliberately excluded here: those images are
- * private personal photos of real couples rather than testimony they
- * composed for publication, so they stay on /sipurim and are not promoted
- * to the homepage.
- *
- * Only `portrait` items are used so every card in the grid shares one aspect
- * ratio and the row does not go ragged.
- *
- * PENDING ELAD'S APPROVAL — do not deploy this branch until he has signed off
- * on this list item by item. The allowlist is explicit on purpose: nothing is
- * included implicitly, so adding a testimonial to testimonials.json can never
- * silently promote it to the homepage.
- *
- * meir-lewinger / dana-ezra / yaala-cohen are deliberately NOT here. Those
- * cards are anonymised (silhouette avatar, initial only) but their filenames
- * carry the person's full name, so serving the file de-anonymises someone who
- * chose to stay anonymous. They stay out until the files are renamed to
- * neutral slugs.
- */
-const APPROVED_FOR_HOMEPAGE = [
-  "meir-david-chai",
-  "mark-luski",
-  "benny-sneider",
-  "david-levinstern",
-  "limor-shaked",
-  "oria-asheta",
+const verificationPaths = [
+  {
+    number: "בדיקה א׳",
+    title: "לקרוא תוכן מלא",
+    description: "לא רק כותרת שיווקית: לבחור מאמר ולבדוק את השפה, העומק והגישה.",
+    href: "/blog",
+    cta: "למאמרים",
+  },
+  {
+    number: "בדיקה ב׳",
+    title: "לפתוח כלי מעשי",
+    description: "לקחת מדריך מלא ולראות אם התרגול ברור, מכבד ושימושי לחיים שלך.",
+    href: "/lead",
+    cta: "למדריכים הפתוחים",
+  },
+  {
+    number: "בדיקה ג׳",
+    title: "לבדוק את המבנה",
+    description: "לעבור על שלבי התוכנית, מה כלול ומה צריך לברר לפני כל התחייבות.",
+    href: "/programs/the-way",
+    cta: "למבנה התוכנית",
+  },
 ] as const;
 
-const homeTestimonials = APPROVED_FOR_HOMEPAGE.map((slug) =>
-  testimonials.find((t) => t.slug === slug)
-).filter((t): t is NonNullable<typeof t> => t !== undefined);
-
+/**
+ * No personal proof is rendered here while the publication ledger is empty.
+ * Instead, the homepage offers evidence visitors can inspect for themselves.
+ */
 export function HomeTestimonials() {
-  if (homeTestimonials.length === 0) return null;
-
   return (
-    <section className="py-24 bg-muted/50">
+    <section className="bg-muted/30 py-20" data-proof-substitute="verification-path">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <Badge variant="outline" className="mb-4 text-primary border-primary/30">
-            עדויות אמיתיות של תלמידים
+        <div className="mx-auto mb-12 max-w-3xl text-center">
+          <Badge variant="outline" className="mb-4 border-primary/30 text-primary">
+            לא צריך להאמין על המילה
           </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            הם כבר <span className="text-primary">מצאו</span>
+          <h2 className="mb-4 text-3xl font-bold text-balance md:text-4xl">
+            שלוש דרכים לבדוק אם הגישה מתאימה לך
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-            סיפורים של אנשים שעברו את התהליך ומצאו את הזוגיות שחיכתה להם — בשמם
-            ובקולם שלהם.
+          <p className="text-lg leading-relaxed text-muted-foreground text-pretty">
+            לפני תוכנית, ספר או ליווי אפשר לפגוש את התוכן עצמו, לנסות כלי אחד
+            ולבדוק אם הוא יוצר יותר בהירות — בלי להתחייב ובלי להסתמך על הבטחת תוצאה.
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {homeTestimonials.map((item, index) => (
-            <TestimonialCard key={item.slug} item={item} index={index} />
+        <ol className="mx-auto grid max-w-5xl gap-5 md:grid-cols-3">
+          {verificationPaths.map((path) => (
+            <li key={path.number}>
+              <Card className="h-full border-border/60">
+                <CardContent className="flex h-full flex-col p-6">
+                  <span className="mb-3 self-start text-sm font-bold text-primary">
+                    {path.number}
+                  </span>
+                  <h3 className="mb-2 text-xl font-bold">{path.title}</h3>
+                  <p className="mb-6 text-sm leading-relaxed text-muted-foreground">
+                    {path.description}
+                  </p>
+                  <Link
+                    href={path.href}
+                    className="mt-auto inline-flex min-h-11 items-center font-semibold text-primary underline-offset-4 hover:underline"
+                  >
+                    {path.cta} ←
+                  </Link>
+                </CardContent>
+              </Card>
+            </li>
           ))}
-        </div>
+        </ol>
 
-        <div className="text-center mt-10">
-          <Link
-            href="/sipurim"
-            className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 rounded-sm"
-          >
-            לכל סיפורי ההצלחה
-            <span aria-hidden style={{ transform: "scaleX(-1)" }}>
-              →
-            </span>
-          </Link>
-        </div>
+        <p className="mx-auto mt-8 max-w-3xl text-center text-sm leading-relaxed text-muted-foreground">
+          סיפורים אישיים ועדויות אינם מוצגים בלי אימות מקור והסכמה לפרסום. עד שיהיו
+          כאלה, אפשר להעריך את העבודה דרך החומרים הפתוחים עצמם.
+        </p>
       </div>
     </section>
   );

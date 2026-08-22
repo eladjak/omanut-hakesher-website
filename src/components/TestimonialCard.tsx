@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
-import { categoryLabel, type TestimonialItem } from "@/lib/testimonials";
+import { categoryLabel, type TestimonialItem } from "@/lib/testimonial-types";
 
 const categoryStyles: Record<TestimonialItem["category"], string> = {
   text: "bg-primary/10 text-primary border-primary/30",

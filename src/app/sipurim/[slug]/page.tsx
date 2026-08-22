@@ -7,10 +7,9 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import {
   getAllSlugs,
   getTestimonial,
-  testimonials,
-  categoryLabel,
-  type TestimonialItem,
+  getPublishedTestimonials,
 } from "@/lib/testimonials";
+import { categoryLabel, type TestimonialItem } from "@/lib/testimonial-types";
 import { TestimonialDetailMotion } from "./detail-motion";
 
 export function generateStaticParams() {
@@ -31,7 +30,7 @@ export async function generateMetadata({
     description: item.short_quote,
     alternates: { canonical: `/sipurim/${item.slug}` },
     openGraph: {
-      title: `${item.name} — סיפור הצלחה`,
+      title: `${item.name} — חוויה אישית מהתהליך`,
       description: item.short_quote,
       url: `/sipurim/${item.slug}`,
       images: [{ url: item.image, alt: `עדות לקוח — ${item.name}` }],
@@ -42,7 +41,7 @@ export async function generateMetadata({
 }
 
 function getRelated(current: TestimonialItem): TestimonialItem[] {
-  return testimonials
+  return getPublishedTestimonials("story-detail")
     .filter((t) => t.slug !== current.slug && t.category === current.category)
     .slice(0, 3);
 }
@@ -66,33 +65,12 @@ export default async function TestimonialDetailPage({
   const related = getRelated(item);
   const ctaLabel = ctaLabels[item.cta_target] ?? "לתיאום שיחת היכרות";
 
-  const reviewJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Review",
-    itemReviewed: {
-      "@type": "Service",
-      name: "אומנות הקשר — ליווי אישי לזוגיות",
-      provider: {
-        "@type": "Person",
-        name: "אלעד יעקובוביץ׳",
-      },
-    },
-    reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
-    author: { "@type": "Person", name: item.name },
-    reviewBody: item.full_text ?? item.short_quote,
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewJsonLd) }}
-      />
-
       <div className="bg-muted/50 border-b border-border/30">
         <Breadcrumbs
           items={[
-            { label: "סיפורי הצלחה", href: "/sipurim" },
+            { label: "סיפורים ובדיקת התאמה", href: "/sipurim" },
             { label: item.name },
           ]}
         />
@@ -171,9 +149,9 @@ export default async function TestimonialDetailPage({
               </p>
 
               <div className="rounded-2xl border border-primary/30 bg-primary/5 p-6 md:p-8">
-                <h3 className="text-lg font-bold mb-2">רוצה את הסיפור הבא להיות שלך?</h3>
+                <h3 className="text-lg font-bold mb-2">רוצה לבדוק מה מתאים למצב שלך?</h3>
                 <p className="text-sm text-muted-foreground mb-5">
-                  שיחת היכרות לבירור הצורך וההתאמה, בתיאום מראש.
+                  אפשר לקרוא קודם את כלי בדיקת ההתאמה, או להגיע לשיחה עם שאלה מוגדרת — בלי להניח שהתוצאה של אדם אחר תחזור אצלך.
                 </p>
                 <Link
                   href={item.cta_target}
