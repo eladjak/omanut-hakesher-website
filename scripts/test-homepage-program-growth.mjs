@@ -69,12 +69,34 @@ function validateGrowthContracts(sources) {
     "homepage-must-render-six-canonical-phases",
   );
   add(
-    /href="\/programs\/the-way"[\s\S]{0,400}להכיר את תוכנית/.test(sources.home),
-    "homepage-primary-cta-must-lead-to-program",
+    /href="\/resources"[\s\S]{0,400}להתחיל ממשאב פתוח/.test(sources.home),
+    "homepage-primary-cta-must-lead-to-open-value",
   );
   add(
     /href="\/book"[\s\S]{0,400}להכיר את הספר/.test(sources.home),
     "homepage-secondary-cta-must-offer-book",
+  );
+  const journeyOrder = [
+    'href: "/resources"',
+    'href: "/book"',
+    'href: "/products/dating-card"',
+    'href: "/programs/the-way"',
+    'href: "/coaching"',
+    'href: "/community"',
+  ].map((needle) => sources.home.indexOf(needle));
+  add(
+    journeyOrder.every((index) => index >= 0) &&
+      journeyOrder.every((index, position) => position === 0 || index > journeyOrder[position - 1]),
+    "homepage-journey-must-progress-from-free-value-to-continuation",
+  );
+  add(
+    /הספר ״אומנות הקשר״ \+ Book Companion/.test(sources.home) &&
+      /קהילה וסימולטור כהמשך/.test(sources.home),
+    "homepage-journey-must-connect-companion-and-continuation",
+  );
+  add(
+    !/הדרך\s*<span[^>]*>שלך<\/span>\s*לזוגיות/.test(sources.home),
+    "homepage-must-not-frame-a-deterministic-personal-path-to-relationship",
   );
   add(
     /Aron[\s\S]{0,260}לא הוכיח/.test(sources.home) &&
@@ -186,6 +208,21 @@ assert.ok(
     ...sources,
     facts: factsSource.replace(/phases:\s*6/, "phases: 5"),
   }).includes("course-phases-must-be-six"),
+);
+assert.ok(
+  validateGrowthContracts({
+    ...sources,
+    home: homeSource.replace('href: "/resources"', 'href: "/community"'),
+  }).includes("homepage-journey-must-progress-from-free-value-to-continuation"),
+);
+assert.ok(
+  validateGrowthContracts({
+    ...sources,
+    home: homeSource.replace(
+      'מסע שאפשר להיכנס אליו <span className="text-primary">מהמקום שלך</span>',
+      'הדרך <span className="text-primary">שלך</span> לזוגיות',
+    ),
+  }).includes("homepage-must-not-frame-a-deterministic-personal-path-to-relationship"),
 );
 assert.ok(
   validateGrowthContracts({

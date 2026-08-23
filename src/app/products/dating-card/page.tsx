@@ -52,7 +52,7 @@ const whatYouGet = [
   "הנחיות להתאמת הטקסט לפלטפורמות היכרות שונות",
 ];
 
-const bonuses = [
+const plannedResources = [
   {
     title: "מדריך לצילום פרופיל",
     desc: "מה לצלם, איך לצלם, איפה לצלם — בעצמך או עם טלפון.",
@@ -194,16 +194,21 @@ export default function DatingCardPage() {
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-10">
             <Badge variant="outline" className="mb-4 text-accent-dark border-accent/40">
-              משאבים נלווים
+              בתכנון · עדיין לא נמסר
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-balance">
               כלים שתומכים ביישום הכרטיס
             </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-pretty text-muted-foreground">
+              שלושת המשאבים הבאים נמצאים בתוכנית העבודה, אבל עדיין אינם חלק זמין מן השירות.
+              אם וכאשר יהיו מוכנים למסירה, התכולה המעודכנת תאושר מראש בבדיקת הזמינות.
+            </p>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
-            {bonuses.map((b) => (
-              <Card key={b.title} className="border-border/50">
+            {plannedResources.map((b) => (
+              <Card key={b.title} className="border-dashed border-border/60 bg-muted/20">
                 <CardContent className="p-6">
+                  <Badge variant="secondary" className="mb-4">מתוכנן</Badge>
                   <h3 className="text-lg font-bold mb-2">{b.title}</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed text-pretty">{b.desc}</p>
                 </CardContent>

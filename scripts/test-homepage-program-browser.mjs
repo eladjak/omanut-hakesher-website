@@ -51,11 +51,19 @@ try {
     await desktop.locator("h1").innerText(),
     /לבנות דרך לקשר[\s\S]*בלי לאבד את עצמך/,
   );
-  assert.equal(
-    await desktop.locator('a[href="/programs/the-way"]').first().isVisible(),
-    true,
-  );
+  assert.equal(await desktop.getByRole("link", { name: "להתחיל ממשאב פתוח" }).isVisible(), true);
   assert.equal(await desktop.locator('a[href="/book"]').first().isVisible(), true);
+  const journeyStages = await desktop.locator("p", { hasText: /^0[1-6] ·/ }).allTextContents();
+  assert.deepEqual(journeyStages, [
+    "01 · מתחילים בחינם",
+    "02 · קוראים ומתרגלים",
+    "03 · ממקדים צורך",
+    "04 · בונים תהליך",
+    "05 · מקבלים ליווי",
+    "06 · ממשיכים יחד",
+  ]);
+  assert.equal(await desktop.getByRole("heading", { name: "הספר ״אומנות הקשר״ + Book Companion" }).isVisible(), true);
+  assert.equal(await desktop.getByRole("heading", { name: "קהילה וסימולטור כהמשך" }).isVisible(), true);
 
   for (const phase of [
     "גישה",

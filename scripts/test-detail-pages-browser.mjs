@@ -66,6 +66,9 @@ try {
 
   await open(desktop, "/products/dating-card");
   assert.equal(await desktop.getByText("תרגיל של דקה", { exact: true }).isVisible(), true);
+  assert.equal(await desktop.getByText("בתכנון · עדיין לא נמסר", { exact: true }).isVisible(), true);
+  assert.equal(await desktop.getByText("עדיין אינם חלק זמין מן השירות", { exact: false }).isVisible(), true);
+  assert.equal(await desktop.getByText("מתוכנן", { exact: true }).count(), 3);
   assert.equal(await desktop.getByText("הרכישה המקוונת אינה פעילה כרגע.", { exact: false }).isVisible(), true);
   assert.equal((await desktop.locator("body").innerText()).includes("₪"), false);
 

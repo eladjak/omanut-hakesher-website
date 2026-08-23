@@ -69,8 +69,14 @@ function validateOfferJourney(sources) {
 
   add(!/redirect\(/.test(sources.resources), "resources-must-be-a-public-hub-not-a-redirect");
   add(/href="\/blog"/.test(sources.resources), "resources-must-link-to-blog");
-  add(/href="\/podcast"/.test(sources.resources), "resources-must-link-to-podcast");
-  add(/href="\/lead"/.test(sources.resources), "resources-must-link-to-open-guides");
+  add(
+    /publicCompanion\("CP-24"\)/.test(sources.resources) && /href=\{podcast\.routes\[0\]\}/.test(sources.resources),
+    "resources-must-link-to-podcast",
+  );
+  add(
+    /publicCompanion\("CP-02"\)/.test(sources.resources) && /href=\{openGuides\.routes\[0\]\}/.test(sources.resources),
+    "resources-must-link-to-open-guides",
+  );
   add(/href:\s*"\/book"/.test(sources.resources), "resources-must-link-to-book");
   add(/current="resources"/.test(sources.resources), "resources-must-mark-first-journey-step");
 
@@ -145,6 +151,18 @@ assert.ok(
 assert.ok(
   validateOfferJourney({ ...sources, resources: 'import { redirect } from "next/navigation"; redirect("/blog");' })
     .includes("resources-must-be-a-public-hub-not-a-redirect"),
+);
+assert.ok(
+  validateOfferJourney({
+    ...sources,
+    resources: resources.replace('publicCompanion("CP-24")', 'publicCompanion("CP-25")'),
+  }).includes("resources-must-link-to-podcast"),
+);
+assert.ok(
+  validateOfferJourney({
+    ...sources,
+    resources: resources.replace('href={openGuides.routes[0]}', 'href="/programs"'),
+  }).includes("resources-must-link-to-open-guides"),
 );
 assert.ok(
   validateOfferJourney({ ...sources, book: `${book}\n<SumitCheckoutButton displayPrice="₪89" />` })

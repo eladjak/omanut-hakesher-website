@@ -61,6 +61,7 @@ const stats = [
 
 type Product = {
   icon: React.ReactNode;
+  stage: string;
   title: string;
   description: string;
   href: string;
@@ -76,11 +77,12 @@ const products: Product[] = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
       </svg>
     ),
-    title: "תוכנית ״הדרך״",
-    description: `תוכנית מובנית של ${PRODUCT_FACTS.course.weeks} שבועות ו־${PRODUCT_FACTS.course.phases} שלבים שמחברת עבודה פנימית, תקשורת, היכרויות ותרגול. תנאי הגישה והליווי מפורטים בעמוד התוכנית.`,
-    href: "/programs/the-way",
+    stage: "01 · מתחילים בחינם",
+    title: "משאבים פתוחים לתרגול",
+    description: "מדריכים ותרגילים שאפשר לפתוח עכשיו, לנסות בקצב שלך ולבדוק אם השפה והגישה של אומנות הקשר מדברות אליך.",
+    href: "/resources",
     color: "bg-primary/10 text-primary",
-    cta: "לפרטים על הדרך",
+    cta: "לבחור תרגול פתוח",
   },
   {
     icon: (
@@ -88,11 +90,12 @@ const products: Product[] = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
       </svg>
     ),
-    title: "ליווי אישי פרימיום",
-    description: "תהליך מותאם אישית עם מפגשים פרטניים, תרגול ומשוב על מה שקורה בפועל בדייטים ובקשרים.",
-    href: "/coaching",
+    stage: "02 · קוראים ומתרגלים",
+    title: "הספר ״אומנות הקשר״ + Book Companion",
+    description: `${PRODUCT_FACTS.book.chapters} פרקים ו־${PRODUCT_FACTS.book.numberedExercises} תרגילים ממוספרים. הספר עומד בפני עצמו; הליווי הדיגיטלי שנבנה לצדו יוסיף בהמשך קול, וידאו ותרגול לקוראים.`,
+    href: "/book",
     color: "bg-secondary/10 text-secondary",
-    cta: "לתיאום שיחת היכרות",
+    cta: "להכיר את הספר והליווי",
   },
   {
     icon: (
@@ -100,11 +103,12 @@ const products: Product[] = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
       </svg>
     ),
-    title: "הספר ״אומנות הקשר״",
-    description: `${PRODUCT_FACTS.book.chapters} פרקים בחמישה חלקים ו־${PRODUCT_FACTS.book.numberedExercises} תרגילים ממוספרים. דרך מובנית מהסיפור שמנהל אותך ועד היכולת לבחור ולבנות קשר.`,
-    href: "/book",
+    stage: "03 · ממקדים צורך",
+    title: "כרטיס היכרויות אישי",
+    description: "שירות ממוקד לניסוח כרטיס שמרגיש כמוך ונותן לאדם אחר פתח אמיתי לשיחה. הזמינות, התכולה ומועד המסירה מאושרים מראש.",
+    href: "/products/dating-card",
     color: "bg-accent/10 text-accent-dark",
-    cta: "להכיר את הספר",
+    cta: "לבדוק התאמה וזמינות",
   },
   {
     icon: (
@@ -112,11 +116,38 @@ const products: Product[] = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
       </svg>
     ),
-    title: "הקהילה",
-    description: "מרחב קהילתי לתרגול, מפגשים ושיח עם אנשים שנמצאים בתהליך דומה. תנאי הגישה מפורטים בכל מסלול.",
-    href: "/community",
+    stage: "04 · בונים תהליך",
+    title: "תוכנית ״הדרך״",
+    description: `תוכנית מובנית של ${PRODUCT_FACTS.course.weeks} שבועות ו־${PRODUCT_FACTS.course.phases} שלבים שמחברת עבודה פנימית, תקשורת, היכרויות ותרגול. תנאי הגישה והליווי מפורטים בעמוד התוכנית.`,
+    href: "/programs/the-way",
     color: "bg-primary-light/20 text-primary-dark",
-    cta: "לפרטים על הקהילה",
+    cta: "לפרטים על התוכנית",
+  },
+  {
+    icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+      </svg>
+    ),
+    stage: "05 · מקבלים ליווי",
+    title: "ליווי אישי",
+    description: "כשהתוכן לבדו לא מספיק, אפשר לבדוק תהליך מותאם אישית עם מפגשים פרטניים, תרגול ומשוב על מה שקורה בפועל.",
+    href: "/coaching",
+    color: "bg-secondary/10 text-secondary",
+    cta: "לבדוק אם ליווי מתאים",
+  },
+  {
+    icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+    ),
+    stage: "06 · ממשיכים יחד",
+    title: "קהילה וסימולטור כהמשך",
+    description: "אחרי שנוצר בסיס, הקהילה יכולה להוסיף שייכות ועקביות והסימולטור יכול להוסיף תרגול. ההצטרפות והגישה נקבעות לפי המסלול ואינן מוצגות כאן כהבטחה פתוחה.",
+    href: "/community",
+    color: "bg-primary/10 text-primary",
+    cta: "להכיר את אפשרויות ההמשך",
   },
 ];
 
@@ -216,11 +247,11 @@ export default function HomePage() {
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
-                href="/programs/the-way"
+                href="/resources"
                 data-wow-lift
                 className="px-8 py-4 bg-primary text-primary-foreground rounded-full font-semibold text-lg hover:bg-primary-dark shadow-lg shadow-primary/20"
               >
-                להכיר את תוכנית ״הדרך״
+                להתחיל ממשאב פתוח
               </Link>
               {/* Legibility fix 25.7: this button was border-secondary /
                   text-secondary — navy #1E3A5F — on the DARK hero scrim, which
@@ -455,10 +486,10 @@ export default function HomePage() {
               מה אני מציע
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              הדרך <span className="text-primary">שלך</span> לזוגיות
+              מסע שאפשר להיכנס אליו <span className="text-primary">מהמקום שלך</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              <GenderedText id="products.choose" /> לפי סוג המסגרת, התרגול והליווי שמתאימים לך.
+              לא חייבים לקפוץ ישר למסלול הגדול. מתחילים בערך פתוח, ומתקדמים רק כשיש סיבה טובה לצעד הבא.
             </p>
           </div>
 
@@ -470,6 +501,9 @@ export default function HomePage() {
                     <div className={`inline-flex p-3 rounded-xl mb-5 ${product.color}`}>
                       {product.icon}
                     </div>
+                    <p className="mb-2 text-xs font-semibold tracking-wide text-muted-foreground">
+                      {product.stage}
+                    </p>
                     <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
                       {product.title}
                     </h3>

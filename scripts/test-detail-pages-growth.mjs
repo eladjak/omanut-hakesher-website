@@ -82,6 +82,11 @@ function validate(source = baseline) {
   requireText(source.coachingVip, "ארבעה דברים שצריכים להופיע בהצעה", "VIP proposal checklist");
   requireText(source.club, "בדיקת התאמה בשתי דקות", "club fit guide");
   requireText(source.datingCard, "תרגיל של דקה", "dating card immediate exercise");
+  requireText(source.datingCard, "בתכנון · עדיין לא נמסר", "dating card planned resources truth label");
+  requireText(source.datingCard, "עדיין אינם חלק זמין מן השירות", "dating card resources are not promised");
+  if ((source.datingCard.match(/<Badge variant="secondary" className="mb-4">מתוכנן<\/Badge>/g) ?? []).length !== 1) {
+    throw new Error("dating card planned resources: every rendered resource card must inherit the planned badge");
+  }
   requireText(source.plus, "התוכנית הבסיסית או המסלול המשולב?", "plus comparison");
   requireText(source.podcast, "איך להפיק יותר", "podcast listening method");
   requireText(source.podcast, "אלה מסלולי הקשבה, לא רשימת פרקים מאומתת", "podcast truth label");
@@ -112,6 +117,14 @@ const negativeControls = [
   () => ({ ...baseline, leadTemplate: `${baseline.leadTemplate}\n<input name="email" />` }),
   () => ({ ...baseline, club: `${baseline.club}\n// CheckoutForm` }),
   () => ({ ...baseline, coaching: baseline.coaching.replace("לא חייבים להתחיל בליווי", "ליווי") }),
+  () => ({
+    ...baseline,
+    datingCard: baseline.datingCard.replace("בתכנון · עדיין לא נמסר", "משאבים נלווים"),
+  }),
+  () => ({
+    ...baseline,
+    datingCard: baseline.datingCard.replace("עדיין אינם חלק זמין מן השירות", "כלולים בשירות"),
+  }),
   () => ({
     ...baseline,
     publicTestimonials: JSON.stringify({
