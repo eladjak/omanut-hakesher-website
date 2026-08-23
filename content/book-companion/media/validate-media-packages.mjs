@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
-const IDS = ["BC-01", "BC-08"];
+const IDS = ["BC-01", "BC-03", "BC-08"];
 const REQUIRED_FILES = [
   "brief.md",
   "script.md",
@@ -66,6 +66,11 @@ export function validateMediaPackage(id, files) {
   if (metadata.mediaFile !== null || metadata.publicUrl !== null) issues.push(`${id}:media-or-url-invented`);
   if (metadata.sourceHash !== "PLACEHOLDER_OWNER_APPROVAL_REQUIRED") issues.push(`${id}:source-hash-not-placeholder`);
   if (!Array.isArray(metadata.sourceReferences) || metadata.sourceReferences.length !== 2) issues.push(`${id}:source-references-invalid`);
+  if (id === "BC-03") {
+    if (metadata.presenterSource !== "owner-recording") issues.push(`${id}:presenter-must-be-owner-recording`);
+    if (metadata.fictionalDemonstration !== true) issues.push(`${id}:demonstration-must-be-fictional`);
+    if (metadata.additionalPeople !== false) issues.push(`${id}:additional-people-must-be-false`);
+  }
 
   const full = spoken(files["script.md"]);
   const short = spoken(files["short-cut.md"]);
@@ -116,4 +121,3 @@ if (isMain) {
   if (issues.length) throw new Error(`Book Companion media packages failed:\n${issues.join("\n")}`);
   console.log(`Book Companion media packages: PASS (${IDS.length}/${IDS.length}, draft-only, no URLs or media)`);
 }
-

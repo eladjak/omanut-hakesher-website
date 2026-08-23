@@ -3,6 +3,7 @@ import { loadMediaPackage, validateAllMediaPackages, validateMediaPackage } from
 
 assert.deepEqual(await validateAllMediaPackages(), []);
 const source = await loadMediaPackage("BC-01");
+const bc03 = await loadMediaPackage("BC-03");
 const controls = [
   ["wrong id", "unexpected-id", "BC-99", (x) => x],
   ["public URL", "package-url-forbidden", "BC-01", (x) => { x["fallback.md"] += "\nhttps://example.invalid"; }],
@@ -23,5 +24,37 @@ for (const [name, expected, id, mutate] of controls) {
   assert.ok(issues.some((issue) => issue.includes(expected)), `${name} must produce ${expected}`);
 }
 
-console.log(`Book Companion media negative controls: PASS (${controls.length}/${controls.length})`);
+const syntheticPresenter = structuredClone(bc03);
+{
+  const metadata = JSON.parse(syntheticPresenter["metadata.json"]);
+  metadata.presenterSource = "synthetic-avatar";
+  syntheticPresenter["metadata.json"] = JSON.stringify(metadata);
+}
+assert.ok(
+  validateMediaPackage("BC-03", syntheticPresenter).some((issue) => issue.includes("presenter-must-be-owner-recording")),
+  "synthetic presenter must be rejected",
+);
 
+const realPersonDemo = structuredClone(bc03);
+{
+  const metadata = JSON.parse(realPersonDemo["metadata.json"]);
+  metadata.fictionalDemonstration = false;
+  realPersonDemo["metadata.json"] = JSON.stringify(metadata);
+}
+assert.ok(
+  validateMediaPackage("BC-03", realPersonDemo).some((issue) => issue.includes("demonstration-must-be-fictional")),
+  "non-fictional demonstration must be rejected",
+);
+
+const additionalPerson = structuredClone(bc03);
+{
+  const metadata = JSON.parse(additionalPerson["metadata.json"]);
+  metadata.additionalPeople = true;
+  additionalPerson["metadata.json"] = JSON.stringify(metadata);
+}
+assert.ok(
+  validateMediaPackage("BC-03", additionalPerson).some((issue) => issue.includes("additional-people-must-be-false")),
+  "additional people must be rejected",
+);
+
+console.log(`Book Companion media negative controls: PASS (${controls.length + 3}/${controls.length + 3})`);

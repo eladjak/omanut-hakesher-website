@@ -1,0 +1,19 @@
+{
+  "id": "BC-03",
+  "register": "PUBLIC",
+  "status": "draft-not-approved",
+  "title": "מה יעזור עכשיו? לעצור ולבדוק לפני שמגיבים",
+  "summary": "אלעד מדגים בסיטואציה בדיונית איך לעצור לפני עצה, לבדוק הבנה ולהציע בחירה שאפשר לתקן או לשנות.",
+  "sourceReferences": ["book/chapters/chapter-6.md", "website/data/book-companion-links.json#BC-03"],
+  "sourceHash": "PLACEHOLDER_OWNER_APPROVAL_REQUIRED",
+  "spokenLanguage": "he-IL",
+  "targetDurationSeconds": { "minimum": 120, "maximum": 180 },
+  "shortCutDurationSeconds": { "minimum": 35, "maximum": 55 },
+  "thumbnailAltDraft": "אלעד יושב מול המצלמה ולצדו הכיתוב מה יעזור עכשיו",
+  "presenterSource": "owner-recording",
+  "fictionalDemonstration": true,
+  "additionalPeople": false,
+  "mediaFile": null,
+  "publicUrl": null,
+  "ownerApproval": false
+}
