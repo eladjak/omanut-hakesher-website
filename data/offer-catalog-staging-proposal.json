@@ -25,7 +25,12 @@
       "sku": "OH-BOOK-PRINT-01",
       "productType": "physical-book-with-digital-companion",
       "publicName": "הספר אומנות הקשר",
-      "proposedConsumerPriceIls": 129,
+      "consumerPriceHypothesisRangeIls": {
+        "min": 99,
+        "max": 149,
+        "basis": "existing-a-b-c-options"
+      },
+      "selectedPriceIls": null,
       "billing": "one-time",
       "activationState": "blocked",
       "humanApproval": null,
@@ -71,7 +76,12 @@
       "sku": "OH-DATING-CARD-SVC-01",
       "productType": "bounded-personal-writing-service",
       "publicName": "כרטיס היכרות אישי",
-      "proposedConsumerPriceIls": 349,
+      "consumerPriceHypothesisRangeIls": {
+        "min": 249,
+        "max": 490,
+        "basis": "existing-a-b-c-options"
+      },
+      "selectedPriceIls": null,
       "billing": "one-time",
       "activationState": "blocked",
       "humanApproval": null,
@@ -114,7 +124,12 @@
       "sku": "OH-WAY-COURSE-01",
       "productType": "time-bounded-digital-course",
       "publicName": "הדרך",
-      "proposedConsumerPriceIls": 1490,
+      "consumerPriceHypothesisRangeIls": {
+        "min": 990,
+        "max": 2490,
+        "basis": "existing-a-b-c-options"
+      },
+      "selectedPriceIls": null,
       "billing": "one-time",
       "activationState": "blocked",
       "humanApproval": null,
@@ -179,7 +194,12 @@
       "sku": "OH-GUIDANCE-3-01",
       "productType": "bounded-human-guidance-service",
       "publicName": "חבילת ליווי אישי",
-      "proposedConsumerPriceIls": 1650,
+      "consumerPriceHypothesisRangeIls": {
+        "min": 1290,
+        "max": 2250,
+        "basis": "existing-a-b-c-options"
+      },
+      "selectedPriceIls": null,
       "billing": "one-time",
       "activationState": "blocked",
       "humanApproval": null,

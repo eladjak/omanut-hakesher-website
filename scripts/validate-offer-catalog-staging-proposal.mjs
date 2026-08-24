@@ -9,4 +9,5 @@ if (issues.length) {
 
 const activeGates = Object.values(proposal.launchGates).filter((value) => value !== false).length;
 const approvedOffers = proposal.offers.filter((offer) => offer.humanApproval !== null).length;
-console.log(`Offer catalog staging proposal: PASS (${proposal.offers.length} offers, ${approvedOffers} human-approved, ${activeGates} launch gates claimed)`);
+const selectedPrices = proposal.offers.filter((offer) => offer.selectedPriceIls !== null).length;
+console.log(`Offer catalog staging proposal: PASS (${proposal.offers.length} offers, ${selectedPrices} selected prices, ${approvedOffers} human-approved, ${activeGates} launch gates claimed)`);

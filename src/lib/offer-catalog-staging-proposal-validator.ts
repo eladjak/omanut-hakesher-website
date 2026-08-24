@@ -2,11 +2,11 @@ export type OfferCatalogProposalIssue = { code: string; item?: string; field?: s
 
 type Obj = Record<string, unknown>;
 
-const EXPECTED_OFFERS = new Map([
-  ["OH-BOOK-PRINT-01", 129],
-  ["OH-DATING-CARD-SVC-01", 349],
-  ["OH-WAY-COURSE-01", 1490],
-  ["OH-GUIDANCE-3-01", 1650],
+const EXPECTED_OFFERS = new Map<string, { min: number; max: number }>([
+  ["OH-BOOK-PRINT-01", { min: 99, max: 149 }],
+  ["OH-DATING-CARD-SVC-01", { min: 249, max: 490 }],
+  ["OH-WAY-COURSE-01", { min: 990, max: 2490 }],
+  ["OH-GUIDANCE-3-01", { min: 1290, max: 2250 }],
 ]);
 const FORBIDDEN_OPERATIONAL_KEYS = new Set([
   "checkoutUrl", "paymentUrl", "providerProductId", "providerSku", "liveProductId", "webhookSecret",
@@ -84,8 +84,17 @@ export function validateOfferCatalogStagingProposal(input: unknown): OfferCatalo
     const sku = String(raw.sku ?? "missing-sku");
     if (seen.has(sku)) issues.push({ code: "duplicate-sku", item: sku });
     seen.add(sku);
-    if (!EXPECTED_OFFERS.has(sku)) issues.push({ code: "unexpected-sku", item: sku });
-    else if (raw.proposedConsumerPriceIls !== EXPECTED_OFFERS.get(sku)) issues.push({ code: "recommended-price-drift", item: sku });
+    const expectedRange = EXPECTED_OFFERS.get(sku);
+    if (!expectedRange) issues.push({ code: "unexpected-sku", item: sku });
+    else if (
+      !obj(raw.consumerPriceHypothesisRangeIls)
+      || raw.consumerPriceHypothesisRangeIls.min !== expectedRange.min
+      || raw.consumerPriceHypothesisRangeIls.max !== expectedRange.max
+      || raw.consumerPriceHypothesisRangeIls.basis !== "existing-a-b-c-options"
+      || expectedRange.min >= expectedRange.max
+    ) issues.push({ code: "price-hypothesis-range-invalid", item: sku });
+    if (raw.selectedPriceIls !== null) issues.push({ code: "selected-price-invented", item: sku, field: "selectedPriceIls" });
+    if ("proposedConsumerPriceIls" in raw) issues.push({ code: "exact-proposed-price-present", item: sku, field: "proposedConsumerPriceIls" });
     if (raw.billing !== "one-time") issues.push({ code: "recurring-billing-introduced", item: sku });
     if (raw.activationState !== "blocked") issues.push({ code: "offer-activation-not-blocked", item: sku });
     if (raw.humanApproval !== null) issues.push({ code: "human-approval-invented", item: sku, field: "humanApproval" });

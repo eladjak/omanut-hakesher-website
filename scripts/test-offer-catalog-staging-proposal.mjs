@@ -9,7 +9,12 @@ assert.deepEqual(codes(source), []);
 const controls = [
   ["three offers", "offer-count-not-four", (x) => { x.offers.pop(); }],
   ["fifth offer", "offer-count-not-four", (x) => { x.offers.push(structuredClone(x.offers[0])); x.offers.at(-1).sku = "OH-EXTRA-01"; }],
-  ["price drift", "recommended-price-drift", (x) => { x.offers[0].proposedConsumerPriceIls = 1; }],
+  ["range minimum drift", "price-hypothesis-range-invalid", (x) => { x.offers[0].consumerPriceHypothesisRangeIls.min = 1; }],
+  ["range maximum drift", "price-hypothesis-range-invalid", (x) => { x.offers[1].consumerPriceHypothesisRangeIls.max = 1; }],
+  ["range basis drift", "price-hypothesis-range-invalid", (x) => { x.offers[2].consumerPriceHypothesisRangeIls.basis = "market-proof"; }],
+  ["range removed", "price-hypothesis-range-invalid", (x) => { delete x.offers[3].consumerPriceHypothesisRangeIls; }],
+  ["selected price invented", "selected-price-invented", (x) => { x.offers[0].selectedPriceIls = 129; }],
+  ["exact proposed price restored", "exact-proposed-price-present", (x) => { x.offers[0].proposedConsumerPriceIls = 129; }],
   ["root approval invented", "human-approval-invented", (x) => { x.humanApproval = { approvedBy: "owner" }; }],
   ["offer approval invented", "human-approval-invented", (x) => { x.offers[1].humanApproval = "approved"; }],
   ["checkout enabled", "activation-not-blocked", (x) => { x.activation.checkout = true; }],

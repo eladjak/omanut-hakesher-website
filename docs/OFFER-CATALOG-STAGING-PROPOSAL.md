@@ -1,4 +1,4 @@
-# הצעת קטלוג staging — חלופה B
+# הצעת קטלוג staging — ארכיטקטורת חלופה B, ללא בחירת מחיר
 
 `data/offer-catalog-staging-proposal.json` הוא חוזה הצעה קנוני **לבדיקות staging בלבד**. הוא אינו קטלוג ציבורי, אינו מיובא לעמודי האתר ואינו מחובר ל־checkout, לספק תשלום או ל־fulfillment writer.
 
@@ -6,14 +6,14 @@
 
 המסע נשאר פשוט: ערך פתוח → ספר → “הדרך” → ליווי. כרטיס ההיכרות הוא שירות צד עצמאי. הקטלוג מכיל בדיוק ארבעה SKU מוצעים:
 
-| SKU | הצעה | מחיר מוצע ולא מאושר | מסירה מרכזית |
+| SKU | הצעה | טווח השערה לא מאושר | מסירה מרכזית |
 |---|---|---:|---|
-| `OH-BOOK-PRINT-01` | הספר | ₪129 | ספר מודפס + Book Companion תואם מהדורה |
-| `OH-DATING-CARD-SVC-01` | כרטיס היכרות אישי | ₪349 | intake פרטי, טיוטה, תיקון אחד וקובץ סופי |
-| `OH-WAY-COURSE-01` | “הדרך” | ₪1,490 | קורס ל־12 חודשים, סימולטור תחום עלות וקהילה ל־6 חודשים |
-| `OH-GUIDANCE-3-01` | ליווי אישי | ₪1,650 | שלוש פגישות של 60 דקות בחלון 90 יום |
+| `OH-BOOK-PRINT-01` | הספר | ₪99–₪149 | ספר מודפס + Book Companion תואם מהדורה |
+| `OH-DATING-CARD-SVC-01` | כרטיס היכרות אישי | ₪249–₪490 | intake פרטי, טיוטה, תיקון אחד וקובץ סופי |
+| `OH-WAY-COURSE-01` | “הדרך” | ₪990–₪2,490 | קורס ל־12 חודשים, סימולטור תחום עלות וקהילה ל־6 חודשים |
+| `OH-GUIDANCE-3-01` | ליווי אישי | ₪1,290–₪2,250 | שלוש פגישות של 60 דקות בחלון 90 יום |
 
-כל סכום הוא hypothesis לאישור אלעד. `humanApproval` הוא `null` ברמת החוזה ובכל SKU. אסור להציג את המחירים האלה לציבור או להסיק מהם מחיר השוואה, הנחה, guarantee או זמינות.
+הטווחים נגזרים אך ורק מטבלת חלופות A/B/C הקיימת. הם אינם הוכחת willingness-to-pay, עלות או מחיר מומלץ. `selectedPriceIls` הוא `null`, ו־`humanApproval` הוא `null` ברמת החוזה ובכל SKU. אסור להציג את הטווחים או מחיר מתוכם לציבור, או להסיק מהם מחיר השוואה, הנחה, guarantee או זמינות.
 
 ## מה אינו SKU
 
@@ -34,7 +34,7 @@
 
 כל שדות activation הם `false`, כל offer הוא `blocked`, וכל launch gate הוא `false`. לפני שינוי מצב נדרשים לפחות:
 
-1. אישור אנושי של אלעד למחיר, תכולה, duration, ביטול ו־no-show.
+1. נתוני עלות, capacity ו־willingness-to-pay, ולאחריהם בחירת מחיר ואישור אנושי של אלעד לתכולה, duration, ביטול ו־no-show.
 2. מודל עלות אמיתי לספר, simulator, community ושירות אנושי.
 3. בדיקות sandbox של order, decline, replay, receipt, refund ו־revoke.
 4. buyer isolation ו־SKU-to-entitlement isolation.
@@ -48,4 +48,4 @@ node --experimental-strip-types scripts/validate-offer-catalog-staging-proposal.
 node --experimental-strip-types scripts/test-offer-catalog-staging-proposal.mjs
 ```
 
-ה־validator דורש בדיוק את ארבעת ה־SKU והמחירים של חלופה B, בודק שכל ההפעלות חסומות ושאין אישור אנושי מומצא, מחייב את גבולות entitlement/fulfillment/refund, ומונע יצירת SKU עצמאי לקהילה או לסימולטור. בדיקות ה־negative controls מוכיחות שהשער נכשל כאשר מנסים לפתוח מחיר/checkout, להמציא approval, לשנות מחיר, להוסיף provider ID, לעקוף זכאות או לפרסם הבטחת refund.
+ה־validator דורש בדיוק את ארבעת ה־SKU ואת טווחי ההשערה שנגזרו מחלופות A/B/C, מחייב `selectedPriceIls: null`, בודק שכל ההפעלות חסומות ושאין אישור אנושי מומצא, מחייב את גבולות entitlement/fulfillment/refund, ומונע יצירת SKU עצמאי לקהילה או לסימולטור. בדיקות ה־negative controls מוכיחות שהשער נכשל כאשר מנסים לבחור או להחזיר מחיר מדויק, לשבש או למחוק טווח, לפתוח checkout, להמציא approval, להוסיף provider ID, לעקוף זכאות או לפרסם הבטחת refund.
