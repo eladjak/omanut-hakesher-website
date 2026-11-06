@@ -1,0 +1,9 @@
+import {test,expect,afterEach} from 'bun:test';
+import {getPublishedPosts,portableHtml,blogJsonLd} from '../src/lib/sanity-blog';
+const real=globalThis.fetch;afterEach(()=>{globalThis.fetch=real});
+const block=(text:string,listItem?:string,level?:number)=>({_type:'block',_key:text,style:'normal',listItem,level,markDefs:[],children:[{_type:'span',_key:text,marks:[],text}]});
+const p=(other:Record<string,unknown>={})=>({_id:'post.x',status:'published',language:'he',slug:'remote',title:'כותרת',publishedAt:'2026-04-01T00:00:00Z',body:[block('תוכן')],...other});
+const mock=(result:unknown)=>{globalThis.fetch=(async()=>new Response(JSON.stringify({result}))) as typeof fetch};
+test('published only, site language, deduplication and descending dates',async()=>{mock([p(),p({_id:'drafts.x',slug:'draft'}),p({status:'draft',slug:'draft2'}),p({language:'en',slug:'en'}),p({slug:'invalid',publishedAt:'no'}),p({_id:'duplicate',title:'חדש'})]);const result=await getPublishedPosts();expect(result[0].slug).toBe('remote');expect(result[0].title).toBe('חדש');expect(result.some(x=>['draft','draft2','en','invalid'].includes(x.slug))).toBe(false);expect(result.length).toBe(7)});
+test('bad Sanity response falls back to static posts',async()=>{mock({invalid:true});expect((await getPublishedPosts()).length).toBe(6)});
+test('renders nested lists and safe image JSON-LD',async()=>{const html=portableHtml([block('one','number',1),block('sub','bullet',2),block('two','number',1)] as Parameters<typeof portableHtml>[0]);expect((html.match(/<ol>/g)||[]).length).toBe(1);expect(html).toContain('<ul>');const image='https://cdn.sanity.io/images/b0hm1i34/production/abc-100x100.jpg';mock([p({imageUrl:image,title:'</script>'})]);const post=(await getPublishedPosts())[0];expect(post.image).toBe(image);expect(blogJsonLd(post,'https://example.com')).not.toContain('</script>');});

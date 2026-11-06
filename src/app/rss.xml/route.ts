@@ -1,0 +1,4 @@
+import {getPublishedPosts} from '@/lib/sanity-blog';
+export const revalidate = 300;
+const xml=(s:string)=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');
+export async function GET() {const posts=await getPublishedPosts();const base='https://omanut-hakesher.co.il';const items=posts.map(p=>`<item><title>${xml(p.title)}</title><link>${base}/blog/${xml(p.slug)}</link><guid>${base}/blog/${xml(p.slug)}</guid><description>${xml(p.excerpt)}</description><pubDate>${new Date(p.publishedAt).toUTCString()}</pubDate></item>`).join('');return new Response(`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>אומנות הקשר</title><link>${base}/blog</link><description>מאמרים על זוגיות</description><language>he</language>${items}</channel></rss>`,{headers:{'content-type':'application/rss+xml; charset=utf-8'}});}

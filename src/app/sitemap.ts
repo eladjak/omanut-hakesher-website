@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next";
-import { getAllBlogSlugs } from "@/lib/blog-posts";
+import { getPublishedPosts } from "@/lib/sanity-blog";
 import { getAllSlugs as getAllTestimonialSlugs } from "@/lib/testimonials";
 
 const BASE_URL = "https://omanut-hakesher.co.il";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const blogSlugs = getAllBlogSlugs();
+export const revalidate = 300;
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const blogSlugs = (await getPublishedPosts()).map(post => post.slug);
   const testimonialSlugs = getAllTestimonialSlugs();
 
   const staticPages: MetadataRoute.Sitemap = [

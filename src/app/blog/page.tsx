@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { blogPosts } from "@/lib/blog-posts";
+import { getPublishedPosts } from "@/lib/sanity-blog";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -25,7 +25,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogPage() {
+export const revalidate = 300;
+export default async function BlogPage() {
+  const blogPosts = await getPublishedPosts();
   return (
     <>
       {/* Breadcrumbs */}
@@ -58,28 +60,7 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* Banner: new articles on eladjak.com (cross-link, not replace) */}
-      <section className="bg-accent/10 border-y border-accent/20">
-        <div className="container mx-auto px-4 py-5">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-center sm:text-right">
-            <p className="text-sm text-foreground/85">
-              ✦ <span className="font-medium">המאמרים החדשים שלי כעת באתר האישי</span> —
-              שם אני כותב גם על מותג אישי, יזמות וטכנולוגיה.
-            </p>
-            <Link
-              href="https://eladjak.com/blog"
-              target="_blank"
-              rel="noopener"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline underline-offset-4 whitespace-nowrap"
-            >
-              eladjak.com/blog
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </Link>
-          </div>
-        </div>
-      </section>
+      <div className="container mx-auto px-4 pt-6"><a href="/rss.xml" className="inline-flex min-h-11 items-center text-primary underline underline-offset-4">הרשמה לעדכוני RSS</a></div>
 
       {/* Blog Posts Grid */}
       <section className="py-20">

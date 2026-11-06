@@ -159,3 +159,7 @@
 | `public/images/generated/` | 22 תמונות Gemini |
 | `public/assets/` | נכסי מותג (brand, media, products) |
 | `.vercelignore` | מוציא תמונות גדולות מדיפלוי |
+
+## 2026-11-06 — ענף קריאת בלוג מ־Sanity
+- קריאה ציבורית בלבד למאמרים עבריים שפורסמו תחת `omanut-hakesher`, שילוב עם המאמרים הקיימים, RSS ומפת אתר.
+- האתר הפעיל ב־www.ohlove.co.il הוא Wix; ענף Next זה אינו משנה את האתר הפעיל ואינו מבצע החלפת DNS.

@@ -2,24 +2,22 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { getBlogPost, getAllBlogSlugs, blogPosts } from "@/lib/blog-posts";
+import { getPublishedPosts, blogJsonLd } from "@/lib/sanity-blog";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { BreadcrumbJsonLd, ArticleJsonLd } from "@/components/JsonLd";
+import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  return getAllBlogSlugs().map((slug) => ({ slug }));
-}
+export const revalidate = 300;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = getBlogPost(slug);
+  const post = (await getPublishedPosts()).find(p => p.slug === slug);
 
   if (!post) {
     return {
@@ -45,7 +43,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
-  const post = getBlogPost(slug);
+  const blogPosts = await getPublishedPosts();
+  const post = blogPosts.find(p => p.slug === slug);
 
   if (!post) {
     notFound();
@@ -70,13 +69,7 @@ export default async function BlogPostPage({ params }: Props) {
           { name: post.title, url: `https://omanut-hakesher.co.il/blog/${slug}` },
         ]}
       />
-      <ArticleJsonLd
-        title={post.title}
-        description={post.excerpt}
-        url={`https://omanut-hakesher.co.il/blog/${slug}`}
-        datePublished={post.date}
-        category={post.category}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: blogJsonLd(post, "https://omanut-hakesher.co.il")}} />
 
       {/* Breadcrumbs */}
       <div className="bg-muted/50 border-b border-border/30">
@@ -124,7 +117,7 @@ export default async function BlogPostPage({ params }: Props) {
             {/* Render markdown content as HTML */}
             <div
               dangerouslySetInnerHTML={{
-                __html: post.content
+                __html: post.contentHtml ?? post.content
                   .replace(/^## (.*$)/gm, '<h2 class="text-2xl font-bold mt-10 mb-4 text-foreground">$1</h2>')
                   .replace(/^### (.*$)/gm, '<h3 class="text-xl font-semibold mt-8 mb-3 text-foreground">$1</h3>')
                   .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -151,10 +144,8 @@ export default async function BlogPostPage({ params }: Props) {
               />
             </div>
             <div className="text-center sm:text-right flex-1">
-              <p className="font-bold text-lg">אלעד יעקובוביץ&apos;</p>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                מאמן זוגיות עם 20 שנות ניסיון. 461 זוגות כבר מצאו אהבה עם הגישה שלי.
-              </p>
+              <p className="font-bold text-lg">{post.author || "אלעד יעקובוביץ׳"}</p>
+              {!post.author && <p className="text-muted-foreground text-sm leading-relaxed">מאמן זוגיות עם 20 שנות ניסיון. 461 זוגות כבר מצאו אהבה עם הגישה שלי.</p>}
             </div>
             <Link
               href="/coaching"
