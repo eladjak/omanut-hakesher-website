@@ -1,0 +1,22 @@
+bun test v1.4.4 (38afee6c8)
+
+tests/sanity-blog.test.ts:
+(pass) published only, site language, deduplication and descending dates [18.52ms]
+Sanity blog unavailable 11 | const query = `*[_type == "post" && siteId == "omanut-hakesher" && status == "published" && !(_id in path("drafts.**")) && (language == "he" || !defined(language))]{_id,status,language,title,"slug":slug.current,excerpt,publishedAt,tags,"body":body[]{...,"assetUrl":asset->url},"imageUrl":mainImage.asset->url,"author":author->name}`;
+12 | export async function getPublishedPosts(): Promise<UnifiedPost[]> {
+13 |  const fallback=local();
+14 |  try {
+15 |   const r=await fetch(`https://b0hm1i34.api.sanity.io/v2024-01-01/data/query/production?query=${encodeURIComponent(query)}`,{next:{revalidate:300},signal:AbortSignal.timeout(5000)});
+16 |   if(!r.ok) throw new Error(`Sanity ${r.status}`); const {result}=await r.json(); if(!Array.isArray(result)) throw new Error('Invalid response');
+                                                                                                                            ^
+error: Invalid response
+      at getPublishedPosts (/root/work/growth-blogs-20261106/audit-sources/omanut-hakesher-website/src/lib/sanity-blog.ts:16:120)
+      at async <anonymous> (/root/work/growth-blogs-20261106/audit-sources/omanut-hakesher-website/tests/sanity-blog.test.ts:8:100)
+
+(pass) bad Sanity response falls back to static posts [0.53ms]
+(pass) renders nested lists and safe image JSON-LD [1.92ms]
+
+ 3 pass
+ 0 fail
+ 9 expect() calls
+Ran 3 tests across 1 file. [83.00ms]

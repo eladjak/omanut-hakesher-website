@@ -1,1 +1,31 @@
-{"model":"gpt-6.1-terra medium","siteId":"omanut-hakesher","dataset":"b0hm1i34/production","localChecks":{"build":"pass","tests":"3 pass","targetedLint":"pass","htmlBlogPosting":"pass","rss":"pass","sitemap":"pass","screenshots":"375px index and Sanity post visually inspected"},"publishedSanityPost":"strategies-for-conflict-resolution-guide","liveSite":"www.ohlove.co.il is Wix; this branch does not connect that site or change DNS","canonical":"existing Next app origin omanut-hakesher.co.il retained; actual cutover/domain requires decision","preview":"not yet verified","writesToSanity":0}
+{
+  "model": "gpt-6.1-terra medium",
+  "siteId": "omanut-hakesher",
+  "dataset": "b0hm1i34/production",
+  "localChecks": {
+    "build": "pass",
+    "tests": "3 pass",
+    "targetedLint": "pass",
+    "htmlBlogPosting": "pass",
+    "rss": "pass",
+    "sitemap": "pass",
+    "screenshots": "375px index and Sanity post visually inspected"
+  },
+  "publishedSanityPost": "strategies-for-conflict-resolution-guide",
+  "liveSite": "www.ohlove.co.il is Wix; this branch does not connect that site or change DNS",
+  "canonical": "existing Next app origin omanut-hakesher.co.il retained; actual cutover/domain requires decision",
+  "preview": "No GitHub deployment found for branch at time of check; CLI authentication invalid",
+  "writesToSanity": 0,
+  "commits": [
+    "e0cb932"
+  ],
+  "logs": [
+    "build.log",
+    "tests.log",
+    "lint.log"
+  ],
+  "screenshots": [
+    "evidence/job-g/index.png",
+    "evidence/job-g/post.png"
+  ]
+}

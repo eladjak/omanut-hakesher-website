@@ -1,0 +1,116 @@
+$ next build
+Warning: Custom Cache-Control headers detected for the following routes:
+  - /_next/static/:path*
+
+Setting a custom Cache-Control header can break Next.js development behavior.
+▲ Next.js 16.2.10 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.1s
+  Running TypeScript ...
+  Finished TypeScript in 12.8s ...
+  Collecting page data using 15 workers ...
+⚠ Using edge runtime on a page currently disables static generation for that page
+  Generating static pages using 15 workers (0/114) ...
+  Generating static pages using 15 workers (28/114) 
+  Generating static pages using 15 workers (56/114) 
+  Generating static pages using 15 workers (85/114) 
+✓ Generating static pages using 15 workers (114/114) in 1385ms
+  Finalizing page optimization ...
+
+Route (app)                         Revalidate  Expire
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ƒ /api/checkout
+├ ƒ /api/contact
+├ ƒ /api/content
+├ ƒ /api/content/[slug]
+├ ƒ /api/content/[slug]/action
+├ ƒ /api/lead/subscribe
+├ ƒ /api/sumit/checkout
+├ ƒ /api/sumit/webhook
+├ ○ /blog                                   5m      1y
+├ ƒ /blog/[slug]
+├ ○ /book
+├ ● /book/[chapter]
+│ ├ /book/1
+│ ├ /book/2
+│ ├ /book/3
+│ └ [+10 more paths]
+├ ● /book/[chapter]/[tool]
+│ ├ /book/1/story-quiz
+│ ├ /book/1/four-a-day
+│ ├ /book/2/fear-map
+│ └ [+33 more paths]
+├ ○ /book/1/four-a-day
+├ ○ /book/1/story-quiz
+├ ○ /book/11/chance-calculator
+├ ○ /book/11/chemistry-quiz
+├ ○ /book/11/connection-score
+├ ○ /book/12/36-questions
+├ ○ /book/12/vulnerability-stage
+├ ○ /book/13/fear-map
+├ ○ /book/13/readiness-quiz
+├ ○ /book/2/fear-map
+├ ○ /book/5/attachment-quiz
+├ ○ /book/5/who-am-i
+├ ○ /book/6/emotion-wheel
+├ ○ /book/8/attraction-map
+├ ○ /book/8/courage-tracker
+├ ○ /book/9/date-report
+├ ○ /book/9/profile-photo
+├ ○ /book/closing
+├ ○ /book/closing/future-letter
+├ ○ /book/closing/readiness-retest
+├ ○ /book/intro
+├ ○ /book/intro/readiness-quiz
+├ ƒ /checkout/success
+├ ○ /club
+├ ○ /coaching
+├ ○ /coaching/book
+├ ○ /coaching/vip
+├ ○ /community
+├ ○ /contact
+├ ○ /content
+├ ƒ /content/[slug]
+├ ○ /content/manifest.webmanifest
+├ ○ /course
+├ ○ /events
+├ ○ /events/love-event
+├ ○ /events/love-event/confirmed
+├ ○ /gallery
+├ ○ /lead/23-reasons
+├ ○ /lead/36-questions
+├ ○ /lead/7-principles
+├ ○ /lead/courage
+├ ○ /lead/dating-talks
+├ ○ /lead/vision
+├ ƒ /opengraph-image
+├ ○ /podcast
+├ ○ /privacy
+├ ○ /products
+├ ○ /products/dating-card
+├ ○ /programs
+├ ○ /programs/the-way
+├ ○ /programs/the-way-plus
+├ ○ /resources
+├ ○ /robots.txt
+├ ○ /rss.xml                                5m      1y
+├ ○ /services
+├ ○ /sipurim
+├ ● /sipurim/[slug]
+│ ├ /sipurim/aharon-deutsch
+│ ├ /sipurim/shlomo-mishaan-masri
+│ ├ /sipurim/shahar-friedman
+│ └ [+13 more paths]
+├ ○ /sitemap.xml                            5m      1y
+├ ○ /thanks
+├ ƒ /thanks/purchase
+└ ○ /welcome
+
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+

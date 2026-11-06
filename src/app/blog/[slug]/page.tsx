@@ -135,14 +135,14 @@ export default async function BlogPostPage({ params }: Props) {
       <section className="py-12 bg-muted/30 border-y border-border/30">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center gap-6">
-            <div className="relative w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-primary/30">
+            {!post.author && <div className="relative w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-primary/30">
               <Image
-                src="/assets/elad-photos/elad-2025-portrait.jpg"
+                src="/images/generated/about-elad-speaking.jpg"
                 alt="אלעד יעקובוביץ"
                 fill
                 className="object-cover"
               />
-            </div>
+            </div>}
             <div className="text-center sm:text-right flex-1">
               <p className="font-bold text-lg">{post.author || "אלעד יעקובוביץ׳"}</p>
               {!post.author && <p className="text-muted-foreground text-sm leading-relaxed">מאמן זוגיות עם 20 שנות ניסיון. 461 זוגות כבר מצאו אהבה עם הגישה שלי.</p>}
