@@ -1,7 +1,43 @@
 # אתר אומנות הקשר - התקדמות
 
-## סטטוס: deployed · lead-magnet pipeline LIVE in production 2026-05-05
-## עדכון אחרון: 2026-05-05
+## סטטוס: deployed · /sipurim עם 36 עדויות אמיתיות · haderech phase-1 tokens unified 2026-05-15
+## עדכון אחרון: 2026-05-15
+
+### Session 2026-05-15 — Testimonials harvest + /sipurim + haderech phase-1
+מהלך כפול: שליפת כל העדויות מהאקוסיסטם + איחוד טוקנים בין שני האתרים.
+
+**עדויות (36 נכסים):**
+- ✅ נסיון Rav-Messer (9 דפי נחיתה): 403 Cloudflare — חסום, נדרש export ידני (שולח אישית)
+- ✅ ohlove.co.il/amlatsot: 3 עדויות טקסט מלאות עם שמות+תמונות (אהרון דויטש, שלמה משען מסרי, שחר פרידמן) — הורד מ-Wix CDN
+- ✅ OneDrive scan חשף מטמון: `ארכיון/_מסודר_מ_Downloads/תיקיית תמונות ועדויות לקוח/` עם:
+  - 10 גרפיקות עדות מעוצבות (מאיר דוד חי, מאיר לווינגר, מרק לוסקי, דנה עזרא, יעלה כהן, בני סניידר, דוד לוינשטרן, לימור שקד, אוריה אשטה, ישראל וינר)
+  - 3 גרפיקות זוגות (אלמוג ושרה, חנוך ויהודית, נתנאל ורחל)
+  - 23 צילומי וואטסאפ (2020-2024)
+- ✅ `src/data/testimonials.json` — סכמה אחידה (text_testimonials, graphic_testimonials, couples, whatsapp_screenshots, videos)
+- ✅ `public/testimonials/images/` — 36 קבצים עם שמות קנוניים (kebab-case)
+- ✅ `src/app/sipurim/page.tsx` — דף חדש, rose/navy/gold, RTL, hero gradient, 6 sections, lazy-loaded, focus-visible, tabular-nums
+- ✅ עדכונים: sitemap.ts (+/sipurim, priority 0.85), Header + Footer (נווט ל-/sipurim)
+- ✅ npm run build: 47+1 routes, /sipurim prerender static, 0 שגיאות
+- ✅ TypeScript: 0 שגיאות
+
+**Phase 1 איחוד haderech-next:**
+- ✅ BRAND.md הועתק ל-`~/projects/haderech-next/BRAND.md`
+- ✅ `globals.css` עודכן:
+  - palette: rose `#E85D75` + navy `#1E3A5F` + gold `#D4A853` + cream bg `#FFFAF7` (היה royal blue + teal + cool-gray)
+  - legacy aliases (`--brand-*`, `--blue-*`, `--accent-*`) ממופים לערכים החדשים → אין breaking changes לקומפוננטות קיימות
+  - `@theme inline` מלא עם token bundle (primary/secondary/accent + radius scale)
+  - dark mode tokens מעודכנים
+  - body line-height: 1.7 + tabular-nums גלובלי
+  - focus-visible: `var(--primary)` במקום hex
+- ✅ `next build` (local): 50+ routes prerender, 0 שגיאות
+
+**חסום:**
+- ⏳ Rav-Messer landing pages (9): Cloudflare 403. צריך אלעד לעשות export ידני או לפתוח דרך Chrome MCP בסשן אחר.
+
+**הבא בתור (phase 2 haderech):**
+- Header/Footer port מ-omanut → haderech (שמירת Clerk wiring)
+- כפתורים rounded-full
+- Hero בtemplate omanut (bg-foreground/70 overlay)
 
 ### Session 2026-05-05 (3) — Production wiring + smoke tests passed
 הצינור באוויר. `RAV_MESSER_*` + `RESEND_API_KEY` + `CONTACT_EMAIL` נוספו ל-Vercel env (production), אומנות הקשר עברה deploy חדש, ונבדקה.

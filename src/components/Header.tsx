@@ -15,7 +15,7 @@ const navLinks = [
   { href: "/hadrech", label: "תוכנית הדרך" },
   { href: "/coaching", label: "ליווי אישי" },
   { href: "/book", label: "הספר" },
-  { href: "/testimonials", label: "סיפורי הצלחה" },
+  { href: "/sipurim", label: "סיפורי הצלחה" },
   { href: "/podcast", label: "פודקאסט" },
   { href: "/blog", label: "בלוג" },
   { href: "/contact", label: "צור קשר" },

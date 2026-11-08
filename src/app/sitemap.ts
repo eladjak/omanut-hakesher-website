@@ -1,10 +1,12 @@
 import type { MetadataRoute } from "next";
 import { getAllBlogSlugs } from "@/lib/blog-posts";
+import { getAllSlugs as getAllTestimonialSlugs } from "@/lib/testimonials";
 
 const BASE_URL = "https://omanut-hakesher.co.il";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const blogSlugs = getAllBlogSlugs();
+  const testimonialSlugs = getAllTestimonialSlugs();
 
   const staticPages: MetadataRoute.Sitemap = [
     {
@@ -42,6 +44,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/sipurim`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.85,
     },
     {
       url: `${BASE_URL}/podcast`,
@@ -106,5 +114,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...blogPages];
+  const testimonialPages: MetadataRoute.Sitemap = testimonialSlugs.map((slug) => ({
+    url: `${BASE_URL}/sipurim/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...blogPages, ...testimonialPages];
 }
