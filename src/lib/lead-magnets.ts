@@ -53,6 +53,38 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
     assetUrl: 'https://omanut-hakesher.co.il/lead/36-questions/download',
     welcomeSubject: 'המדריך שלך מוכן: 36 השאלות שיכולות ליצור אהבה',
   },
+  'courage': {
+    slug: 'courage',
+    titleHe: '8 דרכים לחיים של אומץ',
+    listId: OMANUT_HAKESHER_LIST_ID,
+    tags: ['lead-magnet', 'lead:courage', 'source:website'],
+    assetUrl: 'https://omanut-hakesher.co.il/lead/courage/download',
+    welcomeSubject: 'המדריך שלך מוכן: 8 דרכים לחיים של אומץ',
+  },
+  'vision': {
+    slug: 'vision',
+    titleHe: 'איך לכתוב חזון אישי לזוגיות',
+    listId: OMANUT_HAKESHER_LIST_ID,
+    tags: ['lead-magnet', 'lead:vision', 'source:website'],
+    assetUrl: 'https://omanut-hakesher.co.il/lead/vision/download',
+    welcomeSubject: 'המדריך שלך מוכן: חזון אישי לזוגיות',
+  },
+  'dating-talks': {
+    slug: 'dating-talks',
+    titleHe: '10 כללים לשיחות דייט מנצחות',
+    listId: OMANUT_HAKESHER_LIST_ID,
+    tags: ['lead-magnet', 'lead:dating-talks', 'source:website'],
+    assetUrl: 'https://omanut-hakesher.co.il/lead/dating-talks/download',
+    welcomeSubject: 'המדריך שלך מוכן: 10 כללים לשיחות דייט מנצחות',
+  },
+  'love-event': {
+    slug: 'love-event',
+    titleHe: 'אירוע אהבה — מפגש זום שבועי',
+    listId: OMANUT_HAKESHER_LIST_ID,
+    tags: ['event', 'event:love-event', 'source:website'],
+    assetUrl: 'https://omanut-hakesher.co.il/event/love',
+    welcomeSubject: 'נרשמת לאירוע אהבה — נשלח לך לינק לזום יום לפני',
+  },
 }
 
 export function getLeadMagnet(slug: string): LeadMagnetConfig | undefined {
