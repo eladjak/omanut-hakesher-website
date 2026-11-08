@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
 };
 
-const BOOKING_URL = "/contact";
+const BOOKING_URL = "/coaching/book";
 
 const painPoints = [
   {

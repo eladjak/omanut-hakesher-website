@@ -1,7 +1,104 @@
 # אתר אומנות הקשר - התקדמות
 
-## סטטוס: deployed · lead-magnet pipeline LIVE in production 2026-05-05
-## עדכון אחרון: 2026-05-05
+## סטטוס: deployed · Sumit checkout + 6 commerce/event pages · nav rewired · webhook→RavMesser tagging · Phase 1+2+3a הושלמו (preview)
+## עדכון אחרון: 2026-05-15
+
+### Session 2026-05-15 — Autonomous Phase-3a (nav + index + webhook tagging)
+מטרה: כל מה שאפשר להשלים לבד בלי לחכות לאלעד. בוצע:
+
+- ✅ **Header nav** (`src/components/Header.tsx`): נוסחה מחדש. הוחלף `/hadrech` ל-`/programs/the-way`, `/coaching` ל-`/coaching/vip`, נוסף `/club`. ה-CTA "שיחת היכרות חינם" עובר ל-`/coaching/book` (במקום `/coaching`)
+- ✅ **`/coaching/page.tsx`**: `BOOKING_URL` עודכן מ-`/contact` ל-`/coaching/book` (4 כפתורים בעמוד)
+- ✅ **`/programs/page.tsx`** — דף קטלוג: 5 כרטיסי מוצרים, פילטר אוטומטי מ-`listProducts()`, CTA ל-`/coaching/book`
+- ✅ **`/products/page.tsx`** + **`/events/page.tsx`** — redirect לפריט היחיד (מונע 404 בכניסה ישירה לרמת-האב)
+- ✅ **Sumit webhook** הורחב (`src/app/api/sumit/webhook/route.ts`):
+  - Idempotency in-memory (Map, last 1000, מנקה הכי-ישן ברכישת ה-1001)
+  - חילוץ `slug` מ-`ExternalIdentifier` (תבנית `${slug}-${ts}-${rand}`)
+  - על Status=Success/Paid/Completed/Approved → קריאה ל-`subscribeToList` עם `product.ravMesserTag` + `source:purchase` + customFields (product/payment_id/amount_ils/purchased_at). שירות master 22958
+  - Fire-and-forget tagging — לא חוסם את התגובה ל-Sumit (חייב <3s)
+- ✅ **TypeScript: 0 שגיאות. Build: עובר** — 97 דפים סטטיים (היה 94)
+
+**מצב פרודקשן עכשיו:**
+- Nav מצביע על דפי commerce חדשים בכל הדסקטופ והמובייל
+- מבקרים שמגיעים ל-`/programs`, `/products`, `/events` מקבלים דף תקין
+- כל חיוב ב-Sumit אוטומטית מתייג את הקונה ב-Rav-Messer עם תיוג מוצר ייעודי לסגמנטציה
+- Sumit recurring (`/club` חידוש חודשי), Supabase orders, ו-abandoned-cart נשארו ל-Phase 3b (דורש החלטה על schema + production tokens)
+
+**עדיין חסום על אלעד:**
+1. `NEXT_PUBLIC_YCBM_URL` — `/coaching/book` נראה fallback וואטסאפ עד שמוגדר
+2. Sumit production API token + webhook secret ל-Vercel
+3. אישור scope + URL ב-Sumit admin
+
+### Session 2026-05-14 — Sumit checkout scaffold + INVENTORY + The Way template
+מטרת הסשן: סקרייפינג 9 דפי רב-מסר + בניה מחדש + חיבור Sumit. הסקרייפינג חסום (Cloudflare 403, אין ארכיב Wayback), אבל הניתוח הקיים ב-`.claude/LANDING_PAGES_ANALYSIS.md` משמש מקור אמת. נבנתה תשתית מלאה לתשלומים + דף מוצר ראשון.
+
+- ✅ `INVENTORY.md` — מפת דרכים שלמה: 9 דפים, 6 ל-rebuild + 3 lead-magnets קיימים, מצב סקרייפינג, החלטות (Sumit לא Stripe, YouCanBookMe לא booking מותאם, כתבות ב-eladjak.com לא דומיין חדש)
+- ✅ `src/lib/sumit.ts` — לקוח Sumit מצומצם: `createCheckout()` עוטף `POST /billing/payments/beginredirect/` (תוכנית hosted-checkout); `verifyWebhookSignature()` HMAC-SHA256 דרך Web Crypto
+- ✅ `src/lib/products.ts` — קטלוג מוצרים: 5 מוצרי-עזר (the-way, the-way-plus, dating-card, club-90d, vip-coaching) + `formatILS()` עזר
+- ✅ `src/app/api/checkout/route.ts` — POST: ולידציה (שם/אימייל/טלפון), קריאת Sumit, החזרת `redirectUrl`. Dev-fallback ל-`/thanks?dev=1` כשהקרדים חסרים
+- ✅ `src/app/api/sumit/webhook/route.ts` — POST: ולידציית חתימה (חובה בפרודקשן), לוג. TODO ב-Phase 3: Supabase orders table + tag ב-Rav-Messer
+- ✅ `src/components/CheckoutForm.tsx` — טופס client component: שם+אימייל+טלפון, ולידציה, redirect ל-Sumit
+- ✅ `src/app/programs/the-way/page.tsx` — דף מוצר ראשון: Hero, 6 שלבי השיטה, מה כלול, טופס תשלום inline, התנגדויות, CTA סופי. תבנית להעתקה ל-4 דפים נוספים
+- ✅ `.env.example` — `SUMIT_COMPANY_ID/API_TOKEN/MODE/WEBHOOK_SECRET`
+- ✅ `sitemap.ts` — `/programs/the-way` בעדיפות 0.95
+- ✅ **TypeScript: 0 שגיאות. Build: עובר** (47+1 routes כולל `/api/checkout`, `/api/sumit/webhook`, `/programs/the-way`)
+
+**Sumit credentials:** קיימים ב-`~/.claude/secrets/keyvault/sumit.env` (sandbox). Company ID 1874985196. בפרודקשן צריך:
+1. להעלות `SUMIT_COMPANY_ID`, `SUMIT_API_TOKEN`, `SUMIT_MODE=production` ל-Vercel
+2. להחליף ל-API token של פרודקשן (לא sandbox)
+3. להגדיר webhook URL ב-Sumit admin: `https://omanut-hakesher.co.il/api/sumit/webhook` + לקבל webhook secret + להעלות אותו
+
+**בלוקרים פתוחים:**
+- 6 דפי RavMesser שלא נסרקו — תוכן הקופי בנוי לפי `LANDING_PAGES_ANALYSIS.md` (סיכום קיים, לא הקופי המדויק). לפיקסל-פרפקט: אלעד צריך לייצא PDF/screenshot מהאדמין של RavMesser
+- YouCanBookMe URL — לא הוגדר עדיין
+- Production Sumit API token (כרגע sandbox)
+
+**Phase 2 (זה הסשן, ״רוץ על הכל״):**
+- ✅ `/programs/the-way-plus` (₪2,970) — value-stack מלא: 6 רכיבים + 8 בונוסים, anchor ₪12,420 → ₪2,970
+- ✅ `/products/dating-card` (₪97) — 4 צעדים + 5 רכיבים בכרטיס + 3 בונוסים
+- ✅ `/club` — מועדון 90D: ₪4 חודש ראשון דרך Sumit, חידוש חודשי ידני (Phase 3 — recurring API)
+- ✅ `/coaching/vip` — ליווי VIP: 4 ערכי מפתח, fit/no-fit, 3 tiers שקופים (₪6K-50K), CTA ל-/coaching/book
+- ✅ `/coaching/book` — דף תיאום שיחה: iframe של YouCanBookMe (env `NEXT_PUBLIC_YCBM_URL`), fallback וואטסאפ
+- ✅ `/events/love-event` — RSVP חינמי דרך `/api/lead/subscribe` עם slug `love-event-rsvp`
+- ✅ `/events/love-event/confirmed` — דף אישור אחרי הרשמה
+- ✅ `/checkout/success` — דף אישור post-payment (לא לערבב עם `/thanks` שהוא דף "תודות לאנשים")
+- ✅ `lead-magnets.ts` הורחב עם `love-event-rsvp`
+- ✅ sitemap עודכן עם כל 7 הדפים החדשים
+- ✅ **TypeScript: 0 שגיאות. Build עובר: 94 דפים סטטיים, כולל 4 API routes**
+
+**מבנה Sumit checkout (ניזכר):**
+1. משתמש מקליק ״המשך לתשלום״ → `POST /api/checkout` עם slug+name+email+phone
+2. השרת קורא ל-Sumit `POST /billing/payments/beginredirect/` → מקבל hosted-checkout URL
+3. הלקוח מועבר ל-Sumit, משלם בכרטיס/ביט, מקבל חשבונית מס/קבלה אוטומטית
+4. Sumit מפנה חזרה ל-`/checkout/success?product=X&OG-PaymentID=...&OG-ExternalIdentifier=order-id`
+5. במקביל Sumit שולח webhook ל-`/api/sumit/webhook` עם HMAC חתום
+6. (Phase 3) Webhook → Supabase orders + Rav-Messer tag + abandoned-cart sequence
+
+**מצב המוצרים בפרודקשן (Vercel):**
+| מוצר | Route | מצב Sumit | חוסם |
+|---|---|---|---|
+| The Way | `/programs/the-way` | מוכן לבדיקה sandbox | ⏳ Sumit API token לפרודקשן |
+| The Way + Gym | `/programs/the-way-plus` | מוכן | ⏳ |
+| Dating Card | `/products/dating-card` | מוכן | ⏳ |
+| Club 90D | `/club` | חיוב חד-פעמי ראשון בלבד | ⏳ recurring API + Sumit prod |
+| VIP Coaching | `/coaching/vip` | booking-only (לא Sumit) | ⏳ YouCanBookMe URL |
+| Love Event | `/events/love-event` | Rav-Messer בלבד | ✅ (תוכן זמין) |
+
+**Phase 3 (סשן הבא):**
+- העלאת `SUMIT_*` ל-Vercel production (API token חדש, לא sandbox)
+- הגדרת Sumit webhook ב-admin → קבלת `SUMIT_WEBHOOK_SECRET`
+- בדיקת end-to-end עם כרטיס בדיקה — קניית `the-way` ב-sandbox
+- חיבור webhook ל-Supabase orders table
+- Sumit recurring API ל-/club (אחרי החיוב הראשון)
+- `NEXT_PUBLIC_YCBM_URL` ל-Vercel — לאחר שאלעד שולח את הקישור
+- Navigation header: לינקים ל-`/programs/the-way`, `/club`, `/coaching/vip`
+- כתבות אישיות: cross-link מ-`/blog/*` ל-eladjak.com (משימה נפרדת ב-eladjak-hub repo)
+
+**שאלות חוזרות לאלעד:**
+1. YouCanBookMe URL הסופי?
+2. Sumit production API token (מתחלף מ-sandbox)
+3. אישור Sumit Company ID לפרודקשן זהה ל-1874985196
+4. אישור scopes ל-Sumit webhook + URL ב-admin
+5. PDF/screenshots מ-RavMesser לדפי המקור (לפיקסל-פרפקט) — אופציונלי, הקופי הנוכחי מבוסס על LANDING_PAGES_ANALYSIS.md
 
 ### Session 2026-05-05 (3) — Production wiring + smoke tests passed
 הצינור באוויר. `RAV_MESSER_*` + `RESEND_API_KEY` + `CONTACT_EMAIL` נוספו ל-Vercel env (production), אומנות הקשר עברה deploy חדש, ונבדקה.

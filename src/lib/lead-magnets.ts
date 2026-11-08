@@ -53,6 +53,15 @@ export const LEAD_MAGNETS: Record<string, LeadMagnetConfig> = {
     assetUrl: 'https://omanut-hakesher.co.il/lead/36-questions/download',
     welcomeSubject: 'המדריך שלך מוכן: 36 השאלות שיכולות ליצור אהבה',
   },
+  'love-event-rsvp': {
+    slug: 'love-event-rsvp',
+    titleHe: 'אירוע אהבה — הרשמה',
+    listId: OMANUT_HAKESHER_LIST_ID,
+    tags: ['event:love-event', 'source:website'],
+    // Confirmation/details page — Resend email links here.
+    assetUrl: 'https://omanut-hakesher.co.il/events/love-event/confirmed',
+    welcomeSubject: 'נרשמת בהצלחה לאירוע אהבה — פרטי החיבור בפנים',
+  },
 }
 
 export function getLeadMagnet(slug: string): LeadMagnetConfig | undefined {
